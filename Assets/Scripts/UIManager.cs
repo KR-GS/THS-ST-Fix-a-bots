@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     private List<GameObject> allButtons = new List<GameObject>();
     private List<int> correctAnswers = new List<int>();
     private int currentPage = 0;
-    private const int pageSize = 5;
+    private const int pageSize = 10;
 
 
     public void GenerateTimeButtons(int total = 60)
@@ -70,7 +70,6 @@ public class UIManager : MonoBehaviour
 
     private void OnTimeButtonClicked(GameObject button)
     {
-        // Toggle selection visually
         Image img = button.GetComponent<Image>();
         bool selected = img.color == Color.yellow;
         img.color = selected ? Color.white : Color.yellow;
@@ -83,8 +82,8 @@ public class UIManager : MonoBehaviour
             int btnTime = int.Parse(btn.GetComponentInChildren<TMP_Text>().text);
             if (sequence.Contains(btnTime))
             {
-                btn.GetComponent<Image>().color = Color.green; // Highlight as initial terms
-                btn.GetComponent<Button>().interactable = false; // Prevent selection
+                btn.GetComponent<Image>().color = Color.green; 
+                btn.GetComponent<Button>().interactable = false; 
             }
         }
     }

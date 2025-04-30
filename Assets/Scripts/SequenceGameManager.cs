@@ -25,18 +25,13 @@ public class SequenceGameManager : MonoBehaviour
 
     public void StartNewLevel()
     {
-        // Generate a new sequence (e.g., start = 5, diff = 4 → 5, 9, 13, 17, 21, 25)
         int start = Random.Range(1, 10);
-        int diff = Random.Range(1, 6);
+        int diff = Random.Range(2, 7);
         currentSequence = new Sequence(start, diff);
 
-        // Update UI
         uiManager.GenerateTimeButtons(totalButtons);
-
-        // Highlight first 3 sequence terms only (e.g., 5, 9, 13)
         uiManager.HighlightInitialSequenceNumbers(currentSequence.Terms.GetRange(0, 3));
 
-        // Store the expected next 3 numbers (e.g., 17, 21, 25)
         correctAnswers = currentSequence.Terms.GetRange(3, 3);
     }
 
