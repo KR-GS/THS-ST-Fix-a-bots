@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     public GameObject ruleInputPanel;
     public TMP_InputField startInputField;
     public TMP_InputField diffInputField;
-    public TMP_InputField formulaInputField;
     public Button submitRuleButton;
     public TextMeshProUGUI ruleFeedbackText;
 
@@ -114,12 +113,11 @@ public class UIManager : MonoBehaviour
         ruleInputPanel.SetActive(show);
     }
 
-    public (int start, int diff, string formula) GetRuleInputs()
+    public (int start, int diff) GetRuleInputs()
     {
         int.TryParse(startInputField.text, out int start);
         int.TryParse(diffInputField.text, out int diff);
-        string formula = formulaInputField.text;
-        return (start, diff, formula);
+        return (start, diff);
     }
 
     public void SetRuleFeedback(string message, bool correct)
@@ -160,9 +158,10 @@ public class UIManager : MonoBehaviour
         {
             submitRuleButton.onClick.AddListener(() =>
             {
-                var (start, diff, formula) = GetRuleInputs();
-                SequenceGameManager.Instance.ValidateRuleInput();
-                Debug.Log($"Rule submitted: start={start}, diff={diff}, formula={formula}");
+                Debug.Log($"Pressed Button");
+                var (start, diff) = GetRuleInputs();
+                Debug.Log($"Rule submitted: start={start}, diff={diff}");
+                SequenceGameManager.Instance.ValidateFormula();
             });
         }
     }

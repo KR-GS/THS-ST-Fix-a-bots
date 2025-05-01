@@ -7,6 +7,8 @@ public class SequenceGameManager : MonoBehaviour
 
     public UIManager uiManager;
 
+    public RuleInputFormula ruleInputFormula;
+
     public int totalButtons = 60;
     public Sequence currentSequence;
 
@@ -69,13 +71,43 @@ public class SequenceGameManager : MonoBehaviour
         }
     }
 
-    public void ValidateRuleInput()
+    public void ValidateFormula()
+{
+    var (userStart, userDiff) = uiManager.GetRuleInputs();
+    string expectedFormula;
+    if(currentSequence.Start-currentSequence.Difference > 0){
+        expectedFormula = $"{currentSequence.Difference}n+{currentSequence.Start - currentSequence.Difference}";
+    }
+    else{
+        expectedFormula = $"{currentSequence.Difference}n{-(currentSequence.Start - currentSequence.Difference)}";
+    }
+
+    Debug.Log($"{expectedFormula}");
+
+    string inputFormula = ruleInputFormula.SubmitRule();
+
+    bool isCorrectStart = userStart == currentSequence.Start;
+    bool isCorrectDiff = userDiff == currentSequence.Difference;
+
+        if (isCorrectStart && isCorrectDiff){
+            if (inputFormula == expectedFormula){
+                uiManager.SetRuleFeedback("Perfect! You found the correct rule!", true);
+            }
+            else{
+                uiManager.SetRuleFeedback("Oh no!, your start and difference are correct but your formula is wrong!", true);
+            }
+    }
+}
+
+    /*public void ValidateRuleInput()
     {
         var (userStart, userDiff, formula) = uiManager.GetRuleInputs();
 
         bool isCorrectStart = userStart == currentSequence.Start;
         bool isCorrectDiff = userDiff == currentSequence.Difference;
-        string expectedFormula;
+        bool iscorrectFormula;
+
+
         
         if((currentSequence.Start - currentSequence.Difference) < 0)
         {
@@ -96,5 +128,5 @@ public class SequenceGameManager : MonoBehaviour
         {
             uiManager.SetRuleFeedback("Something is off. Double-check your rule.", false);
         }
-    }
+    }*/
 }
