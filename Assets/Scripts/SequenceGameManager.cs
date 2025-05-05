@@ -79,7 +79,7 @@ public class SequenceGameManager : MonoBehaviour
         expectedFormula = $"{currentSequence.Difference}n+{currentSequence.Start - currentSequence.Difference}";
     }
     else{
-        expectedFormula = $"{currentSequence.Difference}n{-(currentSequence.Start - currentSequence.Difference)}";
+        expectedFormula = $"{currentSequence.Difference}n-{-(currentSequence.Start - currentSequence.Difference)}";
     }
 
     Debug.Log($"{expectedFormula}");
@@ -94,9 +94,12 @@ public class SequenceGameManager : MonoBehaviour
                 uiManager.SetRuleFeedback("Perfect! You found the correct rule!", true);
             }
             else{
-                uiManager.SetRuleFeedback("Oh no!, your start and difference are correct but your formula is wrong!", true);
+                uiManager.SetRuleFeedback("Your start and difference are correct but your formula is wrong!", false);
             }
     }
+        else{
+            uiManager.SetRuleFeedback("Oh no! Please double check your start and difference!", false);
+        }
 }
 
     /*public void ValidateRuleInput()
