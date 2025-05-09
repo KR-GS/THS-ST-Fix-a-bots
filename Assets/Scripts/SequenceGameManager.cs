@@ -23,12 +23,18 @@ public class SequenceGameManager : MonoBehaviour
     {
         uiManager.ShowRuleInputPanel(false);
         StartNewLevel();
+        uiManager.PlaySequenceIntro(currentSequence.Terms);
     }
 
     public void StartNewLevel()
     {
-        int start = Random.Range(1, 10);
-        int diff = Random.Range(2, 7);
+        int start = Random.Range(1, 2);
+        int diff = Random.Range(2, 3);
+
+        while (start == diff){
+            diff = Random.Range(2, 3); //makes sure it's not just 2n for example
+        }
+
         currentSequence = new Sequence(start, diff);
 
         uiManager.GenerateTimeButtons(totalButtons);
@@ -63,6 +69,7 @@ public class SequenceGameManager : MonoBehaviour
         if (correct)
         {
             uiManager.SetFeedback("Correct sequence! Now enter the rule.", true);
+            uiManager.showRuleInputButton.gameObject.SetActive(true);
             uiManager.ShowRuleInputPanel(true);
         }
         else
