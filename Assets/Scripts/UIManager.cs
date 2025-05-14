@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class UIManager : MonoBehaviour
     public Button nextButton;
 
     [Header("Feedback and Rule Input")]
+    public TextMeshProUGUI sequenceIntroText;
+    public Button showRuleInputButton;
     public TextMeshProUGUI feedbackText;
     public GameObject ruleInputPanel;
     public TMP_InputField startInputField;
@@ -24,10 +27,10 @@ public class UIManager : MonoBehaviour
     private List<GameObject> allButtons = new List<GameObject>();
     private List<int> correctAnswers = new List<int>();
     private int currentPage = 0;
-    private const int pageSize = 10;
+    private const int pageSize = 17;
 
 
-    public void GenerateTimeButtons(int total = 60)
+    public void GenerateTimeButtons(int total = 17)
     {
         allButtons.Clear();
         foreach (Transform child in buttonContainer)
@@ -81,7 +84,7 @@ public class UIManager : MonoBehaviour
             int btnTime = int.Parse(btn.GetComponentInChildren<TMP_Text>().text);
             if (sequence.Contains(btnTime))
             {
-                btn.GetComponent<Image>().color = Color.green; 
+                //btn.GetComponent<Image>().color = Color.green; 
                 btn.GetComponent<Button>().interactable = false; 
             }
         }
@@ -102,10 +105,61 @@ public class UIManager : MonoBehaviour
         return selected;
     }
 
+    private void ShowFeedback(TextMeshProUGUI textElement, string message, bool correct, float duration = 2f)
+    {
+        textElement.text = message;
+        textElement.color = correct ? Color.green : Color.red;
+        StartCoroutine(ShowTemporarily(textElement.gameObject, duration));
+    }
+
+        public void PlaySequenceIntro(List<int> sequence)
+    {
+        StartCoroutine(SequenceIntroCoroutine(sequence));
+    }
+
+    private IEnumerator SequenceIntroCoroutine(List<int> sequence)
+    {
+        int count = 0;
+
+        foreach (GameObject btn in allButtons)
+        {
+            int btnValue = int.Parse(btn.GetComponentInChildren<TMP_Text>().text);
+
+            btn.GetComponent<Image>().color = Color.cyan; 
+            if (sequence.Contains(btnValue) && count < 3)
+            {
+                count++;
+                sequenceIntroText.text = $"{btnValue} is part of the sequence!";
+            }
+            else
+            {
+                sequenceIntroText.text = "";
+            }
+
+            yield return new WaitForSeconds(.75f); 
+            btn.GetComponent<Image>().color = Color.white;
+
+            if (count >= 3) break;
+        }
+
+        sequenceIntroText.text = "";
+    }
+
+    private IEnumerator ShowTemporarily(GameObject go, float duration)
+    {
+        go.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        go.SetActive(false);
+    }
+
     public void SetFeedback(string message, bool correct)
     {
-        feedbackText.text = message;
-        feedbackText.color = correct ? Color.green : Color.red;
+        ShowFeedback(feedbackText, message, correct);
+    }
+
+    public void SetRuleFeedback(string message, bool correct)
+    {
+        ShowFeedback(ruleFeedbackText, message, correct);
     }
 
     public void ShowRuleInputPanel(bool show)
@@ -120,14 +174,18 @@ public class UIManager : MonoBehaviour
         return (start, diff);
     }
 
-    public void SetRuleFeedback(string message, bool correct)
-    {
-        ruleFeedbackText.text = message;
-        ruleFeedbackText.color = correct ? Color.green : Color.red;
-    }
-
     private void Start()
     {
+        feedbackText.gameObject.SetActive(false);
+        ruleFeedbackText.gameObject.SetActive(false);
+        showRuleInputButton.gameObject.SetActive(false);
+
+        showRuleInputButton.onClick.AddListener(() =>
+        {
+            bool isActive = ruleInputPanel.activeSelf;
+            ruleInputPanel.SetActive(!isActive);
+        });
+
         backButton.onClick.AddListener(() =>
         {
             if (currentPage > 0)
