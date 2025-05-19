@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2266365310661544379}
   - component: {fileID: 7407427293346072479}
   - component: {fileID: 424976652102050069}
+  - component: {fileID: 5731825028449408568}
   m_Layer: 5
   m_Name: TimePeriodButton
-  m_TagString: Untagged
+  m_TagString: TimeButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,6 +122,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5731825028449408568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7090756147055173588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35fb03b525a66341a716ce093603876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8581235043813821260
 GameObject:
   m_ObjectHideFlags: 0

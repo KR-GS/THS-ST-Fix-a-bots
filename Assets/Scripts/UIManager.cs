@@ -42,8 +42,7 @@ public class UIManager : MonoBehaviour
         {
             GameObject btn = Instantiate(timePeriodButtonPrefab, buttonContainer);
             btn.GetComponentInChildren<TMP_Text>().text = i.ToString();
-            btn.GetComponent<Button>().onClick.AddListener(() => OnTimeButtonClicked(btn));
-            btn.SetActive(false);
+            // btn.GetComponent<Button>().onClick.AddListener(() => OnTimeButtonClicked(btn));
             allButtons.Add(btn);
         }
 
@@ -70,12 +69,12 @@ public class UIManager : MonoBehaviour
         nextButton.interactable = end < allButtons.Count;
     }
 
-    private void OnTimeButtonClicked(GameObject button)
+    /*private void OnTimeButtonClicked(GameObject button)
     {
         Image img = button.GetComponent<Image>();
         bool selected = img.color == Color.yellow;
         img.color = selected ? Color.white : Color.yellow;
-    }
+    }*/
 
     public void HighlightInitialSequenceNumbers(List<int> sequence)
     {
@@ -85,9 +84,11 @@ public class UIManager : MonoBehaviour
             if (sequence.Contains(btnTime))
             {
                 //btn.GetComponent<Image>().color = Color.green; 
-                btn.GetComponent<Button>().interactable = false; 
+                btn.GetComponent<Button>().interactable = false;
             }
+            
         }
+        
     }
 
     public List<int> GetSelectedAnswers()
@@ -116,6 +117,8 @@ public class UIManager : MonoBehaviour
     {
         StartCoroutine(SequenceIntroCoroutine(sequence));
     }
+    
+    
 
     private IEnumerator SequenceIntroCoroutine(List<int> sequence)
     {
@@ -125,20 +128,20 @@ public class UIManager : MonoBehaviour
         {
             int btnValue = int.Parse(btn.GetComponentInChildren<TMP_Text>().text);
 
-            btn.GetComponent<Image>().color = Color.cyan; 
+            btn.GetComponent<Image>().color = Color.cyan;
             if (sequence.Contains(btnValue) && count < 3)
             {
+                btn.GetComponent<Image>().color = Color.green;
                 count++;
                 sequenceIntroText.text = $"{btnValue} is part of the sequence!";
+                yield return new WaitForSeconds(.75f);
             }
             else
             {
                 sequenceIntroText.text = "";
+                yield return new WaitForSeconds(.75f);
+                btn.GetComponent<Image>().color = Color.white;
             }
-
-            yield return new WaitForSeconds(.75f); 
-            btn.GetComponent<Image>().color = Color.white;
-
             if (count >= 3) break;
         }
 
