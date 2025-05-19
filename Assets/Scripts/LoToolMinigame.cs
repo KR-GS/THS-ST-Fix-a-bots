@@ -8,8 +8,6 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textCounter;
 
-    private int counter;
-
     [SerializeField]
     private List<int> numberArray = new List<int>();
 
@@ -24,8 +22,6 @@ public class LoToolMinigame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        counter = 0;
-        
         currentInt = numberArray.Count;
 
         patternLength = numberArray.Count;

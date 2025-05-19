@@ -1,32 +1,82 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RobotPaintPart : MonoBehaviour
 {
-    private int stickerCount;
+    [SerializeField]
+    private int[] sequenceArray = new int[4];
+
+    private int[] stickerCount = new int[4];
+
+    private Sticker[][] stickers = new Sticker[4][];
+
+    private int currentSide;
+
+    private GameObject[] testObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        stickerCount = 0;
+        currentSide = 0;
+
+        testObject = new GameObject[4];
+
+        for(int i = 0; i<4; i++)
+        {
+            testObject[i] = new GameObject("Side "+ (i+1).ToString());
+
+            if(i != currentSide)
+            {
+                testObject[i].SetActive(false);
+            }
+        }
     }
 
-    public void IncSticker()
+    public void AddSticker(Sticker newSticker)
     {
-        stickerCount++;
-        Debug.Log(stickerCount);
+        newSticker.transform.SetParent(testObject[currentSide].transform);
     }
 
-    public void DecSticker()
+    public void RemoveSticker()
     {
-        stickerCount--;
+        Debug.Log(testObject[currentSide].transform.childCount);
+    }
+
+    public void RotateToRight()
+    {
+        if (currentSide < 3)
+        {
+            Debug.Log("Sticker Count: " + stickerCount[currentSide]);
+            testObject[currentSide].SetActive(false);
+
+            currentSide++;
+
+            testObject[currentSide].SetActive(true);
+
+            Debug.Log(currentSide);
+        }
+    }
+
+    public void RotateToLeft()
+    {
+        if (currentSide > 0)
+        {
+            testObject[currentSide].SetActive(false);
+
+            currentSide--;
+
+            testObject[currentSide].SetActive(true);
+
+            Debug.Log(currentSide);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.TryGetComponent(out Sticker sticker))
         {
-            IncSticker();
-            sticker.ToggleIsDuplicate();
+            AddSticker(sticker);
             sticker.ToggleIsOnPart();
             Debug.Log("Sticker stuck");
         }
@@ -36,10 +86,14 @@ public class RobotPaintPart : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Sticker sticker))
         {
-            DecSticker();
-            sticker.ToggleIsDuplicate();
+            RemoveSticker();
             sticker.ToggleIsOnPart();
             Debug.Log("Sticker stuck");
         }
+    }
+
+    public int GetCurrentStickerSideCount()
+    {
+        return testObject[currentSide].transform.childCount;
     }
 }

@@ -41,13 +41,14 @@ public class Sticker : MonoBehaviour
         return onPart;
     }
 
-    public void ToggleIsDuplicate()
-    {
-        isDuplicate = !isDuplicate;
-    }
-
     public void ToggleIsOnPart()
     {
         onPart = !onPart;
+        
+    }
+
+    public void ToggleIsADuplicate()
+    {
+        isDuplicate = !isDuplicate;
     }
 }

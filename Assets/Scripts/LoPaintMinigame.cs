@@ -1,15 +1,26 @@
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
+using TMPro;
 
 public class LoPaintMinigame : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshProUGUI stickerTextCounter;
+
     private bool dragging = false;
+
     private GameObject draggableObject;
+
+    private List<Sticker> draggedObjects = new List<Sticker>();
+
+    private RobotPaintPart roboPart;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        roboPart = FindFirstObjectByType<RobotPaintPart>();
+        Debug.Log(roboPart.name);
     }
 
     // Update is called once per frame
@@ -35,9 +46,11 @@ public class LoPaintMinigame : MonoBehaviour
                     }
                     else
                     {
+                        draggedObjects.Remove(draggableObject.GetComponent<Sticker>());
                         Destroy(draggableObject);
                         dragging = false;
                     }
+                    stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
                 }
             }
             else
@@ -58,17 +71,38 @@ public class LoPaintMinigame : MonoBehaviour
         {
             if (rayHit.transform.gameObject.TryGetComponent(out Sticker sticker))
             {
-                if (sticker.IsADuplicate())
+                if (sticker.IsOnPart())
                 {
+                    Debug.Log("This is on the robot");
                     draggableObject = sticker.gameObject;
                 }
                 else
                 {
-                    draggableObject = GameObjectUtility.DuplicateGameObject(sticker.gameObject);
+                    draggableObject = Instantiate(sticker.transform.gameObject);
+                    draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();
+                    Debug.Log(draggableObject.GetComponent<Sticker>().IsADuplicate());
+                    draggedObjects.Add(sticker);
                 }
                 dragging = true;
                 Debug.Log(draggableObject.name);
             }
         }
+    }
+
+    public void ClearStickers()
+    {
+        
+    }
+
+    public void TurnToRight()
+    {
+        roboPart.RotateToRight();
+        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
+    }
+
+    public void TurnToLeft()
+    {
+        roboPart.RotateToLeft();
+        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
     }
 }

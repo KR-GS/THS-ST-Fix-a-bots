@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 27378301}
   - component: {fileID: 27378300}
   m_Layer: 5
-  m_Name: Left
+  m_Name: LeftPartBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,9 +202,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
-        m_MethodName: ChangeToLeftElement
+      - m_Target: {fileID: 1742507110}
+        m_TargetAssemblyTypeName: LoPaintMinigame, Assembly-CSharp
+        m_MethodName: TurnToLeft
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   - component: {fileID: 696130312}
   - component: {fileID: 696130311}
   - component: {fileID: 696130315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -937,7 +937,7 @@ GameObject:
   - component: {fileID: 823367653}
   - component: {fileID: 823367652}
   m_Layer: 5
-  m_Name: Right
+  m_Name: RightPartBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1007,9 +1007,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
-        m_MethodName: ChangeToRightElement
+      - m_Target: {fileID: 1742507110}
+        m_TargetAssemblyTypeName: LoPaintMinigame, Assembly-CSharp
+        m_MethodName: TurnToRight
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1070,7 +1070,7 @@ GameObject:
   - component: {fileID: 846016935}
   - component: {fileID: 846016934}
   - component: {fileID: 846016938}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1236,7 +1236,7 @@ GameObject:
   - component: {fileID: 935172301}
   - component: {fileID: 935172300}
   m_Layer: 5
-  m_Name: Counter
+  m_Name: CounterTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1765,6 +1765,7 @@ GameObject:
   - component: {fileID: 1146391401}
   - component: {fileID: 1146391404}
   - component: {fileID: 1146391405}
+  - component: {fileID: 1146391406}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -1872,7 +1873,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1900,6 +1901,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5984c8c927ea4e4e9c5c63ff3644a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sequenceArray: 02000000040000000600000008000000
+--- !u!50 &1146391406
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146391400}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &1175512278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1942,7 @@ GameObject:
   - component: {fileID: 1175512281}
   - component: {fileID: 1175512280}
   m_Layer: 5
-  m_Name: Right (1)
+  m_Name: RightStickerBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1936,7 +1965,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 251.5, y: 106.00002}
+  m_AnchoredPosition: {x: 371.1, y: -7.7}
   m_SizeDelta: {x: 52.4612, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1175512280
@@ -2212,7 +2241,7 @@ GameObject:
   - component: {fileID: 1493400718}
   - component: {fileID: 1493400717}
   m_Layer: 5
-  m_Name: Left (1)
+  m_Name: LeftStickerBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2235,7 +2264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 104.5, y: 106}
+  m_AnchoredPosition: {x: -18, y: -7.7000504}
   m_SizeDelta: {x: 52.4612, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1493400717
@@ -2502,7 +2531,7 @@ Camera:
   m_GameObject: {fileID: 1742507105}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -2615,6 +2644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1be2cba45539c6469301fdb08740173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stickerTextCounter: {fileID: 935172300}
 --- !u!1 &1805694482
 GameObject:
   m_ObjectHideFlags: 0
@@ -2956,7 +2986,7 @@ GameObject:
   - component: {fileID: 2101594618}
   - component: {fileID: 2101594617}
   - component: {fileID: 2101594621}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
