@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SequenceGameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class SequenceGameManager : MonoBehaviour
 
     public int totalButtons = 60;
     public Sequence currentSequence;
+
+    public string dataToSend;
 
     private List<int> correctAnswers = new List<int>();
 
@@ -97,10 +100,15 @@ public class SequenceGameManager : MonoBehaviour
     bool isCorrectDiff = userDiff == currentSequence.Difference;
 
         if (isCorrectStart && isCorrectDiff){
-            if (inputFormula == expectedFormula){
+            if (inputFormula == expectedFormula)
+            {
                 uiManager.SetRuleFeedback("Perfect! You found the correct rule!", true);
+                dataToSend = expectedFormula;
+                StaticData.valueToKeep = dataToSend;
+                SceneManager.LoadScene("DataTransferTest");
             }
-            else{
+            else
+            {
                 uiManager.SetRuleFeedback("Your start and difference are correct but your formula is wrong!", false);
             }
     }
