@@ -941,6 +941,7 @@ MonoBehaviour:
   uiManager: {fileID: 200346912}
   ruleInputFormula: {fileID: 1335937661}
   totalButtons: 60
+  dataToSend: 
 --- !u!114 &800923697 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2574417718498069516, guid: 456e3c1287b6ffc4692ce9d94227da5e, type: 3}
@@ -3211,9 +3212,9 @@ RectTransform:
   - {fileID: 923846519}
   m_Father: {fileID: 1536644569}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2051371460
@@ -3229,8 +3230,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   markerPrefab: {fileID: 923846518}
-  spawnParent: {fileID: 1536644569}
-  spawnPosition: {x: 0, y: 0}
+  spawnParent: {fileID: 2051371459}
+  spawnPosition: {x: 50, y: 0}
 --- !u!1 &2057305000
 GameObject:
   m_ObjectHideFlags: 0
