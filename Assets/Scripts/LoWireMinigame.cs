@@ -12,18 +12,32 @@ public class LoWireMinigame : MonoBehaviour
 
     private List<GameObject> createdWireChild = new List<GameObject>();
 
+    private GameObject wireParent;
+
     private List<float> midPoints = new List<float>();
 
     private GameObject color;
 
     private bool isDragging;
 
+    private int wireNoTotal;
+
+    private GameObject wireCopy;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isDragging = false;
 
+        wireNoTotal = 0;
 
+        wireParent = new GameObject();
+
+        createdWireChild.Add(Instantiate(originalWire.transform.gameObject));
+
+        createdWireChild[0].name = "0";
+
+        createdWireChild[0].transform.SetParent(wireParent.transform);
     }
 
     // Update is called once per frame
@@ -97,6 +111,8 @@ public class LoWireMinigame : MonoBehaviour
 
             createdWireChild[i].name = i.ToString();
 
+            createdWireChild[i].transform.SetParent(wireParent.transform);
+
             if (i%2 == 0)
             {
                 createdWireChild[i].GetComponent<SpriteRenderer>().color = Color.white;
@@ -110,5 +126,30 @@ public class LoWireMinigame : MonoBehaviour
         }
 
         Debug.Log("Current Value");
+    }
+
+    public void CheckColorNumber()
+    {
+        int redTotal = 0;
+        int blueTotal = 0;
+        int yellowTotal = 0;
+        foreach(GameObject childClr in createdWireChild)
+        {
+            if(childClr.GetComponent<SpriteRenderer>().color == Color.red)
+            {
+                redTotal++;
+            }else if(childClr.GetComponent<SpriteRenderer>().color == Color.blue)
+            {
+                blueTotal++;
+            }
+            else
+            {
+                yellowTotal++;
+            }
+        }
+
+        wireNoTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
+
+        Debug.Log(wireNoTotal);
     }
 }
