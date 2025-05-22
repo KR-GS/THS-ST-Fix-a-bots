@@ -1766,7 +1766,7 @@ GameObject:
   - component: {fileID: 1146391404}
   - component: {fileID: 1146391405}
   - component: {fileID: 1146391406}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2645,6 +2645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stickerTextCounter: {fileID: 935172300}
+  draggedObjects: []
 --- !u!1 &1805694482
 GameObject:
   m_ObjectHideFlags: 0

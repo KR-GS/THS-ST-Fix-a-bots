@@ -9,6 +9,4 @@ public class WireColor : MonoBehaviour
     {
         return btnColor;
     }
-
-    
 }

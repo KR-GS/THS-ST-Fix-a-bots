@@ -12,9 +12,12 @@ public class LoPaintMinigame : MonoBehaviour
 
     private GameObject draggableObject;
 
+    [SerializeField]
     private List<Sticker> draggedObjects = new List<Sticker>();
 
     private RobotPaintPart roboPart;
+
+    private LayerMask bodyMask;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,8 +72,10 @@ public class LoPaintMinigame : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(position), Vector2.zero);
         if (rayHit.collider != null)
         {
+            Debug.Log("Interacting with: " + rayHit.transform.name);
             if (rayHit.transform.gameObject.TryGetComponent(out Sticker sticker))
             {
+                Debug.Log("111Interacting with: " + rayHit.transform.name);
                 if (sticker.IsOnPart())
                 {
                     Debug.Log("This is on the robot");

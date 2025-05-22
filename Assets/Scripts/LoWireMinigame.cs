@@ -1,43 +1,26 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
+using System.Drawing;
 
 public class LoWireMinigame : MonoBehaviour
 {
-    [SerializeField]
-    private Wire originalWire;
-
-    [SerializeField]
-    private Sprite instantiatedObjSprtie;
-
-    private List<GameObject> createdWireChild = new List<GameObject>();
-
-    private GameObject wireParent;
-
-    private List<float> midPoints = new List<float>();
-
-    private GameObject color;
+    private GameObject WireSlots;
 
     private bool isDragging;
 
     private int wireNoTotal;
 
-    private GameObject wireCopy;
+    private GameObject wireToAdd;
+
+    private Transform wireGeneratedPlace;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isDragging = false;
-
         wireNoTotal = 0;
 
-        wireParent = new GameObject();
-
-        createdWireChild.Add(Instantiate(originalWire.transform.gameObject));
-
-        createdWireChild[0].name = "0";
-
-        createdWireChild[0].transform.SetParent(wireParent.transform);
+        isDragging = false;
     }
 
     // Update is called once per frame
@@ -47,14 +30,19 @@ public class LoWireMinigame : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
+                Debug.Log("Hello World");
                 HandleClickEvent(Input.GetTouch(0).position);
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 if (isDragging)
                 {
-                    Destroy(color);
                     isDragging = false;
+
+                    if (wireToAdd.GetComponent<Wire>().GetSlotStatus())
+                    {
+                        wireToAdd.transform.position = wireToAdd.GetComponent<Wire>().GetNewNearbyPos().position;
+                    }
                 }
             }
             else
@@ -62,7 +50,7 @@ public class LoWireMinigame : MonoBehaviour
                 if (isDragging)
                 {
                     Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                    color.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    wireToAdd.transform.position = new Vector2(touchPos.x, touchPos.y);
                 }
             }
         }
@@ -73,83 +61,61 @@ public class LoWireMinigame : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(position), Vector2.zero);
         if (rayHit.collider != null)
         {
-            if (rayHit.transform.gameObject.TryGetComponent(out WireColor selectedColor))
+            Debug.Log(rayHit.transform.name);
+            if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
             {
-                Debug.Log(selectedColor.transform.name);
-                color = Instantiate(selectedColor.transform.gameObject);
-                isDragging = true;
+                if (wire.GetComplete())
+                {
+                    Debug.Log(wire.transform.name);
+                    wireToAdd = wire.transform.gameObject;
+                    isDragging = true;
+                    wireGeneratedPlace = wire.transform;
+                }
+                    
             }
         }
     }
 
-    public void ChangeWireValue(float value)
+    public List<GameObject> ChangeWireValue(float value, Wire wireToChange, GameObject parent)
     {
-        if (createdWireChild.Count > 0)
-        {
-            foreach(GameObject child in createdWireChild)
-            {
-                Destroy(child);
-            }
-        }
+        List<GameObject> generatedChildren = new List<GameObject>();
+        List<float> generatePoints = new List<float>();
 
-        createdWireChild.Clear();
+        Debug.Log(generatedChildren.Count);
 
-        Debug.Log(createdWireChild.Count);
+        int intValue = (int)value;
 
-        int intValue = (int) value;
+        float newLen = wireToChange.GetComponent<SpriteRenderer>().bounds.size.x / intValue;
 
-        float newLen = originalWire.GetComponent<SpriteRenderer>().bounds.size.x / intValue;
+        generatePoints = new List<float>(wireToChange.GetDivisionPoints(intValue));
 
-        midPoints = new List<float>(originalWire.GetDivisionPoints(intValue));
-
-        Debug.Log("Number: " + midPoints.Count);
+        Debug.Log("Number: " + generatePoints.Count);
 
         for (int i = 0; i < intValue; i++)
         {
-            createdWireChild.Add(Instantiate(originalWire.transform.gameObject));
-            createdWireChild[i].transform.localScale = new Vector2(newLen, 1f);
+            generatedChildren.Add(Instantiate(wireToChange.transform.gameObject));
+            generatedChildren[i].transform.localScale = new Vector2(newLen, 1f);
 
-            createdWireChild[i].name = i.ToString();
+            generatedChildren[i].name = i.ToString();
 
-            createdWireChild[i].transform.SetParent(wireParent.transform);
+            generatedChildren[i].transform.SetParent(parent.transform);
 
-            if (i%2 == 0)
+            if (i % 2 == 0)
             {
-                createdWireChild[i].GetComponent<SpriteRenderer>().color = Color.white;
+                generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.white;
             }
             else
             {
-                createdWireChild[i].GetComponent<SpriteRenderer>().color = Color.grey;
+                generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.grey;
             }
 
-            createdWireChild[i].transform.position = new Vector2(midPoints[i], createdWireChild[i].transform.position.y);
+            generatedChildren[i].transform.position = new Vector2(generatePoints[i], generatedChildren[i].transform.position.y);
         }
 
         Debug.Log("Current Value");
+
+        return generatedChildren;
     }
 
-    public void CheckColorNumber()
-    {
-        int redTotal = 0;
-        int blueTotal = 0;
-        int yellowTotal = 0;
-        foreach(GameObject childClr in createdWireChild)
-        {
-            if(childClr.GetComponent<SpriteRenderer>().color == Color.red)
-            {
-                redTotal++;
-            }else if(childClr.GetComponent<SpriteRenderer>().color == Color.blue)
-            {
-                blueTotal++;
-            }
-            else
-            {
-                yellowTotal++;
-            }
-        }
-
-        wireNoTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
-
-        Debug.Log(wireNoTotal);
-    }
+    
 }
