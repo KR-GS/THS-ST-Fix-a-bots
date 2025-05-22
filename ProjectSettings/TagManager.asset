@@ -6,6 +6,10 @@ TagManager:
   tags:
   - TimeButton
   - Marker
+  - TV
+  - Paint
+  - Tool
+  - Wire
   layers:
   - Default
   - TransparentFX
