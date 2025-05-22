@@ -11,6 +11,17 @@ public class Wire : MonoBehaviour
 
     private List<float> divisionPoints = new List<float>();
 
+    private int wireNumberTotal;
+
+    private Color origColor;
+
+    [SerializeField]
+    private bool isCompleteWire = false;
+
+    private bool isOnSlot = false;
+
+    private Transform newWirePos;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +33,8 @@ public class Wire : MonoBehaviour
 
         wireEndPoint = transform.position.x + ((wireSprite.bounds.size.x) / 2);
         Debug.Log(wireEndPoint);
+
+        origColor = GetComponent<SpriteRenderer>().color;
     }
 
     // Update is called once per frame
@@ -38,6 +51,46 @@ public class Wire : MonoBehaviour
     public float GetEndPoint()
     {
         return wireEndPoint;
+    }
+
+    public int GetWireNumber()
+    {
+        return wireNumberTotal; 
+    }
+
+    public void SetWireNumber(int number)
+    {
+        wireNumberTotal = number;
+    }
+
+    public bool GetComplete()
+    {
+         return isCompleteWire;
+    }
+
+    public void SetComplete()
+    {
+        isCompleteWire = true;
+    }
+
+    public bool GetSlotStatus()
+    {
+        return isOnSlot;
+    }
+
+    public void SetSlotStatus()
+    {
+        isOnSlot = true;
+    }
+
+    public void SetNewWirePos(Transform newPos)
+    {
+        newWirePos = newPos;
+    }
+
+    public Transform GetNewNearbyPos()
+    {
+        return newWirePos;
     }
 
     public List<float> GetDivisionPoints(int numDiv)

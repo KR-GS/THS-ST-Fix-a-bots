@@ -44,7 +44,7 @@ public class Sticker : MonoBehaviour
     public void ToggleIsOnPart()
     {
         onPart = !onPart;
-        
+        Debug.Log(onPart);   
     }
 
     public void ToggleIsADuplicate()

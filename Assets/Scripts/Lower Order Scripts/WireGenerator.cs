@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
+using System.Drawing;
+using UnityEngine;
 
-public class LoWireMinigame : MonoBehaviour
+public class WireGenerator : MonoBehaviour
 {
     [SerializeField]
     private Wire originalWire;
@@ -10,28 +10,32 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private Sprite instantiatedObjSprtie;
 
+    [SerializeField]
+    private Transform generateLocation;
+
+    [SerializeField]
+    private LoWireMinigame generalWireScript;
+
     private List<GameObject> createdWireChild = new List<GameObject>();
 
     private GameObject wireParent;
 
-    private List<float> midPoints = new List<float>();
+    private bool isDragging;
 
     private GameObject color;
 
-    private bool isDragging;
-
     private int wireNoTotal;
-
-    private GameObject wireCopy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isDragging = false;
 
-        wireNoTotal = 0;
-
         wireParent = new GameObject();
+
+        wireParent.name = "Wire Parent";
+
+        wireParent.transform.position = originalWire.transform.position;
 
         createdWireChild.Add(Instantiate(originalWire.transform.gameObject));
 
@@ -82,50 +86,13 @@ public class LoWireMinigame : MonoBehaviour
         }
     }
 
-    public void ChangeWireValue(float value)
+    public void EditWireValue(float value)
     {
-        if (createdWireChild.Count > 0)
+        foreach (GameObject child in createdWireChild)
         {
-            foreach(GameObject child in createdWireChild)
-            {
-                Destroy(child);
-            }
+            Destroy(child);
         }
-
-        createdWireChild.Clear();
-
-        Debug.Log(createdWireChild.Count);
-
-        int intValue = (int) value;
-
-        float newLen = originalWire.GetComponent<SpriteRenderer>().bounds.size.x / intValue;
-
-        midPoints = new List<float>(originalWire.GetDivisionPoints(intValue));
-
-        Debug.Log("Number: " + midPoints.Count);
-
-        for (int i = 0; i < intValue; i++)
-        {
-            createdWireChild.Add(Instantiate(originalWire.transform.gameObject));
-            createdWireChild[i].transform.localScale = new Vector2(newLen, 1f);
-
-            createdWireChild[i].name = i.ToString();
-
-            createdWireChild[i].transform.SetParent(wireParent.transform);
-
-            if (i%2 == 0)
-            {
-                createdWireChild[i].GetComponent<SpriteRenderer>().color = Color.white;
-            }
-            else
-            {
-                createdWireChild[i].GetComponent<SpriteRenderer>().color = Color.grey;
-            }
-
-            createdWireChild[i].transform.position = new Vector2(midPoints[i], createdWireChild[i].transform.position.y);
-        }
-
-        Debug.Log("Current Value");
+        createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(value, originalWire, wireParent));
     }
 
     public void CheckColorNumber()
@@ -133,12 +100,13 @@ public class LoWireMinigame : MonoBehaviour
         int redTotal = 0;
         int blueTotal = 0;
         int yellowTotal = 0;
-        foreach(GameObject childClr in createdWireChild)
+        foreach (GameObject childClr in createdWireChild)
         {
-            if(childClr.GetComponent<SpriteRenderer>().color == Color.red)
+            if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.red)
             {
                 redTotal++;
-            }else if(childClr.GetComponent<SpriteRenderer>().color == Color.blue)
+            }
+            else if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.blue)
             {
                 blueTotal++;
             }
@@ -151,5 +119,28 @@ public class LoWireMinigame : MonoBehaviour
         wireNoTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
 
         Debug.Log(wireNoTotal);
+
+        GenerateWire();
+    }
+    
+    private void GenerateWire()
+    {
+        for(int i = 0; i<wireParent.transform.childCount; i++)
+        {
+            wireParent.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = false;
+            wireParent.transform.GetChild(i).GetComponent<Wire>().enabled = false;
+        }
+
+        wireParent.transform.position = generateLocation.position;
+
+        wireParent.AddComponent<BoxCollider2D>();
+
+        wireParent.AddComponent<SpriteRenderer>();
+
+        wireParent.AddComponent<Wire>();
+
+        wireParent.GetComponent<Wire>().SetWireNumber(wireNoTotal);
+
+        wireParent.GetComponent<Wire>().SetComplete();
     }
 }
