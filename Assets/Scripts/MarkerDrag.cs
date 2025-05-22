@@ -62,14 +62,15 @@ public class MarkerDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         else if (previousButton != null && newButton == null)
         {
             previousButton.DeselectButton();
-            if (gameObject.name.Contains("(Clone)"))
+            Destroy(gameObject);
+            /*if (gameObject.name.Contains("(Clone)"))
             {
                 Destroy(gameObject);
             }
             else
             {
                 transform.SetSiblingIndex(0);
-            }
+            }*/
         }
         // Logic for dragging marker from origin to null
         else
