@@ -8,7 +8,7 @@ public class RuleInputFormula : MonoBehaviour
     public TextMeshProUGUI signText;
     public TextMeshProUGUI constantText;
     public Button upCoefficientButton, downCoefficientButton;
-    public Button toggleSignButton;
+    public Button upToggleSignButton, downToggleSignButton;
     public Button upConstantButton, downConstantButton;
 
     private int coefficient = 1;
@@ -22,7 +22,8 @@ public class RuleInputFormula : MonoBehaviour
         upCoefficientButton.onClick.AddListener(() => { coefficient++; UpdateDisplay(); });
         downCoefficientButton.onClick.AddListener(() => { coefficient = Mathf.Max(1, coefficient - 1); UpdateDisplay(); });
 
-        toggleSignButton.onClick.AddListener(() => { isAddition = !isAddition; UpdateDisplay(); });
+        upToggleSignButton.onClick.AddListener(() => { isAddition = !isAddition; UpdateDisplay(); });
+        downToggleSignButton.onClick.AddListener(() => { isAddition = !isAddition; UpdateDisplay(); });
 
         upConstantButton.onClick.AddListener(() => { constant++; UpdateDisplay(); });
         downConstantButton.onClick.AddListener(() => { constant--; UpdateDisplay(); });
