@@ -1,8 +1,11 @@
+using System.Globalization;
 using UnityEngine;
 
 public class RaycastInteractor : MonoBehaviour
 {
     public float rayLength = 10f;
+    public int tvNum = 0;
+    [SerializeField] private GameLoopManager gameLoopManager;
 
     void Update()
     {
@@ -26,8 +29,16 @@ public class RaycastInteractor : MonoBehaviour
                 // TV interaction
                 if (hit.collider.CompareTag("TV"))
                 {
-                    Debug.Log("TV clicked - generating new order.");
-                    OrderManager.Instance.CreateNewOrder();
+                    if (tvNum != gameLoopManager.level)
+                    {
+                        tvNum++;
+                        Debug.Log("TV clicked - generating new order.");
+                        OrderManager.Instance.CreateNewOrder();
+                    }
+                    else
+                    {
+                        Debug.Log("You have unfinished orders!");
+                    }
                 }
             }
             else

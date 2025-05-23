@@ -1,16 +1,23 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderManager : MonoBehaviour
 {
     public static OrderManager Instance;
+    [SerializeField] private GameObject orderCompletePanel;
+    [SerializeField] private RaycastInteractor raycastInteractor;
+    private Button button;
 
     public List<Order> orderList = new List<Order>();
     public int currentOrderIndex = -1;
 
+
     private void Awake()
     {
         Instance = this;
+        HideOrderCompletePanel();
     }
 
     public void CreateNewOrder()
@@ -36,9 +43,10 @@ public class OrderManager : MonoBehaviour
     {
         if (GetCurrentOrder().IsComplete())
         {
-            Debug.Log("Order Complete! Next level!");
-            // Proceed to next order/level
-            GameLoopManager.Instance.CompleteLevel(); // or load a new scene, etc.
+            Debug.Log("Order Complete!");
+            ShowOrderCompletePanel();
+            raycastInteractor.enabled = false;
+            orderList.Remove(GetCurrentOrder());
         }
     }
 
@@ -48,5 +56,22 @@ public class OrderManager : MonoBehaviour
             return orderList[currentOrderIndex];
 
         return null;
+    }
+
+    public void ShowOrderCompletePanel()
+    {
+        orderCompletePanel.SetActive(true);
+    }
+
+    public void HideOrderCompletePanel()
+    {
+        orderCompletePanel.SetActive(false);
+    }
+
+    public void OnButtonClick()
+    {
+        HideOrderCompletePanel();
+        GameLoopManager.Instance.CompleteLevel();
+        raycastInteractor.enabled = true;
     }
 }
