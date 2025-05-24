@@ -53,7 +53,6 @@ public class LoPaintMinigame : MonoBehaviour
                         Destroy(draggableObject);
                         dragging = false;
                     }
-                    stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
                 }
             }
             else
@@ -65,6 +64,7 @@ public class LoPaintMinigame : MonoBehaviour
                 }
             }
         }
+        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
     }
 
     private void HandleClickEvent(Vector2 position)

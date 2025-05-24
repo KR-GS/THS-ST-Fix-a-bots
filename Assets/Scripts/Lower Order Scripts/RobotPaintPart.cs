@@ -13,6 +13,7 @@ public class RobotPaintPart : MonoBehaviour
 
     private int currentSide;
 
+    [SerializeField]
     private GameObject[] testObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
