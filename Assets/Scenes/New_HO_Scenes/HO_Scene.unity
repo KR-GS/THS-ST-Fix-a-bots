@@ -237,7 +237,7 @@ MonoBehaviour:
   nextStageButton: {fileID: 187252095}
   maxNumber: 25
   cycleInterval: 0.75
-  prePressedCount: 0
+  prePressedCount: 2
 --- !u!114 &110916365
 MonoBehaviour:
   m_ObjectHideFlags: 0

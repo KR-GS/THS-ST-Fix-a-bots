@@ -41,12 +41,10 @@ public class SequenceGameManager : MonoBehaviour
 
     void SetupButtons()
     {
-        // Clear existing buttons (if any)
         foreach (Transform child in buttonsParent)
             Destroy(child.gameObject);
         buttons.Clear();
 
-        // Create buttons 1 to maxNumber
         for (int i = 1; i <= maxNumber; i++)
         {
             GameObject go = Instantiate(timePeriodButtonPrefab, buttonsParent);
@@ -69,7 +67,7 @@ public class SequenceGameManager : MonoBehaviour
         {
             int num = currentSequence.Numbers[i];
             pressedNumbers.Add(num);
-            buttons[num - 1].SetSelected(true); // Index zero-based, number is 1-based
+            buttons[num - 1].SetGreen();
         }
 
         currentCycleIndex = 0;
@@ -92,6 +90,11 @@ public class SequenceGameManager : MonoBehaviour
             {
                 yield return null;
                 continue;
+            }
+
+            if (currentCycleIndex == 0)
+            {
+                yield return new WaitForSeconds(1f);
             }
 
             HighlightButton(currentCycleIndex);
@@ -128,6 +131,7 @@ public class SequenceGameManager : MonoBehaviour
                 else
                 {
                     feedbackText.text = "Sequence not complete or wrong taps. Restarting...";
+                    yield return new WaitForSeconds(1f);
                     ResetSequence();
                 }
             }
@@ -146,6 +150,14 @@ public class SequenceGameManager : MonoBehaviour
         if (index > 0 && buttons[index - 1].getSelected())
         {
             buttons[index - 1].SetGreen();
+        }
+        if (index == 0  && !buttons[maxNumber - 1].getSelected())
+        {
+            buttons[maxNumber - 1].SetSelected(false);
+        }
+        if (index == 0  && buttons[maxNumber - 1].getSelected())
+        {
+            buttons[maxNumber - 1].SetGreen();
         }
         buttons[index].SetSelected(true);
     }
@@ -195,10 +207,10 @@ public class SequenceGameManager : MonoBehaviour
         {
             int num = currentSequence.Numbers[i];
             pressedNumbers.Add(num);
-            buttons[num - 1].SetSelected(true);
+            buttons[num - 1].SetGreen();
         }
 
-        currentCycleIndex = 0;
+        currentCycleIndex = -1;
         isCycling = true;
     }
 
