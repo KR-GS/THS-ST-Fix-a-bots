@@ -236,7 +236,7 @@ MonoBehaviour:
   formulaText: {fileID: 842840116}
   nextStageButton: {fileID: 187252095}
   maxNumber: 25
-  cycleInterval: 1
+  cycleInterval: 0.75
   prePressedCount: 0
 --- !u!114 &110916365
 MonoBehaviour:
