@@ -8,41 +8,73 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textCounter;
 
-    [SerializeField]
     private List<int> numberArray = new List<int>();
 
-    private List<int> numberToCheck = new List<int>();
+    [SerializeField]
+    private GameObject hitPrefab;
+
+    [SerializeField]
+    private Transform spawnPoint;
+
+    private List<int> nextAnswers = new List<int>();
+
+    private PatternGameManager patternGameManager = new PatternGameManager();
+
+    private List<int> generatedList = new List<int>();
 
     private int currentInt;
 
+    private List<int> numberToDisplay = new List<int>();
+
     private int patternLength;
+
+    private int slotToFill;
 
     private int difference;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentInt = numberArray.Count;
+        patternGameManager.GenerateValueForPattern();
 
-        patternLength = numberArray.Count;
+        difference = patternGameManager.ReturnDifference();
+
+        patternLength = Random.Range(6, 10);
+
+        generatedList = patternGameManager.ReturnPatternArray(patternLength);
+
+        currentInt = slotToFill = patternLength-3;
+
+        Debug.Log("Current Index: " + currentInt);
+        Debug.Log("Current Difference: " + difference);
+        Debug.Log("Current Length: " + patternLength);
+        Debug.Log("Current Array Length: " + generatedList.Count);
+
+        for (int i=0; i<patternLength-3; i++)
+        {
+            numberToDisplay.Add(generatedList[i]);
+            Debug.Log(i+" Value: " + numberToDisplay[i]);
+        }
 
         for (int i = 0; i<3; i++)
         {
-            numberArray.Add(0);
+            numberToDisplay.Add(0);
+            //Debug.Log(i + " Value: " + numberToDisplay[i]);
         }
 
-        difference = numberArray[currentInt - 1] - numberArray[currentInt - 2];
-
-        for (int i = 0; i < 3; i++)
+        for (int i = patternLength - 3; i < patternLength; i++)
         {
-            numberToCheck.Add(numberArray[currentInt - 1] + difference*(i+1));
-            Debug.Log(numberToCheck[i]);
+            nextAnswers.Add(generatedList[i]);
+            //Debug.Log(i + " answer: " + nextAnswers[]);
+            //Debug.Log("Current value:" + i);
         }
 
-        Debug.Log(currentInt);
-        Debug.Log(numberToCheck);
-        Debug.Log(numberArray[currentInt-1] + ", " + numberArray[currentInt]);
-        textCounter.text = numberArray[currentInt].ToString();
+        foreach(int number in nextAnswers)
+        {
+            Debug.Log("Answer Set:" + number);
+        }
+        
+        textCounter.text = numberToDisplay[currentInt].ToString();
     }
 
     // Update is called once per frame
@@ -55,6 +87,7 @@ public class LoToolMinigame : MonoBehaviour
                 HandleClickEvent();
             }
         }
+        textCounter.text = numberToDisplay[currentInt].ToString();
     }
 
     private void HandleClickEvent()
@@ -64,8 +97,8 @@ public class LoToolMinigame : MonoBehaviour
         {
             if(rayHit.transform.name == "Tool")
             {
-                numberArray[currentInt]++;
-                textCounter.text = numberArray[currentInt].ToString();
+                numberToDisplay[currentInt]++;
+                textCounter.text = numberToDisplay[currentInt].ToString();
             }
         }
     }
@@ -75,10 +108,10 @@ public class LoToolMinigame : MonoBehaviour
         int totalCorrect = 0 ;
         for(int i=0; i<3; i++)
         {
-            if (numberArray[patternLength+i] != numberToCheck[i])
+            if (numberToDisplay[slotToFill+i] != nextAnswers[i])
             {
                 Debug.Log("Incorrect Number");
-                numberArray[patternLength+i] = 0;
+                numberToDisplay[slotToFill+i] = 0;
             }
             else
             {
@@ -102,16 +135,16 @@ public class LoToolMinigame : MonoBehaviour
         if (currentInt>0)
         {
             currentInt--;
-            textCounter.text = numberArray[currentInt].ToString();
+            textCounter.text = numberToDisplay[currentInt].ToString();
         }
     }
 
     public void ChangeToRightElement()
     {
-        if (currentInt < numberArray.Count-1)
+        if (currentInt < numberToDisplay.Count-1)
         {
             currentInt++;
-            textCounter.text = numberArray[currentInt].ToString();
+            textCounter.text = numberToDisplay[currentInt].ToString();
         }
     }
 }

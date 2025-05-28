@@ -23,11 +23,11 @@ public class RobotPaintPart : MonoBehaviour
 
         testObject = new GameObject[4];
 
-        for(int i = 0; i<4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            testObject[i] = new GameObject("Side "+ (i+1).ToString());
+            testObject[i] = new GameObject("Side " + (i + 1).ToString());
 
-            if(i != currentSide)
+            if (i != currentSide)
             {
                 testObject[i].SetActive(false);
             }
@@ -75,7 +75,7 @@ public class RobotPaintPart : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.TryGetComponent(out Sticker sticker))
+        if (collision.gameObject.TryGetComponent(out Sticker sticker))
         {
             AddSticker(sticker);
             sticker.ToggleIsOnPart();
@@ -96,5 +96,13 @@ public class RobotPaintPart : MonoBehaviour
     public int GetCurrentStickerSideCount()
     {
         return testObject[currentSide].transform.childCount;
+    }
+
+    public void clearStickersOnSide()
+    {
+        for(int i=0; i < testObject[currentSide].transform.childCount; i++)
+        {
+            Destroy(testObject[currentSide].transform.GetChild(i));
+        }
     }
 }
