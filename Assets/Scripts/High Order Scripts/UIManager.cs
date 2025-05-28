@@ -24,6 +24,8 @@ public class UIManager : MonoBehaviour
     public Button submitRuleButton;
     public TextMeshProUGUI ruleFeedbackText;
 
+    public TextMeshProUGUI winsNumber;
+
     private List<GameObject> allButtons = new List<GameObject>();
     private List<int> correctAnswers = new List<int>();
     private int currentPage = 0;
@@ -76,6 +78,10 @@ public class UIManager : MonoBehaviour
         img.color = selected ? Color.white : Color.yellow;
     }*/
 
+    public void setGamesWin(int number)
+    {
+        winsNumber.text = $"{number}";
+    }
     public void HighlightInitialSequenceNumbers(List<int> sequence)
     {
         foreach (GameObject btn in allButtons)
@@ -86,9 +92,9 @@ public class UIManager : MonoBehaviour
                 //btn.GetComponent<Image>().color = Color.green; 
                 btn.GetComponent<Button>().interactable = false;
             }
-            
+
         }
-        
+
     }
 
     public List<int> GetSelectedAnswers()
@@ -113,7 +119,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(ShowTemporarily(textElement.gameObject, duration));
     }
 
-        public void PlaySequenceIntro(List<int> sequence)
+    public void PlaySequenceIntro(List<int> sequence)
     {
         StartCoroutine(SequenceIntroCoroutine(sequence));
     }

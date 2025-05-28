@@ -15,6 +15,8 @@ public class SequenceGameManager : MonoBehaviour
 
     public string dataToSend;
 
+    public int gamesWin = 0;
+
     private List<int> correctAnswers = new List<int>();
 
     private void Awake()
@@ -31,6 +33,7 @@ public class SequenceGameManager : MonoBehaviour
 
     public void StartNewLevel()
     {
+        uiManager.setGamesWin(gamesWin);
         int start = Random.Range(1, 2);
         int diff = Random.Range(2, 3);
 
@@ -104,8 +107,15 @@ public class SequenceGameManager : MonoBehaviour
             {
                 uiManager.SetRuleFeedback("Perfect! You found the correct rule!", true);
                 dataToSend = expectedFormula;
+                // TEST FOR SAVING DATA SAKE
+                gamesWin++;
+                //uiManager.setGamesWin(gamesWin);
+                StartNewLevel();
+                // TEST FOR SENDING DATA TO OTHER SCENES
+                /* 
                 StaticData.valueToKeep = dataToSend;
                 SceneManager.LoadScene("DataTransferTest");
+                */
             }
             else
             {
