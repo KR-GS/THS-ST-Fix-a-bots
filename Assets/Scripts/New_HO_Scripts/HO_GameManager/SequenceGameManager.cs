@@ -17,13 +17,14 @@ public class SequenceGameManager : MonoBehaviour
     public TextMeshProUGUI formulaText;
     public Button nextStageButton;
     public Button restartStageButton;
+    public FormulaInputPanel formulaPanel;
 
     [Header("Settings")]
     public int maxNumber = 25;
     public float cycleInterval = 0.5f;
     public int prePressedCount = 0; 
 
-    private Sequence currentSequence;
+    private Sequence currentSequence;    
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
     private int currentCycleIndex = 0;
     private HashSet<int> pressedNumbers = new HashSet<int>();
@@ -56,8 +57,14 @@ public class SequenceGameManager : MonoBehaviour
         return false;
     }
 
+    public Sequence GetCurrentSequence()
+    {
+        return currentSequence;
+    }
+
     void Start()
     {
+        formulaPanel.gameObject.SetActive(false);
         nextStageButton.gameObject.SetActive(false);
         restartStageButton.gameObject.SetActive(false);
         feedbackText.text = "";
@@ -193,7 +200,7 @@ public class SequenceGameManager : MonoBehaviour
                     restartStageButton.gameObject.SetActive(true);
                     canTap = false;
                     restartStageButton.onClick.AddListener(() => { isCycling = false; RestartStage(); });
-                    // TODO : add listener for the "Next stage" button so that the coroutine stops, new panel shows itself, and all the canvas elements here are disabled
+                    nextStageButton.onClick.AddListener(() => OnNextStageButtonClicked());
 
                     //isCycling = false;
                 }
@@ -304,9 +311,24 @@ public class SequenceGameManager : MonoBehaviour
 
     public void OnNextStageButtonClicked()
     {
-        // Disable button, proceed to next part (formula input)
         nextStageButton.gameObject.SetActive(false);
         isCycling = false;
-        feedbackText.text = "Now input the formula rule.";
+        StopAllCoroutines(); // stops the button cycling
+        feedbackText.text = "";
+        
+        foreach (var btn in buttons)
+            btn.SetHighlighted(false);
+
+        for (int i = 0; i < maxNumber; i++)
+        {
+            if (buttons[i].GetSelected())
+            {
+                buttons[i].SetGreen();
+            }
+        }
+
+        // Show formula panel with current sequence
+        formulaPanel.gameObject.SetActive(true);
+        formulaPanel.ShowPanel(currentSequence);
     }
 }

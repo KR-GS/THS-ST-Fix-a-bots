@@ -33,4 +33,12 @@ public class Sequence : MonoBehaviour
                 Numbers.Add(val);
         }
     }
+
+    public bool Matches(Sequence other)
+    {
+        return other != null &&
+               this.Coefficient == other.Coefficient &&
+               this.Constant == other.Constant;
+    }
+
 }
