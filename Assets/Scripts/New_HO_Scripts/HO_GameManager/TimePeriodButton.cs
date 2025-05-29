@@ -12,18 +12,22 @@ public class TimePeriodButton : MonoBehaviour
         buttonImage = GetComponent<Image>();
     }
 
-    public void SetSelected(bool selected)
+    public void SetHighlighted(bool selected)
     {
         buttonImage.color = selected ? Color.yellow : Color.white;
     }
 
     public void SetGreen()
     {
-        isSelected = true;
         buttonImage.color = Color.green;
     }
 
-    public bool getSelected()
+    public void SetSelected(bool selected)
+    {
+        isSelected = selected;
+    }
+
+    public bool GetSelected()
     {
         return isSelected;
     }
