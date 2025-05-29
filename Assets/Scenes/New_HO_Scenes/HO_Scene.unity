@@ -230,6 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240fce870f0051b41bb4660253f93a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiRaycaster: {fileID: 110916365}
+  eventSystem: {fileID: 61260500}
   timePeriodButtonPrefab: {fileID: 7090756147055173588, guid: 22c11db02120b824e835fed4cf52ae16, type: 3}
   buttonsParent: {fileID: 929197243}
   feedbackText: {fileID: 129588472}
