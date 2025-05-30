@@ -64,6 +64,7 @@ public class LoPaintMinigame : MonoBehaviour
                 }
             }
         }
+
         stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
     }
 
@@ -96,7 +97,7 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void ClearStickers()
     {
-        
+        roboPart.clearStickersOnSide();
     }
 
     public void TurnToRight()

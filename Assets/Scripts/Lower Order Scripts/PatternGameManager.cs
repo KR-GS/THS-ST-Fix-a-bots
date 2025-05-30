@@ -10,23 +10,13 @@ public class PatternGameManager : MonoBehaviour
     private List<int> numberPatternList = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        generatedDifference = Random.Range(1, 10);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public int ReturnDifference()
     {
         return generatedDifference;
     }
 
-    private void generatePatternArray(int patternLen)
+    private void GeneratePatternArray(int patternLen)
     {
         for(int i = 1; i<= patternLen; i++)
         {
@@ -34,9 +24,14 @@ public class PatternGameManager : MonoBehaviour
         }
     }
 
-    public List<int> returnPatternArray(int intInput)
+    public List<int> ReturnPatternArray(int intInput)
     {
-        generatePatternArray(intInput);
+        GeneratePatternArray(intInput);
         return numberPatternList;
+    }
+
+    public void GenerateValueForPattern()
+    {
+        generatedDifference = Random.Range(1, 5);
     }
 }
