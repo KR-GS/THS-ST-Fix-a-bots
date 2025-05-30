@@ -15,25 +15,30 @@ public class SequenceGameManager : MonoBehaviour
     public Transform buttonsParent;   
     public TextMeshProUGUI feedbackText;
     public TextMeshProUGUI formulaText;
+    public TextMeshProUGUI timerText;
     public Button nextStageButton;
     public Button restartStageButton;
     public FormulaInputPanel formulaPanel;
+    public GameTimer gameTimer;
 
     [Header("Settings")]
     public int maxNumber = 25;
     public float cycleInterval = 0.5f;
-    public int prePressedCount = 0; 
+    public int prePressedCount = 0;
+    public bool isFormulaSeen = true;
 
     private Sequence currentSequence;    
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
     private int currentCycleIndex = 0;
-    private HashSet<int> pressedNumbers = new HashSet<int>();
+    private List<int> pressedNumbers = new List<int>();
 
     private bool isCycling = false;
 
     private bool isCorrect = true;
 
     private bool canTap = true;
+
+    private bool isStart = true;
 
     // Basically checks if the pointer/mouse is above an interactable UI
     private bool IsPointerOverInteractableUi()
@@ -56,22 +61,27 @@ public class SequenceGameManager : MonoBehaviour
 
         return false;
     }
-
-    public Sequence GetCurrentSequence()
-    {
-        return currentSequence;
-    }
-
+  
     void Start()
     {
+        formulaText.gameObject.SetActive(isFormulaSeen);
         formulaPanel.gameObject.SetActive(false);
         nextStageButton.gameObject.SetActive(false);
-        restartStageButton.gameObject.SetActive(false);
-        feedbackText.text = "";
+        //restartStageButton.gameObject.SetActive(false);
+        feedbackText.text = "Please tap screen to start game";
 
         SetupButtons();
-        StartNewSequence();
-        StartCoroutine(DelayedStartCycle());
+    }
+
+    void Update()
+    {
+        
+         if (Input.GetMouseButtonDown(0) && !IsPointerOverInteractableUi() && isStart)
+        {
+            isStart = false;
+            StartNewSequence();
+            StartCoroutine(DelayedStartCycle());
+        }
     }
 
     // Creates buttons, destroys previous buttons as well
@@ -149,7 +159,16 @@ public class SequenceGameManager : MonoBehaviour
     IEnumerator DelayedStartCycle()
     {
         yield return new WaitForSeconds(2f);
+        feedbackText.text = "3";
+        yield return new WaitForSeconds(1f);
+        feedbackText.text = "2";
+        yield return new WaitForSeconds(1f);
+        feedbackText.text = "1";
+        yield return new WaitForSeconds(1f);
+        feedbackText.text = "Go!";
         StartCoroutine(CycleButtons());
+        yield return new WaitForSeconds(1f);
+        gameTimer.StartTimer();
     }
 
     // Main loop for the cycling
@@ -162,6 +181,7 @@ public class SequenceGameManager : MonoBehaviour
                 yield return null;
                 continue;
             }
+            restartStageButton.onClick.AddListener(() => { isCycling = false; RestartStage(); });
 
             if (currentCycleIndex == 0)
             {
@@ -199,7 +219,6 @@ public class SequenceGameManager : MonoBehaviour
                     nextStageButton.gameObject.SetActive(true);
                     restartStageButton.gameObject.SetActive(true);
                     canTap = false;
-                    restartStageButton.onClick.AddListener(() => { isCycling = false; RestartStage(); });
                     nextStageButton.onClick.AddListener(() => OnNextStageButtonClicked());
 
                     //isCycling = false;
@@ -220,12 +239,10 @@ public class SequenceGameManager : MonoBehaviour
     {
         //SetupButtons();
         RestartSequence();
-        nextStageButton.gameObject.SetActive(true);
+        //nextStageButton.gameObject.SetActive(true);
         restartStageButton.gameObject.SetActive(true);
         isCycling = true;
         //StartCoroutine(DelayedStartCycle());
-
-        
     }
 
     void HighlightButton(int index)
@@ -319,16 +336,13 @@ public class SequenceGameManager : MonoBehaviour
         foreach (var btn in buttons)
             btn.SetHighlighted(false);
 
-        for (int i = 0; i < maxNumber; i++)
+        foreach (int num in currentSequence.Numbers)
         {
-            if (buttons[i].GetSelected())
-            {
-                buttons[i].SetGreen();
-            }
+            buttons[num - 1].SetGreen();
         }
 
         // Show formula panel with current sequence
         formulaPanel.gameObject.SetActive(true);
-        formulaPanel.ShowPanel(currentSequence);
+        formulaPanel.ShowPanel(currentSequence, gameTimer);
     }
 }

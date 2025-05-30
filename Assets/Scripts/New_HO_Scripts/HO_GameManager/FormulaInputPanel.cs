@@ -9,6 +9,7 @@ public class FormulaInputPanel : MonoBehaviour
     public TMP_Text coefficientText;
     public TMP_Text constantText;
     public TMP_Text feedbackText;
+    public TextMeshProUGUI signText;
 
     public Button coefUpButton;
     public Button coefDownButton;
@@ -26,9 +27,11 @@ public class FormulaInputPanel : MonoBehaviour
     private int currentConst = 0;
 
     private Sequence targetSequence;
+    private GameTimer gameTimer;
 
-    public void ShowPanel(Sequence sequence)
+    public void ShowPanel(Sequence sequence, GameTimer gameTimer1)
     {
+        gameTimer = gameTimer1;
         targetSequence = sequence;
 
         currentCoef = 0;
@@ -47,17 +50,19 @@ public class FormulaInputPanel : MonoBehaviour
 
     private void ApplyLockSettings()
     {
-        coefUpButton.gameObject.SetActive(!lockCoefficient);
-        coefDownButton.gameObject.SetActive(!lockCoefficient);
-
-        constUpButton.gameObject.SetActive(!lockConstant);
-        constDownButton.gameObject.SetActive(!lockConstant);
-      
         if (lockCoefficient)
+        {
+            coefUpButton.transform.localScale = new Vector3(0, 0, 0);
+            coefDownButton.transform.localScale = new Vector3(0, 0, 0);
             currentCoef = targetSequence.Coefficient;
-
+        }
         if (lockConstant)
+        {
+            constUpButton.transform.localScale = new Vector3(0, 0, 0);
+            constDownButton.transform.localScale = new Vector3(0, 0, 0);
             currentConst = targetSequence.Constant;
+        }
+
     }
 
     private void Start()
@@ -74,7 +79,8 @@ public class FormulaInputPanel : MonoBehaviour
     private void UpdateFormulaText()
     {
         coefficientText.text = $"{currentCoef}";
-        constantText.text = currentConst >= 0 ? $"+{currentConst}" : $"{currentConst}";
+        signText.text = currentConst >= 0 ? "+" : "-";
+        constantText.text = currentConst >= 0 ? $"{currentConst}" : $"{-currentConst}";
     }
 
     private void ValidateFormula()
@@ -93,6 +99,7 @@ public class FormulaInputPanel : MonoBehaviour
         }
         else if (currentCoef == targetSequence.Coefficient && currentConst == targetSequence.Constant)
         {
+            gameTimer.StopTimer();
             feedbackText.text = "Both are right";
         }
     }
