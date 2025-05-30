@@ -24,8 +24,13 @@ public class SequenceGameManager : MonoBehaviour
     [Header("Settings")]
     public int maxNumber = 25;
     public float cycleInterval = 0.5f;
+    public float cycleLeniency = 0.4f;
     public int prePressedCount = 0;
     public bool isFormulaSeen = true;
+
+    [Header("Audio Files")]
+    public AudioSource audioSource;
+    public AudioClip audioMiss;
 
     private Sequence currentSequence;    
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
@@ -39,6 +44,8 @@ public class SequenceGameManager : MonoBehaviour
     private bool canTap = true;
 
     private bool isStart = true;
+
+    private float timer;
 
     // Basically checks if the pointer/mouse is above an interactable UI
     private bool IsPointerOverInteractableUi()
@@ -197,13 +204,21 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
 
             // Wait for cycleInterval seconds and listen for input 
-            float timer = 0f;
+            timer = 0f;
+            
 
             while (timer < cycleInterval)
             {
+                
+                if (timer > cycleLeniency && inSequence)
+                {
+                    feedbackText.text = "You missed!";
+                    audioSource.PlayOneShot(audioMiss);
+                }
+                
                 if (Input.GetMouseButtonDown(0) && canTap && !IsPointerOverInteractableUi())
                 {
-                    Debug.Log("Clicked: " +  gameObject.name);
+                    Debug.Log("Clicked: " + gameObject.name);
                     HandleUserTap(btnNumber, inSequence);
                 }
                 timer += Time.deltaTime;
@@ -269,7 +284,7 @@ public class SequenceGameManager : MonoBehaviour
 
     void HandleUserTap(int btnNumber, bool inSequence)
     {
-        buttons[btnNumber - 1].SetGreen();
+        
         if (pressedNumbers.Contains(btnNumber))
         {
             feedbackText.text = $"You already pressed number {btnNumber}.";
@@ -278,15 +293,25 @@ public class SequenceGameManager : MonoBehaviour
 
         if (inSequence)
         {
-            pressedNumbers.Add(btnNumber);
-            buttons[btnNumber - 1].SetSelected(true);
-            feedbackText.text = $"You pressed the right number: {btnNumber}!";
+            if (timer > cycleLeniency)
+            {
+                feedbackText.text = "You pressed the button to late!";
+                audioSource.PlayOneShot(audioMiss);
+            }
+            else
+            {
+                buttons[btnNumber - 1].SetGreen();
+                pressedNumbers.Add(btnNumber);
+                buttons[btnNumber - 1].SetSelected(true);
+                feedbackText.text = $"You pressed the right number: {btnNumber}!";
+            }
         }
         else
         {
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             isCorrect = false;
+            audioSource.PlayOneShot(audioMiss);
         }
     }
 
