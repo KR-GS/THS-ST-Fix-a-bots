@@ -21,6 +21,9 @@ public class SequenceGameManager : MonoBehaviour
     public FormulaInputPanel formulaPanel;
     public GameTimer gameTimer;
 
+    [Header("Central Animator")]
+    public Animator statusAnimator;
+
     [Header("Settings")]
     public int maxNumber = 25;
     public float cycleInterval = 0.5f;
@@ -44,6 +47,8 @@ public class SequenceGameManager : MonoBehaviour
     private bool canTap = true;
 
     private bool isStart = true;
+
+    private bool gotRight = false;
 
     private float timer;
 
@@ -124,6 +129,7 @@ public class SequenceGameManager : MonoBehaviour
             pressedNumbers.Add(num);
             buttons[num - 1].SetGreen();
             buttons[num - 1].SetSelected(true);
+            buttons[num - 1].SetPreSelected(true);
         }
 
         currentCycleIndex = 0;
@@ -205,25 +211,48 @@ public class SequenceGameManager : MonoBehaviour
 
             // Wait for cycleInterval seconds and listen for input 
             timer = 0f;
-            
 
-            while (timer < cycleInterval)
+            bool fuckingStop = true;
+
+            gotRight = false;
+
+            while (timer < cycleInterval && fuckingStop)
             {
-                
-                if (timer > cycleLeniency && inSequence)
+                if (!inSequence)
                 {
-                    feedbackText.text = "You missed!";
-                    audioSource.PlayOneShot(audioMiss);
+                    statusAnimator.SetTrigger("IdleTrigger");
                 }
-                
+                if (inSequence)
+                {
+                    statusAnimator.SetTrigger("AnticipateTrigger");
+                    if (timer > cycleLeniency && !gotRight && !buttons[currentCycleIndex].GetPreSelected())
+                    {
+                        audioSource.Stop();
+                        feedbackText.text = "You missed!";
+                        statusAnimator.SetTrigger("MissTrigger");
+                        fuckingStop = false;
+                        audioSource.PlayOneShot(audioMiss);
+                    }
+                }
                 if (Input.GetMouseButtonDown(0) && canTap && !IsPointerOverInteractableUi())
                 {
                     Debug.Log("Clicked: " + gameObject.name);
+                    fuckingStop = false;
                     HandleUserTap(btnNumber, inSequence);
                 }
                 timer += Time.deltaTime;
                 yield return null;
             }
+
+            if (timer == cycleInterval)
+            {
+                statusAnimator.ResetTrigger("MissTrigger");
+                statusAnimator.ResetTrigger("AnticipateTrigger");
+                statusAnimator.ResetTrigger("HitTrigger");
+                statusAnimator.ResetTrigger("WrongTrigger");
+                statusAnimator.ResetTrigger("IdleTrigger");
+            }
+            
 
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
@@ -293,24 +322,21 @@ public class SequenceGameManager : MonoBehaviour
 
         if (inSequence)
         {
-            if (timer > cycleLeniency)
-            {
-                feedbackText.text = "You pressed the button to late!";
-                audioSource.PlayOneShot(audioMiss);
-            }
-            else
-            {
-                buttons[btnNumber - 1].SetGreen();
-                pressedNumbers.Add(btnNumber);
-                buttons[btnNumber - 1].SetSelected(true);
-                feedbackText.text = $"You pressed the right number: {btnNumber}!";
-            }
+            audioSource.Stop();
+            buttons[btnNumber - 1].SetGreen();
+            pressedNumbers.Add(btnNumber);
+            buttons[btnNumber - 1].SetSelected(true);
+            feedbackText.text = $"You pressed the right number: {btnNumber}!";
+            statusAnimator.SetTrigger("HitTrigger");
+            gotRight = true;
         }
         else
         {
+            audioSource.Stop();
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             isCorrect = false;
+            statusAnimator.SetTrigger("WrongTrigger");
             audioSource.PlayOneShot(audioMiss);
         }
     }
