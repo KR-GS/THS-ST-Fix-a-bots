@@ -32,8 +32,7 @@ public class SequenceGameManager : MonoBehaviour
     public bool isFormulaSeen = true;
 
     [Header("Audio Files")]
-    public AudioSource audioSource;
-    public AudioClip audioMiss;
+    public SoundEffectsManager soundEffectsManager;
 
     private Sequence currentSequence;    
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
@@ -216,6 +215,8 @@ public class SequenceGameManager : MonoBehaviour
 
             gotRight = false;
 
+            soundEffectsManager.playIdleSound();
+
             while (timer < cycleInterval)
             {
                 if (fuckingStop)
@@ -228,19 +229,19 @@ public class SequenceGameManager : MonoBehaviour
                     {
                         statusAnimator.SetBool("IdleTrigger", false);
                         statusAnimator.SetBool("AnticipateTrigger", true);
-                        if((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.10f)
+                        if ((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.10f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("HitTrigger", true);
+                            soundEffectsManager.playHitSound();
                             fuckingStop = false;
                         }
-                        if(timer > cycleLeniency && !gotRight)
+                        if (timer > cycleLeniency && !gotRight)
                         {
-                            audioSource.Stop();
                             feedbackText.text = "You missed!";
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("MissTrigger", true);
-                            audioSource.PlayOneShot(audioMiss);
+                            soundEffectsManager.playMissSound();
                             fuckingStop = false;
                         }
                     }
@@ -331,7 +332,6 @@ public class SequenceGameManager : MonoBehaviour
 
         if (inSequence)
         {
-            audioSource.Stop();
             buttons[btnNumber - 1].SetGreen();
             buttons[btnNumber - 1].SetWasSelected(true);
             pressedNumbers.Add(btnNumber);
@@ -339,17 +339,17 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = $"You pressed the right number: {btnNumber}!";
             statusAnimator.SetBool("IdleTrigger", false);
             statusAnimator.SetBool("HitTrigger", true);
+            soundEffectsManager.playHitSound();
             gotRight = true;
         }
         else
         {
-            audioSource.Stop();
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
-            isCorrect = false;
             statusAnimator.SetBool("IdleTrigger", false);
             statusAnimator.SetBool("WrongTrigger", true);
-            audioSource.PlayOneShot(audioMiss);
+            isCorrect = false;
+            soundEffectsManager.playMissSound();
         }
     }
 
