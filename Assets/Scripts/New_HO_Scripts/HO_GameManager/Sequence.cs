@@ -19,7 +19,7 @@ public class Sequence : MonoBehaviour
     public void GenerateRandomFormula()
     {
         Coefficient = Random.Range(2, 6);
-        Constant = Random.Range(-5, 6);
+        Constant = Random.Range(-Coefficient + 1, 6);
     }
 
     public void GenerateSequence()
@@ -33,4 +33,12 @@ public class Sequence : MonoBehaviour
                 Numbers.Add(val);
         }
     }
+
+    public bool Matches(Sequence other)
+    {
+        return other != null &&
+               this.Coefficient == other.Coefficient &&
+               this.Constant == other.Constant;
+    }
+
 }
