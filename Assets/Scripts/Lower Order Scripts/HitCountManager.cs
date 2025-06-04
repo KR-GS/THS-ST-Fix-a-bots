@@ -1,16 +1,132 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class HitCountManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    private GameObject hitSprite;
+
+    [SerializeField]
+    private int hitCount;
+
+    [SerializeField]
+    private float gapValue;
+
+    [SerializeField]
+    private int colValue;
+
+    private float prefabRight;
+
+    private float prefabDown;
+
+    private float furthestPoint;
+
+    private float distance_LR;
+
+    private float distance_UD;
+
+    private float distance_lastRow;
+
+    private GameObject newObj;
+
+    public void increaseChildCount(GameObject hitCounterObject)
     {
-        
+        newObj = Instantiate(hitSprite, hitCounterObject.transform);
+        newObj.transform.position = hitCounterObject.transform.position;
+        TapIconLayout(hitCounterObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void presetCounter(int value, GameObject presetObject)
     {
-        
+        for(int i = 0; i<value; i++)
+        {
+            newObj = Instantiate(hitSprite, presetObject.transform);
+            newObj.transform.position = presetObject.transform.position;
+        }
+
+        TapIconLayout(presetObject);
+    }
+
+    public void TapIconLayout(GameObject parentObjectObject)
+    {
+        int childCounter = 0;
+
+        int rowCount;
+
+        int objChildCount = parentObjectObject.transform.childCount;
+
+        float furthestPoint_left;
+
+        float furthestPoint_up;
+
+        prefabRight = hitSprite.GetComponent<SpriteRenderer>().bounds.size.x + gapValue;
+
+        prefabDown = hitSprite.GetComponent<SpriteRenderer>().bounds.size.y + gapValue;
+
+        rowCount = objChildCount / colValue;
+
+        if (objChildCount % colValue != 0)
+        {
+            rowCount++;
+        }
+
+        if (objChildCount <= colValue)
+        {
+            distance_LR = prefabRight * (objChildCount - 1);
+        }
+        else
+        {
+            distance_LR = prefabRight * (colValue - 1);
+        }
+
+        if(objChildCount%colValue > 0)
+        {
+            distance_lastRow = prefabRight * ((objChildCount%colValue) - 1);
+        }
+
+        distance_UD = prefabDown * (rowCount - 1);
+
+        Debug.Log("Distance via multiplication: " + distance_LR);
+
+        furthestPoint_left = -(distance_LR / 2) + newObj.transform.position.x;
+
+        furthestPoint_up = (distance_UD / 2) + newObj.transform.position.y;
+
+        for (int j = 0; j < rowCount; j++)
+        {
+            if (j==rowCount-1 && rowCount >1)
+            {
+                if(objChildCount % colValue > 0)
+                {
+                    furthestPoint_left = -(distance_lastRow / 2) + newObj.transform.position.x;
+                }
+            }
+
+            for (int i = 0; i < colValue; i++)
+            {
+                if (childCounter <= objChildCount - 1)
+                {
+                    if (i > 0)
+                    {
+                        parentObjectObject.transform.GetChild(childCounter).position = new Vector2(prefabRight + parentObjectObject.transform.GetChild(childCounter - 1).position.x, furthestPoint_up);
+                        furthestPoint = parentObjectObject.transform.GetChild(childCounter).position.x;
+                    }
+                    else
+                    {
+                        parentObjectObject.transform.GetChild(childCounter).position = new Vector2(furthestPoint_left, furthestPoint_up);
+                    }
+                    Debug.Log("Element " + j + " " + i + ": " + parentObjectObject.transform.GetChild(i).position.x);
+                    childCounter++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            furthestPoint_up -= prefabDown;
+        }
     }
 }
