@@ -1318,8 +1318,8 @@ MonoBehaviour:
   constUpButton: {fileID: 2027005827}
   constDownButton: {fileID: 1558378272}
   submitButton: {fileID: 1039696785}
-  lockCoefficient: 1
-  lockConstant: 1
+  lockCoefficient: 0
+  lockConstant: 0
 --- !u!1 &842840114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,7 +2012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 400}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1253231071
@@ -2025,7 +2025,7 @@ Animator:
   m_GameObject: {fileID: 1253231069}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9c90e323a31e6ea459ea5fd561e4d884, type: 2}
+  m_Controller: {fileID: 9100000, guid: 53b0be10818beb546a55b5912cc2b1cf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2057,7 +2057,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -107577836, guid: 7f2dd7ba632504a49b54228043ff4fbe, type: 3}
+  m_Sprite: {fileID: -1554959072, guid: 7c011a8d99463554c90d7c4687578906, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2631,7 +2631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

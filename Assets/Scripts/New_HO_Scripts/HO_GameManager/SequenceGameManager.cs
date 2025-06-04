@@ -216,42 +216,51 @@ public class SequenceGameManager : MonoBehaviour
 
             gotRight = false;
 
-            while (timer < cycleInterval && fuckingStop)
+            while (timer < cycleInterval)
             {
-                if (!inSequence)
+                if (fuckingStop)
                 {
-                    statusAnimator.SetTrigger("IdleTrigger");
-                }
-                if (inSequence)
-                {
-                    statusAnimator.SetTrigger("AnticipateTrigger");
-                    if (timer > cycleLeniency && !gotRight && !buttons[currentCycleIndex].GetPreSelected())
+                    if (!inSequence)
                     {
-                        audioSource.Stop();
-                        feedbackText.text = "You missed!";
-                        statusAnimator.SetTrigger("MissTrigger");
-                        fuckingStop = false;
-                        audioSource.PlayOneShot(audioMiss);
+                        statusAnimator.SetBool("IdleTrigger", true);
                     }
-                }
-                if (Input.GetMouseButtonDown(0) && canTap && !IsPointerOverInteractableUi())
-                {
-                    Debug.Log("Clicked: " + gameObject.name);
-                    fuckingStop = false;
-                    HandleUserTap(btnNumber, inSequence);
+                    else if (inSequence)
+                    {
+                        statusAnimator.SetBool("IdleTrigger", false);
+                        statusAnimator.SetBool("AnticipateTrigger", true);
+                        if((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.10f)
+                        {
+                            statusAnimator.SetBool("AnticipateTrigger", false);
+                            statusAnimator.SetBool("HitTrigger", true);
+                            fuckingStop = false;
+                        }
+                        if(timer > cycleLeniency && !gotRight)
+                        {
+                            audioSource.Stop();
+                            feedbackText.text = "You missed!";
+                            statusAnimator.SetBool("AnticipateTrigger", false);
+                            statusAnimator.SetBool("MissTrigger", true);
+                            audioSource.PlayOneShot(audioMiss);
+                            fuckingStop = false;
+                        }
+                    }
+                    if (Input.GetMouseButtonDown(0) && canTap && !IsPointerOverInteractableUi())
+                    {
+                        Debug.Log("Clicked: " + gameObject.name);
+                        HandleUserTap(btnNumber, inSequence);
+                        fuckingStop = false;
+                    }
                 }
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            if (timer == cycleInterval)
-            {
-                statusAnimator.ResetTrigger("MissTrigger");
-                statusAnimator.ResetTrigger("AnticipateTrigger");
-                statusAnimator.ResetTrigger("HitTrigger");
-                statusAnimator.ResetTrigger("WrongTrigger");
-                statusAnimator.ResetTrigger("IdleTrigger");
-            }
+                statusAnimator.SetBool("MissTrigger", false);
+                statusAnimator.SetBool("AnticipateTrigger", false);
+                statusAnimator.SetBool("HitTrigger", false);
+                statusAnimator.SetBool("WrongTrigger", false);
+                statusAnimator.SetBool("IdleTrigger", true);
+            
             
 
             // After cycle of 25 buttons, check if sequence complete
@@ -324,10 +333,12 @@ public class SequenceGameManager : MonoBehaviour
         {
             audioSource.Stop();
             buttons[btnNumber - 1].SetGreen();
+            buttons[btnNumber - 1].SetWasSelected(true);
             pressedNumbers.Add(btnNumber);
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"You pressed the right number: {btnNumber}!";
-            statusAnimator.SetTrigger("HitTrigger");
+            statusAnimator.SetBool("IdleTrigger", false);
+            statusAnimator.SetBool("HitTrigger", true);
             gotRight = true;
         }
         else
@@ -336,7 +347,8 @@ public class SequenceGameManager : MonoBehaviour
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             isCorrect = false;
-            statusAnimator.SetTrigger("WrongTrigger");
+            statusAnimator.SetBool("IdleTrigger", false);
+            statusAnimator.SetBool("WrongTrigger", true);
             audioSource.PlayOneShot(audioMiss);
         }
     }
@@ -359,6 +371,7 @@ public class SequenceGameManager : MonoBehaviour
         {
             buttons[i].SetHighlighted(false);
             buttons[i].SetSelected(false);
+            buttons[i].SetWasSelected(false);
         }
             
 

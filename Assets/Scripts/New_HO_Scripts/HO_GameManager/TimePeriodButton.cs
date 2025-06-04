@@ -8,6 +8,8 @@ public class TimePeriodButton : MonoBehaviour
 
     public bool isPreSelected = false;
 
+    public bool wasSelected = false;
+
     private Image buttonImage;
 
     private void Awake()
@@ -43,5 +45,15 @@ public class TimePeriodButton : MonoBehaviour
     public bool GetPreSelected()
     {
         return isPreSelected;
+    }
+
+    public void SetWasSelected(bool wasselected)
+    {
+        wasSelected = wasselected;
+    }
+
+    public bool GetWasSelected()
+    {
+        return wasSelected;
     }
 }
