@@ -201,15 +201,7 @@ public class LoToolMinigame : MonoBehaviour
             currentInt++;
             textCounter.text = numberToDisplay[currentInt].ToString();
             fastenerObj[currentInt].SetActive(true);
-            newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
-            isMoving = true;
-            while (isMoving)
-            {
-                Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, newCameraPos, speed * Time.deltaTime);
-
-                isMoving = !(Camera.main.transform.position == newCameraPos);
-
-            }  
+            Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
         }
     }
 }
