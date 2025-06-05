@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DataTransferTest.unity
     guid: 4323dd1c5e2779f4aa2f608f37626060
+  - enabled: 1
+    path: Assets/Scenes/New_HO_Scenes/Stage_Select.unity
+    guid: ee3eb123556d64a46a17e8b3c9f27453
+  - enabled: 1
+    path: Assets/Scenes/New_HO_Scenes/HO_Scene.unity
+    guid: 1968bf1d2666b67449e0268a98c4eb48
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

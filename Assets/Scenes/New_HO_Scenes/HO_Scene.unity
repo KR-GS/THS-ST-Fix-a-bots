@@ -518,12 +518,8 @@ MonoBehaviour:
   formulaPanel: {fileID: 830478798}
   gameTimer: {fileID: 1920746572}
   statusAnimator: {fileID: 1253231071}
-  maxNumber: 25
-  cycleInterval: 1
-  cycleLeniency: 0.4
-  prePressedCount: 2
-  isFormulaSeen: 0
   soundEffectsManager: {fileID: 1183926327}
+  formulaInputPanel: {fileID: 830478798}
 --- !u!114 &110916365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1446,8 +1442,6 @@ MonoBehaviour:
   constUpButton: {fileID: 2027005827}
   constDownButton: {fileID: 1558378272}
   submitButton: {fileID: 1039696785}
-  lockCoefficient: 0
-  lockConstant: 0
 --- !u!1 &842840114
 GameObject:
   m_ObjectHideFlags: 0

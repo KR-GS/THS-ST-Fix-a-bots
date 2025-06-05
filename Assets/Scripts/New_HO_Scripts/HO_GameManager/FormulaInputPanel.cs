@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FormulaInputPanel : MonoBehaviour
 {
@@ -20,14 +21,23 @@ public class FormulaInputPanel : MonoBehaviour
     public Button submitButton;
 
     [Header("Lock Settings")]
-    public bool lockCoefficient = false;
-    public bool lockConstant = false;
+    private bool lockCoefficient = false;
+    private bool lockConstant = false;
 
     private int currentCoef = 0;
     private int currentConst = 0;
 
     private Sequence targetSequence;
     private GameTimer gameTimer;
+
+    public void SetLockConstant(bool constant)
+    {
+        lockConstant = constant;
+    }
+    public void SetLockCoefficient(bool coef)
+    {
+        lockCoefficient = coef;
+    }
 
     public void ShowPanel(Sequence sequence, GameTimer gameTimer1)
     {
@@ -41,11 +51,6 @@ public class FormulaInputPanel : MonoBehaviour
         UpdateFormulaText();
         feedbackText.text = "Adjust the formula and submit.";
         panelRoot.SetActive(true);
-    }
-
-    public void HidePanel()
-    {
-        panelRoot.SetActive(false);
     }
 
     private void ApplyLockSettings()
@@ -99,8 +104,17 @@ public class FormulaInputPanel : MonoBehaviour
         }
         else if (currentCoef == targetSequence.Coefficient && currentConst == targetSequence.Constant)
         {
-            gameTimer.StopTimer();
             feedbackText.text = "Both are right";
+            if (StaticData.isRandomSequence)
+            {
+                SceneManager.LoadScene("HO_Scene");
+            }
+            else
+            {
+                SceneManager.LoadScene("Stage_Select");
+                gameTimer.StopTimer();
+            }
+                
         }
     }
 }

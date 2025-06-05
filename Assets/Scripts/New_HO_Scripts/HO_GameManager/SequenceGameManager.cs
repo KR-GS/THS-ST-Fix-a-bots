@@ -25,16 +25,20 @@ public class SequenceGameManager : MonoBehaviour
     public Animator statusAnimator;
 
     [Header("Settings")]
-    public int maxNumber = 25;
-    public float cycleInterval = 0.5f;
-    public float cycleLeniency = 0.4f;
-    public int prePressedCount = 0;
-    public bool isFormulaSeen = true;
+    private int maxNumber = 25;
+    private float cycleInterval = 1;
+    private float cycleLeniency = 0.4f;
+    private int prePressedCount = 0;
+    private bool isFormulaSeen = true;
+    private bool isRandomSequence = true;
 
     [Header("Audio Files")]
     public SoundEffectsManager soundEffectsManager;
 
-    private Sequence currentSequence;    
+    private Sequence currentSequence;
+
+    public FormulaInputPanel formulaInputPanel;
+
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
     private int currentCycleIndex = 0;
     private List<int> pressedNumbers = new List<int>();
@@ -72,9 +76,27 @@ public class SequenceGameManager : MonoBehaviour
 
         return false;
     }
+
+    public void SetIsRandomSequence(bool rand)
+    {
+        isRandomSequence = rand;
+    }
+
+    public void GetData()
+    {
+        maxNumber = StaticData.maxNumber;
+        cycleInterval = StaticData.cycleInterval;
+        cycleLeniency = StaticData.cycleLeniency;
+        prePressedCount = StaticData.prePressedCount;
+        isFormulaSeen = StaticData.isFormulaSeen;
+        isRandomSequence = StaticData.isRandomSequence;
+        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient);
+        formulaInputPanel.SetLockConstant(StaticData.lockConstant);
+    }
   
     void Start()
     {
+        GetData();
         formulaText.gameObject.SetActive(isFormulaSeen);
         formulaPanel.gameObject.SetActive(false);
         nextStageButton.gameObject.SetActive(false);
@@ -116,7 +138,14 @@ public class SequenceGameManager : MonoBehaviour
     void StartNewSequence()
     {
         canTap = true;
-        currentSequence = new Sequence(maxNumber);
+        if (isRandomSequence)
+        {
+            currentSequence = new Sequence(maxNumber);
+        }
+        else
+        {
+            currentSequence = new Sequence(maxNumber, StaticData.coefficient, StaticData.constant);
+        }
         formulaText.text = $"Rule: {currentSequence.FormulaString}";
 
         pressedNumbers.Clear();
@@ -149,6 +178,7 @@ public class SequenceGameManager : MonoBehaviour
         {
             buttons[i].SetSelected(false);
             buttons[i].SetHighlighted(false);
+            buttons[i].SetWasSelected(false);
         }
 
         // Pre-press first n numbers in the sequence, mark them as selected
