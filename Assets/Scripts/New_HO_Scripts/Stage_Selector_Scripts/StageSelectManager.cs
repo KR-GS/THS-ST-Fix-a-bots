@@ -9,7 +9,7 @@ public class StageSelectManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        stage1.onClick.AddListener(() => LoadStage(25, 1f, 0.4f, 3, true, true, true, 2, 2, false));
+        stage1.onClick.AddListener(() => LoadStage(25, 1f, 0.6f, 3, true, true, true, 2, 2, false));
         stage2.onClick.AddListener(() => LoadStage(25, 1f, 0.6f, 3, false, false, true, 2, -3, false));
         stage3.onClick.AddListener(() => LoadStage(25, 1f, 0.6f, 3, false, false, false, 3, -1, false));
         stage4.onClick.AddListener(() => LoadStage(25, 1f, 0.6f, 0, true, true, true, 3, 1, false));
