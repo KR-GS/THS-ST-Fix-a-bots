@@ -11,6 +11,11 @@ public class PatternGameManager : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    void Awake()
+    {
+        generatedDifference = Random.Range(1, 5);
+    }
+
     public int ReturnDifference()
     {
         return generatedDifference;
@@ -28,10 +33,5 @@ public class PatternGameManager : MonoBehaviour
     {
         GeneratePatternArray(intInput);
         return numberPatternList;
-    }
-
-    public void GenerateValueForPattern()
-    {
-        generatedDifference = Random.Range(1, 5);
     }
 }

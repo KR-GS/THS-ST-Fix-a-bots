@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class HitCountManager : MonoBehaviour
 {
+    /*
     [SerializeField]
     private GameObject hitSprite;
+    */
 
     [SerializeField]
     private int hitCount;
@@ -31,14 +33,14 @@ public class HitCountManager : MonoBehaviour
 
     private GameObject newObj;
 
-    public void increaseChildCount(GameObject hitCounterObject)
+    public void increaseChildCount(GameObject hitCounterObject, GameObject hitSprite)
     {
         newObj = Instantiate(hitSprite, hitCounterObject.transform);
         newObj.transform.position = hitCounterObject.transform.position;
-        TapIconLayout(hitCounterObject);
+        TapIconLayout(hitCounterObject, hitSprite);
     }
 
-    public void presetCounter(int value, GameObject presetObject)
+    public void presetCounter(int value, GameObject presetObject, GameObject hitSprite)
     {
         for(int i = 0; i<value; i++)
         {
@@ -46,10 +48,10 @@ public class HitCountManager : MonoBehaviour
             newObj.transform.position = presetObject.transform.position;
         }
 
-        TapIconLayout(presetObject);
+        TapIconLayout(presetObject, hitSprite);
     }
 
-    public void TapIconLayout(GameObject parentObjectObject)
+    public void TapIconLayout(GameObject parentObjectObject, GameObject hitSprite)
     {
         int childCounter = 0;
 

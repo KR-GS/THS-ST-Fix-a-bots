@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ToolTilingManager : MonoBehaviour
@@ -9,10 +10,12 @@ public class ToolTilingManager : MonoBehaviour
     private Vector2 tileSize;
 
     private GameObject[] tiles;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    void Awake()
     {
         tileObj = FindFirstObjectByType<PartTile>();
+
+        Debug.Log(tileObj.gameObject);
 
         tilePosition = tileObj.transform.position;
 
@@ -22,6 +25,8 @@ public class ToolTilingManager : MonoBehaviour
     public void SpawnPartTiled(int numberOfTiles)
     {
         tiles = new GameObject[numberOfTiles];
+
+        Debug.Log("Hello World");
 
         for (int i = 0; i < numberOfTiles; i++)
         {
