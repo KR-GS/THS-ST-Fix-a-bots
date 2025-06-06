@@ -16,6 +16,8 @@ public class SequenceGameManager : MonoBehaviour
     public TextMeshProUGUI feedbackText;
     public TextMeshProUGUI formulaText;
     public TextMeshProUGUI timerText;
+    public TextMeshProUGUI livesText;
+    public TextMeshProUGUI restartText;
     public Button nextStageButton;
     public Button restartStageButton;
     public FormulaInputPanel formulaPanel;
@@ -25,16 +27,20 @@ public class SequenceGameManager : MonoBehaviour
     public Animator statusAnimator;
 
     [Header("Settings")]
-    public int maxNumber = 25;
-    public float cycleInterval = 0.5f;
-    public float cycleLeniency = 0.4f;
-    public int prePressedCount = 0;
-    public bool isFormulaSeen = true;
+    private int maxNumber = 25;
+    private float cycleInterval = 1;
+    private float cycleLeniency = 0.4f;
+    private int prePressedCount = 0;
+    private bool isFormulaSeen = true;
+    private bool isRandomSequence = true;
 
     [Header("Audio Files")]
     public SoundEffectsManager soundEffectsManager;
 
-    private Sequence currentSequence;    
+    private Sequence currentSequence;
+
+    public FormulaInputPanel formulaInputPanel;
+
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
     private int currentCycleIndex = 0;
     private List<int> pressedNumbers = new List<int>();
@@ -50,6 +56,10 @@ public class SequenceGameManager : MonoBehaviour
     private bool gotRight = false;
 
     private float timer;
+
+    private int numLives = 1;
+
+    private int numRestarts = 0;
 
     // Basically checks if the pointer/mouse is above an interactable UI
     private bool IsPointerOverInteractableUi()
@@ -72,26 +82,56 @@ public class SequenceGameManager : MonoBehaviour
 
         return false;
     }
+
+    public void SetIsRandomSequence(bool rand)
+    {
+        isRandomSequence = rand;
+    }
+
+    public void GetData()
+    {
+        maxNumber = StaticData.maxNumber;
+        cycleInterval = StaticData.cycleInterval;
+        cycleLeniency = StaticData.cycleLeniency;
+        prePressedCount = StaticData.prePressedCount;
+        isFormulaSeen = StaticData.isFormulaSeen;
+        isRandomSequence = StaticData.isRandomSequence;
+        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient);
+        formulaInputPanel.SetLockConstant(StaticData.lockConstant);
+    }
   
     void Start()
     {
+        GetData();
         formulaText.gameObject.SetActive(isFormulaSeen);
         formulaPanel.gameObject.SetActive(false);
         nextStageButton.gameObject.SetActive(false);
         //restartStageButton.gameObject.SetActive(false);
+        restartStageButton.enabled = false;
+        restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence(); Debug.Log("NumRestarts" + numRestarts); });
         feedbackText.text = "Please tap screen to start game";
-
         SetupButtons();
     }
 
     void Update()
     {
-        
-         if (Input.GetMouseButtonDown(0) && !IsPointerOverInteractableUi() && isStart)
+
+        if (Input.GetMouseButtonDown(0) && !IsPointerOverInteractableUi() && isStart)
         {
             isStart = false;
             StartNewSequence();
             StartCoroutine(DelayedStartCycle());
+        }
+        livesText.text = $"{numLives}";
+        restartText.text = $"{numRestarts}";
+        /*if (isCycling)
+        {
+            restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence();});
+        }*/
+        if (numLives == 0)
+        {
+            isCycling = false;
+            feedbackText.text = "You lost all your lives!";
         }
     }
 
@@ -116,7 +156,14 @@ public class SequenceGameManager : MonoBehaviour
     void StartNewSequence()
     {
         canTap = true;
-        currentSequence = new Sequence(maxNumber);
+        if (isRandomSequence)
+        {
+            currentSequence = new Sequence(maxNumber);
+        }
+        else
+        {
+            currentSequence = new Sequence(maxNumber, StaticData.coefficient, StaticData.constant);
+        }
         formulaText.text = $"Rule: {currentSequence.FormulaString}";
 
         pressedNumbers.Clear();
@@ -149,6 +196,7 @@ public class SequenceGameManager : MonoBehaviour
         {
             buttons[i].SetSelected(false);
             buttons[i].SetHighlighted(false);
+            buttons[i].SetWasSelected(false);
         }
 
         // Pre-press first n numbers in the sequence, mark them as selected
@@ -181,6 +229,7 @@ public class SequenceGameManager : MonoBehaviour
         StartCoroutine(CycleButtons());
         yield return new WaitForSeconds(1f);
         gameTimer.StartTimer();
+        restartStageButton.enabled = true;
     }
 
     // Main loop for the cycling
@@ -193,7 +242,7 @@ public class SequenceGameManager : MonoBehaviour
                 yield return null;
                 continue;
             }
-            restartStageButton.onClick.AddListener(() => { isCycling = false; RestartStage(); });
+
 
             if (currentCycleIndex == 0)
             {
@@ -241,6 +290,7 @@ public class SequenceGameManager : MonoBehaviour
                             feedbackText.text = "You missed!";
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("MissTrigger", true);
+                            numLives -= 1;
                             soundEffectsManager.playMissSound();
                             fuckingStop = false;
                         }
@@ -256,13 +306,13 @@ public class SequenceGameManager : MonoBehaviour
                 yield return null;
             }
 
-                statusAnimator.SetBool("MissTrigger", false);
-                statusAnimator.SetBool("AnticipateTrigger", false);
-                statusAnimator.SetBool("HitTrigger", false);
-                statusAnimator.SetBool("WrongTrigger", false);
-                statusAnimator.SetBool("IdleTrigger", true);
-            
-            
+            statusAnimator.SetBool("MissTrigger", false);
+            statusAnimator.SetBool("AnticipateTrigger", false);
+            statusAnimator.SetBool("HitTrigger", false);
+            statusAnimator.SetBool("WrongTrigger", false);
+            statusAnimator.SetBool("IdleTrigger", true);
+
+
 
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
@@ -272,10 +322,8 @@ public class SequenceGameManager : MonoBehaviour
                     feedbackText.text = "Great job! Sequence completed!";
                     nextStageButton.gameObject.SetActive(true);
                     restartStageButton.gameObject.SetActive(true);
-                    canTap = false;
                     nextStageButton.onClick.AddListener(() => OnNextStageButtonClicked());
-
-                    //isCycling = false;
+                    canTap = false;
                 }
                 else
                 {
@@ -291,10 +339,8 @@ public class SequenceGameManager : MonoBehaviour
 
     public void RestartStage()
     {
-        //SetupButtons();
         RestartSequence();
-        //nextStageButton.gameObject.SetActive(true);
-        restartStageButton.gameObject.SetActive(true);
+        //restartStageButton.gameObject.SetActive(true);
         isCycling = true;
         //StartCoroutine(DelayedStartCycle());
     }
@@ -348,6 +394,7 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
             statusAnimator.SetBool("WrongTrigger", true);
+            numLives -= 1;
             isCorrect = false;
             soundEffectsManager.playMissSound();
         }
@@ -373,7 +420,6 @@ public class SequenceGameManager : MonoBehaviour
             buttons[i].SetSelected(false);
             buttons[i].SetWasSelected(false);
         }
-            
 
         pressedNumbers.Clear();
 
@@ -385,7 +431,10 @@ public class SequenceGameManager : MonoBehaviour
             buttons[num - 1].SetSelected(true);
         }
 
+        feedbackText.text = "Restarting Stage...";
+
         currentCycleIndex = -1;
+        numRestarts += 1;
         isCorrect = true;
         isCycling = true;
     }

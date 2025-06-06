@@ -9,10 +9,18 @@ public class Sequence : MonoBehaviour
     public string FormulaString => $"{Coefficient}n{(Constant >= 0 ? "+" : "")}{Constant}";
     public List<int> Numbers { get; private set; }
 
-    public Sequence(int maxNumber = 25)
+    public Sequence(int maxNumber)
     {
         MaxNumber = maxNumber;
         GenerateRandomFormula();
+        GenerateSequence();
+    }
+
+    public Sequence(int maxNumber, int coefficient, int constant)
+    {
+        MaxNumber = maxNumber;
+        Coefficient = coefficient;
+        Constant = constant;
         GenerateSequence();
     }
 
@@ -33,12 +41,4 @@ public class Sequence : MonoBehaviour
                 Numbers.Add(val);
         }
     }
-
-    public bool Matches(Sequence other)
-    {
-        return other != null &&
-               this.Coefficient == other.Coefficient &&
-               this.Constant == other.Constant;
-    }
-
 }
