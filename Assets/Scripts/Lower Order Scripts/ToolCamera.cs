@@ -1,0 +1,44 @@
+using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+
+public class ToolCamera : MonoBehaviour
+{
+    [SerializeField]
+    private ToolTilingManager tilingManager;
+
+    [SerializeField]
+    private Canvas zoomInCanvas;
+
+    [SerializeField]
+    private Canvas toolCanvas;
+
+    [SerializeField]
+    private Canvas overViewCanvas;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Vector3 originalPosition;
+
+    private float originalSize;
+
+    public void OverheadCameraView()
+    {
+        originalPosition = transform.position;
+        originalSize = GetComponent<Camera>().orthographicSize;
+
+        transform.position = new Vector3(tilingManager.TileMidPoint(), (tilingManager.TileMidPoint() / 4), transform.position.z);
+        GetComponent<Camera>().orthographicSize = tilingManager.TileMidPoint();
+        zoomInCanvas.gameObject.SetActive(false);
+        toolCanvas.gameObject.SetActive(false);
+        overViewCanvas.gameObject.SetActive(true);
+    }
+
+    public void FocusedCameraView(float partPosition)
+    {
+        transform.position = new Vector3(partPosition, originalPosition.y, originalPosition.z);
+        GetComponent<Camera>().orthographicSize = originalSize;
+
+        zoomInCanvas.gameObject.SetActive(true);
+        toolCanvas.gameObject.SetActive(true);
+        overViewCanvas.gameObject.SetActive(false);
+    }
+}

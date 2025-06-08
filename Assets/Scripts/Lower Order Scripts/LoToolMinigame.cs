@@ -55,6 +55,10 @@ public class LoToolMinigame : MonoBehaviour
 
     private Fastener[] fastenerList = new Fastener[4];
 
+    private Vector3 originalPosition;
+
+    private bool isFocused = true;
+
     void Awake()
     {
         fastenerList = FindObjectsByType<Fastener>(FindObjectsSortMode.None);
@@ -212,6 +216,8 @@ public class LoToolMinigame : MonoBehaviour
             Instantiate(fastenerList[0].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
             fastenerValues[i] = 1;
         }
+
+        originalPosition = Camera.main.transform.position;
     }
 
     // Update is called once per frame
@@ -225,17 +231,20 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
 
-        textCounter.text = numberToDisplay[currentInt].ToString();
+        if (isFocused)
+        {
+            textCounter.text = numberToDisplay[currentInt].ToString();
 
-        if (numberToDisplay[currentInt] > 24)
-        {
-            fastenerObj[currentInt].SetActive(false);
-            textCounter.gameObject.SetActive(true);
-        }
-        else
-        {
-            textCounter.gameObject.SetActive(false);
-            fastenerObj[currentInt].SetActive(true);
+            if (numberToDisplay[currentInt] > 24)
+            {
+                fastenerObj[currentInt].SetActive(false);
+                textCounter.gameObject.SetActive(true);
+            }
+            else
+            {
+                textCounter.gameObject.SetActive(false);
+                fastenerObj[currentInt].SetActive(true);
+            }
         }
     }
 
@@ -256,6 +265,23 @@ public class LoToolMinigame : MonoBehaviour
                     numberToDisplay[currentInt]++;
                     textCounter.text = numberToDisplay[currentInt].ToString();
                 }
+            }
+            else if(rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
+            {
+                Camera.main.GetComponent<ToolCamera>().FocusedCameraView(roboPart.transform.position.x);
+
+                for (int i=0; i< tiledParts.Length; i++)
+                {
+                    tiledParts[i].layer = LayerMask.NameToLayer("Ignore Raycast");
+                    if(roboPart.gameObject == tiledParts[i])
+                    {
+                        currentInt = i;
+                    }
+                }
+
+                fastenerObj[currentInt].SetActive(true);
+
+                isFocused = true;
             }
         }
     }
@@ -361,5 +387,19 @@ public class LoToolMinigame : MonoBehaviour
             }
 
         }
+    }
+
+    public void OverheadView()
+    {
+        fastenerObj[currentInt].SetActive(false);
+        currentInt = -1;
+        originalPosition = Camera.main.transform.position;
+
+        foreach (GameObject part in tiledParts)
+        {
+            part.layer = LayerMask.NameToLayer("Default");
+        }
+
+        isFocused = false;
     }
 }

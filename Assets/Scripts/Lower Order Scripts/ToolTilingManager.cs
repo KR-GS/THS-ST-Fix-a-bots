@@ -40,7 +40,7 @@ public class ToolTilingManager : MonoBehaviour
     {
         float midPoint;
 
-        midPoint = tiles[0].transform.position.x + tiles[tiles.Length - 1].transform.position.x;
+        midPoint = (tiles[0].transform.position.x + tiles[tiles.Length - 1].transform.position.x) / 2;
 
         return midPoint;
     }
