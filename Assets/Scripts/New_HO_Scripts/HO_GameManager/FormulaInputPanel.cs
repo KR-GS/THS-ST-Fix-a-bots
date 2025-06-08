@@ -6,29 +6,19 @@ using UnityEngine.SceneManagement;
 public class FormulaInputPanel : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject panelRoot;
-    public TMP_Text coefficientText;
-    public TMP_Text constantText;
-    public TMP_Text feedbackText;
+    public TMP_Text coefficientText, constantText, feedbackText;
     public TextMeshProUGUI signText;
 
-    public Button coefUpButton;
-    public Button coefDownButton;
-
-    public Button constUpButton;
-    public Button constDownButton;
-
-    public Button submitButton;
+    public Button coefUpButton, coefDownButton, constUpButton, constDownButton, submitButton;
 
     [Header("Lock Settings")]
-    private bool lockCoefficient = false;
-    private bool lockConstant = false;
+    private bool lockCoefficient = false, lockConstant = false;
 
-    private int currentCoef = 0;
-    private int currentConst = 0;
+    private int currentCoef = 0, currentConst = 0;
 
     private Sequence targetSequence;
     private GameTimer gameTimer;
+    private HOStageData stageData;
 
     public void SetLockConstant(bool constant)
     {
@@ -39,8 +29,38 @@ public class FormulaInputPanel : MonoBehaviour
         lockCoefficient = coef;
     }
 
-    public void ShowPanel(Sequence sequence, GameTimer gameTimer1)
+    public void StoreStageData()
     {
+        //if haven't done the stage before, just store everything
+        if (StaticData.numStageDone == stageData.GetStageNum())
+        {
+            StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
+            StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
+            StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
+            StaticData.numStageDone = stageData.GetStageNum() + 1;
+        }
+        //else, check if it is better before storing
+        else
+        {
+            if (StaticData.stageTime[stageData.GetStageNum()] > stageData.GetElapsedTime())
+            {
+                StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
+            }
+            if (StaticData.stageLives[stageData.GetStageNum()] < stageData.GetNumLives())
+            {
+                StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
+            }
+            if (StaticData.stageRestarts[stageData.GetStageNum()] > stageData.GetNumRestarts())
+            {
+                StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
+            }
+        }
+        
+    }
+
+    public void ShowPanel(Sequence sequence, GameTimer gameTimer1, HOStageData sd)
+    {
+        stageData = sd;
         gameTimer = gameTimer1;
         targetSequence = sequence;
 
@@ -50,7 +70,7 @@ public class FormulaInputPanel : MonoBehaviour
         ApplyLockSettings();
         UpdateFormulaText();
         feedbackText.text = "Adjust the formula and submit.";
-        panelRoot.SetActive(true);
+
     }
 
     private void ApplyLockSettings()
@@ -111,8 +131,10 @@ public class FormulaInputPanel : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene("Stage_Select");
                 gameTimer.StopTimer();
+                stageData.SetElapsedTime(gameTimer.GetElapsedTime());
+                StoreStageData();
+                SceneManager.LoadScene("Stage_Select");
             }
                 
         }
