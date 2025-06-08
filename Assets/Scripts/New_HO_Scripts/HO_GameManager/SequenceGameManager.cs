@@ -4,22 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SequenceGameManager : MonoBehaviour
 {
     [Header("Raycasts")]
     public GraphicRaycaster uiRaycaster;
     public EventSystem eventSystem;
+
     [Header("UI & Prefabs")]
     public GameObject timePeriodButtonPrefab;
     public Transform buttonsParent;   
-    public TextMeshProUGUI feedbackText;
-    public TextMeshProUGUI formulaText;
-    public TextMeshProUGUI timerText;
-    public TextMeshProUGUI livesText;
-    public TextMeshProUGUI restartText;
-    public Button nextStageButton;
-    public Button restartStageButton;
+    public TextMeshProUGUI feedbackText, formulaText, timerText, livesText, restartText;
+    public Button nextStageButton, restartStageButton;
     public FormulaInputPanel formulaPanel;
     public GameTimer gameTimer;
 
@@ -28,38 +25,21 @@ public class SequenceGameManager : MonoBehaviour
 
     [Header("Settings")]
     private int maxNumber = 25;
-    private float cycleInterval = 1;
-    private float cycleLeniency = 0.4f;
-    private int prePressedCount = 0;
-    private bool isFormulaSeen = true;
-    private bool isRandomSequence = true;
+    private float cycleInterval = 1, cycleLeniency = 0.4f;
+    private int prePressedCount = 0, stageNum = 0;
+    private bool isFormulaSeen = true, isRandomSequence = true;
 
     [Header("Audio Files")]
     public SoundEffectsManager soundEffectsManager;
-
+    private HOStageData stageData;
     private Sequence currentSequence;
-
     public FormulaInputPanel formulaInputPanel;
-
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
     private int currentCycleIndex = 0;
     private List<int> pressedNumbers = new List<int>();
-
-    private bool isCycling = false;
-
-    private bool isCorrect = true;
-
-    private bool canTap = true;
-
-    private bool isStart = true;
-
-    private bool gotRight = false;
-
+    private bool isCycling = false, isCorrect = true, canTap = true, isStart = true, gotRight = false;
     private float timer;
-
-    private int numLives = 1;
-
-    private int numRestarts = 0;
+    //private int numLives = 3, numRestarts = 0;
 
     // Basically checks if the pointer/mouse is above an interactable UI
     private bool IsPointerOverInteractableUi()
@@ -83,12 +63,7 @@ public class SequenceGameManager : MonoBehaviour
         return false;
     }
 
-    public void SetIsRandomSequence(bool rand)
-    {
-        isRandomSequence = rand;
-    }
-
-    public void GetData()
+    void GetData()
     {
         maxNumber = StaticData.maxNumber;
         cycleInterval = StaticData.cycleInterval;
@@ -96,20 +71,37 @@ public class SequenceGameManager : MonoBehaviour
         prePressedCount = StaticData.prePressedCount;
         isFormulaSeen = StaticData.isFormulaSeen;
         isRandomSequence = StaticData.isRandomSequence;
+        stageNum = StaticData.stageNum;
         formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient);
         formulaInputPanel.SetLockConstant(StaticData.lockConstant);
+    }
+
+    void InitilizeStageData()
+    {
+        stageData = new HOStageData();
+        stageData.SetStageNum(StaticData.stageNum);
+        stageData.SetNumRestarts(0);
+        stageData.SetElapsedTime(0f);
+        stageData.SetNumLives(3);
+    }
+
+    void InitializeStageUi()
+    {
+        formulaText.gameObject.SetActive(isFormulaSeen);
+        formulaPanel.gameObject.SetActive(false);
+        nextStageButton.gameObject.SetActive(false);
+        restartStageButton.enabled = false;
+        restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence();});
+        feedbackText.text = "Please tap screen to start game";
+        livesText.text = $"{stageData.GetNumLives()}";
+        restartText.text = $"{stageData.GetNumRestarts()}";
     }
   
     void Start()
     {
         GetData();
-        formulaText.gameObject.SetActive(isFormulaSeen);
-        formulaPanel.gameObject.SetActive(false);
-        nextStageButton.gameObject.SetActive(false);
-        //restartStageButton.gameObject.SetActive(false);
-        restartStageButton.enabled = false;
-        restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence(); Debug.Log("NumRestarts" + numRestarts); });
-        feedbackText.text = "Please tap screen to start game";
+        InitilizeStageData();
+        InitializeStageUi();
         SetupButtons();
     }
 
@@ -122,17 +114,20 @@ public class SequenceGameManager : MonoBehaviour
             StartNewSequence();
             StartCoroutine(DelayedStartCycle());
         }
-        livesText.text = $"{numLives}";
-        restartText.text = $"{numRestarts}";
-        /*if (isCycling)
-        {
-            restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence();});
-        }*/
-        if (numLives == 0)
+        //livesText.text = $"{numLives}";
+        //restartText.text = $"{numRestarts}";
+        if (stageData.GetNumLives() == 0)
         {
             isCycling = false;
             feedbackText.text = "You lost all your lives!";
+            StartCoroutine(LostStage());
         }
+    }
+
+    IEnumerator LostStage()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("HO_Scene");
     }
 
     // Creates buttons, destroys previous buttons as well
@@ -185,36 +180,6 @@ public class SequenceGameManager : MonoBehaviour
         //nextStageButton.gameObject.SetActive(false);
     }
 
-    // Clears all things the selections in the time periods and reselects those that need to be prepressed
-    void RestartSequence()
-    {
-        canTap = true;
-        pressedNumbers.Clear();
-
-        // Clear all buttons
-        for (int i = 0; i < maxNumber; i++)
-        {
-            buttons[i].SetSelected(false);
-            buttons[i].SetHighlighted(false);
-            buttons[i].SetWasSelected(false);
-        }
-
-        // Pre-press first n numbers in the sequence, mark them as selected
-        for (int i = 0; i < Mathf.Clamp(prePressedCount, 0, currentSequence.Numbers.Count); i++)
-        {
-            int num = currentSequence.Numbers[i];
-            pressedNumbers.Add(num);
-            buttons[num - 1].SetGreen();
-            buttons[num - 1].SetSelected(true);
-        }
-
-        currentCycleIndex = -1;
-
-        isCycling = true;
-
-        feedbackText.text = "Restarting Sequence";
-    }
-
     // Just to make time for the cycling
     IEnumerator DelayedStartCycle()
     {
@@ -243,7 +208,7 @@ public class SequenceGameManager : MonoBehaviour
                 continue;
             }
 
-
+            // Makes sure player has time to start
             if (currentCycleIndex == 0)
             {
                 yield return new WaitForSeconds(1f);
@@ -278,6 +243,7 @@ public class SequenceGameManager : MonoBehaviour
                     {
                         statusAnimator.SetBool("IdleTrigger", false);
                         statusAnimator.SetBool("AnticipateTrigger", true);
+                        // If the Sequence was pre pressed, automatically plays hit animation
                         if ((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.10f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
@@ -285,16 +251,19 @@ public class SequenceGameManager : MonoBehaviour
                             soundEffectsManager.playHitSound();
                             fuckingStop = false;
                         }
+                        // if the player misses, plays miss animation
                         if (timer > cycleLeniency && !gotRight)
                         {
                             feedbackText.text = "You missed!";
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("MissTrigger", true);
-                            numLives -= 1;
+                            stageData.SetNumLives(stageData.GetNumLives() - 1);
+                            livesText.text = $"{stageData.GetNumLives()}";
                             soundEffectsManager.playMissSound();
                             fuckingStop = false;
                         }
                     }
+                    // Listens to player tapping the screen
                     if (Input.GetMouseButtonDown(0) && canTap && !IsPointerOverInteractableUi())
                     {
                         Debug.Log("Clicked: " + gameObject.name);
@@ -335,14 +304,6 @@ public class SequenceGameManager : MonoBehaviour
 
             currentCycleIndex = (currentCycleIndex + 1) % maxNumber;
         }
-    }
-
-    public void RestartStage()
-    {
-        RestartSequence();
-        //restartStageButton.gameObject.SetActive(true);
-        isCycling = true;
-        //StartCoroutine(DelayedStartCycle());
     }
 
     void HighlightButton(int index)
@@ -394,7 +355,8 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
             statusAnimator.SetBool("WrongTrigger", true);
-            numLives -= 1;
+            stageData.SetNumLives(stageData.GetNumLives() - 1);
+            livesText.text = $"{stageData.GetNumLives()}";
             isCorrect = false;
             soundEffectsManager.playMissSound();
         }
@@ -413,14 +375,12 @@ public class SequenceGameManager : MonoBehaviour
 
     void ResetSequence()
     {
-
         for (int i = 0; i < buttons.Count; i++)
         {
             buttons[i].SetHighlighted(false);
             buttons[i].SetSelected(false);
             buttons[i].SetWasSelected(false);
         }
-
         pressedNumbers.Clear();
 
         for (int i = 0; i < Mathf.Clamp(prePressedCount, 0, currentSequence.Numbers.Count); i++)
@@ -434,7 +394,8 @@ public class SequenceGameManager : MonoBehaviour
         feedbackText.text = "Restarting Stage...";
 
         currentCycleIndex = -1;
-        numRestarts += 1;
+        stageData.SetNumRestarts(stageData.GetNumRestarts() + 1);
+        restartText.text = $"{stageData.GetNumRestarts()}";
         isCorrect = true;
         isCycling = true;
     }
@@ -456,6 +417,6 @@ public class SequenceGameManager : MonoBehaviour
 
         // Show formula panel with current sequence
         formulaPanel.gameObject.SetActive(true);
-        formulaPanel.ShowPanel(currentSequence, gameTimer);
+        formulaPanel.ShowPanel(currentSequence, gameTimer, stageData);
     }
 }

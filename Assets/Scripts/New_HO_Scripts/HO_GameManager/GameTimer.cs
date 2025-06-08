@@ -21,7 +21,7 @@ public class GameTimer : MonoBehaviour
         isRunning = false;
     }
 
-    public float getElapsedTime()
+    public float GetElapsedTime()
     {
         return elapsedTime;
     }
