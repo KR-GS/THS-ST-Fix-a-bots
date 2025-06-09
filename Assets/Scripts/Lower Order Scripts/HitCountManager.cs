@@ -21,14 +21,14 @@ public class HitCountManager : MonoBehaviour
 
     private GameObject newObj;
 
-    public void increaseChildCount(GameObject hitCounterObject, GameObject hitSprite)
+    public void IncreaseChildCount(GameObject hitCounterObject, GameObject hitSprite)
     {
         newObj = Instantiate(hitSprite, hitCounterObject.transform);
         newObj.transform.position = hitCounterObject.transform.position;
         TapIconLayout(hitCounterObject, hitSprite);
     }
 
-    public void presetCounter(int value, GameObject presetObject, GameObject hitSprite)
+    public void PresetCounter(int value, GameObject presetObject, GameObject hitSprite)
     {
         for(int i = 0; i<value; i++)
         {

@@ -216,7 +216,7 @@ public class LoToolMinigame : MonoBehaviour
             Debug.Log(i+ " value: " + numberToDisplay[i]);
             if (numberToDisplay[i] > 0)
             {
-                hitCountManager.presetCounter(numberToDisplay[i], fastenerObj[i], fastenerList[0].GetHitIcon());
+                hitCountManager.PresetCounter(numberToDisplay[i], fastenerObj[i], fastenerList[0].GetHitIcon());
             }
 
             if (i != currentInt)
@@ -268,7 +268,7 @@ public class LoToolMinigame : MonoBehaviour
 
         if (Vector3.Distance(Camera.main.transform.position, newCameraPos)<0.001f && isMoving)
         {
-            //fastenerObj[currentInt].SetActive(true);
+            fastenerObj[currentInt].SetActive(true);
             isMoving = false;
         }
     }
@@ -283,7 +283,7 @@ public class LoToolMinigame : MonoBehaviour
                 if (numberToDisplay[currentInt]<24)
                 {
                     numberToDisplay[currentInt]++;
-                    hitCountManager.increaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+                    hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
                 }
                 else
                 {
@@ -345,7 +345,7 @@ public class LoToolMinigame : MonoBehaviour
             fastenerObj[currentInt].SetActive(false);
             currentInt--;
             textCounter.text = numberToDisplay[currentInt].ToString();
-            fastenerObj[currentInt].SetActive(true);
+            //fastenerObj[currentInt].SetActive(true);
             //Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
             newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
@@ -368,7 +368,7 @@ public class LoToolMinigame : MonoBehaviour
             fastenerObj[currentInt].SetActive(false);
             currentInt++;
             textCounter.text = numberToDisplay[currentInt].ToString();
-            fastenerObj[currentInt].SetActive(true);
+            //fastenerObj[currentInt].SetActive(true);
             //Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
             newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
@@ -433,15 +433,22 @@ public class LoToolMinigame : MonoBehaviour
 
     public void UndoHitCounts()
     {
-        Vector3 position = fastenerObj[currentInt].transform.localPosition;
+
         numberToDisplay[currentInt] = originalHitValues[currentInt];
 
         Debug.Log("Undo Value: " + originalHitValues[currentInt]);
 
+        StartCoroutine(ResetHitCoroutine());
+    }
+
+    private IEnumerator ResetHitCoroutine()
+    {
         foreach (Transform child in fastenerObj[currentInt].transform)
         {
             GameObject.Destroy(child.gameObject);
         }
+
+        yield return null;
 
         Debug.Log("Current Child Count before reset: " + fastenerObj[currentInt].transform.childCount);
 
@@ -449,7 +456,7 @@ public class LoToolMinigame : MonoBehaviour
 
         if (numberToDisplay[currentInt] < 24)
         {
-            hitCountManager.presetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+            hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[0].GetHitIcon());
         }
         else
         {
