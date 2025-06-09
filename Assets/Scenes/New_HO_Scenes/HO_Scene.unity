@@ -1570,7 +1570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 560930833d738d740b74d96f748f4d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelRoot: {fileID: 830478796}
   coefficientText: {fileID: 892717997}
   constantText: {fileID: 1236816933}
   feedbackText: {fileID: 1655680223}
@@ -2191,8 +2190,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 400}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 12.218506, y: 400}
+  m_SizeDelta: {x: 124.437, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1253231071
 Animator:
@@ -2236,7 +2235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1554959072, guid: 7c011a8d99463554c90d7c4687578906, type: 3}
+  m_Sprite: {fileID: 1425870729, guid: 1e47e28c679cea54c8f6a0d5356bf993, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
