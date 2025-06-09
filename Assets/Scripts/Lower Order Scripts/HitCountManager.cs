@@ -19,18 +19,6 @@ public class HitCountManager : MonoBehaviour
     [SerializeField]
     private int colValue;
 
-    private float prefabRight;
-
-    private float prefabDown;
-
-    private float furthestPoint;
-
-    private float distance_LR;
-
-    private float distance_UD;
-
-    private float distance_lastRow;
-
     private GameObject newObj;
 
     public void increaseChildCount(GameObject hitCounterObject, GameObject hitSprite)
@@ -45,7 +33,7 @@ public class HitCountManager : MonoBehaviour
         for(int i = 0; i<value; i++)
         {
             newObj = Instantiate(hitSprite, presetObject.transform);
-            newObj.transform.position = presetObject.transform.position;
+            newObj.transform.position = presetObject.transform.localPosition;
         }
 
         TapIconLayout(presetObject, hitSprite);
@@ -59,13 +47,17 @@ public class HitCountManager : MonoBehaviour
 
         int objChildCount = parentObjectObject.transform.childCount;
 
+        Debug.Log("Childcount for counter: " + objChildCount);
+
         float furthestPoint_left;
-
         float furthestPoint_up;
+        float prefabRight = hitSprite.GetComponent<SpriteRenderer>().bounds.size.x + gapValue;
+        float prefabDown = hitSprite.GetComponent<SpriteRenderer>().bounds.size.y + gapValue;
 
-        prefabRight = hitSprite.GetComponent<SpriteRenderer>().bounds.size.x + gapValue;
-
-        prefabDown = hitSprite.GetComponent<SpriteRenderer>().bounds.size.y + gapValue;
+        float distance_LR;
+        float distance_UD;
+        float distance_lastRow = 0;
+        float furthestPoint;
 
         rowCount = objChildCount / colValue;
 

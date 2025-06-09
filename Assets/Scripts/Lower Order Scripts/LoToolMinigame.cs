@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -29,6 +30,9 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private Transform toolHolder;
 
+    [SerializeField]
+    private float speed;
+
     private List<int> nextAnswers = new List<int>();
 
     private List<int> generatedList = new List<int>();
@@ -51,6 +55,8 @@ public class LoToolMinigame : MonoBehaviour
 
     private int[] fastenerValues;
 
+    private int[] originalHitValues;
+
     private GameObject currentTool;
 
     private Fastener[] fastenerList = new Fastener[4];
@@ -58,6 +64,10 @@ public class LoToolMinigame : MonoBehaviour
     private Vector3 originalPosition;
 
     private bool isFocused = true;
+
+    private Vector3 newCameraPos;
+
+    private bool isMoving = false;
 
     void Awake()
     {
@@ -104,6 +114,8 @@ public class LoToolMinigame : MonoBehaviour
         fastenerObj = new GameObject[patternLength];
 
         fastenerValues = new int[patternLength];
+
+        originalHitValues = new int[patternLength];
 
         generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
@@ -188,9 +200,11 @@ public class LoToolMinigame : MonoBehaviour
             }
 
             valueToFollow = patternLength;
-            
         }
-        
+
+        originalHitValues = numberToDisplay.ToArray();
+
+
         textCounter.text = numberToDisplay[currentInt].ToString();
 
         for (int i = 0; i < patternLength; i++)
@@ -245,6 +259,17 @@ public class LoToolMinigame : MonoBehaviour
                 textCounter.gameObject.SetActive(false);
                 fastenerObj[currentInt].SetActive(true);
             }
+        }
+
+        if (isMoving)
+        {
+            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, newCameraPos, speed * Time.deltaTime);
+        }
+
+        if (Vector3.Distance(Camera.main.transform.position, newCameraPos)<0.001f && isMoving)
+        {
+            //fastenerObj[currentInt].SetActive(true);
+            isMoving = false;
         }
     }
 
@@ -321,8 +346,11 @@ public class LoToolMinigame : MonoBehaviour
             currentInt--;
             textCounter.text = numberToDisplay[currentInt].ToString();
             fastenerObj[currentInt].SetActive(true);
-            
-            Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            //Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+
+            newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+
+            isMoving = true;
 
             toolHolder.position = new Vector3(fastenerObj[currentInt].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
@@ -341,7 +369,11 @@ public class LoToolMinigame : MonoBehaviour
             currentInt++;
             textCounter.text = numberToDisplay[currentInt].ToString();
             fastenerObj[currentInt].SetActive(true);
-            Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            //Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+
+            newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
+
+            isMoving = true;
 
             toolHolder.position = new Vector3(fastenerObj[currentInt].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
@@ -368,24 +400,20 @@ public class LoToolMinigame : MonoBehaviour
 
     public void SelectTool(Button toolBtn)
     {
-        if (toolBtn.GetComponent<ToolBtn>().GetToolType() == fastenerValues[currentInt])
+        int toolUsed = toolBtn.GetComponent<ToolBtn>().GetToolType();
+        int currentFastenerVal = fastenerValues[currentInt];
+        Debug.Log("Tool Chosen: " + toolUsed);
+        Debug.Log("Fastener in place: " + currentFastenerVal);
+
+        if (toolUsed == currentFastenerVal)
         {
-            if (slotToFill == 0)
-            {
-                Debug.Log(toolBtn.GetComponent<ToolBtn>().GetToolType() + " can fix this");
+            currentTool = Instantiate(toolBtn.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
 
-                currentTool = Instantiate(toolBtn.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
-            }
-            else
-            {
-                if (currentInt >= patternLength - slotToFill)
-                {
-                    Debug.Log(toolBtn.GetComponent<ToolBtn>().GetToolType() + " to fill in");
-
-                    currentTool = Instantiate(toolBtn.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
-                }
-            }
-
+            Debug.Log("What is happening???");
+        }
+        else
+        {
+            Debug.Log("Can't use tool T_T");
         }
     }
 
@@ -401,5 +429,31 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         isFocused = false;
+    }
+
+    public void UndoHitCounts()
+    {
+        Vector3 position = fastenerObj[currentInt].transform.localPosition;
+        numberToDisplay[currentInt] = originalHitValues[currentInt];
+
+        Debug.Log("Undo Value: " + originalHitValues[currentInt]);
+
+        foreach (Transform child in fastenerObj[currentInt].transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        Debug.Log("Current Child Count before reset: " + fastenerObj[currentInt].transform.childCount);
+
+        Debug.Log(fastenerObj[currentInt].transform.position);
+
+        if (numberToDisplay[currentInt] < 24)
+        {
+            hitCountManager.presetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+        }
+        else
+        {
+            textCounter.text = numberToDisplay[currentInt].ToString();
+        }
     }
 }
