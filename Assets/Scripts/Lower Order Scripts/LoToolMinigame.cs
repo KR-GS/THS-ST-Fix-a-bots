@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,8 +11,6 @@ public class LoToolMinigame : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI textCounter;
-
-    private List<int> numberArray = new List<int>();
 
     [SerializeField]
     private HitCountManager hitCountManager;
@@ -33,11 +33,9 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private float speed;
 
-    private List<int> nextAnswers = new List<int>();
+    private GameObject[] counterHolder;
 
     private List<int> generatedList = new List<int>();
-
-    private GameObject tool;
 
     private int currentInt;
 
@@ -63,11 +61,9 @@ public class LoToolMinigame : MonoBehaviour
 
     private Vector3 originalPosition;
 
-    private bool isFocused = true;
+    private bool isFocused = false;
 
     private Vector3 newCameraPos;
-
-    private bool isMoving = false;
 
     void Awake()
     {
@@ -107,6 +103,8 @@ public class LoToolMinigame : MonoBehaviour
 
         int randomValue = 1;
 
+        GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
+
         difference = patternGameManager.ReturnDifference();
 
         patternLength = toolDifficulty.GetLengthOfPattern();
@@ -118,6 +116,8 @@ public class LoToolMinigame : MonoBehaviour
         originalHitValues = new int[patternLength];
 
         numberToDisplay = new int[patternLength];
+
+        counterHolder = new GameObject[patternLength];
 
         generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
@@ -173,32 +173,26 @@ public class LoToolMinigame : MonoBehaviour
                 numberToDisplay[i] = 0;
             }
 
-            for (int i = patternLength - slotToFill; i < patternLength; i++)
-            {
-                nextAnswers.Add(generatedList[i]);
-            }
-
-            foreach (int number in nextAnswers)
-            {
-                Debug.Log("Answer Set:" + number);
-            }
-
             valueToFollow = patternLength - slotToFill;
         }
         else
         {
             numberToDisplay = generatedList.ToArray();
 
+            int[] tempArr = new int[slotToFix];
+
             for (int i=0; i < slotToFix; i++)
             {
                 randomValue = Random.Range(0, patternLength);
 
-                while (nextAnswers.Contains(randomValue))
+                while (tempArr.Contains(randomValue))
                 {
                     randomValue = Random.Range(0, patternLength);
                 }
 
                 numberToDisplay[randomValue] = numberToDisplay[randomValue] - difference;
+
+                tempArr[i] = randomValue;
             }
 
             valueToFollow = patternLength;
@@ -233,7 +227,22 @@ public class LoToolMinigame : MonoBehaviour
             fastenerValues[i] = 1;
         }
 
+        for(int i = 0; i<patternLength; i++)
+        {
+            Vector3 position = new Vector3(tiledParts[i].transform.position.x, originalCounter.transform.position.y, originalCounter.transform.position.z);
+            counterHolder[i] = Instantiate(originalCounter);
+
+            counterHolder[i].transform.position = position;
+
+            counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i]);
+        }
+
+        Destroy(originalCounter);
+
         originalPosition = Camera.main.transform.position;
+
+        Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
+        OverheadView();
     }
 
     // Update is called once per frame
@@ -246,33 +255,7 @@ public class LoToolMinigame : MonoBehaviour
                 HandleClickEvent();
             }
         }
-
-        if (isFocused)
-        {
-            textCounter.text = numberToDisplay[currentInt].ToString();
-
-            if (numberToDisplay[currentInt] > 24)
-            {
-                fastenerObj[currentInt].SetActive(false);
-                textCounter.gameObject.SetActive(true);
-            }
-            else
-            {
-                textCounter.gameObject.SetActive(false);
-                fastenerObj[currentInt].SetActive(true);
-            }
-        }
-
-        if (isMoving)
-        {
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, newCameraPos, speed * Time.deltaTime);
-        }
-
-        if (Vector3.Distance(Camera.main.transform.position, newCameraPos)<0.001f && isMoving)
-        {
-            fastenerObj[currentInt].SetActive(true);
-            isMoving = false;
-        }
+        
     }
 
     private void HandleClickEvent()
@@ -304,11 +287,23 @@ public class LoToolMinigame : MonoBehaviour
                     {
                         currentInt = i;
                     }
+                    ToggleOverviewCounters(false);
                 }
 
                 fastenerObj[currentInt].SetActive(true);
 
-                isFocused = true;
+                textCounter.text = numberToDisplay[currentInt].ToString();
+
+                if (numberToDisplay[currentInt] > 24)
+                {
+                    fastenerObj[currentInt].SetActive(false);
+                    textCounter.gameObject.SetActive(true);
+                }
+                else
+                {
+                    textCounter.gameObject.SetActive(false);
+                    fastenerObj[currentInt].SetActive(true);
+                }
             }
         }
     }
@@ -317,10 +312,11 @@ public class LoToolMinigame : MonoBehaviour
     {
         newCameraPos = new Vector3(fastenerObj[0].transform.position.x, 0, Camera.main.transform.position.z);
 
-        StartCoroutine(ValueCheckCoroutine());
-    }
+        ToggleOverviewCounters(false);
 
-    public void ChangeToLeftElement()
+        StartCoroutine(ValueCheckCoroutine());    }
+
+    public async void ChangeToLeftElement()
     {
         if (currentInt>0)
         {
@@ -332,9 +328,9 @@ public class LoToolMinigame : MonoBehaviour
 
             newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-            isMoving = true;
+            await TriggerFastenerChange();
 
-            toolHolder.position = new Vector3(fastenerObj[currentInt].transform.position.x, toolHolder.position.y, toolHolder.position.z);
+            //isMoving = true;
 
             if (currentTool != null)
             {
@@ -343,21 +339,17 @@ public class LoToolMinigame : MonoBehaviour
         }
     }
 
-    public void ChangeToRightElement()
+    public async void ChangeToRightElement()
     {
         if (currentInt < numberToDisplay.Length-1)
         {
             fastenerObj[currentInt].SetActive(false);
             currentInt++;
             textCounter.text = numberToDisplay[currentInt].ToString();
-            //fastenerObj[currentInt].SetActive(true);
-            //Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
-
+            
             newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-            isMoving = true;
-
-            toolHolder.position = new Vector3(fastenerObj[currentInt].transform.position.x, toolHolder.position.y, toolHolder.position.z);
+            await TriggerFastenerChange();
 
             if(currentTool != null)
             {
@@ -386,6 +378,7 @@ public class LoToolMinigame : MonoBehaviour
         int currentFastenerVal = fastenerValues[currentInt];
         Debug.Log("Tool Chosen: " + toolUsed);
         Debug.Log("Fastener in place: " + currentFastenerVal);
+        toolHolder.position = new Vector3(fastenerObj[currentInt].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
         if (toolUsed == currentFastenerVal)
         {
@@ -411,6 +404,13 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         isFocused = false;
+
+        ToggleOverviewCounters(true);
+
+        if (currentTool != null)
+        {
+            Destroy(currentTool);
+        }
     }
 
     public void UndoHitCounts()
@@ -461,11 +461,19 @@ public class LoToolMinigame : MonoBehaviour
             if (numberToDisplay[i] != generatedList[i])
             {
                 Debug.Log("Incorrect Number");
+
+                yield return new WaitForSeconds(1);
+
+                //insert wrong indicator
             }
             else
             {
                 totalCorrect++;
                 Debug.Log("Correct!!");
+
+                yield return new WaitForSeconds(1);
+
+                //insert wrong indicator
             }
 
             yield return new WaitForSeconds(2);
@@ -485,6 +493,49 @@ public class LoToolMinigame : MonoBehaviour
                 Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed);
 
                 yield return null;
+            }
+        }
+
+        if(totalCorrect == patternLength)
+        {
+            Debug.Log("All correct!");
+        }
+        else
+        {
+            Debug.Log("Something is wrong!");
+        }
+
+        yield return null;
+
+        Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
+
+        yield return null;
+
+        ToggleOverviewCounters(true);
+    }
+
+    private async Task TriggerFastenerChange()
+    {
+        Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed);
+        await Task.Yield();
+        fastenerObj[currentInt].SetActive(true);
+    }
+
+    private void ToggleOverviewCounters(bool isShowing)
+    {
+        if (isShowing)
+        {
+            for (int i = 0; i < patternLength; i++)
+            {
+                counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i]);
+                counterHolder[i].SetActive(true);
+            }
+        }
+        else
+        {
+            foreach(GameObject count in counterHolder)
+            {
+                count.SetActive(false);
             }
         }
     }

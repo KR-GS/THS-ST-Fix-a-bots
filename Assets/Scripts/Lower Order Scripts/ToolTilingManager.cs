@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ToolTilingManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject partPrefab;
+
     private PartTile tileObj;
 
     private Vector2 tilePosition;
@@ -13,7 +16,7 @@ public class ToolTilingManager : MonoBehaviour
     
     void Awake()
     {
-        tileObj = FindFirstObjectByType<PartTile>();
+        tileObj = partPrefab.GetComponent<PartTile>();
 
         Debug.Log(tileObj.gameObject);
 

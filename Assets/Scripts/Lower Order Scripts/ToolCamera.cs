@@ -69,15 +69,4 @@ public class ToolCamera : MonoBehaviour
             await Task.Yield();
         }
     }
-
-    /*
-    public IEnumerator CameraMove(Vector3 firstFastenerPosition, float speed)
-    {
-        while (Vector3.Distance(transform.position, firstFastenerPosition) > 0.001f)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, firstFastenerPosition, speed * Time.deltaTime);
-            yield return null;
-        }
-    }
-    */
 }
