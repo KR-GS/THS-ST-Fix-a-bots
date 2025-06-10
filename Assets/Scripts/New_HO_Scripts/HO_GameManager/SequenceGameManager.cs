@@ -19,6 +19,7 @@ public class SequenceGameManager : MonoBehaviour
     public Button nextStageButton, restartStageButton;
     public FormulaInputPanel formulaPanel;
     public GameTimer gameTimer;
+    public HealthBar healthBar;
 
     [Header("Central Animator")]
     public Animator statusAnimator;
@@ -28,6 +29,9 @@ public class SequenceGameManager : MonoBehaviour
     private float cycleInterval = 1, cycleLeniency = 0.4f;
     private int prePressedCount = 0, stageNum = 0;
     private bool isFormulaSeen = true, isRandomSequence = true;
+
+    [Header("Active scene name")]
+    private string sceneName;
 
     [Header("Audio Files")]
     public SoundEffectsManager soundEffectsManager;
@@ -82,7 +86,7 @@ public class SequenceGameManager : MonoBehaviour
         stageData.SetStageNum(StaticData.stageNum);
         stageData.SetNumRestarts(0);
         stageData.SetElapsedTime(0f);
-        stageData.SetNumLives(3);
+        stageData.SetNumLives(5);
     }
 
     void InitializeStageUi()
@@ -94,12 +98,16 @@ public class SequenceGameManager : MonoBehaviour
         restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence();});
         feedbackText.text = "Please tap screen to start game";
         livesText.text = $"{stageData.GetNumLives()}";
+        healthBar.SetMaxHealth(stageData.GetNumLives());
         restartText.text = $"{stageData.GetNumRestarts()}";
+
     }
   
     void Start()
     {
         // GetData();
+        sceneName= SceneManager.GetActiveScene().name;
+        Debug.Log("Current scene: "+ sceneName);
         InitilizeStageData();
         InitializeStageUi();
         SetupButtons();
@@ -127,7 +135,7 @@ public class SequenceGameManager : MonoBehaviour
     IEnumerator LostStage()
     {
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("HO_Scene");
+        SceneManager.LoadScene(sceneName); 
     }
 
     // Creates buttons, destroys previous buttons as well
@@ -259,6 +267,7 @@ public class SequenceGameManager : MonoBehaviour
                             statusAnimator.SetBool("MissTrigger", true);
                             stageData.SetNumLives(stageData.GetNumLives() - 1);
                             livesText.text = $"{stageData.GetNumLives()}";
+                            healthBar.SetHealth(stageData.GetNumLives());
                             soundEffectsManager.playMissSound();
                             fuckingStop = false;
                         }
@@ -357,6 +366,7 @@ public class SequenceGameManager : MonoBehaviour
             statusAnimator.SetBool("WrongTrigger", true);
             stageData.SetNumLives(stageData.GetNumLives() - 1);
             livesText.text = $"{stageData.GetNumLives()}";
+            healthBar.SetHealth(stageData.GetNumLives());
             isCorrect = false;
             soundEffectsManager.playMissSound();
         }
