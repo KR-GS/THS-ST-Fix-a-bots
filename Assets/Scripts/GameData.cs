@@ -8,11 +8,17 @@ using UnityEngine;
 public class GameData
 {
     public int level;
-    //DataPersistenceManager dpm;
+
+    public List<Order> savedOrders;
+
+    public int currentOrderIndex;
 
     public GameData()
     {
         this.level = 1;
-    }
+        this.savedOrders = new List<Order>();
+        this.currentOrderIndex = -1;
+}
+
 
 }
