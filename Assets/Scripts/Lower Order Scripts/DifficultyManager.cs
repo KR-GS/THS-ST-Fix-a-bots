@@ -114,8 +114,9 @@ public class DifficultyManager : MonoBehaviour
         return noOfTypes;
     }
 
+    //Returns difficulty of level in string format
     public string GetDifficulty()
     {
-        return nameof(level);
+        return level.ToString();
     }
 }

@@ -9,23 +9,27 @@ using UnityEngine.UI;
 
 public class LoToolMinigame : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI textCounter;
-
-    [SerializeField]
-    private HitCountManager hitCountManager;
-
-    [SerializeField]
-    private GameObject[] fastenerObj;
-
-    [SerializeField]
-    private ToolTilingManager toolTilingManager;
+    [Header("Minigame Managers")]
 
     [SerializeField]
     private PatternGameManager patternGameManager;
 
     [SerializeField]
+    private HitCountManager hitCountManager;
+
+    [SerializeField]
+    private ToolTilingManager toolTilingManager;
+
+    [SerializeField]
     private DifficultyManager toolDifficulty;
+
+    [Header("Tool Objects")]
+
+    [SerializeField]
+    private TextMeshProUGUI textCounter;
+
+    [SerializeField]
+    private GameObject[] fastenerObj;
 
     [SerializeField]
     private Transform toolHolder;
@@ -34,35 +38,18 @@ public class LoToolMinigame : MonoBehaviour
     private float speed;
 
     private GameObject[] counterHolder;
-
     private List<int> generatedList = new List<int>();
-
     private int currentInt;
-
     private int[] numberToDisplay;
-
     private int patternLength;
-
     private int slotToFill;
-
     private int slotToFix;
-
     private int difference;
-
     private GameObject[] tiledParts;
-
     private int[] fastenerValues;
-
     private int[] originalHitValues;
-
     private GameObject currentTool;
-
     private Fastener[] fastenerList = new Fastener[4];
-
-    private Vector3 originalPosition;
-
-    private bool isFocused = false;
-
     private Vector3 newCameraPos;
 
     void Awake()
@@ -98,42 +85,35 @@ public class LoToolMinigame : MonoBehaviour
     void Start()
     {
         int valueToFollow;
-
         int medValue;
-
         int randomValue = 1;
-
         GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
 
         difference = patternGameManager.ReturnDifference();
-
         patternLength = toolDifficulty.GetLengthOfPattern();
-
         fastenerObj = new GameObject[patternLength];
-
         fastenerValues = new int[patternLength];
-
         originalHitValues = new int[patternLength];
-
         numberToDisplay = new int[patternLength];
-
         counterHolder = new GameObject[patternLength];
 
         generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
-        if(toolDifficulty.GetNumberOfMissingVal() == 0)
+        Debug.Log(toolDifficulty.GetDifficulty());
+
+        if (toolDifficulty.GetDifficulty() == "easy")
         {
             slotToFill = 0;
             slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
-            Debug.Log("Fixing");
+            Debug.Log("Fixing in " + toolDifficulty.GetDifficulty());
         }
-        else if(toolDifficulty.GetNumberOfIncorrectVal() == 0)
+        else if(toolDifficulty.GetDifficulty() == "hard")
         {
             slotToFix = 0;
             slotToFill = toolDifficulty.GetNumberOfMissingVal();
             Debug.Log("Filling");
         }
-        else
+        else if(toolDifficulty.GetDifficulty() == "medium")
         {
             //Randomize between missing and incorrect value where:
             //  0 = incorrect value
@@ -160,7 +140,7 @@ public class LoToolMinigame : MonoBehaviour
 
         tiledParts = toolTilingManager.GetTileList();
 
-        if (slotToFill!=0)
+        if (toolDifficulty.GetDifficulty() == "hard" || toolDifficulty.GetDifficulty() == "medium")
         {
             for (int i = 0; i < patternLength - slotToFill; i++)
             {
@@ -238,8 +218,6 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         Destroy(originalCounter);
-
-        originalPosition = Camera.main.transform.position;
 
         Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
         OverheadView();
@@ -323,14 +301,10 @@ public class LoToolMinigame : MonoBehaviour
             fastenerObj[currentInt].SetActive(false);
             currentInt--;
             textCounter.text = numberToDisplay[currentInt].ToString();
-            //fastenerObj[currentInt].SetActive(true);
-            //Camera.main.transform.position = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
-
+            
             newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
             await TriggerFastenerChange();
-
-            //isMoving = true;
 
             if (currentTool != null)
             {
@@ -396,14 +370,11 @@ public class LoToolMinigame : MonoBehaviour
     {
         fastenerObj[currentInt].SetActive(false);
         currentInt = -1;
-        originalPosition = Camera.main.transform.position;
 
         foreach (GameObject part in tiledParts)
         {
             part.layer = LayerMask.NameToLayer("Default");
         }
-
-        isFocused = false;
 
         ToggleOverviewCounters(true);
 
@@ -521,6 +492,7 @@ public class LoToolMinigame : MonoBehaviour
         fastenerObj[currentInt].SetActive(true);
     }
 
+    //toggles the view of the overview counter
     private void ToggleOverviewCounters(bool isShowing)
     {
         if (isShowing)

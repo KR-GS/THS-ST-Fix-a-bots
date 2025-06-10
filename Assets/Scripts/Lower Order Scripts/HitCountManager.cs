@@ -47,7 +47,7 @@ public class HitCountManager : MonoBehaviour
 
         int objChildCount = parentObjectObject.transform.childCount;
 
-        Debug.Log("Childcount for counter: " + objChildCount);
+        //Debug.Log("Childcount for counter: " + objChildCount);
 
         float furthestPoint_left;
         float furthestPoint_up;
@@ -82,7 +82,7 @@ public class HitCountManager : MonoBehaviour
 
         distance_UD = prefabDown * (rowCount - 1);
 
-        Debug.Log("Distance via multiplication: " + distance_LR);
+        //Debug.Log("Distance via multiplication: " + distance_LR);
 
         furthestPoint_left = -(distance_LR / 2) + newObj.transform.position.x;
 
@@ -111,7 +111,7 @@ public class HitCountManager : MonoBehaviour
                     {
                         parentObjectObject.transform.GetChild(childCounter).position = new Vector2(furthestPoint_left, furthestPoint_up);
                     }
-                    Debug.Log("Element " + j + " " + i + ": " + parentObjectObject.transform.GetChild(i).position.x);
+                    //Debug.Log("Element " + j + " " + i + ": " + parentObjectObject.transform.GetChild(i).position.x);
                     childCounter++;
                 }
                 else

@@ -7,9 +7,11 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ToolCamera : MonoBehaviour
 {
+    [Header("Managers")]
     [SerializeField]
     private ToolTilingManager tilingManager;
 
+    [Header("Canvases")]
     [SerializeField]
     private Canvas zoomInCanvas;
 
@@ -19,9 +21,7 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private Canvas overViewCanvas;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private Vector3 originalPosition;
-
     private float originalSize;
 
     public void OverheadCameraView()
