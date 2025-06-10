@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OrderManager : MonoBehaviour
+public class OrderManager : MonoBehaviour, IDataPersistence
 {
     public static OrderManager Instance;
     [SerializeField] private GameObject orderCompletePanel;
@@ -41,12 +41,13 @@ public class OrderManager : MonoBehaviour
 
     public void TryCompleteOrder()
     {
-        if (GetCurrentOrder().IsComplete())
+        if (GetCurrentOrder()?.IsComplete() ?? false)
         {
             Debug.Log("Order Complete!");
             ShowOrderCompletePanel();
             raycastInteractor.enabled = false;
-            orderList.Remove(GetCurrentOrder());
+            orderList.RemoveAt(currentOrderIndex);
+            currentOrderIndex = Mathf.Clamp(currentOrderIndex - 1, 0, orderList.Count - 1);
         }
     }
 
@@ -74,4 +75,18 @@ public class OrderManager : MonoBehaviour
         GameLoopManager.Instance.CompleteLevel();
         raycastInteractor.enabled = true;
     }
+
+    public void LoadData(GameData data)
+    {
+        this.orderList = data.savedOrders ?? new List<Order>();
+        this.currentOrderIndex = data.currentOrderIndex;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.savedOrders = this.orderList;
+        data.currentOrderIndex = this.currentOrderIndex;
+    }
+
+
 }
