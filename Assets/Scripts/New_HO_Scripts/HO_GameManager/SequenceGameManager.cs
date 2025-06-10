@@ -99,7 +99,7 @@ public class SequenceGameManager : MonoBehaviour
   
     void Start()
     {
-        GetData();
+        // GetData();
         InitilizeStageData();
         InitializeStageUi();
         SetupButtons();
