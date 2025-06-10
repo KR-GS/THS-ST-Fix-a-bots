@@ -41,7 +41,7 @@ public class LoToolMinigame : MonoBehaviour
 
     private int currentInt;
 
-    private List<int> numberToDisplay = new List<int>();
+    private int[] numberToDisplay;
 
     private int patternLength;
 
@@ -117,6 +117,8 @@ public class LoToolMinigame : MonoBehaviour
 
         originalHitValues = new int[patternLength];
 
+        numberToDisplay = new int[patternLength];
+
         generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
         if(toolDifficulty.GetNumberOfMissingVal() == 0)
@@ -162,13 +164,13 @@ public class LoToolMinigame : MonoBehaviour
         {
             for (int i = 0; i < patternLength - slotToFill; i++)
             {
-                numberToDisplay.Add(generatedList[i]);
+                numberToDisplay[i] = generatedList[i];
                 Debug.Log(i + " Value: " + numberToDisplay[i]);
             }
 
-            for (int i = 0; i < slotToFill; i++)
+            for (int i = patternLength - slotToFill; i < patternLength; i++)
             {
-                numberToDisplay.Add(0);
+                numberToDisplay[i] = 0;
             }
 
             for (int i = patternLength - slotToFill; i < patternLength; i++)
@@ -185,7 +187,7 @@ public class LoToolMinigame : MonoBehaviour
         }
         else
         {
-            numberToDisplay = generatedList;
+            numberToDisplay = generatedList.ToArray();
 
             for (int i=0; i < slotToFix; i++)
             {
@@ -202,7 +204,7 @@ public class LoToolMinigame : MonoBehaviour
             valueToFollow = patternLength;
         }
 
-        originalHitValues = numberToDisplay.ToArray();
+        originalHitValues = numberToDisplay;
 
 
         textCounter.text = numberToDisplay[currentInt].ToString();
@@ -313,29 +315,9 @@ public class LoToolMinigame : MonoBehaviour
 
     public void CheckNumber()
     {
-        int totalCorrect = 0 ;
-        for(int i=0; i<3; i++)
-        {
-            if (numberToDisplay[slotToFill+i] != nextAnswers[i])
-            {
-                Debug.Log("Incorrect Number");
-                numberToDisplay[slotToFill+i] = 0;
-            }
-            else
-            {
-                totalCorrect++;
-                Debug.Log("Correct!!");
-            }
-        }
+        newCameraPos = new Vector3(fastenerObj[0].transform.position.x, 0, Camera.main.transform.position.z);
 
-        if(totalCorrect == 3)
-        {
-            Debug.Log("All Correct!");
-        }
-        else
-        {
-            Debug.Log("Theres a mistake");
-        }
+        StartCoroutine(ValueCheckCoroutine());
     }
 
     public void ChangeToLeftElement()
@@ -363,7 +345,7 @@ public class LoToolMinigame : MonoBehaviour
 
     public void ChangeToRightElement()
     {
-        if (currentInt < numberToDisplay.Count-1)
+        if (currentInt < numberToDisplay.Length-1)
         {
             fastenerObj[currentInt].SetActive(false);
             currentInt++;
@@ -461,6 +443,49 @@ public class LoToolMinigame : MonoBehaviour
         else
         {
             textCounter.text = numberToDisplay[currentInt].ToString();
+        }
+    }
+
+    private IEnumerator ValueCheckCoroutine()
+    {
+        int totalCorrect = 0;
+        int i = 0;
+
+        Camera.main.GetComponent<ToolCamera>().CameraTrigger(newCameraPos, speed);
+        yield return null;
+
+        while (i<patternLength)
+        {
+            fastenerObj[i].SetActive(true);
+
+            if (numberToDisplay[i] != generatedList[i])
+            {
+                Debug.Log("Incorrect Number");
+            }
+            else
+            {
+                totalCorrect++;
+                Debug.Log("Correct!!");
+            }
+
+            yield return new WaitForSeconds(2);
+
+            fastenerObj[i].SetActive(false);
+
+            i++;
+
+            if (i < patternLength)
+            {
+                newCameraPos = new Vector3(fastenerObj[i].transform.position.x, 0, Camera.main.transform.position.z);
+
+                yield return null;
+
+                Debug.Log(Camera.main.transform.name);
+
+                Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed);
+
+                yield return null;
+            }
         }
     }
 }
