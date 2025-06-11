@@ -91,6 +91,6 @@ public class StageSelectManager : MonoBehaviour
         StaticData.constant = constant;
         StaticData.isRandomSequence = randSeq;
 
-        SceneManager.LoadScene("HO_Scene");
+        SceneManager.LoadScene("HO_BotFightScene");
     }
 }

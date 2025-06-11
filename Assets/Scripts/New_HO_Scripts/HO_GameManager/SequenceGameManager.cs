@@ -20,6 +20,7 @@ public class SequenceGameManager : MonoBehaviour
     public FormulaInputPanel formulaPanel;
     public GameTimer gameTimer;
     public HealthBar healthBar;
+    public Sprite unpressedSprite;
 
     [Header("Central Animator")]
     public Animator statusAnimator;
@@ -390,6 +391,7 @@ public class SequenceGameManager : MonoBehaviour
             buttons[i].SetHighlighted(false);
             buttons[i].SetSelected(false);
             buttons[i].SetWasSelected(false);
+            buttons[i].GetComponent<Image>().sprite = unpressedSprite;
         }
         pressedNumbers.Clear();
 

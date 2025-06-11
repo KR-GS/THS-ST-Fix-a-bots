@@ -18,7 +18,6 @@ public class TimePeriodButton : MonoBehaviour
     private void Awake()
     {
         buttonImage = GetComponent<Image>();
-        
     }
 
     public void SetHighlighted(bool selected)
@@ -29,8 +28,7 @@ public class TimePeriodButton : MonoBehaviour
     public void SetGreen()
     {
         buttonImage.color = Color.green;
-        Image changeImg = Button.GetComponent<Image>();
-        changeImg.sprite = pressedSprite;
+        Button.GetComponent<Image>().sprite = pressedSprite;
     }
 
     public void SetSelected(bool selected)

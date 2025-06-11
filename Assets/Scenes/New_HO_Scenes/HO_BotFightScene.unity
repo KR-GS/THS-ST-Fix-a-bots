@@ -520,6 +520,7 @@ MonoBehaviour:
   formulaPanel: {fileID: 830478798}
   gameTimer: {fileID: 1920746572}
   healthBar: {fileID: 1611611418}
+  unpressedSprite: {fileID: -136007251, guid: 25f9f8883b944524daacea2eea7d2904, type: 3}
   statusAnimator: {fileID: 1253231071}
   soundEffectsManager: {fileID: 1183926327}
   formulaInputPanel: {fileID: 830478798}
