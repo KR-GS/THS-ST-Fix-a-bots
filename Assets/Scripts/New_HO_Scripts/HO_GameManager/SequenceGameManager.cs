@@ -103,10 +103,15 @@ public class SequenceGameManager : MonoBehaviour
         restartText.text = $"{stageData.GetNumRestarts()}";
 
     }
+
+    IEnumerator wait(int x)
+    {
+        yield return new WaitForSeconds(x);
+    }
   
     void Start()
     {
-        // GetData();
+         GetData();
         sceneName= SceneManager.GetActiveScene().name;
         Debug.Log("Current scene: "+ sceneName);
         InitilizeStageData();
@@ -125,7 +130,7 @@ public class SequenceGameManager : MonoBehaviour
         }
         //livesText.text = $"{numLives}";
         //restartText.text = $"{numRestarts}";
-        if (stageData.GetNumLives() == 0)
+        if (stageData.GetNumLives() <= 0)
         {
             isCycling = false;
             feedbackText.text = "You lost all your lives!";
@@ -206,6 +211,23 @@ public class SequenceGameManager : MonoBehaviour
         restartStageButton.enabled = true;
     }
 
+    IEnumerator RestartCycle()
+    {
+        feedbackText.text = "Restarting Stage...";
+        yield return new WaitForSeconds(1f);
+        feedbackText.text = "3";
+        yield return new WaitForSeconds(1f);
+        feedbackText.text = "2";
+        yield return new WaitForSeconds(1f);
+        feedbackText.text = "1";
+        yield return new WaitForSeconds(1f);
+        feedbackText.text = "Go!";
+        isCycling = true;
+        canTap = true;
+        isCorrect = true;
+        currentCycleIndex = 0;
+    }
+
     // Main loop for the cycling
     IEnumerator CycleButtons()
     {
@@ -238,16 +260,21 @@ public class SequenceGameManager : MonoBehaviour
 
             gotRight = false;
 
-            statusAnimator.SetBool("IdleTrigger", true);
+            statusAnimator.SetBool("MissTrigger", false);
+            statusAnimator.SetBool("AnticipateTrigger", false);
+            statusAnimator.SetBool("HitTrigger", false);
+            statusAnimator.SetBool("WrongTrigger", false);
+            //statusAnimator.SetBool("IdleTrigger", true);
             soundEffectsManager.playIdleSound();
 
-            while (timer < cycleInterval)
+            while (timer < cycleInterval && currentCycleIndex >= 0)
             {
                 if (hasNotClicked)
                 {
                     if (!inSequence)
                     {
                         //statusAnimator.SetBool("IdleTrigger", true);
+                        statusAnimator.SetBool("IdleTrigger", true);
                     }
                     else if (inSequence)
                     {
@@ -267,10 +294,13 @@ public class SequenceGameManager : MonoBehaviour
                             feedbackText.text = "You missed!";
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("MissTrigger", true);
-                            stageData.SetNumLives(stageData.GetNumLives() - 1);
-                            livesText.text = $"{stageData.GetNumLives()}";
-                            healthBar.SetHealth(stageData.GetNumLives());
                             soundEffectsManager.playMissSound();
+                            if (!isStageFinished)
+                            {
+                                stageData.SetNumLives(stageData.GetNumLives() - 1);
+                                livesText.text = $"{stageData.GetNumLives()}";
+                                healthBar.SetHealth(stageData.GetNumLives());
+                            }
                             hasNotClicked = false;
                         }
                     }
@@ -286,13 +316,7 @@ public class SequenceGameManager : MonoBehaviour
                 yield return null;
             }
 
-            statusAnimator.SetBool("MissTrigger", false);
-            statusAnimator.SetBool("AnticipateTrigger", false);
-            statusAnimator.SetBool("HitTrigger", false);
-            statusAnimator.SetBool("WrongTrigger", false);
-            statusAnimator.SetBool("IdleTrigger", true);
-
-
+            //statusAnimator.SetBool("IdleTrigger", true);
 
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
@@ -308,7 +332,6 @@ public class SequenceGameManager : MonoBehaviour
                 else
                 {
                     feedbackText.text = "Sequence not complete or wrong taps. Restarting...";
-                    yield return new WaitForSeconds(1f);
                     ResetSequence();
                 }
             }
@@ -365,16 +388,13 @@ public class SequenceGameManager : MonoBehaviour
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
-            statusAnimator.SetBool("WrongTrigger", true);
-            stageData.SetNumLives(stageData.GetNumLives() - 1);
-            livesText.text = $"{stageData.GetNumLives()}";
-            healthBar.SetHealth(stageData.GetNumLives());
-            isCorrect = false;
+            statusAnimator.SetBool("WrongTrigger", true);  
             soundEffectsManager.playMissSound();
             if (!isStageFinished)
             {
                 stageData.SetNumLives(stageData.GetNumLives() - 1);
                 livesText.text = $"{stageData.GetNumLives()}";
+                healthBar.SetHealth(stageData.GetNumLives());
                 isCorrect = false;
             }
         }
@@ -410,16 +430,11 @@ public class SequenceGameManager : MonoBehaviour
             buttons[num - 1].SetSelected(true);
         }
 
-        feedbackText.text = "Restarting Stage...";
-
-        currentCycleIndex = -1;
         if(!isStageFinished){
             stageData.SetNumRestarts(stageData.GetNumRestarts() + 1);
             restartText.text = $"{stageData.GetNumRestarts()}";
         }
-        canTap = true;
-        isCorrect = true;
-        isCycling = true;
+        StartCoroutine(RestartCycle());
     }
 
     public void OnNextStageButtonClicked()

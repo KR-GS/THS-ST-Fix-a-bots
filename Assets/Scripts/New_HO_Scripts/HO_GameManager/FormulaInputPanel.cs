@@ -133,7 +133,7 @@ public class FormulaInputPanel : MonoBehaviour
             feedbackText.text = "Both are right";
             if (StaticData.isRandomSequence)
             {
-                SceneManager.LoadScene("HO_Scene");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
             }
             else
             {

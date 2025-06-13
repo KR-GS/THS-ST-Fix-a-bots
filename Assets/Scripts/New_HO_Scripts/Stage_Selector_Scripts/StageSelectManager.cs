@@ -20,7 +20,8 @@ public class StageSelectManager : MonoBehaviour
     {
         //LoadGame() here for StaticData.numStageDone, StaticData.stageLives[], StaticData.stageRestarts[], StaticData.stageTime[]
         stageInfoPanel.SetActive(false);
-        var stageConfigs = new (int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef, bool lockConst, int coef, int constant)[]
+        var stageConfigs = new (int max, float cycInt, float cycLen, int prePressed,
+        bool formSeen, bool lockCoef, bool lockConst, int coef, int constant)[]
         {
             (25, 1f, 0.6f, 3, true,  true,  true,  2,  2),
             (25, 1f, 0.6f, 3, false, false, true,  3, -2),
@@ -61,7 +62,7 @@ public class StageSelectManager : MonoBehaviour
         {
             livesText.text = $"{StaticData.stageLives[stageNum]}";
             restartsText.text = $"{StaticData.stageRestarts[stageNum]}";
-            timeText.text = $"{StaticData.stageTime[stageNum]}s";
+            timeText.text = $"{Mathf.Round(StaticData.stageTime[stageNum]*100)/100.0}s";
         }
 
         stageInfoPanel.SetActive(true);
