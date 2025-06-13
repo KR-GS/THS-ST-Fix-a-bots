@@ -341,10 +341,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1450728182}
         m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
         m_MethodName: ChangeToLeftElement
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 27378300}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2655,10 +2655,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1450728182}
         m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
         m_MethodName: ChangeToRightElement
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 823367652}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5469,7 +5469,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.60188675, g: 0.89830816, b: 1, a: 1}
+  m_Color: {r: 0.6528301, g: 0.15643285, b: 0.17831038, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

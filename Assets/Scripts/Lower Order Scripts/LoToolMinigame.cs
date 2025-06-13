@@ -204,6 +204,8 @@ public class LoToolMinigame : MonoBehaviour
         for (int i = 0; i< valueToFollow; i++)
         {
             Instantiate(fastenerList[0].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+
+            Debug.Log("Adding Fastener");
             fastenerValues[i] = 1;
         }
 
@@ -294,17 +296,18 @@ public class LoToolMinigame : MonoBehaviour
 
         StartCoroutine(ValueCheckCoroutine());    }
 
-    public async void ChangeToLeftElement()
+    public void ChangeToLeftElement(Button button)
     {
         if (currentInt>0)
         {
+            
             fastenerObj[currentInt].SetActive(false);
             currentInt--;
             textCounter.text = numberToDisplay[currentInt].ToString();
             
             newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-            await TriggerFastenerChange();
+            StartCoroutine(TriggerFastenerChange(button));
 
             if (currentTool != null)
             {
@@ -313,7 +316,7 @@ public class LoToolMinigame : MonoBehaviour
         }
     }
 
-    public async void ChangeToRightElement()
+    public void ChangeToRightElement(Button button)
     {
         if (currentInt < numberToDisplay.Length-1)
         {
@@ -323,7 +326,7 @@ public class LoToolMinigame : MonoBehaviour
             
             newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-            await TriggerFastenerChange();
+            StartCoroutine(TriggerFastenerChange(button));
 
             if(currentTool != null)
             {
@@ -485,11 +488,15 @@ public class LoToolMinigame : MonoBehaviour
         ToggleOverviewCounters(true);
     }
 
-    private async Task TriggerFastenerChange()
+    private IEnumerator TriggerFastenerChange(Button button)
     {
+        button.interactable = false;
+        yield return null;
         Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed);
-        await Task.Yield();
+        yield return null;
         fastenerObj[currentInt].SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        button.interactable = true;
     }
 
     //toggles the view of the overview counter
