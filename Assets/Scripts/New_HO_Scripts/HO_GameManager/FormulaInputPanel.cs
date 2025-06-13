@@ -93,7 +93,13 @@ public class FormulaInputPanel : MonoBehaviour
     private void Start()
     {
         coefUpButton.onClick.AddListener(() => { currentCoef += 1; UpdateFormulaText(); });
-        coefDownButton.onClick.AddListener(() => { currentCoef -= 1; UpdateFormulaText(); });
+        coefDownButton.onClick.AddListener(() => {
+            if (currentCoef != 0)
+            {
+                currentCoef -= 1;
+                UpdateFormulaText();
+            }
+        });
 
         constUpButton.onClick.AddListener(() => { currentConst += 1; UpdateFormulaText(); });
         constDownButton.onClick.AddListener(() => { currentConst -= 1; UpdateFormulaText(); });
