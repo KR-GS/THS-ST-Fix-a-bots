@@ -9,8 +9,11 @@ public class TimePeriodButton : MonoBehaviour
     public bool isPreSelected = false;
 
     public bool wasSelected = false;
+    public Sprite pressedSprite;
+    public Button Button;
 
     private Image buttonImage;
+
 
     private void Awake()
     {
@@ -25,6 +28,7 @@ public class TimePeriodButton : MonoBehaviour
     public void SetGreen()
     {
         buttonImage.color = Color.green;
+        Button.GetComponent<Image>().sprite = pressedSprite;
     }
 
     public void SetSelected(bool selected)
