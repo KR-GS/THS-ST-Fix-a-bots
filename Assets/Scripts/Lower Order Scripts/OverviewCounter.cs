@@ -10,7 +10,7 @@ public class OverviewCounter : MonoBehaviour
     {
         int counterSlot = count % 5;
 
-        if(counterSlot == 0)
+        if(counterSlot == 0 && count>0)
         {
             counterSlot = 5;
         }

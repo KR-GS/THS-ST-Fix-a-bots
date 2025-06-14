@@ -44,13 +44,11 @@ public class LoToolMinigame : MonoBehaviour
     private int patternLength;
     private int slotToFill;
     private int slotToFix;
-    private int difference;
     private GameObject[] tiledParts;
     private int[] fastenerValues;
     private int[] originalHitValues;
     private GameObject currentTool;
     private Fastener[] fastenerList = new Fastener[4];
-    private Vector3 newCameraPos;
 
     void Awake()
     {
@@ -84,12 +82,13 @@ public class LoToolMinigame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        int valueToFollow;
         int medValue;
-        int randomValue = 1;
+        int randomValue;
+        bool isFix=false;
+        int[] tempArr;
         GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
 
-        difference = patternGameManager.ReturnDifference();
+        int difference = patternGameManager.ReturnDifference();
         patternLength = toolDifficulty.GetLengthOfPattern();
         fastenerObj = new GameObject[patternLength];
         fastenerValues = new int[patternLength];
@@ -101,81 +100,111 @@ public class LoToolMinigame : MonoBehaviour
 
         Debug.Log(toolDifficulty.GetDifficulty());
 
-        if (toolDifficulty.GetDifficulty() == "easy")
+        //Checks for minigame's difficulty
+        switch (toolDifficulty.GetDifficulty())
         {
-            slotToFill = 0;
-            slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
-            Debug.Log("Fixing in " + toolDifficulty.GetDifficulty());
-        }
-        else if(toolDifficulty.GetDifficulty() == "hard")
-        {
-            slotToFix = 0;
-            slotToFill = toolDifficulty.GetNumberOfMissingVal();
-            Debug.Log("Filling");
-        }
-        else if(toolDifficulty.GetDifficulty() == "medium")
-        {
-            //Randomize between missing and incorrect value where:
-            //  0 = incorrect value
-            //  1 = missing value
-            medValue = Random.Range(1, 10);
-            Debug.Log("Choosing: " + medValue);
-            if (medValue <= 5)
-            {
-                slotToFill = 0;
+            case "easy":
                 slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
-                Debug.Log("Method to follow: fix");
-            }
-            else
-            {
+                isFix = true;
+                Debug.Log("Fixing in " + toolDifficulty.GetDifficulty());
+                break;
+            case "medium":
+                //Randomize between missing and incorrect value where:
+                //  0 = incorrect value
+                //  1 = missing value
+                medValue = Random.Range(1, 10);
+                Debug.Log("Choosing: " + medValue);
+                if (medValue <= 5)
+                {
+                    slotToFill = 0;
+                    slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
+                    isFix= true;
+                    Debug.Log("Method to follow: fix");
+                }
+                else
+                {
+                    slotToFix = 0;
+                    slotToFill = toolDifficulty.GetNumberOfMissingVal();
+                    isFix = false;
+                    Debug.Log("Method to follow: fill");
+                }
+                break;
+            case "hard":
                 slotToFix = 0;
                 slotToFill = toolDifficulty.GetNumberOfMissingVal();
-                Debug.Log("Method to follow: fill");
-            }
+                isFix = false;
+                Debug.Log("Filling");
+                break;
+            default:
+                Debug.Log("Playing tutorial code");
+                break;
         }
-
+        
         currentInt = 0;
 
         toolTilingManager.SpawnPartTiled(patternLength);
 
         tiledParts = toolTilingManager.GetTileList();
-
-        if (toolDifficulty.GetDifficulty() == "hard" || toolDifficulty.GetDifficulty() == "medium")
+        switch (isFix)
         {
-            for (int i = 0; i < patternLength - slotToFill; i++)
-            {
-                numberToDisplay[i] = generatedList[i];
-                Debug.Log(i + " Value: " + numberToDisplay[i]);
-            }
+            case true:
+                numberToDisplay = generatedList.ToArray();
 
-            for (int i = patternLength - slotToFill; i < patternLength; i++)
-            {
-                numberToDisplay[i] = 0;
-            }
+                tempArr = new int[slotToFix];
 
-            valueToFollow = patternLength - slotToFill;
-        }
-        else
-        {
-            numberToDisplay = generatedList.ToArray();
-
-            int[] tempArr = new int[slotToFix];
-
-            for (int i=0; i < slotToFix; i++)
-            {
-                randomValue = Random.Range(0, patternLength);
-
-                while (tempArr.Contains(randomValue))
+                for (int i = 0; i < slotToFix; i++)
                 {
                     randomValue = Random.Range(0, patternLength);
+
+                    while (tempArr.Contains(randomValue))
+                    {
+                        randomValue = Random.Range(0, patternLength);
+                    }
+
+                    numberToDisplay[randomValue] = numberToDisplay[randomValue] - difference;
+
+                    tempArr[i] = randomValue;
                 }
+                break;
+            case false: 
+                if(toolDifficulty.GetDifficulty() == "hard")
+                {
+                    for (int i = 0; i < patternLength - slotToFill; i++)
+                    {
+                        numberToDisplay[i] = generatedList[i];
+                        Debug.Log(i + " Value: " + numberToDisplay[i]);
+                    }
 
-                numberToDisplay[randomValue] = numberToDisplay[randomValue] - difference;
+                    for (int i = patternLength - slotToFill; i < patternLength; i++)
+                    {
+                        numberToDisplay[i] = 0;
+                    }
+                }
+                else
+                {
+                    numberToDisplay = generatedList.ToArray();
 
-                tempArr[i] = randomValue;
-            }
+                    tempArr = new int[slotToFill];
 
-            valueToFollow = patternLength;
+                    for (int i = 0; i < slotToFill; i++)
+                    {
+                        randomValue = Random.Range(0, patternLength);
+
+                        while (tempArr.Contains(randomValue))
+                        {
+                            randomValue = Random.Range(0, patternLength);
+                        }
+
+                        numberToDisplay[randomValue] = 0;
+
+                        tempArr[i] = randomValue;
+                    }
+                }
+                break;
+            default:
+                Debug.Log("Tutorial case here");
+                break;
+
         }
 
         originalHitValues = numberToDisplay;
@@ -201,12 +230,15 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
 
-        for (int i = 0; i< valueToFollow; i++)
+        for (int i = 0; i< patternLength; i++)
         {
-            Instantiate(fastenerList[0].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+            if (numberToDisplay[i] > 0)
+            {
+                Instantiate(fastenerList[0].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
 
-            Debug.Log("Adding Fastener");
-            fastenerValues[i] = 1;
+                Debug.Log("Adding Fastener");
+                fastenerValues[i] = 1;
+            }
         }
 
         for(int i = 0; i<patternLength; i++)
@@ -290,8 +322,6 @@ public class LoToolMinigame : MonoBehaviour
 
     public void CheckNumber()
     {
-        newCameraPos = new Vector3(fastenerObj[0].transform.position.x, 0, Camera.main.transform.position.z);
-
         ToggleOverviewCounters(false);
 
         StartCoroutine(ValueCheckCoroutine());    }
@@ -305,8 +335,6 @@ public class LoToolMinigame : MonoBehaviour
             currentInt--;
             textCounter.text = numberToDisplay[currentInt].ToString();
             
-            newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
-
             StartCoroutine(TriggerFastenerChange(button));
 
             if (currentTool != null)
@@ -324,8 +352,6 @@ public class LoToolMinigame : MonoBehaviour
             currentInt++;
             textCounter.text = numberToDisplay[currentInt].ToString();
             
-            newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
-
             StartCoroutine(TriggerFastenerChange(button));
 
             if(currentTool != null)
@@ -338,15 +364,17 @@ public class LoToolMinigame : MonoBehaviour
     public void SelectFastener(Button fastenerBtn)
     {
         Transform holder = null;
-        if (currentInt>=slotToFill)
+        Debug.Log(fastenerBtn.GetComponent<Fastener>().GetFastenerType());
+        fastenerValues[currentInt] = fastenerBtn.GetComponent<Fastener>().GetFastenerType();
+
+        holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
+
+        if (holder.childCount > 0)
         {
-            Debug.Log(fastenerBtn.GetComponent<Fastener>().GetFastenerType());
-            fastenerValues[currentInt] = fastenerBtn.GetComponent<Fastener>().GetFastenerType();
-
-            holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
-
-            Instantiate(fastenerBtn.GetComponent<Fastener>().GetFastenerSprite(), holder);
+            Destroy(holder.transform.GetChild(0).gameObject);
         }
+
+        Instantiate(fastenerBtn.GetComponent<Fastener>().GetFastenerSprite(), holder);
     }
 
     public void SelectTool(Button toolBtn)
@@ -425,6 +453,8 @@ public class LoToolMinigame : MonoBehaviour
         int totalCorrect = 0;
         int i = 0;
 
+        Vector3 newCameraPos = new Vector3(fastenerObj[0].transform.position.x, 0, Camera.main.transform.position.z);
+
         Camera.main.GetComponent<ToolCamera>().CameraTrigger(newCameraPos, speed);
         yield return null;
 
@@ -458,7 +488,7 @@ public class LoToolMinigame : MonoBehaviour
 
             if (i < patternLength)
             {
-                newCameraPos = new Vector3(fastenerObj[i].transform.position.x, 0, Camera.main.transform.position.z);
+                newCameraPos = new(fastenerObj[i].transform.position.x, 0, Camera.main.transform.position.z);
 
                 yield return null;
 
@@ -490,6 +520,7 @@ public class LoToolMinigame : MonoBehaviour
 
     private IEnumerator TriggerFastenerChange(Button button)
     {
+        Vector3 newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
         button.interactable = false;
         yield return null;
         Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed);
