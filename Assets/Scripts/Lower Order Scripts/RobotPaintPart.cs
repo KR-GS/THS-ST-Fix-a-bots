@@ -65,7 +65,7 @@ public class RobotPaintPart : MonoBehaviour
     {
         for(int i=0; i < testObject.transform.childCount; i++)
         {
-            Destroy(testObject.transform.GetChild(i));
+            Destroy(testObject.transform.GetChild(i).gameObject);
         }
     }
 }

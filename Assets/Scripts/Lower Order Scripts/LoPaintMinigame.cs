@@ -126,7 +126,7 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void ClearStickers()
     {
-        partSides[currentSide].GetComponent<RobotPaintPart>().ClearStickersOnSide();
+        partSides[currentSide].GetComponentInChildren<RobotPaintPart>().ClearStickersOnSide();
     }
 
     public void TurnToRight()
