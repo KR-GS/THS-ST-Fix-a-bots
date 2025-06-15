@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using TMPro;
+using System.Runtime.CompilerServices;
+using UnityEditor.ShaderGraph.Internal;
 
 public class LoPaintMinigame : MonoBehaviour
 {
@@ -19,10 +21,37 @@ public class LoPaintMinigame : MonoBehaviour
 
     private LayerMask bodyMask;
 
+    private GameObject[] partSides = new GameObject[4];
+
+    private int currentSide = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        float posY;
+        float posX;
+        RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimap>().GetGeneratedRT();
         roboPart = FindFirstObjectByType<RobotPaintPart>();
+
+        roboPart.transform.parent.GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
+
+        posY = -roboPart.transform.parent.position.y * 15;
+
+        posX = roboPart.transform.parent.position.x;
+
+        partSides[0] = roboPart.transform.parent.gameObject;
+
+        for (int i = 1; i<4; i++)
+        {
+            partSides[i] = Instantiate(roboPart.transform.parent.gameObject);
+
+            partSides[i].transform.position = new Vector3(posX+ ((i-1) * 5), posY, partSides[i].transform.position.z);
+
+            partSides[i].name = roboPart.transform.parent.name+ " " + i;
+
+            partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
+        }
+
         Debug.Log(roboPart.name);
     }
 
@@ -65,7 +94,7 @@ public class LoPaintMinigame : MonoBehaviour
             }
         }
 
-        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
+        //stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
     }
 
     private void HandleClickEvent(Vector2 position)
@@ -97,18 +126,30 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void ClearStickers()
     {
-        roboPart.clearStickersOnSide();
+        partSides[currentSide].GetComponent<RobotPaintPart>().ClearStickersOnSide();
     }
 
     public void TurnToRight()
     {
-        roboPart.RotateToRight();
-        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
+        Vector3 tempPos;
+        if (currentSide < 3)
+        {
+            tempPos = partSides[currentSide].transform.position;
+            currentSide++;
+            partSides[currentSide - 1].transform.position = partSides[currentSide].transform.position;
+            partSides[currentSide].transform.position = tempPos;
+        }
     }
 
     public void TurnToLeft()
     {
-        roboPart.RotateToLeft();
-        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
+        Vector3 tempPos;
+        if (currentSide > 0)
+        {
+            tempPos = partSides[currentSide].transform.position;
+            currentSide--;
+            partSides[currentSide + 1].transform.position = partSides[currentSide].transform.position;
+            partSides[currentSide].transform.position = tempPos;
+        }
     }
 }
