@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1362103896113949254}
   - component: {fileID: 8614375217175639399}
+  - component: {fileID: 7056747429471643177}
   m_Layer: 0
   m_Name: initialToolAssets_12
   m_TagString: Untagged
@@ -87,6 +88,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7056747429471643177
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731235260709172067}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 952026d49b01194459a30d98334841d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6710342850988161296
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,6 +121,7 @@ GameObject:
   - component: {fileID: 9021013758019238289}
   - component: {fileID: 4698591497509508751}
   - component: {fileID: 4723267820852517908}
+  - component: {fileID: -1416707398159327863}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: Untagged
@@ -179,3 +203,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d7fdd809db7ab4cb9c03e370a44eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statusAnimator: {fileID: 7056747429471643177}
+--- !u!111 &-1416707398159327863
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710342850988161296}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 8910c3a00252c464db9b9fcb907a1d55, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
