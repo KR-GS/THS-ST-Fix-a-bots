@@ -16,11 +16,17 @@ public class SequenceGameManager : MonoBehaviour
     public GameObject timePeriodButtonPrefab;
     public Transform buttonsParent;   
     public TextMeshProUGUI feedbackText, formulaText, timerText, livesText, restartText;
-    public Button nextStageButton, restartStageButton;
+    public Button nextStageButton, restartStageButton, pauseButton;
     public FormulaInputPanel formulaPanel;
+    //public PausePanel pausePanel;
     public GameTimer gameTimer;
     public HealthBar healthBar;
     public Sprite unpressedSprite;
+
+    [Header("Pause Panel")]
+    public GameObject pausePanel;
+    public Button resumeButton, exitButton;
+    public TextMeshProUGUI panelText;
 
     [Header("Central Animator")]
     public Animator statusAnimator;
@@ -93,15 +99,71 @@ public class SequenceGameManager : MonoBehaviour
     void InitializeStageUi()
     {
         formulaText.gameObject.SetActive(isFormulaSeen);
+
         formulaPanel.gameObject.SetActive(false);
+        pausePanel.SetActive(false);
         nextStageButton.gameObject.SetActive(false);
+
         restartStageButton.enabled = false;
         restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence();});
+
+        pauseButton.enabled = false;
+        pauseButton.onClick.AddListener(() => PauseGame());
+        resumeButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
+        exitButton.onClick.AddListener(() => ExitGame());
+
         feedbackText.text = "Please tap screen to start game";
         livesText.text = $"{stageData.GetNumLives()}";
         healthBar.SetMaxHealth(stageData.GetNumLives());
         restartText.text = $"{stageData.GetNumRestarts()}";
 
+    }
+
+    void PauseGame()
+    {
+        gameTimer.StopTimer();
+        canTap = false;
+        //StopCoroutine(CycleButtons());
+        isCycling = false;
+        //StopAllCoroutines();
+        if (stageData.GetNumLives() <= 0)
+        {
+            pausePanel.SetActive(true);
+            panelText.text = "You Lost! Continue?";
+        }
+        else
+        {
+            panelText.text = "Game Paused";
+            pausePanel.SetActive(true);
+        }
+    }
+
+    IEnumerator ResumeGame()
+    {
+        if (stageData.GetNumLives() <= 0)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+            feedbackText.text = "3";
+            yield return new WaitForSeconds(1);
+            feedbackText.text = "2";
+            yield return new WaitForSeconds(1);
+            feedbackText.text = "1";
+            yield return new WaitForSeconds(1);
+            gameTimer.ResumeTimer();
+            if (!isCycling)
+            {
+                isCycling = true;
+            }
+            canTap = true;
+        }
+    }
+
+    void ExitGame() {
+        SceneManager.LoadScene("Stage_Select");
     }
 
     IEnumerator wait(int x)
@@ -111,8 +173,9 @@ public class SequenceGameManager : MonoBehaviour
   
     void Start()
     {
-         GetData();
-        sceneName= SceneManager.GetActiveScene().name;
+        //Comment this out if testing from scene itself!
+        //GetData();
+        sceneName = SceneManager.GetActiveScene().name;
         Debug.Log("Current scene: "+ sceneName);
         InitilizeStageData();
         InitializeStageUi();
@@ -133,8 +196,7 @@ public class SequenceGameManager : MonoBehaviour
         if (stageData.GetNumLives() <= 0)
         {
             isCycling = false;
-            feedbackText.text = "You lost all your lives!";
-            StartCoroutine(LostStage());
+            PauseGame();
         }
     }
 
@@ -209,10 +271,13 @@ public class SequenceGameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         gameTimer.StartTimer();
         restartStageButton.enabled = true;
+        pauseButton.enabled = true;
     }
 
     IEnumerator RestartCycle()
     {
+        canTap = false;
+        isCycling = false;
         feedbackText.text = "Restarting Stage...";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "3";
@@ -233,17 +298,18 @@ public class SequenceGameManager : MonoBehaviour
     {
         while (true)
         {
-            if (!isCycling)
+            while (!isCycling)
             {
-                yield return null;
-                continue;
+                //Do nothing
             }
 
             // Makes sure player has time to start
+            /*
             if (currentCycleIndex == 0)
             {
                 yield return new WaitForSeconds(1f);
             }
+            */
 
             HighlightButton(currentCycleIndex);
 
@@ -312,7 +378,10 @@ public class SequenceGameManager : MonoBehaviour
                         hasNotClicked = false;
                     }
                 }
-                timer += Time.deltaTime;
+                if (isCycling)
+                {
+                    timer += Time.deltaTime;
+                }
                 yield return null;
             }
 

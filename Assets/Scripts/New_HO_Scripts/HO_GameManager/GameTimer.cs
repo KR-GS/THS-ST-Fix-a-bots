@@ -21,6 +21,11 @@ public class GameTimer : MonoBehaviour
         isRunning = false;
     }
 
+    public void ResumeTimer()
+    {
+        isRunning = true;
+    }
+
     public float GetElapsedTime()
     {
         return elapsedTime;
