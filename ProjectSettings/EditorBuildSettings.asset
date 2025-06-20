@@ -11,16 +11,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/DataTransferTest.unity
     guid: 4323dd1c5e2779f4aa2f608f37626060
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/New_HO_Scenes/Stage_Select.unity
     guid: ee3eb123556d64a46a17e8b3c9f27453
   - enabled: 0
     path: Assets/Scenes/New_HO_Scenes/HO_Scene.unity
     guid: 1968bf1d2666b67449e0268a98c4eb48
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/New_HO_Scenes/HO_BotFightScene.unity
     guid: df4a6c3eee62b9d40b7c3b609f5e9a99
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LO_Paint.unity
     guid: d64f5749cf96fc0488d0d40f295064e1
   m_configObjects:
