@@ -105,7 +105,9 @@ public class SequenceGameManager : MonoBehaviour
         nextStageButton.gameObject.SetActive(false);
 
         restartStageButton.enabled = false;
-        restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence();});
+        restartStageButton.onClick.AddListener(() => {
+            isCycling = false;
+            ResetSequence();});
 
         pauseButton.enabled = false;
         pauseButton.onClick.AddListener(() => PauseGame());
@@ -287,10 +289,13 @@ public class SequenceGameManager : MonoBehaviour
         feedbackText.text = "1";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "Go!";
+        pauseButton.enabled = true;
+        restartStageButton.enabled = true;
         isCycling = true;
+        currentCycleIndex = -1;
         canTap = true;
         isCorrect = true;
-        currentCycleIndex = 0;
+        
     }
 
     // Main loop for the cycling
@@ -304,14 +309,16 @@ public class SequenceGameManager : MonoBehaviour
             }
 
             // Makes sure player has time to start
-            /*
+            
             if (currentCycleIndex == 0)
             {
                 yield return new WaitForSeconds(1f);
             }
-            */
-
+            
+        
             HighlightButton(currentCycleIndex);
+
+            Debug.Log("Cycle index: " + currentCycleIndex);
 
             int btnNumber = currentCycleIndex + 1;
             bool inSequence = currentSequence.Numbers.Contains(btnNumber);
@@ -347,7 +354,7 @@ public class SequenceGameManager : MonoBehaviour
                         statusAnimator.SetBool("IdleTrigger", false);
                         statusAnimator.SetBool("AnticipateTrigger", true);
                         // If the Sequence was pre pressed, automatically plays hit animation
-                        if ((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.10f)
+                        if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.10f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("HitTrigger", true);
@@ -482,6 +489,14 @@ public class SequenceGameManager : MonoBehaviour
 
     void ResetSequence()
     {
+        statusAnimator.SetBool("MissTrigger", false);
+        statusAnimator.SetBool("AnticipateTrigger", false);
+        statusAnimator.SetBool("HitTrigger", false);
+        statusAnimator.SetBool("WrongTrigger", false);
+        statusAnimator.SetBool("IdleTrigger", true);
+        
+        restartStageButton.enabled = false;
+        pauseButton.enabled = false;
         for (int i = 0; i < buttons.Count; i++)
         {
             buttons[i].SetHighlighted(false);
@@ -498,11 +513,15 @@ public class SequenceGameManager : MonoBehaviour
             buttons[num - 1].SetGreen();
             buttons[num - 1].SetSelected(true);
         }
+        
 
         if(!isStageFinished){
             stageData.SetNumRestarts(stageData.GetNumRestarts() + 1);
             restartText.text = $"{stageData.GetNumRestarts()}";
         }
+        timer = 0f;
+        currentCycleIndex = 0;
+
         StartCoroutine(RestartCycle());
     }
 
