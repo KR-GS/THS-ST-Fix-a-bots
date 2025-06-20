@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Station : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class Station : MonoBehaviour
             case StationType.Tool:
                 if (currentOrder.needsTool && !currentOrder.toolDone)
                 {
-                    currentOrder.toolDone = true;
+                    SceneManager.LoadScene("LO_Tool 1");
+                    //currentOrder.toolDone = true;
                     Debug.Log("Tool station activated!");
                 }
                 break;
@@ -27,7 +29,8 @@ public class Station : MonoBehaviour
             case StationType.Paint:
                 if (currentOrder.needsPaint && !currentOrder.paintDone)
                 {
-                    currentOrder.paintDone = true;
+                    SceneManager.LoadScene("LO_Paint");
+                    //currentOrder.paintDone = true;
                     Debug.Log("Paint station activated!");
                 }
                 break;
@@ -35,7 +38,8 @@ public class Station : MonoBehaviour
             case StationType.Wire:
                 if (currentOrder.needsWire && !currentOrder.wireDone)
                 {
-                    currentOrder.wireDone = true;
+                    SceneManager.LoadScene("LO_Wire");
+                    //currentOrder.wireDone = true;
                     Debug.Log("Wire station activated!");
                 }
                 break;
