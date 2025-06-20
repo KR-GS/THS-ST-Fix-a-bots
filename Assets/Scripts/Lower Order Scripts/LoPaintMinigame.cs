@@ -47,7 +47,7 @@ public class LoPaintMinigame : MonoBehaviour
         {
             partSides[i] = Instantiate(roboPart.transform.parent.gameObject);
 
-            partSides[i].transform.position = new Vector3(posX+ ((i-1) * 5), posY, partSides[i].transform.position.z);
+            partSides[i].transform.position = new Vector3(posX+ ((i-1) * 10), posY, partSides[i].transform.position.z);
 
             partSides[i].name = roboPart.transform.parent.name+ " " + i;
 

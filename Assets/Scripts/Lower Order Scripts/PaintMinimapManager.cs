@@ -34,7 +34,7 @@ public class PaintMinimapManager : MonoBehaviour
 
         for(int i=0; i< miniMapLength; i++)
         {
-            miniMapRT[i] = new RenderTexture(250, 250, 16);
+            miniMapRT[i] = new RenderTexture(200, 200, 16);
             minimapArr[i].GetComponent<RawImage>().texture = miniMapRT[i];
             
         }
