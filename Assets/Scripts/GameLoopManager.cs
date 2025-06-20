@@ -108,7 +108,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         }
     }
-
+    public enum DifficultyLevel
+    {
+        tutorial,
+        easy,
+        medium,
+        hard
+    }
 
     public void LoadData(GameData data)
     {
@@ -152,6 +158,16 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         Debug.Log("Level " + level + " complete!");
         StartNewLevel();
+    }
+
+    public DifficultyLevel GetDifficultyLevel()
+    {
+        if (level <= 5)
+            return DifficultyLevel.easy;
+        else if (level > 5 && level <= 10)
+            return DifficultyLevel.medium;
+        else
+            return DifficultyLevel.hard;
     }
 
     /*
