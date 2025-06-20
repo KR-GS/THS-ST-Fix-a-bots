@@ -21,6 +21,14 @@ public class GameData
 
     public int currentOrderIndex;
 
+    public List<int> lives;
+
+    public List<int> restarts;
+
+    public List<float> stageTimes;
+
+    public int stageDone;
+
     public GameData()
     {
         this.level = 1;
@@ -30,6 +38,10 @@ public class GameData
         this.finished = false;
         this.prize = 0;
         this.time = 0f;
+        this.lives = new List<int>();
+        this.restarts = new List<int>();
+        this.stageDone = 0;
+        this.stageTimes = new List<float>();
     }
 
 
