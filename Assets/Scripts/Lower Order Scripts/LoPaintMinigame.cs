@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using TMPro;
-using System.Runtime.CompilerServices;
-using UnityEditor.ShaderGraph.Internal;
 
 public class LoPaintMinigame : MonoBehaviour
 {
@@ -17,20 +15,24 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private List<Sticker> draggedObjects = new List<Sticker>();
 
+    [SerializeField]
+    private int numOfSides;
+
     private RobotPaintPart roboPart;
 
     private LayerMask bodyMask;
 
-    private GameObject[] partSides = new GameObject[4];
+    private GameObject[] partSides;
 
     private int currentSide = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        partSides = new GameObject[numOfSides];
         float posY;
         float posX;
-        RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimap>().GetGeneratedRT();
+        RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
         roboPart = FindFirstObjectByType<RobotPaintPart>();
 
         roboPart.transform.parent.GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
@@ -41,7 +43,7 @@ public class LoPaintMinigame : MonoBehaviour
 
         partSides[0] = roboPart.transform.parent.gameObject;
 
-        for (int i = 1; i<4; i++)
+        for (int i = 1; i< numOfSides; i++)
         {
             partSides[i] = Instantiate(roboPart.transform.parent.gameObject);
 
@@ -132,7 +134,7 @@ public class LoPaintMinigame : MonoBehaviour
     public void TurnToRight()
     {
         Vector3 tempPos;
-        if (currentSide < 3)
+        if (currentSide < numOfSides-1)
         {
             tempPos = partSides[currentSide].transform.position;
             currentSide++;
@@ -151,5 +153,15 @@ public class LoPaintMinigame : MonoBehaviour
             partSides[currentSide + 1].transform.position = partSides[currentSide].transform.position;
             partSides[currentSide].transform.position = tempPos;
         }
+    }
+
+    public void ChangeSide(int val)
+    {
+        Vector3 tempPos = partSides[currentSide].transform.position;
+        int prevVal = currentSide;
+        currentSide = val;
+
+        partSides[prevVal].transform.position = partSides[currentSide].transform.position;
+        partSides[currentSide].transform.position = tempPos;
     }
 }

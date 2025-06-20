@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PaintMinimap : MonoBehaviour
+public class PaintMinimapManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject minimapSelectionObj;
@@ -29,12 +29,14 @@ public class PaintMinimap : MonoBehaviour
         for (int i=1; i< miniMapLength; i++)
         {
             minimapArr[i] = Instantiate(minimapOrig, minimapOrig.transform.parent);
+            
         }
 
         for(int i=0; i< miniMapLength; i++)
         {
             miniMapRT[i] = new RenderTexture(250, 250, 16);
             minimapArr[i].GetComponent<RawImage>().texture = miniMapRT[i];
+            
         }
 
         StartCoroutine(WaitToProcess());
@@ -42,7 +44,10 @@ public class PaintMinimap : MonoBehaviour
 
     void Start()
     {
-        
+        for (int i = 0; i < miniMapLength; i++)
+        {
+            minimapArr[i].GetComponent<Minimap>().SetValue(i);
+        }
     }
 
     // Update is called once per frame
@@ -74,6 +79,14 @@ public class PaintMinimap : MonoBehaviour
             currentMinimap++;
             minimapSelectionObj.transform.position = minimapArr[currentMinimap].transform.position;
         }
+    }
+
+    public void ChangeSelectedSide(int val)
+    {
+        Debug.Log("testing");
+        currentMinimap = val;
+        Debug.Log(val);
+        minimapSelectionObj.transform.position = minimapArr[currentMinimap].transform.position;
     }
 
     public RenderTexture[] GetGeneratedRT() {
