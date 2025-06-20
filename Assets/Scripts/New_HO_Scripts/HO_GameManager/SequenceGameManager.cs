@@ -18,7 +18,6 @@ public class SequenceGameManager : MonoBehaviour
     public TextMeshProUGUI feedbackText, formulaText, timerText, livesText, restartText;
     public Button nextStageButton, restartStageButton, pauseButton;
     public FormulaInputPanel formulaPanel;
-    //public PausePanel pausePanel;
     public GameTimer gameTimer;
     public HealthBar healthBar;
     public Sprite unpressedSprite;
@@ -51,7 +50,6 @@ public class SequenceGameManager : MonoBehaviour
     private bool isCycling = false, isCorrect = true, canTap = true, isStart = true,
     gotRight = false, wasRestartButtonPressed = false, nextStage = false;
     private float timer;
-    //private int numLives = 3, numRestarts = 0;
 
     // Basically checks if the pointer/mouse is above an interactable UI
     private bool IsPointerOverInteractableUi()
@@ -74,7 +72,6 @@ public class SequenceGameManager : MonoBehaviour
 
         return false;
     }
-
     bool IsScreenTapped()
     {
     #if UNITY_EDITOR
@@ -140,9 +137,7 @@ public class SequenceGameManager : MonoBehaviour
     {
         gameTimer.StopTimer();
         canTap = false;
-        //StopCoroutine(CycleButtons());
         isCycling = false;
-        //StopAllCoroutines();
         if (stageData.GetNumLives() <= 0)
         {
             pausePanel.SetActive(true);
@@ -214,20 +209,11 @@ public class SequenceGameManager : MonoBehaviour
             StartNewSequence();
             StartCoroutine(DelayedStartCycle());
         }
-        //livesText.text = $"{numLives}";
-        //restartText.text = $"{numRestarts}";
         if (stageData.GetNumLives() <= 0)
         {
             isCycling = false;
             PauseGame();
         }
-    }
-
-    IEnumerator LostStage()
-    {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(sceneName); 
-        yield return null;
     }
 
     // Creates buttons, destroys previous buttons as well
@@ -277,7 +263,6 @@ public class SequenceGameManager : MonoBehaviour
         isCycling = true;
 
         feedbackText.text = "Watch the sequence! Tap the screen when the highlighted number is in the sequence.";
-        //nextStageButton.gameObject.SetActive(false);
     }
 
     // Just to make time for the cycling
@@ -369,7 +354,6 @@ public class SequenceGameManager : MonoBehaviour
             statusAnimator.SetBool("AnticipateTrigger", false);
             statusAnimator.SetBool("HitTrigger", false);
             statusAnimator.SetBool("WrongTrigger", false);
-            //statusAnimator.SetBool("IdleTrigger", true);
             soundEffectsManager.playIdleSound();
 
             while (timer < cycleInterval && currentCycleIndex >= 0)
@@ -378,7 +362,6 @@ public class SequenceGameManager : MonoBehaviour
                 {
                     if (!inSequence)
                     {
-                        //statusAnimator.SetBool("IdleTrigger", true);
                         statusAnimator.SetBool("IdleTrigger", true);
                     }
                     else if (inSequence)
@@ -424,8 +407,6 @@ public class SequenceGameManager : MonoBehaviour
                 }
                 yield return null;
             }
-
-            //statusAnimator.SetBool("IdleTrigger", true);
 
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
