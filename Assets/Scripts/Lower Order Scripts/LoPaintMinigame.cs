@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using TMPro;
-using System.Runtime.CompilerServices;
-using UnityEditor.ShaderGraph.Internal;
 
 public class LoPaintMinigame : MonoBehaviour
 {
