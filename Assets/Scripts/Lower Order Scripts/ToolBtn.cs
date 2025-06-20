@@ -15,7 +15,8 @@ public class ToolBtn : MonoBehaviour
     [SerializeField]
     private Sprite unselectedSprite;
 
-    public Button Button;
+    //public Button Button;
+
     private bool selected = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,11 +33,11 @@ public class ToolBtn : MonoBehaviour
 
     public void Unselect()
     {    
-        Button.GetComponent<Image>().sprite = unselectedSprite;
+        GetComponent<Image>().sprite = unselectedSprite;
     }
 
     public void Select()
     {
-        Button.GetComponent<Image>().sprite = selectedSprite;
+        GetComponent<Image>().sprite = selectedSprite;
     }
 }

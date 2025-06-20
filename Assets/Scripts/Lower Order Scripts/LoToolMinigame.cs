@@ -400,6 +400,7 @@ public class LoToolMinigame : MonoBehaviour
             Destroy(currentTool);
             currentTool = null;
         }
+
         //unselect all buttons but this one 
         foreach (var tool in toolButtons)
         {
