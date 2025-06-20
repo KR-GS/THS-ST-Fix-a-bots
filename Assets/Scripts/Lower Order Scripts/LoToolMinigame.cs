@@ -49,6 +49,7 @@ public class LoToolMinigame : MonoBehaviour
     private int[] originalHitValues;
     private GameObject currentTool;
     private Fastener[] fastenerList = new Fastener[4];
+    private int[] fastenerCheckVal;
 
     void Awake()
     {
@@ -84,6 +85,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         int medValue;
         int randomValue;
+        int randFastenerVal;
         bool isFix=false;
         int[] tempArr;
         GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
@@ -95,6 +97,7 @@ public class LoToolMinigame : MonoBehaviour
         originalHitValues = new int[patternLength];
         numberToDisplay = new int[patternLength];
         counterHolder = new GameObject[patternLength];
+        fastenerCheckVal = new int[patternLength];
 
         generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
@@ -201,10 +204,6 @@ public class LoToolMinigame : MonoBehaviour
                     }
                 }
                 break;
-            default:
-                Debug.Log("Tutorial case here");
-                break;
-
         }
 
         originalHitValues = numberToDisplay;
@@ -230,15 +229,18 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
 
+        randFastenerVal = Random.Range(0, fastenerList.Length);
         for (int i = 0; i< patternLength; i++)
         {
             if (numberToDisplay[i] > 0)
             {
-                Instantiate(fastenerList[0].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+                Instantiate(fastenerList[randFastenerVal].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
 
                 Debug.Log("Adding Fastener");
-                fastenerValues[i] = 1;
+                fastenerValues[i] = randFastenerVal+1;
             }
+
+            fastenerCheckVal[i] = randFastenerVal+1;
         }
 
         for(int i = 0; i<patternLength; i++)
@@ -324,7 +326,8 @@ public class LoToolMinigame : MonoBehaviour
     {
         ToggleOverviewCounters(false);
 
-        StartCoroutine(ValueCheckCoroutine());    }
+        StartCoroutine(ValueCheckCoroutine());    
+    }
 
     public void ChangeToLeftElement(Button button)
     {
@@ -462,7 +465,7 @@ public class LoToolMinigame : MonoBehaviour
         {
             fastenerObj[i].SetActive(true);
 
-            if (numberToDisplay[i] != generatedList[i])
+            if (numberToDisplay[i] != generatedList[i] || fastenerCheckVal[i] != fastenerValues[i])
             {
                 Debug.Log("Incorrect Number");
 

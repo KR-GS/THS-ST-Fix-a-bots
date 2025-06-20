@@ -14,63 +14,26 @@ public class RobotPaintPart : MonoBehaviour
     private int currentSide;
 
     [SerializeField]
-    private GameObject[] testObject;
+    private GameObject testObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentSide = 0;
 
-        testObject = new GameObject[4];
+        testObject = new GameObject();
 
-        for (int i = 0; i < 4; i++)
-        {
-            testObject[i] = new GameObject("Side " + (i + 1).ToString());
-
-            if (i != currentSide)
-            {
-                testObject[i].SetActive(false);
-            }
-        }
+        testObject.transform.parent = transform;
     }
 
     public void AddSticker(Sticker newSticker)
     {
-        newSticker.transform.SetParent(testObject[currentSide].transform);
+        newSticker.transform.SetParent(testObject.transform);
     }
 
     public void RemoveSticker()
     {
-        Debug.Log(testObject[currentSide].transform.childCount);
-    }
-
-    public void RotateToRight()
-    {
-        if (currentSide < 3)
-        {
-            Debug.Log("Sticker Count: " + stickerCount[currentSide]);
-            testObject[currentSide].SetActive(false);
-
-            currentSide++;
-
-            testObject[currentSide].SetActive(true);
-
-            Debug.Log(currentSide);
-        }
-    }
-
-    public void RotateToLeft()
-    {
-        if (currentSide > 0)
-        {
-            testObject[currentSide].SetActive(false);
-
-            currentSide--;
-
-            testObject[currentSide].SetActive(true);
-
-            Debug.Log(currentSide);
-        }
+        Debug.Log(testObject.transform.childCount);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -95,14 +58,14 @@ public class RobotPaintPart : MonoBehaviour
 
     public int GetCurrentStickerSideCount()
     {
-        return testObject[currentSide].transform.childCount;
+        return testObject.transform.childCount;
     }
 
-    public void clearStickersOnSide()
+    public void ClearStickersOnSide()
     {
-        for(int i=0; i < testObject[currentSide].transform.childCount; i++)
+        for(int i=0; i < testObject.transform.childCount; i++)
         {
-            Destroy(testObject[currentSide].transform.GetChild(i));
+            Destroy(testObject.transform.GetChild(i).gameObject);
         }
     }
 }
