@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class StageSelectManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class StageSelectManager : MonoBehaviour
 
     void Start()
     {
+        DataPersistenceManager.Instance.LoadGame();
+
         //LoadGame() here for StaticData.numStageDone, StaticData.stageLives[], StaticData.stageRestarts[], StaticData.stageTime[]
         stageInfoPanel.SetActive(false);
         var stageConfigs = new (int max, float cycInt, float cycLen, int prePressed,
@@ -75,6 +78,7 @@ public class StageSelectManager : MonoBehaviour
         LoadStage(selectedStageNum, cfg.max, cfg.cycInt, cfg.cycLen,
             cfg.prePressed, cfg.formSeen, cfg.lockCoef, cfg.lockConst,
             cfg.coef, cfg.constant, false);
+
     }
 
     public void LoadStage(int stageNum, int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef,

@@ -33,6 +33,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
         Instance = this;
         */
+        dataPersistenceObjects = new List<IDataPersistence>();
     }
 
     public void Start()
@@ -60,6 +61,14 @@ public class DataPersistenceManager : MonoBehaviour
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
+    public void RegisterDataPersistence(IDataPersistence dataPersistence)
+    {
+        if (!dataPersistenceObjects.Contains(dataPersistence))
+        {
+            dataPersistenceObjects.Add(dataPersistence);
+        }
+    }
+
     public void NewGame()
     {
         this.gameData = new GameData();
@@ -67,7 +76,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
-        if (hasLoadedFromFile) return;
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
 
         this.gameData = dataHandler.Load();
 

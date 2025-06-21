@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HOStageData : MonoBehaviour
@@ -12,6 +13,8 @@ public class HOStageData : MonoBehaviour
         numRestarts = 0;
         elapsedTime = 0f;
     }
+
+    
     public void SetStageNum(int s)
     {
         stageNum = s;
@@ -45,5 +48,13 @@ public class HOStageData : MonoBehaviour
     {
         return elapsedTime;
     }
-    
+
+    public void LoadFromStaticData()
+    {
+        StaticData.EnsureStageListSizes();
+
+        numLives = StaticData.stageLives[stageNum];
+        numRestarts = StaticData.stageRestarts[stageNum];
+        elapsedTime = StaticData.stageTime[stageNum];
+    }
 }
