@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
-public class FormulaInputPanel : MonoBehaviour
+public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 {
     [Header("UI References")]
     public TMP_Text coefficientText, constantText, feedbackText;
@@ -34,12 +35,14 @@ public class FormulaInputPanel : MonoBehaviour
         //if haven't done the stage before, just store everything
         if (StaticData.numStageDone == stageData.GetStageNum())
         {
+            Debug.Log("BEFORE STORE: Lives = " + StaticData.stageLives[stageData.GetStageNum()]);
             StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
             StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
             StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
             StaticData.numStageDone = stageData.GetStageNum() + 1;
+            Debug.Log("AFTER STORE: Lives = " + StaticData.stageLives[stageData.GetStageNum()]);
         }
-        //else, check if it is better before storing
+ 
         else
         {
             if (StaticData.stageTime[stageData.GetStageNum()] > stageData.GetElapsedTime())
@@ -57,6 +60,28 @@ public class FormulaInputPanel : MonoBehaviour
         }
         
     }
+
+    public void LoadData(GameData data)
+    {
+        //StaticData.EnsureStageListSizes();
+
+        StaticData.stageLives = new List<int>(data.lives);
+        StaticData.stageRestarts = new List<int>(data.restarts);
+        StaticData.stageTime = new List<float>(data.stageTimes);
+        StaticData.numStageDone = data.stageDone;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        StaticData.EnsureStageListSizes();
+
+        data.lives = new List<int>(StaticData.stageLives);
+        data.restarts = new List<int>(StaticData.stageRestarts);
+        data.stageTimes = new List<float>(StaticData.stageTime);
+        data.stageDone = StaticData.numStageDone;
+    }
+
+
 
     public void ShowPanel(Sequence sequence, GameTimer gameTimer1, HOStageData sd)
     {
@@ -92,6 +117,8 @@ public class FormulaInputPanel : MonoBehaviour
 
     private void Start()
     {
+        DataPersistenceManager.Instance.RegisterDataPersistence(this);
+
         coefUpButton.onClick.AddListener(() => { currentCoef += 1; UpdateFormulaText(); });
         coefDownButton.onClick.AddListener(() => {
             if (currentCoef != 0)
@@ -105,6 +132,10 @@ public class FormulaInputPanel : MonoBehaviour
         constDownButton.onClick.AddListener(() => { currentConst -= 1; UpdateFormulaText(); });
 
         submitButton.onClick.AddListener(ValidateFormula);
+
+        int s = stageData != null ? stageData.GetStageNum() : 0;
+        Debug.Log("Loaded lives from save file: " + StaticData.stageLives[s]);
+        feedbackText.text = "Lives: " + StaticData.stageLives[s];
     }
 
     private void UpdateFormulaText()
@@ -140,6 +171,8 @@ public class FormulaInputPanel : MonoBehaviour
                 gameTimer.StopTimer();
                 stageData.SetElapsedTime(gameTimer.GetElapsedTime());
                 StoreStageData();
+                Debug.Log("Saving game...");
+                DataPersistenceManager.Instance.SaveGame();
                 SceneManager.LoadScene("Stage_Select");
             }
                 

@@ -191,9 +191,8 @@ public class SequenceGameManager : MonoBehaviour
   
     void Start()
     {
-        //Comment this out if testing from scene itself!
-        //GetData();
-        sceneName = SceneManager.GetActiveScene().name;
+        GetData();
+        sceneName= SceneManager.GetActiveScene().name;
         Debug.Log("Current scene: "+ sceneName);
         InitilizeStageData();
         InitializeStageUi();
