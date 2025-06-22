@@ -1,30 +1,20 @@
 using UnityEngine;
 
 public class Sticker : MonoBehaviour
-{
-    [SerializeField]
-    private string stickerType;
-
+{ 
     [SerializeField]
     private int stickerNum;
 
-    private Vector2 stickerPosition;
+    [SerializeField]
+    private bool isDuplicate = false;
 
-    private bool isDuplicate;
+    [SerializeField]
+    private bool onPart = false;
 
-    private bool onPart;
+    [SerializeField]
+    private bool isDefault = false;
 
-    void Start()
-    {
-        stickerPosition = transform.position;
-        isDuplicate = false;
-        onPart = false;
-    }
-
-    public string GetStickerType()
-    {
-        return stickerType;
-    }
+    private Vector3 defaultPos;
 
     public int GetStickerNum()
     {
@@ -41,6 +31,11 @@ public class Sticker : MonoBehaviour
         return onPart;
     }
 
+    public bool IsADefault()
+    {
+        return isDefault;
+    }
+
     public void ToggleIsOnPart()
     {
         onPart = !onPart;
@@ -50,5 +45,20 @@ public class Sticker : MonoBehaviour
     public void ToggleIsADuplicate()
     {
         isDuplicate = !isDuplicate;
+    }
+
+    public void ToggleIsDefault()
+    {
+        isDefault = !isDefault;
+    }
+
+    public void SetDefaultPos(Vector3 pos)
+    {
+        defaultPos = pos;
+    }
+
+    public Vector3 GetDefaultPos()
+    {
+        return defaultPos;
     }
 }

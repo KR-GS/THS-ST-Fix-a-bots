@@ -5,25 +5,24 @@ using System.Collections.Generic;
 public class RobotPaintPart : MonoBehaviour
 {
     [SerializeField]
-    private int[] sequenceArray = new int[4];
-
-    private int[] stickerCount = new int[4];
-
-    private Sticker[][] stickers = new Sticker[4][];
-
-    private int currentSide;
+    private int sequenceArray;
 
     [SerializeField]
     private GameObject testObject;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        currentSide = 0;
+    [SerializeField]
+    private GameObject defaultObj;
 
+    private int sideVal;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
         testObject = new GameObject();
+        defaultObj = new GameObject();
 
         testObject.transform.parent = transform;
+        defaultObj.transform.parent = transform;
     }
 
     public void AddSticker(Sticker newSticker)
@@ -36,11 +35,34 @@ public class RobotPaintPart : MonoBehaviour
         Debug.Log(testObject.transform.childCount);
     }
 
+    public void SetStickersOnSide(StickerPack stickersToAdd)
+    {
+        Sticker[] stickers = stickersToAdd.GetPackContents();
+        float boxLength_L = transform.position.x - (transform.GetComponent<SpriteRenderer>().bounds.size.x / 2);
+        float boxLength_R = transform.position.x + (transform.GetComponent<SpriteRenderer>().bounds.size.x / 2);
+        float boxLength_U = transform.position.y + (transform.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+        float boxLength_D = transform.position.y - (transform.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+        for (int i = 0; i < sideVal; i++)
+        {
+            
+            GameObject sticker = Instantiate(stickers[Random.Range(0, stickers.Length)].gameObject);
+            Vector3 newPos = new Vector3(Random.Range(boxLength_L, boxLength_R), Random.Range(boxLength_D, boxLength_U), sticker.transform.position.z);
+            sticker.transform.position = newPos;
+            sticker.transform.SetParent(defaultObj.transform);
+            sticker.GetComponent<Sticker>().ToggleIsADuplicate();
+            sticker.GetComponent<Sticker>().ToggleIsDefault();
+            sticker.GetComponent<Sticker>().SetDefaultPos(newPos);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Sticker sticker))
         {
-            AddSticker(sticker);
+            if (!sticker.IsADefault())
+            {
+                AddSticker(sticker);
+            }
             sticker.ToggleIsOnPart();
             Debug.Log("Sticker stuck");
         }
@@ -50,9 +72,16 @@ public class RobotPaintPart : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Sticker sticker))
         {
-            RemoveSticker();
+            if (!sticker.IsADefault())
+            {
+                RemoveSticker();
+                Debug.Log("Sticker stuck");
+            }
+            else
+            {
+                Debug.Log("Cannot remove");
+            }
             sticker.ToggleIsOnPart();
-            Debug.Log("Sticker stuck");
         }
     }
 
@@ -67,5 +96,10 @@ public class RobotPaintPart : MonoBehaviour
         {
             Destroy(testObject.transform.GetChild(i).gameObject);
         }
+    }
+
+    public void SetSideValue(int value)
+    {
+        sideVal = value; 
     }
 }

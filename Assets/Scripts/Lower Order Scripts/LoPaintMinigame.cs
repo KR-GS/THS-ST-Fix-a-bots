@@ -8,32 +8,40 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI stickerTextCounter;
 
+    [SerializeField]
+    private PatternGameManager patternGameManager;
+
     private bool dragging = false;
 
     private GameObject draggableObject;
 
     [SerializeField]
-    private List<Sticker> draggedObjects = new List<Sticker>();
-
-    [SerializeField]
     private int numOfSides;
-
-    private RobotPaintPart roboPart;
-
-    private LayerMask bodyMask;
 
     private GameObject[] partSides;
 
     private int currentSide = 0;
 
+    private int[] numberPattern;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    void Awake()
     {
         partSides = new GameObject[numOfSides];
+    }
+    void Start()
+    {
         float posY;
         float posX;
         RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
-        roboPart = FindFirstObjectByType<RobotPaintPart>();
+        RobotPaintPart roboPart = FindFirstObjectByType<RobotPaintPart>();
+        StickerPack[] stickerPacks = FindObjectsByType<StickerPack>(FindObjectsSortMode.None);
+
+        numberPattern = patternGameManager.ReturnPatternArray(numOfSides).ToArray();
+
+        Debug.Log("Number of current sticker packs: " + stickerPacks.Length);
+        Debug.Log("sticker pack name: " + stickerPacks[0].name);
 
         roboPart.transform.parent.GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
 
@@ -47,11 +55,20 @@ public class LoPaintMinigame : MonoBehaviour
         {
             partSides[i] = Instantiate(roboPart.transform.parent.gameObject);
 
-            partSides[i].transform.position = new Vector3(posX+ ((i-1) * 10), posY, partSides[i].transform.position.z);
+            partSides[i].transform.position = new Vector3(posX, posY - ((i - 1) * 10), partSides[i].transform.position.z);
 
             partSides[i].name = roboPart.transform.parent.name+ " " + i;
 
             partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
+        }
+
+        for (int i = 0; i<numOfSides; i++)
+        {
+            partSides[i].GetComponentInChildren<RobotPaintPart>().SetSideValue(numberPattern[i]);
+            if (i < numOfSides-1)
+            {
+                partSides[i].GetComponentInChildren<RobotPaintPart>().SetStickersOnSide(stickerPacks[0]);
+            }
         }
 
         Debug.Log(roboPart.name);
@@ -76,13 +93,26 @@ public class LoPaintMinigame : MonoBehaviour
                     if (draggableObject.GetComponent<Sticker>().IsOnPart())
                     {
                         dragging = false;
+                        if (draggableObject.GetComponent<Sticker>().IsADefault())
+                        {
+                            Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                            draggableObject.GetComponent<Sticker>().SetDefaultPos(new Vector3(touchPos.x, touchPos.y, draggableObject.transform.position.z));
+                        }
                         draggableObject = null;
                     }
                     else
                     {
-                        draggedObjects.Remove(draggableObject.GetComponent<Sticker>());
-                        Destroy(draggableObject);
-                        dragging = false;
+                        if (!draggableObject.GetComponent<Sticker>().IsADefault())
+                        {
+                            Destroy(draggableObject);
+                            dragging = false;
+                        }
+                        else
+                        {
+                            draggableObject.transform.position = draggableObject.GetComponent<Sticker>().GetDefaultPos();
+                            draggableObject = null; 
+                            dragging = false;
+                        }
                     }
                 }
             }
@@ -107,7 +137,6 @@ public class LoPaintMinigame : MonoBehaviour
             Debug.Log("Interacting with: " + rayHit.transform.name);
             if (rayHit.transform.gameObject.TryGetComponent(out Sticker sticker))
             {
-                Debug.Log("111Interacting with: " + rayHit.transform.name);
                 if (sticker.IsOnPart())
                 {
                     Debug.Log("This is on the robot");
@@ -118,7 +147,7 @@ public class LoPaintMinigame : MonoBehaviour
                     draggableObject = Instantiate(sticker.transform.gameObject);
                     draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();
                     Debug.Log(draggableObject.GetComponent<Sticker>().IsADuplicate());
-                    draggedObjects.Add(sticker);
+                    
                 }
                 dragging = true;
                 Debug.Log(draggableObject.name);

@@ -23,9 +23,10 @@ public class PatternGameManager : MonoBehaviour
 
     private void GeneratePatternArray(int patternLen)
     {
+        int baseHolder = Random.Range(1, 4);
         for(int i = 1; i<= patternLen; i++)
         {
-            numberPatternList.Add(generatedDifference * i);
+            numberPatternList.Add(baseHolder + (generatedDifference * i));
         }
     }
 

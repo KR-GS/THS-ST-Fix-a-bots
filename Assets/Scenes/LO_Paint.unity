@@ -503,7 +503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimapSelectionObj: {fileID: 135102035}
   minimapOrig: {fileID: 1795323747}
-  miniMapLength: 5
+  miniMapLength: 4
 --- !u!1 &408360011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,8 +1028,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978aa6f6c4f27643bd1d80a067725da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stickerType: Shape
   stickerNum: 1
+  isDuplicate: 0
+  onPart: 0
 --- !u!61 &696130312
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1203,8 +1204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stickerTextCounter: {fileID: 0}
-  draggedObjects: []
-  numOfSides: 5
+  numOfSides: 4
 --- !u!4 &707493500
 Transform:
   m_ObjectHideFlags: 0
@@ -1566,8 +1566,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978aa6f6c4f27643bd1d80a067725da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stickerType: Shape
   stickerNum: 0
+  isDuplicate: 0
+  onPart: 0
 --- !u!58 &846016935
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2103,8 +2104,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1122348090}
+  - component: {fileID: 1122348091}
   m_Layer: 0
-  m_Name: Sticker Pack
+  m_Name: Sticker Pack 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2129,6 +2131,23 @@ Transform:
   - {fileID: 2101594620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1122348091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122348089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62446e9d158d8294bbf9dddd71c5f4ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stickerPackType: Shape
+  stickers:
+  - {fileID: 846016934}
+  - {fileID: 696130311}
+  - {fileID: 2101594617}
 --- !u!1 &1136556791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,7 +2432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5984c8c927ea4e4e9c5c63ff3644a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sequenceArray: 02000000040000000600000008000000
+  sequenceArray: -1403547136
   testObject: {fileID: 0}
 --- !u!50 &1146391406
 Rigidbody2D:
@@ -3721,8 +3740,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d978aa6f6c4f27643bd1d80a067725da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stickerType: Shape
   stickerNum: 2
+  isDuplicate: 0
+  onPart: 0
 --- !u!60 &2101594618
 PolygonCollider2D:
   m_ObjectHideFlags: 0
