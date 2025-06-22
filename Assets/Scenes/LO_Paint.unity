@@ -1031,6 +1031,7 @@ MonoBehaviour:
   stickerNum: 1
   isDuplicate: 0
   onPart: 0
+  isDefault: 0
 --- !u!61 &696130312
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1204,6 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stickerTextCounter: {fileID: 0}
+  patternGameManager: {fileID: 1883860792}
   numOfSides: 4
 --- !u!4 &707493500
 Transform:
@@ -1569,6 +1571,7 @@ MonoBehaviour:
   stickerNum: 0
   isDuplicate: 0
   onPart: 0
+  isDefault: 0
 --- !u!58 &846016935
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2434,6 +2437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sequenceArray: -1403547136
   testObject: {fileID: 0}
+  defaultObj: {fileID: 0}
 --- !u!50 &1146391406
 Rigidbody2D:
   serializedVersion: 5
@@ -3743,6 +3747,7 @@ MonoBehaviour:
   stickerNum: 2
   isDuplicate: 0
   onPart: 0
+  isDefault: 0
 --- !u!60 &2101594618
 PolygonCollider2D:
   m_ObjectHideFlags: 0
