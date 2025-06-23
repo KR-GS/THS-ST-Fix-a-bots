@@ -127,7 +127,7 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.SaveData(ref gameData);
         }
 
-        Debug.Log("Saved day number: " + gameData.level);
+        Debug.Log("Saved day number: " + gameData.level + "at: " + Application.persistentDataPath);
 
         dataHandler.Save(gameData);
     }

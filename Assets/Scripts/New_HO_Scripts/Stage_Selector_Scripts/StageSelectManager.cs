@@ -17,8 +17,11 @@ public class StageSelectManager : MonoBehaviour
     private int selectedStageNum;
     private (int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef, bool lockConst, int coef, int constant) selectedConfig;
 
+    
+
     IEnumerator Start()
     {
+        Debug.Log("Num Stage Done: " + StaticData.numStageDone);
         yield return null;
 
         if (DataPersistenceManager.Instance != null)
@@ -30,7 +33,7 @@ public class StageSelectManager : MonoBehaviour
             Debug.LogError("The DataPersistence.Instance is NULL!!!");
         }
 
-            //LoadGame() here for StaticData.numStageDone, StaticData.stageLives[], StaticData.stageRestarts[], StaticData.stageTime[]
+        //LoadGame() here for StaticData.numStageDone, StaticData.stageLives[], StaticData.stageRestarts[], StaticData.stageTime[]
         stageInfoPanel.SetActive(false);
         var stageConfigs = new (int max, float cycInt, float cycLen, int prePressed,
         bool formSeen, bool lockCoef, bool lockConst, int coef, int constant)[]

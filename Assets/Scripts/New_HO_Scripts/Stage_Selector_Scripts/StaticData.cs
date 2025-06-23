@@ -15,17 +15,17 @@ public class StaticData
     public static float cycleLeniency;
     public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence;
 
-    static StaticData()
+   /* static StaticData()
     {
         ResetStageData();
     }
-
-    public static void ResetStageData()
+   */
+    static StaticData()
     {
         stageLives = new List<int>(new int[STAGE_COUNT]);
         stageRestarts = new List<int>(new int[STAGE_COUNT]);
         stageTime = new List<float>(new float[STAGE_COUNT]);
-        numStageDone = 0;
+        //numStageDone = 0;
     }
 
     public static void EnsureStageListSizes()

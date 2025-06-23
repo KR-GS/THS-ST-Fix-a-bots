@@ -2065,8 +2065,6 @@ GameObject:
   - component: {fileID: 1856314339}
   - component: {fileID: 1856314338}
   - component: {fileID: 1856314341}
-  - component: {fileID: 1856314343}
-  - component: {fileID: 1856314342}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -2182,76 +2180,6 @@ MonoBehaviour:
   timeText: {fileID: 107182390}
   yesButton: {fileID: 640982218}
   noButton: {fileID: 1989965465}
---- !u!114 &1856314342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1856314336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe2ab74e55d57d34f8c688df3367713c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1856314343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1856314336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87744157c8591a348acf0c58f47a4650, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fileName: data.game
---- !u!1 &1857575656
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1857575658}
-  - component: {fileID: 1857575657}
-  m_Layer: 0
-  m_Name: DataPersistenceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1857575657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857575656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87744157c8591a348acf0c58f47a4650, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fileName: data.game
---- !u!4 &1857575658
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857575656}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1989965465 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5832326767116250681, guid: bd532f35d8a432a41b2bff25de19a20d, type: 3}
@@ -2274,6 +2202,8 @@ GameObject:
   - component: {fileID: 2117145447}
   - component: {fileID: 2117145449}
   - component: {fileID: 2117145448}
+  - component: {fileID: 2117145451}
+  - component: {fileID: 2117145450}
   m_Layer: 0
   m_Name: StageSelectPanel
   m_TagString: Untagged
@@ -2345,6 +2275,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117145446}
   m_CullTransparentMesh: 1
+--- !u!114 &2117145450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117145446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2ab74e55d57d34f8c688df3367713c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2117145451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117145446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87744157c8591a348acf0c58f47a4650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data2.game
 --- !u!1001 &8844329685252781989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2450,4 +2405,3 @@ SceneRoots:
   - {fileID: 1856314337}
   - {fileID: 1852229862}
   - {fileID: 35062419}
-  - {fileID: 1857575658}
