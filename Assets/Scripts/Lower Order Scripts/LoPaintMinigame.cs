@@ -160,30 +160,22 @@ public class LoPaintMinigame : MonoBehaviour
         partSides[currentSide].GetComponentInChildren<RobotPaintPart>().ClearStickersOnSide();
     }
 
-    public void TurnToRight()
+    public void CheckSideValues()
     {
-        Vector3 tempPos;
-        if (currentSide < numOfSides-1)
+        int correctAns = 0;
+        for (int i = 0; i < numOfSides; i++) 
         {
-            tempPos = partSides[currentSide].transform.position;
-            currentSide++;
-            partSides[currentSide - 1].transform.position = partSides[currentSide].transform.position;
-            partSides[currentSide].transform.position = tempPos;
+            if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount() == numberPattern[i])
+            {
+                correctAns++;
+            }
+        }
+
+        if (correctAns == numOfSides)
+        {
+            Debug.Log("All Correct!");
         }
     }
-
-    public void TurnToLeft()
-    {
-        Vector3 tempPos;
-        if (currentSide > 0)
-        {
-            tempPos = partSides[currentSide].transform.position;
-            currentSide--;
-            partSides[currentSide + 1].transform.position = partSides[currentSide].transform.position;
-            partSides[currentSide].transform.position = tempPos;
-        }
-    }
-
     public void ChangeSide(int val)
     {
         Vector3 tempPos = partSides[currentSide].transform.position;

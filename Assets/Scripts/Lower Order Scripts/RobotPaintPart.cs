@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 
 public class RobotPaintPart : MonoBehaviour
 {
@@ -19,7 +20,9 @@ public class RobotPaintPart : MonoBehaviour
     void Awake()
     {
         testObject = new GameObject();
+        testObject.name = "Added Sticker Holder";
         defaultObj = new GameObject();
+        defaultObj.name = "Default Sitckers";
 
         testObject.transform.parent = transform;
         defaultObj.transform.parent = transform;
@@ -87,7 +90,7 @@ public class RobotPaintPart : MonoBehaviour
 
     public int GetCurrentStickerSideCount()
     {
-        return testObject.transform.childCount;
+        return defaultObj.transform.childCount + testObject.transform.childCount;
     }
 
     public void ClearStickersOnSide()

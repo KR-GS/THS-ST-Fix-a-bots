@@ -3328,6 +3328,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0ac233f3207d5d47a13af486875afc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  base_Lowest: 1
+  base_Highest: 4
+  diff_Lowest: 1
+  diff_Highest: 3
 --- !u!4 &1883860793
 Transform:
   m_ObjectHideFlags: 0
@@ -3662,9 +3666,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
-        m_MethodName: CheckNumber
+      - m_Target: {fileID: 707493499}
+        m_TargetAssemblyTypeName: LoPaintMinigame, Assembly-CSharp
+        m_MethodName: CheckSideValues
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

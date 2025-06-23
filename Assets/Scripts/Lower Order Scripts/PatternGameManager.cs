@@ -5,6 +5,18 @@ using System.Xml.Serialization;
 
 public class PatternGameManager : MonoBehaviour
 {
+    [SerializeField]
+    private int base_Lowest;
+
+    [SerializeField]
+    private int base_Highest;
+
+    [SerializeField]
+    private int diff_Lowest;
+
+    [SerializeField] 
+    private int diff_Highest;
+
     private int generatedDifference;
 
     private List<int> numberPatternList = new List<int>();
@@ -13,7 +25,7 @@ public class PatternGameManager : MonoBehaviour
 
     void Awake()
     {
-        generatedDifference = Random.Range(1, 5);
+        generatedDifference = Random.Range(diff_Lowest, diff_Highest);
     }
 
     public int ReturnDifference()
@@ -23,7 +35,9 @@ public class PatternGameManager : MonoBehaviour
 
     private void GeneratePatternArray(int patternLen)
     {
-        int baseHolder = Random.Range(1, 4);
+        int baseHolder = Random.Range(base_Lowest, base_Highest);
+
+
         for(int i = 1; i<= patternLen; i++)
         {
             numberPatternList.Add(baseHolder + (generatedDifference * i));
