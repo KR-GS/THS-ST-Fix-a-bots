@@ -2065,6 +2065,8 @@ GameObject:
   - component: {fileID: 1856314339}
   - component: {fileID: 1856314338}
   - component: {fileID: 1856314341}
+  - component: {fileID: 1856314343}
+  - component: {fileID: 1856314342}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -2180,6 +2182,31 @@ MonoBehaviour:
   timeText: {fileID: 107182390}
   yesButton: {fileID: 640982218}
   noButton: {fileID: 1989965465}
+--- !u!114 &1856314342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856314336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2ab74e55d57d34f8c688df3367713c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1856314343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856314336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87744157c8591a348acf0c58f47a4650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data.game
 --- !u!1 &1857575656
 GameObject:
   m_ObjectHideFlags: 0
