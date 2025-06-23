@@ -19,9 +19,14 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private int numOfSides;
 
+    [SerializeField]
+    private StickerPack[] stickerPacks;
+
     private GameObject[] partSides;
 
     private int currentSide = 0;
+
+    private int currentStickerPack = 0;
 
     private int[] numberPattern;
 
@@ -37,7 +42,6 @@ public class LoPaintMinigame : MonoBehaviour
         float posX;
         RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
         RobotPaintPart roboPart = FindFirstObjectByType<RobotPaintPart>();
-        StickerPack[] stickerPacks = FindObjectsByType<StickerPack>(FindObjectsSortMode.None);
 
         numberPattern = patternGameManager.ReturnPatternArray(numOfSides).ToArray();
 
@@ -63,12 +67,14 @@ public class LoPaintMinigame : MonoBehaviour
             partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
         }
 
+        int packToUse = Random.Range(0, stickerPacks.Length-1);
+
         for (int i = 0; i<numOfSides; i++)
         {
             partSides[i].GetComponentInChildren<RobotPaintPart>().SetSideValue(numberPattern[i]);
             if (i < numOfSides-1)
             {
-                partSides[i].GetComponentInChildren<RobotPaintPart>().SetStickersOnSide(stickerPacks[0]);
+                partSides[i].GetComponentInChildren<RobotPaintPart>().SetStickersOnSide(stickerPacks[packToUse]);
             }
         }
 
@@ -213,6 +219,29 @@ public class LoPaintMinigame : MonoBehaviour
         for (int i = 0; i < defaultObj.childCount; i++) 
         {
             defaultObj.GetChild(i).GetComponent<Sticker>().SetDefaultPos(Vector3.zero);
+        }
+    }
+
+    public void ChangeStickerUp()
+    {
+        
+        if (currentStickerPack > 0)
+        {
+            Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
+            currentStickerPack--;
+            stickerPacks[currentStickerPack+1].transform.position = stickerPacks[currentStickerPack].transform.position;
+            stickerPacks[currentStickerPack].transform.position = newPos;
+        }
+    }
+
+    public void ChangeStickerDown()
+    {
+        if (currentStickerPack < stickerPacks.Length-1)
+        {
+            Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
+            currentStickerPack++;
+            stickerPacks[currentStickerPack - 1].transform.position = stickerPacks[currentStickerPack].transform.position;
+            stickerPacks[currentStickerPack].transform.position = newPos;
         }
     }
 }
