@@ -16,6 +16,8 @@ public class Sticker : MonoBehaviour
 
     private Vector3 defaultPos;
 
+    private int partOn;
+
     public int GetStickerNum()
     {
         return stickerNum;
@@ -54,11 +56,29 @@ public class Sticker : MonoBehaviour
 
     public void SetDefaultPos(Vector3 pos)
     {
-        defaultPos = pos;
+        if(pos != Vector3.zero)
+        {
+            defaultPos = pos;
+        }
+        else
+        {
+            defaultPos = transform.position;
+        }
+            
     }
 
     public Vector3 GetDefaultPos()
     {
         return defaultPos;
+    }
+
+    public void SetPart(int val)
+    {
+        partOn = val;
+    }
+
+    public int GetPartOn()
+    {
+        return partOn;
     }
 }

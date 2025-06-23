@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class LoPaintMinigame : MonoBehaviour
 {
@@ -55,7 +56,7 @@ public class LoPaintMinigame : MonoBehaviour
         {
             partSides[i] = Instantiate(roboPart.transform.parent.gameObject);
 
-            partSides[i].transform.position = new Vector3(posX, posY - ((i - 1) * 10), partSides[i].transform.position.z);
+            partSides[i].transform.position = new Vector3(posX, posY - ((i - 1) * 20), partSides[i].transform.position.z);
 
             partSides[i].name = roboPart.transform.parent.name+ " " + i;
 
@@ -96,8 +97,31 @@ public class LoPaintMinigame : MonoBehaviour
                         if (draggableObject.GetComponent<Sticker>().IsADefault())
                         {
                             Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                            draggableObject.GetComponent<Sticker>().SetDefaultPos(new Vector3(touchPos.x, touchPos.y, draggableObject.transform.position.z));
+                            Debug.Log(currentSide);
+                            if(touchPos.x > partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_RightVal() + 0.5f)
+                            {
+                                touchPos.x = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_RightVal();
+                            }
+                            else if(touchPos.x < partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_LeftVal() - 0.5f)
+                            {
+                                touchPos.x = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_LeftVal();
+                            }
+
+                            if (touchPos.y > partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_UpVal() +0.5f)
+                            {
+                                touchPos.y = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_UpVal();
+                            }
+                            else if (touchPos.y < partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_DownVal() - 0.5f)
+                            {
+                                touchPos.y = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_DownVal();
+                            }
+
+                            Vector3 newPos = new Vector3(touchPos.x, touchPos.y, draggableObject.transform.position.z);
+
+                            draggableObject.GetComponent<Sticker>().SetDefaultPos(newPos);
+                            draggableObject.transform.position = newPos;
                         }
+
                         draggableObject = null;
                     }
                     else
@@ -184,5 +208,11 @@ public class LoPaintMinigame : MonoBehaviour
 
         partSides[prevVal].transform.position = partSides[currentSide].transform.position;
         partSides[currentSide].transform.position = tempPos;
+        Transform defaultObj = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().GetDefaultHolder();
+
+        for (int i = 0; i < defaultObj.childCount; i++) 
+        {
+            defaultObj.GetChild(i).GetComponent<Sticker>().SetDefaultPos(Vector3.zero);
+        }
     }
 }

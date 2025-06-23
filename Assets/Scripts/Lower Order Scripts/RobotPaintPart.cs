@@ -41,10 +41,10 @@ public class RobotPaintPart : MonoBehaviour
     public void SetStickersOnSide(StickerPack stickersToAdd)
     {
         Sticker[] stickers = stickersToAdd.GetPackContents();
-        float boxLength_L = transform.position.x - (transform.GetComponent<SpriteRenderer>().bounds.size.x / 2);
-        float boxLength_R = transform.position.x + (transform.GetComponent<SpriteRenderer>().bounds.size.x / 2);
-        float boxLength_U = transform.position.y + (transform.GetComponent<SpriteRenderer>().bounds.size.y / 2);
-        float boxLength_D = transform.position.y - (transform.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+        float boxLength_L = Base_LeftVal();
+        float boxLength_R = Base_RightVal();
+        float boxLength_U = Base_UpVal();
+        float boxLength_D = Base_DownVal();
         for (int i = 0; i < sideVal; i++)
         {
             
@@ -104,5 +104,30 @@ public class RobotPaintPart : MonoBehaviour
     public void SetSideValue(int value)
     {
         sideVal = value; 
+    }
+
+    public float Base_LeftVal()
+    {
+        return transform.position.x - (transform.GetComponent<SpriteRenderer>().bounds.size.x / 2) + 0.5f;
+    }
+
+    public float Base_RightVal()
+    {
+        return transform.position.x + (transform.GetComponent<SpriteRenderer>().bounds.size.x / 2) - 0.5f;
+    }
+
+    public float Base_UpVal()
+    {
+        return transform.position.y + (transform.GetComponent<SpriteRenderer>().bounds.size.y / 2) - 0.5f;
+    }
+
+    public float Base_DownVal()
+    {
+        return transform.position.y - (transform.GetComponent<SpriteRenderer>().bounds.size.y / 2) + 0.5f;
+    }
+
+    public Transform GetDefaultHolder()
+    {
+        return defaultObj.transform;
     }
 }
