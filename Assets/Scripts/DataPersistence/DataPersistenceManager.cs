@@ -34,6 +34,7 @@ public class DataPersistenceManager : MonoBehaviour
         Instance = this;
         */
         dataPersistenceObjects = new List<IDataPersistence>();
+        Debug.Log("Awake has been called, instance set");
     }
 
     public void Start()

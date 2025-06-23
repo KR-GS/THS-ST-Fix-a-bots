@@ -24,8 +24,16 @@ public class SetStageInfo: MonoBehaviour, IDataPersistence
         Debug.Log("[StageDataLoader] Data saved from StaticData");
     }
 
-    private void Awake()
+    private void Start()
     {
-        DataPersistenceManager.Instance.RegisterDataPersistence(this);
+        if (DataPersistenceManager.Instance != null)
+        {
+            DataPersistenceManager.Instance.RegisterDataPersistence(this);
+            Debug.Log("Start is called!");
+        }
+        else
+        {
+            Debug.LogError("[SetStageInfo] DataPersistenceManager.Instance is null during Start!");
+        }
     }
 }
