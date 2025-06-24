@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class LoPaintMinigame : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class LoPaintMinigame : MonoBehaviour
 
     [SerializeField]
     private StickerPack[] stickerPacks;
+
+    [SerializeField]
+    private float speed;
+
+    [SerializeField]
+    private Button[] moveBtn;
 
     private GameObject[] partSides;
 
@@ -227,10 +234,11 @@ public class LoPaintMinigame : MonoBehaviour
         
         if (currentStickerPack > 0)
         {
-            Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
-            currentStickerPack--;
-            stickerPacks[currentStickerPack+1].transform.position = stickerPacks[currentStickerPack].transform.position;
-            stickerPacks[currentStickerPack].transform.position = newPos;
+            //Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
+            //currentStickerPack--;
+            //stickerPacks[currentStickerPack+1].transform.position = stickerPacks[currentStickerPack].transform.position;
+            //stickerPacks[currentStickerPack].transform.position = newPos;
+            StartCoroutine(TriggerPackChange(1));
         }
     }
 
@@ -238,10 +246,41 @@ public class LoPaintMinigame : MonoBehaviour
     {
         if (currentStickerPack < stickerPacks.Length-1)
         {
-            Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
-            currentStickerPack++;
-            stickerPacks[currentStickerPack - 1].transform.position = stickerPacks[currentStickerPack].transform.position;
-            stickerPacks[currentStickerPack].transform.position = newPos;
+            Debug.Log("Hello World");
+            //stickerPacks[currentStickerPack - 1].transform.position = stickerPacks[currentStickerPack].transform.position;
+            //stickerPacks[currentStickerPack].transform.position = newPos;
+            StartCoroutine(TriggerPackChange(-1));
+        }
+    }
+
+    private IEnumerator TriggerPackChange(int val)
+    {
+        Debug.Log("Coroutine Triggered");
+
+        foreach(Button button in moveBtn)
+        {
+            button.interactable = false;
+        }
+
+        Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
+        currentStickerPack++;
+
+        while (Vector3.Distance(stickerPacks[currentStickerPack + val].transform.position, stickerPacks[currentStickerPack].transform.position) > 0.001f)
+        {
+            stickerPacks[currentStickerPack + val].transform.position = Vector3.MoveTowards(stickerPacks[currentStickerPack + val].transform.position, stickerPacks[currentStickerPack].transform.position, speed * Time.deltaTime);
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.5f);
+
+        while (Vector3.Distance(stickerPacks[currentStickerPack].transform.position, newPos) > 0.001f)
+        {
+            stickerPacks[currentStickerPack].transform.position = Vector3.MoveTowards(stickerPacks[currentStickerPack].transform.position, newPos, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        foreach (Button button in moveBtn)
+        {
+            button.interactable = true;
         }
     }
 }
