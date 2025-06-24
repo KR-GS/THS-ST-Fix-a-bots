@@ -19,6 +19,8 @@ public class GameData
 
     public bool finished;
 
+    public bool orderReceived;
+
     public int currentOrderIndex;
 
     public List<int> lives;
@@ -36,6 +38,7 @@ public class GameData
         this.currentOrderIndex = -1;
         this.money = 0;
         this.finished = false;
+        this.orderReceived = false;
         this.prize = 0;
         this.time = 0f;
         this.lives = new List<int>();

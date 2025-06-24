@@ -61,7 +61,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void CreateNewOrder()
+    public Order CreateNewOrder()
     {
         if (TimerScript.instance != null)
         {
@@ -88,6 +88,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             TimerScript.instance.StartTimer();
         }
+
+        return newOrder;
     }
 
     public void TryCompleteOrder()

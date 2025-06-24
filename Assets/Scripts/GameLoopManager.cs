@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using System;
+//using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -144,6 +144,15 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         level++;
         money += OrderManager.Instance.GetPrize();
         OrderManager.Instance.SetStatus(false);
+        RaycastInteractor ri = Object.FindFirstObjectByType<RaycastInteractor>();
+        if (ri != null)
+        {
+            ri.SetFinished(false);
+        }
+        else
+        {
+            Debug.LogWarning("RaycastInteractor not found in scene.");
+        }
         dayNumber.text = "Day: " + this.level;
         moneyText.text = "Money: " + this.money;
         Debug.Log("Starting Level " + level);
