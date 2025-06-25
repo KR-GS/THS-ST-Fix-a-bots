@@ -14,7 +14,15 @@ public class StationExit : MonoBehaviour
             switch (type)
             {
                 case StationType.Tool:
-                    currentOrder.toolDone = true;
+                    if (StaticData.isToolDone)
+                    {
+                        currentOrder.toolDone = true;
+                        Debug.Log("Tool task completed, marking toolDone = true");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tool task not completed yet!");
+                    }
                     break;
                 case StationType.Paint:
                     currentOrder.paintDone = true;
@@ -24,7 +32,7 @@ public class StationExit : MonoBehaviour
                     break;
             }
 
-            Debug.Log($"{type} station task marked complete!");
+            Debug.Log($"Successfully returned from {type} station!");
             //OrderManager.Instance.TryCompleteOrder();
         }
 

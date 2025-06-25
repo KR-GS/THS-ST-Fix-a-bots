@@ -503,6 +503,14 @@ public class LoToolMinigame : MonoBehaviour
         if(totalCorrect == patternLength)
         {
             Debug.Log("All correct!");
+
+            StaticData.isToolDone = true;
+
+            if (DataPersistenceManager.Instance != null)
+            {
+                DataPersistenceManager.Instance.SaveGame();
+                Debug.Log("Tool station completion saved to StaticData.");
+            }
         }
         else
         {

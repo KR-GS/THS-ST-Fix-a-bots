@@ -120,6 +120,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         this.level = data.level;
         this.money = data.money;
+
+        StaticData.dayNo = this.level;
+
         if (dayNumber != null)
         {
             dayNumber.text = "Day: " + this.level;
@@ -142,6 +145,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public void StartNewLevel()
     {
         level++;
+        StaticData.dayNo = level;
         money += OrderManager.Instance.GetPrize();
         OrderManager.Instance.SetStatus(false);
         RaycastInteractor ri = Object.FindFirstObjectByType<RaycastInteractor>();
@@ -167,16 +171,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         Debug.Log("Level " + level + " complete!");
         StartNewLevel();
-    }
-
-    public DifficultyLevel GetDifficultyLevel()
-    {
-        if (level <= 5)
-            return DifficultyLevel.easy;
-        else if (level > 5 && level <= 10)
-            return DifficultyLevel.medium;
-        else
-            return DifficultyLevel.hard;
     }
 
     /*

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 
 public class RaycastInteractor : MonoBehaviour, IDataPersistence
@@ -24,20 +25,51 @@ public class RaycastInteractor : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
-        HideOrderSheetPanel();
+        StartCoroutine(DelayedOrderUISetup());
+    }
 
-        if (OrderManager.Instance != null && OrderManager.Instance.GetCurrentOrder() != null)
+    private IEnumerator DelayedOrderUISetup()
+    {
+        // Wait 1 frame to ensure OrderManager is initialized and data is loaded
+        yield return null;
+
+
+        if (OrderManager.Instance != null)
         {
-            currentOrder = OrderManager.Instance.GetCurrentOrder();
-            orderReceived = true;
-            ShowOrderUI(currentOrder);
-            Debug.Log("[RaycastInteractor] Showing existing order on Awake.");
+            Order savedOrder = OrderManager.Instance.GetCurrentOrder();
+
+            // Check if it's a valid order
+            if (savedOrder != null && (savedOrder.needsTool || savedOrder.needsWire || savedOrder.needsPaint))
+            {
+                currentOrder = savedOrder;
+                orderReceived = true;
+                ShowOrderUI(currentOrder);
+                Debug.Log("[RaycastInteractor] Showing existing order on delayed setup.");
+                HideOrderSheetPanel();
+            }
+            else
+            {
+                HideOrderSheetPanel(); // keep it hidden if invalid
+                Debug.Log("[RaycastInteractor] No valid saved order to display.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[RaycastInteractor] OrderManager.Instance is null in coroutine.");
         }
     }
 
     public void HideOrderSheetPanel()
     {
-        orderSheetPanel.SetActive(false);
+        if (orderSheetPanel != null)
+        {
+            Debug.Log("Hiding order sheet panel.");
+            orderSheetPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("orderSheetPanel is null — can't hide it.");
+        }
     }
     void Update()
     {
@@ -93,13 +125,39 @@ public class RaycastInteractor : MonoBehaviour, IDataPersistence
 
     void ShowOrderUI(Order order)
     {
-        orderSheetPanel.gameObject.SetActive(true); 
-  
-        toolStatus.text = order.needsTool ? "Tool - Not Done" : "Tool - Not Needed";
-        wireStatus.text = order.needsWire ? "Wire - Not Done" : "Wire - Not Needed";
-        paintStatus.text = order.needsPaint ? "Paint - Not Done" : "Paint - Not Needed";
+        orderSheetPanel.gameObject.SetActive(true);
 
-  
+        if (order.needsTool)
+        {
+            toolStatus.gameObject.SetActive(true);
+            toolStatus.text = StaticData.isToolDone ? "Tool - Complete" : "Tool - Not Done";
+        }
+        else
+        {
+            toolStatus.gameObject.SetActive(false);
+        }
+
+        if (order.needsWire)
+        {
+            wireStatus.gameObject.SetActive(true);
+            wireStatus.text = StaticData.isWireDone ? "Wire - Complete" : "Wire - Not Done";
+        }
+        else
+        {
+            wireStatus.gameObject.SetActive(false);
+        }
+
+        if (order.needsPaint)
+        {
+            paintStatus.gameObject.SetActive(true);
+            paintStatus.text = StaticData.isPaintDone ? "Paint - Complete" : "Paint - Not Done";
+        }
+        else
+        {
+            paintStatus.gameObject.SetActive(false);
+        }
+
+
         okButton.gameObject.SetActive(true);
         okButton.onClick.RemoveAllListeners();
         okButton.onClick.AddListener(() =>

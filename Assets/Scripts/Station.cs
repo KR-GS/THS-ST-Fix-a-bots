@@ -20,7 +20,7 @@ public class Station : MonoBehaviour
             case StationType.Tool:
                 if (currentOrder.needsTool && !currentOrder.toolDone)
                 {
-                    SceneManager.LoadScene("LO_Tool 1");
+                    SceneManager.LoadScene("LO_Tool");
                     //currentOrder.toolDone = true;
                     Debug.Log("Tool station activated!");
                 }
