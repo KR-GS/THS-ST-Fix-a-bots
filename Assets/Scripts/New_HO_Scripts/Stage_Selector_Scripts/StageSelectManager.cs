@@ -61,40 +61,6 @@ public class StageSelectManager : MonoBehaviour
         noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
     }
 
-    /*
-    void Start()
-    {
-        DataPersistenceManager.Instance.LoadGame();
-
-        //LoadGame() here for StaticData.numStageDone, StaticData.stageLives[], StaticData.stageRestarts[], StaticData.stageTime[]
-        stageInfoPanel.SetActive(false);
-        var stageConfigs = new (int max, float cycInt, float cycLen, int prePressed,
-        bool formSeen, bool lockCoef, bool lockConst, int coef, int constant)[]
-        {
-            (25, 1f, 0.6f, 3, true,  true,  true,  2,  2),
-            (25, 1f, 0.6f, 3, false, false, true,  3, -2),
-            (25, 1f, 0.6f, 3, false, false, false, 3, -1),
-            (25, 1f, 0.6f, 0, true,  true,  true,  3,  1),
-            (25, 1f, 0.6f, 0, false, false, false, 4, -3)
-        };
-
-        for (int i = 0; i < stageButtons.Length; i++)
-        {
-            int stageNum = i;
-            var cfg = stageConfigs[i];
-
-            stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
-
-            stageButtons[i].onClick.AddListener(() => ShowStageInfo(stageNum, cfg));
-        }
-
-        randButton.onClick.AddListener(() => LoadStage(5, 25, 1f, 0.6f, 0, false, false, false, 0, 0, true));
-
-        yesButton.onClick.AddListener(ConfirmStageSelection);
-        noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
-    }
-    */
-
     void ShowStageInfo(int stageNum, (int, float, float, int, bool, bool, bool, int, int) config)
     {
         selectedStageNum = stageNum;

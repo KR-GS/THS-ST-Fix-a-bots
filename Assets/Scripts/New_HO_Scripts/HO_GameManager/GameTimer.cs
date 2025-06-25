@@ -31,6 +31,11 @@ public class GameTimer : MonoBehaviour
         return elapsedTime;
     }
 
+    public bool GetIsRunning()
+    {
+        return isRunning;
+    }
+
     private void Update()
     {
         if (isRunning)

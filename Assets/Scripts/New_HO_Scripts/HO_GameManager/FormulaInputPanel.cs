@@ -135,7 +135,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             feedbackText.text = "Both are right";
             if (StaticData.isRandomSequence)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
+                SceneManager.LoadScene("Ho_BotFight");
             }
             else
             {

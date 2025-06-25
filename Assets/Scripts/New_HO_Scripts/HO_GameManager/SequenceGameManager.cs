@@ -64,7 +64,7 @@ public class SequenceGameManager : MonoBehaviour
 
         foreach (RaycastResult result in raycastResults)
         {
-            if (result.gameObject.GetComponent<Button>() != null || result.gameObject.GetComponent<Toggle>() != null)
+            if ((result.gameObject.GetComponent<Button>() != null || result.gameObject.GetComponent<Toggle>() != null) && !result.gameObject.GetComponent<TimePeriodButton>()) 
             {
                 return true;
             }
@@ -108,6 +108,7 @@ public class SequenceGameManager : MonoBehaviour
     void InitializeStageUi()
     {
         formulaText.gameObject.SetActive(isFormulaSeen);
+        isCycling = false;
 
         formulaPanel.gameObject.SetActive(false);
         pausePanel.SetActive(false);
@@ -121,7 +122,7 @@ public class SequenceGameManager : MonoBehaviour
             ResetSequence();
         });
 
-        pauseButton.enabled = false;
+        //pauseButton.enabled = false;
         pauseButton.onClick.AddListener(() => PauseGame());
         resumeButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
         exitButton.onClick.AddListener(() => ExitGame());
@@ -135,18 +136,17 @@ public class SequenceGameManager : MonoBehaviour
 
     void PauseGame()
     {
+        Time.timeScale = 0;
         gameTimer.StopTimer();
         canTap = false;
-        isCycling = false;
+        pausePanel.SetActive(true);
         if (stageData.GetNumLives() <= 0)
         {
-            pausePanel.SetActive(true);
             panelText.text = "You Lost! Continue?";
         }
         else
         {
             panelText.text = "Game Paused";
-            pausePanel.SetActive(true);
         }
     }
 
@@ -158,14 +158,26 @@ public class SequenceGameManager : MonoBehaviour
         }
         if (nextStage)
         {
+            Time.timeScale = 1;
             pausePanel.SetActive(false);
             gameTimer.ResumeTimer();
             canTap = true;
         }
-        if (!nextStage)
+        if (!nextStage && !isCycling)
         {
+            Time.timeScale = 1;
             pausePanel.SetActive(false);
-            pauseButton.enabled = false;
+            if (!gameTimer.GetIsRunning())
+            {
+                gameTimer.ResumeTimer();
+            }
+            canTap = true;
+        }
+        if (!nextStage && isCycling)
+        {
+            Time.timeScale = 1;
+            isCycling = false;
+            pausePanel.SetActive(false);
             restartStageButton.enabled = false;
             feedbackText.text = "3";
             yield return new WaitForSeconds(1);
@@ -174,12 +186,9 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = "1";
             yield return new WaitForSeconds(1);
             gameTimer.ResumeTimer();
-            if (!isCycling)
-            {
-                isCycling = true;
-            }
+            //pauseButton.enabled = true;
+            isCycling = true;
             restartStageButton.enabled = true;
-            pauseButton.enabled = true;
             canTap = true;
         }
         yield return null;
@@ -259,7 +268,7 @@ public class SequenceGameManager : MonoBehaviour
         }
 
         currentCycleIndex = 0;
-        isCycling = true;
+        //isCycling = true;
 
         feedbackText.text = "Watch the sequence! Tap the screen when the highlighted number is in the sequence.";
     }
@@ -277,9 +286,10 @@ public class SequenceGameManager : MonoBehaviour
         feedbackText.text = "Go!";
         StartCoroutine(CycleButtons());
         yield return new WaitForSeconds(1f);
+        isCycling = true;
         gameTimer.StartTimer();
         restartStageButton.enabled = true;
-        pauseButton.enabled = true;
+        //pauseButton.enabled = true;
         yield return null;
     }
 
@@ -296,7 +306,7 @@ public class SequenceGameManager : MonoBehaviour
         feedbackText.text = "1";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "Go!";
-        pauseButton.enabled = true;
+        //pauseButton.enabled = true;
         restartStageButton.enabled = true;
         isCycling = true;
         if (wasRestartButtonPressed)
@@ -505,7 +515,7 @@ public class SequenceGameManager : MonoBehaviour
     void ResetSequence()
     {
         restartStageButton.enabled = false;
-        pauseButton.enabled = false;
+        //pauseButton.enabled = false;
         for (int i = 0; i < buttons.Count; i++)
         {
             buttons[i].SetHighlighted(false);
