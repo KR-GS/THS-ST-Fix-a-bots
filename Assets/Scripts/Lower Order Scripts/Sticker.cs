@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Sticker : MonoBehaviour
+public class Sticker : StickerPack
 { 
     [SerializeField]
     private int stickerNum;
@@ -17,6 +17,11 @@ public class Sticker : MonoBehaviour
     private Vector3 defaultPos;
 
     private int partOn;
+
+    public void SetStickerType()
+    {
+        stickerPackType = transform.parent.GetComponent<StickerPack>().GetPackType();
+    }
 
     public int GetStickerNum()
     {

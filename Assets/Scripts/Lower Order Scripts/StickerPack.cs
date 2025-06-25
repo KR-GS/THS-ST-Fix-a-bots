@@ -3,7 +3,7 @@ using UnityEngine;
 public class StickerPack : MonoBehaviour
 {
     [SerializeField]
-    private string stickerPackType;
+    protected string stickerPackType;
 
     [SerializeField]
     private Sticker[] stickers;

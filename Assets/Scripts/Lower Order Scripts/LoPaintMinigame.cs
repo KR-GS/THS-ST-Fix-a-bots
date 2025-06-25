@@ -37,11 +37,21 @@ public class LoPaintMinigame : MonoBehaviour
 
     private int[] numberPattern;
 
+    private string packUsed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake()
     {
         partSides = new GameObject[numOfSides];
+        foreach(StickerPack stickerpacks in stickerPacks)
+        {
+            Sticker[] stickers = stickerpacks.GetPackContents();
+            for (int i =0; i< stickers.Length; i++)
+            {
+                stickers[i].SetStickerType();
+            }
+        }
     }
     void Start()
     {
@@ -75,6 +85,8 @@ public class LoPaintMinigame : MonoBehaviour
         }
 
         int packToUse = Random.Range(0, stickerPacks.Length-1);
+
+        packUsed = stickerPacks[packToUse].GetPackType();
 
         for (int i = 0; i<numOfSides; i++)
         {
@@ -199,18 +211,39 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void CheckSideValues()
     {
-        int correctAns = 0;
+        Debug.Log("Hello from checking");
+        int correctAnsNo = 0;
+        int correntTypeNo = 0;
         for (int i = 0; i < numOfSides; i++) 
         {
             if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount() == numberPattern[i])
             {
-                correctAns++;
+                correctAnsNo++;
+            }
+
+            if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetStickeyTypeCount(packUsed) == numberPattern[i])
+            {
+                correntTypeNo++;
             }
         }
 
-        if (correctAns == numOfSides)
+
+        if (correctAnsNo == numOfSides)
         {
-            Debug.Log("All Correct!");
+            Debug.Log("All Numbers Correct!");
+        }
+        else
+        {
+            Debug.Log("Some number's wrong");
+        }
+
+        if (correntTypeNo == numOfSides)
+        {
+            Debug.Log("All Types Correct!");
+        }
+        else
+        {
+            Debug.Log("Some type's wrong");
         }
     }
     public void ChangeSide(int val)
@@ -263,7 +296,15 @@ public class LoPaintMinigame : MonoBehaviour
         }
 
         Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
-        currentStickerPack++;
+        
+        if(val == 1)
+        {
+            currentStickerPack--;
+        }
+        else
+        {
+            currentStickerPack++;
+        }
 
         while (Vector3.Distance(stickerPacks[currentStickerPack + val].transform.position, stickerPacks[currentStickerPack].transform.position) > 0.001f)
         {

@@ -130,4 +130,27 @@ public class RobotPaintPart : MonoBehaviour
     {
         return defaultObj.transform;
     }
+
+    public int GetStickeyTypeCount(string stickerType)
+    {
+        int typeCount = 0;
+
+        foreach(Transform child in testObject.transform)
+        {
+            if (child.GetComponent<Sticker>().GetPackType() == stickerType)
+            {
+                typeCount++;
+            }
+        }
+
+        foreach (Transform child in defaultObj.transform)
+        {
+            if (child.GetComponent<Sticker>().GetPackType() == stickerType)
+            {
+                typeCount++;
+            }
+        }
+
+        return typeCount;
+    }
 }
