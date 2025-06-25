@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Tool : MonoBehaviour
 {
+    public Animator statusAnimator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,4 +15,5 @@ public class Tool : MonoBehaviour
     {
         
     }
+
 }

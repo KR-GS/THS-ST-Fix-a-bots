@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ToolBtn : MonoBehaviour
 {
@@ -7,6 +8,17 @@ public class ToolBtn : MonoBehaviour
 
     [SerializeField]
     private int toolValue;
+
+    [SerializeField]
+    private Sprite selectedSprite;
+
+    [SerializeField]
+    private Sprite unselectedSprite;
+
+    //public Button Button;
+
+    private bool selected = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject GetToolSprite()
     {
@@ -15,6 +27,17 @@ public class ToolBtn : MonoBehaviour
 
     public int GetToolType()
     {
+        Select();
         return toolValue;
+    }
+
+    public void Unselect()
+    {    
+        GetComponent<Image>().sprite = unselectedSprite;
+    }
+
+    public void Select()
+    {
+        GetComponent<Image>().sprite = selectedSprite;
     }
 }

@@ -535,6 +535,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolPrefab: {fileID: 5915793044961681256, guid: 5d6931c3f7498b944a62cd117aeba6a8, type: 3}
   toolValue: 2
+  selectedSprite: {fileID: -1957689310, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+  unselectedSprite: {fileID: 1479028790, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
 --- !u!1 &90114784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,6 +1178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolPrefab: {fileID: 5915793044961681256, guid: 54ebcf16cbb9745458c0f8f7bd5ccd5b, type: 3}
   toolValue: 3
+  selectedSprite: {fileID: -740555216, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+  unselectedSprite: {fileID: -220597589, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
 --- !u!1 &207959251
 GameObject:
   m_ObjectHideFlags: 0
@@ -3941,6 +3945,11 @@ MonoBehaviour:
   fastenerObj: []
   toolHolder: {fileID: 743482644}
   speed: 20
+  toolButtons:
+  - {fileID: 1477890871}
+  - {fileID: 44079001}
+  - {fileID: 202795842}
+  - {fileID: 1813378011}
 --- !u!4 &1450728183
 Transform:
   m_ObjectHideFlags: 0
@@ -4341,6 +4350,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolPrefab: {fileID: 6710342850988161296, guid: 562f8e9bcd9413846bf00c716d3e6f4e, type: 3}
   toolValue: 1
+  selectedSprite: {fileID: -1403518528, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+  unselectedSprite: {fileID: -1805406497, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
 --- !u!1 &1530918229
 GameObject:
   m_ObjectHideFlags: 0
@@ -4927,7 +4938,7 @@ SpriteRenderer:
   m_Size: {x: 30.000002, y: 18.002932}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1805694484
@@ -5092,6 +5103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolPrefab: {fileID: 6710342850988161296, guid: d3af05035617e194fbe5682ffba3820b, type: 3}
   toolValue: 4
+  selectedSprite: {fileID: -1427984567, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+  unselectedSprite: {fileID: -28200258, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
 --- !u!1 &1819350713
 GameObject:
   m_ObjectHideFlags: 0

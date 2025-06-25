@@ -51,6 +51,10 @@ public class LoToolMinigame : MonoBehaviour
     private Fastener[] fastenerList = new Fastener[4];
     private int[] fastenerCheckVal;
 
+    [SerializeField]
+    private List<ToolBtn> toolButtons;
+    
+
     void Awake()
     {
         fastenerList = FindObjectsByType<Fastener>(FindObjectsSortMode.None);
@@ -382,16 +386,35 @@ public class LoToolMinigame : MonoBehaviour
 
     public void SelectTool(Button toolBtn)
     {
+        ToolBtn selectedToolBtn = toolBtn.GetComponent<ToolBtn>();
         int toolUsed = toolBtn.GetComponent<ToolBtn>().GetToolType();
         int currentFastenerVal = fastenerValues[currentInt];
         Debug.Log("Tool Chosen: " + toolUsed);
         Debug.Log("Fastener in place: " + currentFastenerVal);
         toolHolder.position = new Vector3(fastenerObj[currentInt].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
+
+        //remove other visible tools from toolHolder
+        if (currentTool != null)
+        {
+            Destroy(currentTool);
+            currentTool = null;
+        }
+
+        //unselect all buttons but this one 
+        foreach (var tool in toolButtons)
+        {
+            if (tool != selectedToolBtn)
+            {
+                tool.Unselect();
+            }
+        }
+
+
         if (toolUsed == currentFastenerVal)
         {
             currentTool = Instantiate(toolBtn.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
-
+            
             Debug.Log("What is happening???");
         }
         else
