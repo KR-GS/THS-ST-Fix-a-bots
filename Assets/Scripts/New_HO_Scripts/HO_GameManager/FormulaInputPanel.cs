@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 {
@@ -14,11 +15,13 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     [Header("Lock Settings")]
     private bool lockCoefficient = false, lockConstant = false;
 
-    private int currentCoef = 0, currentConst = 0;
+    private int currentCoef = 1, currentConst = 0;
 
     private Sequence targetSequence;
     private GameTimer gameTimer;
     private HOStageData stageData;
+
+    private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
 
     private DataPersistenceManager dpm;
 
@@ -60,8 +63,32 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         
     }
 
-    public void ShowPanel(Sequence sequence, GameTimer gameTimer1, HOStageData sd)
+    private void UpdateButtonHighlights()
     {
+        // Generate new sequence based on current input
+        List<int> predictedSequence = new Sequence(buttons.Count, currentCoef, currentConst).Numbers;
+
+        foreach(var btn in buttons)
+            btn.SetHighlighted(false);
+        
+        // Highlight buttons in the new sequence
+        foreach (int number in predictedSequence)
+        {
+            if (number >= 1 && number <= buttons.Count)
+            {
+                buttons[number - 1].SetHighlighted(true);
+            }
+        }
+        
+        foreach (int num in targetSequence.Numbers)
+        {
+            buttons[num - 1].SetGreen();
+        }
+}
+
+    public void ShowPanel(Sequence sequence, GameTimer gameTimer1, HOStageData sd, List<TimePeriodButton> btns)
+    {
+        buttons = btns;
         stageData = sd;
         gameTimer = gameTimer1;
         targetSequence = sequence;
@@ -96,7 +123,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     {
         coefUpButton.onClick.AddListener(() => { currentCoef += 1; UpdateFormulaText(); });
         coefDownButton.onClick.AddListener(() => {
-            if (currentCoef != 0)
+            if (currentCoef > 1)
             {
                 currentCoef -= 1;
                 UpdateFormulaText();
@@ -114,6 +141,10 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         coefficientText.text = $"{currentCoef}";
         signText.text = currentConst >= 0 ? "+" : "-";
         constantText.text = currentConst >= 0 ? $"{currentConst}" : $"{-currentConst}";
+        if(currentCoef != 0)
+        {
+            UpdateButtonHighlights();
+        }
     }
 
     private void ValidateFormula()

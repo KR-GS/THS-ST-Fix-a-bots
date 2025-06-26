@@ -195,6 +195,7 @@ public class SequenceGameManager : MonoBehaviour
     }
 
     void ExitGame() {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Stage_Select");
     }
   
@@ -558,6 +559,6 @@ public class SequenceGameManager : MonoBehaviour
 
         // Show formula panel with current sequence
         formulaPanel.gameObject.SetActive(true);
-        formulaPanel.ShowPanel(currentSequence, gameTimer, stageData);
+        formulaPanel.ShowPanel(currentSequence, gameTimer, stageData, buttons);
     }
 }
