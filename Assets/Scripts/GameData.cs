@@ -27,6 +27,8 @@ public class GameData
 
     public List<float> stageTimes;
 
+    public List<FormulaAttemptWrapper> formulaAttempts;
+
     public int stageDone;
 
     public GameData()
@@ -42,6 +44,7 @@ public class GameData
         this.lives = new List<int>(new int[stageCount]);
         this.restarts = new List<int>(new int[stageCount]);
         this.stageTimes = new List<float>(new float[stageCount]);
+        this.formulaAttempts = new List<FormulaAttemptWrapper>(new FormulaAttemptWrapper[stageCount]);
         this.stageDone = 0;
     }
 

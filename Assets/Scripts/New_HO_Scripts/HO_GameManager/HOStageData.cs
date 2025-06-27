@@ -5,7 +5,12 @@ public class HOStageData : MonoBehaviour
 {
     private int stageNum, numLives, numRestarts;
     private float elapsedTime;
+    private List<FormulaAttempt> attempts = new List<FormulaAttempt>();
 
+    public List<FormulaAttempt> GetAttempts()
+    {
+        return attempts;
+    }
     public HOStageData()
     {
         stageNum = 0;

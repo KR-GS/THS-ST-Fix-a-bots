@@ -2294,7 +2294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87744157c8591a348acf0c58f47a4650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: data2.game
+  fileName: data1.game
 --- !u!1001 &7814411538927629933
 PrefabInstance:
   m_ObjectHideFlags: 0

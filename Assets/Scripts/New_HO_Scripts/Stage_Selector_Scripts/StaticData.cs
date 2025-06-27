@@ -8,6 +8,8 @@ public class StaticData
 
     public static List<int> stageLives, stageRestarts;
     public static List<float> stageTime;
+
+    public static List<FormulaAttemptWrapper> formulaAttempts;
     public static int numStageDone = 0;
 
     public static int maxNumber, coefficient, constant, prePressedCount, stageNum;
@@ -15,16 +17,17 @@ public class StaticData
     public static float cycleLeniency;
     public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence;
 
-   /* static StaticData()
-    {
-        ResetStageData();
-    }
-   */
+    /* static StaticData()
+     {
+         ResetStageData();
+     }
+    */
     static StaticData()
     {
         stageLives = new List<int>(new int[STAGE_COUNT]);
         stageRestarts = new List<int>(new int[STAGE_COUNT]);
         stageTime = new List<float>(new float[STAGE_COUNT]);
+        formulaAttempts = new List<FormulaAttemptWrapper>(new FormulaAttemptWrapper[STAGE_COUNT]);
         //numStageDone = 0;
     }
 
@@ -33,6 +36,7 @@ public class StaticData
         EnsureListSize(stageLives, STAGE_COUNT);
         EnsureListSize(stageRestarts, STAGE_COUNT);
         EnsureListSize(stageTime, STAGE_COUNT);
+        EnsureListSize(formulaAttempts, STAGE_COUNT);
     }
 
     private static void EnsureListSize<T>(List<T> list, int size)

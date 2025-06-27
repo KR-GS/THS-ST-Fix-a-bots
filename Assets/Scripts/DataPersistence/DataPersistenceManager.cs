@@ -20,7 +20,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
             return;
         }
 
@@ -94,7 +94,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         hasLoadedFromFile = true;
         Debug.Log("Loaded day number: " + gameData.level);
-        
+
     }
 
     public int GetLevel()

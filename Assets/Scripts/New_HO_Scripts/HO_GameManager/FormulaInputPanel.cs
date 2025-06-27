@@ -3,9 +3,25 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+
+[System.Serializable]
+public class FormulaAttempt
+{
+    public int coefficient;
+    public int constant;
+
+    public FormulaAttempt(int coef, int consta)
+    {
+        coefficient = coef;
+        constant = consta;
+    }
+}
 
 public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 {
+
+
     [Header("UI References")]
     public TMP_Text coefficientText, constantText, feedbackText;
     public TextMeshProUGUI signText;
@@ -17,11 +33,16 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private int currentCoef = 1, currentConst = 0;
 
+    private int i = 0;
     private Sequence targetSequence;
     private GameTimer gameTimer;
     private HOStageData stageData;
 
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
+
+    private FormulaAttemptWrapper stageFormulaAttempts;
+
+    private string stageStringAttempt = "";
 
     private DataPersistenceManager dpm;
 
@@ -42,6 +63,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
             StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
             StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
+            StaticData.formulaAttempts[stageData.GetStageNum()] = stageFormulaAttempts;
             StaticData.numStageDone = stageData.GetStageNum() + 1;
         }
         //else, check if it is better before storing
@@ -59,18 +81,20 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             {
                 StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
             }
+            
         }
-        
+
     }
+
 
     private void UpdateButtonHighlights()
     {
         // Generate new sequence based on current input
         List<int> predictedSequence = new Sequence(buttons.Count, currentCoef, currentConst).Numbers;
 
-        foreach(var btn in buttons)
+        foreach (var btn in buttons)
             btn.SetHighlighted(false);
-        
+
         // Highlight buttons in the new sequence
         foreach (int number in predictedSequence)
         {
@@ -79,12 +103,12 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 buttons[number - 1].SetHighlighted(true);
             }
         }
-        
+
         foreach (int num in targetSequence.Numbers)
         {
             buttons[num - 1].SetGreen();
         }
-}
+    }
 
     public void ShowPanel(Sequence sequence, GameTimer gameTimer1, HOStageData sd, List<TimePeriodButton> btns)
     {
@@ -122,7 +146,8 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     private void Start()
     {
         coefUpButton.onClick.AddListener(() => { currentCoef += 1; UpdateFormulaText(); });
-        coefDownButton.onClick.AddListener(() => {
+        coefDownButton.onClick.AddListener(() =>
+        {
             if (currentCoef > 1)
             {
                 currentCoef -= 1;
@@ -141,7 +166,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         coefficientText.text = $"{currentCoef}";
         signText.text = currentConst >= 0 ? "+" : "-";
         constantText.text = currentConst >= 0 ? $"{currentConst}" : $"{-currentConst}";
-        if(currentCoef != 0)
+        if (currentCoef != 0)
         {
             UpdateButtonHighlights();
         }
@@ -149,6 +174,26 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private void ValidateFormula()
     {
+
+        string sign = currentConst >= 0 ? "+" : "-";
+        int absConst = Mathf.Abs(currentConst);
+        string attempt = $"{currentCoef}n {sign} {absConst}";
+
+        if (!string.IsNullOrEmpty(stageStringAttempt))
+            stageStringAttempt += ", ";
+
+        stageStringAttempt += attempt;
+        
+        stageFormulaAttempts = new FormulaAttemptWrapper{
+            Attempt = stageStringAttempt
+        };
+
+        StaticData.EnsureStageListSizes();
+        StaticData.formulaAttempts[stageData.GetStageNum()] = stageFormulaAttempts;
+
+        Debug.Log($"[Formula] Current attempts: {StaticData.formulaAttempts[stageData.GetStageNum()]}");
+
+
         if (currentCoef != targetSequence.Coefficient && currentConst != targetSequence.Constant)
         {
             feedbackText.text = "Both are wrong";
@@ -164,6 +209,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         else if (currentCoef == targetSequence.Coefficient && currentConst == targetSequence.Constant)
         {
             feedbackText.text = "Both are right";
+
             if (StaticData.isRandomSequence)
             {
                 SceneManager.LoadScene("Ho_BotFight");
@@ -176,7 +222,6 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 DataPersistenceManager.Instance.SaveGame();
                 SceneManager.LoadScene("Stage_Select");
             }
-                
         }
     }
 
@@ -185,6 +230,8 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         StaticData.stageLives = new System.Collections.Generic.List<int>(data.lives);
         StaticData.stageRestarts = new System.Collections.Generic.List<int>(data.restarts);
         StaticData.stageTime = new System.Collections.Generic.List<float>(data.stageTimes);
+        StaticData.formulaAttempts = new List<FormulaAttemptWrapper>(data.formulaAttempts);
+        
         StaticData.numStageDone = data.stageDone;
 
         Debug.Log("[StageDataLoader] Data loaded into StaticData");
@@ -197,6 +244,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         data.lives = new System.Collections.Generic.List<int>(StaticData.stageLives);
         data.restarts = new System.Collections.Generic.List<int>(StaticData.stageRestarts);
         data.stageTimes = new System.Collections.Generic.List<float>(StaticData.stageTime);
+        data.formulaAttempts = new System.Collections.Generic.List<FormulaAttemptWrapper>(StaticData.formulaAttempts);
         data.stageDone = StaticData.numStageDone;
 
         Debug.Log("[StageDataLoader] Data saved from StaticData");
