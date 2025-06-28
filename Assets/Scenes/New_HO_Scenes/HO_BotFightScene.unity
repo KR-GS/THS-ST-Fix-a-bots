@@ -1413,6 +1413,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2941902419968326422, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 830478798}
+    - targetCorrespondingSourceObject: {fileID: 2941902419968326422, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 830478799}
   m_SourcePrefab: {fileID: 100100000, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
 --- !u!1 &325372707
 GameObject:
@@ -1920,6 +1923,19 @@ MonoBehaviour:
   constUpButton: {fileID: 2027005827}
   constDownButton: {fileID: 1558378272}
   submitButton: {fileID: 1039696785}
+--- !u!114 &830478799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830478796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87744157c8591a348acf0c58f47a4650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data3.game
 --- !u!1 &842840114
 GameObject:
   m_ObjectHideFlags: 0

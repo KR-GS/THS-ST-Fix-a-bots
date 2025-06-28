@@ -39,9 +39,6 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     private HOStageData stageData;
 
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
-
-    private FormulaAttemptWrapper stageFormulaAttempts;
-
     private string stageStringAttempt = "";
 
     private DataPersistenceManager dpm;
@@ -63,7 +60,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
             StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
             StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
-            StaticData.formulaAttempts[stageData.GetStageNum()] = stageFormulaAttempts;
+            StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
             StaticData.numStageDone = stageData.GetStageNum() + 1;
         }
         //else, check if it is better before storing
@@ -81,6 +78,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             {
                 StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
             }
+            StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
             
         }
 
@@ -183,15 +181,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             stageStringAttempt += ", ";
 
         stageStringAttempt += attempt;
-        
-        stageFormulaAttempts = new FormulaAttemptWrapper{
-            Attempt = stageStringAttempt
-        };
 
         StaticData.EnsureStageListSizes();
-        StaticData.formulaAttempts[stageData.GetStageNum()] = stageFormulaAttempts;
+       /* StaticData.formulaAttempts[stageData.GetStageNum()] = stageFormulaAttempts;
 
-        Debug.Log($"[Formula] Current attempts: {StaticData.formulaAttempts[stageData.GetStageNum()]}");
+        Debug.Log($"[Formula] Current attempts: {StaticData.formulaAttempts[stageData.GetStageNum()]}");*/
 
 
         if (currentCoef != targetSequence.Coefficient && currentConst != targetSequence.Constant)
@@ -210,6 +204,8 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         {
             feedbackText.text = "Both are right";
 
+            Debug.Log("Stage Formula Attempts = " + stageStringAttempt);
+
             if (StaticData.isRandomSequence)
             {
                 SceneManager.LoadScene("Ho_BotFight");
@@ -227,24 +223,16 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        StaticData.stageLives = new System.Collections.Generic.List<int>(data.lives);
-        StaticData.stageRestarts = new System.Collections.Generic.List<int>(data.restarts);
-        StaticData.stageTime = new System.Collections.Generic.List<float>(data.stageTimes);
-        StaticData.formulaAttempts = new List<FormulaAttemptWrapper>(data.formulaAttempts);
-        
-        StaticData.numStageDone = data.stageDone;
-
-        Debug.Log("[StageDataLoader] Data loaded into StaticData");
     }
 
     public void SaveData(ref GameData data)
     {
         StaticData.EnsureStageListSizes();
 
-        data.lives = new System.Collections.Generic.List<int>(StaticData.stageLives);
-        data.restarts = new System.Collections.Generic.List<int>(StaticData.stageRestarts);
-        data.stageTimes = new System.Collections.Generic.List<float>(StaticData.stageTime);
-        data.formulaAttempts = new System.Collections.Generic.List<FormulaAttemptWrapper>(StaticData.formulaAttempts);
+        data.lives = new List<int>(StaticData.stageLives);
+        data.restarts = new List<int>(StaticData.stageRestarts);
+        data.stageTimes = new List<float>(StaticData.stageTime);
+        data.formulaAttempts = new List<string>(StaticData.formulaAttempts);
         data.stageDone = StaticData.numStageDone;
 
         Debug.Log("[StageDataLoader] Data saved from StaticData");
