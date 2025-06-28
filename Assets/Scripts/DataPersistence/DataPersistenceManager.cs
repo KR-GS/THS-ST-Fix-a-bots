@@ -14,21 +14,42 @@ public class DataPersistenceManager : MonoBehaviour
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
     public static DataPersistenceManager Instance { get; private set; }
+    private bool hasLoadedFromFile = false;
 
     public void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        /*
         if (Instance != null)
         {
             Debug.LogError("Found more than one Data Persistence Manager in the scene");
         }
         Instance = this;
+        */
     }
 
     public void Start()
     {
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+
+        if (!hasLoadedFromFile)
+        {
+            LoadGame();
+            hasLoadedFromFile = true;
+        }
+        /*
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
+        */
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
@@ -46,20 +67,24 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
+        if (hasLoadedFromFile) return;
+
         this.gameData = dataHandler.Load();
 
-        if(this.gameData == null)
+        if (this.gameData == null)
         {
             Debug.Log("No save file has been recorded! Creating new save file.");
             NewGame();
         }
 
-        foreach(IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.LoadData(gameData);
         }
 
+        hasLoadedFromFile = true;
         Debug.Log("Loaded day number: " + gameData.level);
+        
     }
 
     public int GetLevel()
