@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 657200562}
   - component: {fileID: 657200566}
   m_Layer: 0
-  m_Name: Hexagon
+  m_Name: Blue_Bandaid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1029,7 +1029,7 @@ GameObject:
   - component: {fileID: 704184085}
   - component: {fileID: 704184084}
   m_Layer: 0
-  m_Name: Hexagon
+  m_Name: Pink_Floppydisk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
