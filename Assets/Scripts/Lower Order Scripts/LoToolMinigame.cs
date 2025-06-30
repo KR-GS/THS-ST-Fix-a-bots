@@ -234,12 +234,14 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         randFastenerVal = Random.Range(0, fastenerList.Length);
+
+
         for (int i = 0; i< patternLength; i++)
         {
             if (numberToDisplay[i] > 0)
             {
                 Instantiate(fastenerList[randFastenerVal].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
-
+                
                 Debug.Log("Adding Fastener");
                 fastenerValues[i] = randFastenerVal+1;
             }

@@ -38,9 +38,9 @@ public class RobotPaintPart : MonoBehaviour
         Debug.Log(testObject.transform.childCount);
     }
 
-    public void SetStickersOnSide(StickerPack stickersToAdd)
+    public void SetStickersOnSide(Sticker stickerToAdd)
     {
-        Sticker[] stickers = stickersToAdd.GetPackContents();
+        //Sticker stickers = stickersToAdd.GetPackContents();
         float boxLength_L = Base_LeftVal();
         float boxLength_R = Base_RightVal();
         float boxLength_U = Base_UpVal();
@@ -48,7 +48,7 @@ public class RobotPaintPart : MonoBehaviour
         for (int i = 0; i < sideVal; i++)
         {
             
-            GameObject sticker = Instantiate(stickers[Random.Range(0, stickers.Length)].gameObject);
+            GameObject sticker = Instantiate(stickerToAdd.gameObject);
             Vector3 newPos = new Vector3(Random.Range(boxLength_L, boxLength_R), Random.Range(boxLength_D, boxLength_U), sticker.transform.position.z);
             sticker.transform.position = newPos;
             sticker.transform.SetParent(defaultObj.transform);
@@ -131,13 +131,13 @@ public class RobotPaintPart : MonoBehaviour
         return defaultObj.transform;
     }
 
-    public int GetStickeyTypeCount(string stickerType)
+    public int GetStickeyTypeCount(int stickerType)
     {
         int typeCount = 0;
 
         foreach(Transform child in testObject.transform)
         {
-            if (child.GetComponent<Sticker>().GetPackType() == stickerType)
+            if (child.GetComponent<Sticker>().GetStickerNum() == stickerType)
             {
                 typeCount++;
             }
@@ -145,7 +145,7 @@ public class RobotPaintPart : MonoBehaviour
 
         foreach (Transform child in defaultObj.transform)
         {
-            if (child.GetComponent<Sticker>().GetPackType() == stickerType)
+            if (child.GetComponent<Sticker>().GetStickerNum() == stickerType)
             {
                 typeCount++;
             }
