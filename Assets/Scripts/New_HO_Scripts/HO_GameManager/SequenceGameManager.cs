@@ -198,8 +198,8 @@ public class SequenceGameManager : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Stage_Select");
     }
-  
-    void Start()
+
+    void Awake()
     {
         GetData();
         sceneName= SceneManager.GetActiveScene().name;
@@ -207,6 +207,11 @@ public class SequenceGameManager : MonoBehaviour
         InitilizeStageData();
         InitializeStageUi();
         SetupButtons();
+    }
+
+    void Start()
+    {
+        
     }
 
     void Update()

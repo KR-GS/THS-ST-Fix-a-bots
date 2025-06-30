@@ -31,7 +31,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     [Header("Lock Settings")]
     private bool lockCoefficient = false, lockConstant = false;
 
-    private int currentCoef = 1, currentConst = 0;
+    private int currentCoef = 1, currentConst = 0, numStars;
 
     private int i = 0;
     private Sequence targetSequence;
@@ -54,6 +54,20 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     public void StoreStageData()
     {
+        //STAR GENERATION
+        if (stageData.GetNumLives() == 5 && stageData.GetElapsedTime() <= 60f && stageData.GetNumRestarts() == 0)
+        {
+            numStars = 3;
+        }
+        else if (stageData.GetNumLives() >= 2 && stageData.GetElapsedTime() <= 120f && stageData.GetNumRestarts() <= 3)
+        {
+            numStars = 2;
+        }
+        else
+        {
+            numStars = 1;
+        }
+
         //if haven't done the stage before, just store everything
         if (StaticData.numStageDone == stageData.GetStageNum())
         {
@@ -61,50 +75,64 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
             StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
             StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
+            StaticData.stageStars[stageData.GetStageNum()] = numStars;
             StaticData.numStageDone = stageData.GetStageNum() + 1;
         }
         //else, check if it is better before storing
         else
         {
-            if (StaticData.stageTime[stageData.GetStageNum()] > stageData.GetElapsedTime())
+            if (numStars >= StaticData.stageStars[stageData.GetStageNum()])
             {
-                StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
+                if (StaticData.stageTime[stageData.GetStageNum()] > stageData.GetElapsedTime())
+                {
+                    StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
+                }
+                if (StaticData.stageLives[stageData.GetStageNum()] < stageData.GetNumLives())
+                {
+                    StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
+                }
+                if (StaticData.stageRestarts[stageData.GetStageNum()] > stageData.GetNumRestarts())
+                {
+                    StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
+                }
+                if (StaticData.formulaAttempts[stageData.GetStageNum()].Length > stageStringAttempt.Length)
+                {
+                    StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
+                }
             }
-            if (StaticData.stageLives[stageData.GetStageNum()] < stageData.GetNumLives())
-            {
-                StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
-            }
-            if (StaticData.stageRestarts[stageData.GetStageNum()] > stageData.GetNumRestarts())
-            {
-                StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
-            }
-            StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
-            
         }
-
     }
 
 
     private void UpdateButtonHighlights()
     {
-        // Generate new sequence based on current input
         List<int> predictedSequence = new Sequence(buttons.Count, currentCoef, currentConst).Numbers;
 
         foreach (var btn in buttons)
             btn.SetHighlighted(false);
 
-        // Highlight buttons in the new sequence
-        foreach (int number in predictedSequence)
+        foreach (int num in predictedSequence)
         {
-            if (number >= 1 && number <= buttons.Count)
+            if (num >= 1 && num <= buttons.Count)
             {
-                buttons[number - 1].SetHighlighted(true);
+                buttons[num - 1].SetHighlighted(true);
             }
         }
 
         foreach (int num in targetSequence.Numbers)
         {
-            buttons[num - 1].SetGreen();
+            if (num >= 1 && num <= buttons.Count)
+            {
+                buttons[num - 1].SetRed();
+            }
+        }
+
+        foreach (int num in predictedSequence)
+        {
+            if (targetSequence.Numbers.Contains(num) && num >= 1 && num <= buttons.Count)
+            {
+                buttons[num - 1].SetGreen();
+            }
         }
     }
 
@@ -154,7 +182,13 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         });
 
         constUpButton.onClick.AddListener(() => { currentConst += 1; UpdateFormulaText(); });
-        constDownButton.onClick.AddListener(() => { currentConst -= 1; UpdateFormulaText(); });
+        constDownButton.onClick.AddListener(() =>
+        {
+            if (currentConst > -currentCoef)
+            {
+                currentConst -= 1; UpdateFormulaText();
+            }
+        });
 
         submitButton.onClick.AddListener(ValidateFormula);
     }
@@ -233,6 +267,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         data.restarts = new List<int>(StaticData.stageRestarts);
         data.stageTimes = new List<float>(StaticData.stageTime);
         data.formulaAttempts = new List<string>(StaticData.formulaAttempts);
+        data.stageStars = new List<int>(StaticData.stageStars);
         data.stageDone = StaticData.numStageDone;
 
         Debug.Log("[StageDataLoader] Data saved from StaticData");

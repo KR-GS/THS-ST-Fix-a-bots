@@ -6,7 +6,7 @@ public class StaticData
     
     private const int STAGE_COUNT = 5; 
 
-    public static List<int> stageLives, stageRestarts;
+    public static List<int> stageLives, stageRestarts, stageStars;
     public static List<float> stageTime;
     public static List<string> formulaAttempts;
     public static int numStageDone = 0;
@@ -25,6 +25,7 @@ public class StaticData
     {
         stageLives = new List<int>(new int[STAGE_COUNT]);
         stageRestarts = new List<int>(new int[STAGE_COUNT]);
+        stageStars = new List<int>(new int[STAGE_COUNT]);
         stageTime = new List<float>(new float[STAGE_COUNT]);
         formulaAttempts = new List<string>(new string[STAGE_COUNT]);
         //numStageDone = 0;
