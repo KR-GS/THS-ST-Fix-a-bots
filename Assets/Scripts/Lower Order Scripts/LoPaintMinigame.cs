@@ -21,7 +21,7 @@ public class LoPaintMinigame : MonoBehaviour
     private int numOfSides;
 
     [SerializeField]
-    private StickerPack[] stickerPacks;
+    private Sticker[] stickerPacks;
 
     [SerializeField]
     private float speed;
@@ -37,21 +37,13 @@ public class LoPaintMinigame : MonoBehaviour
 
     private int[] numberPattern;
 
-    private string packUsed;
+    private int packUsed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake()
     {
         partSides = new GameObject[numOfSides];
-        foreach(StickerPack stickerpacks in stickerPacks)
-        {
-            Sticker[] stickers = stickerpacks.GetPackContents();
-            for (int i =0; i< stickers.Length; i++)
-            {
-                stickers[i].SetStickerType();
-            }
-        }
     }
     void Start()
     {
@@ -86,7 +78,7 @@ public class LoPaintMinigame : MonoBehaviour
 
         int packToUse = Random.Range(0, stickerPacks.Length-1);
 
-        packUsed = stickerPacks[packToUse].GetPackType();
+        packUsed = stickerPacks[packToUse].GetStickerNum();
 
         for (int i = 0; i<numOfSides; i++)
         {
@@ -295,7 +287,7 @@ public class LoPaintMinigame : MonoBehaviour
             button.interactable = false;
         }
 
-        Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
+        Vector3 newPos = stickerPacks[currentStickerPack].transform.parent.position;
         
         if(val == 1)
         {
@@ -306,16 +298,16 @@ public class LoPaintMinigame : MonoBehaviour
             currentStickerPack++;
         }
 
-        while (Vector3.Distance(stickerPacks[currentStickerPack + val].transform.position, stickerPacks[currentStickerPack].transform.position) > 0.001f)
+        while (Vector3.Distance(stickerPacks[currentStickerPack + val].transform.parent.position, stickerPacks[currentStickerPack].transform.parent.position) > 0.001f)
         {
-            stickerPacks[currentStickerPack + val].transform.position = Vector3.MoveTowards(stickerPacks[currentStickerPack + val].transform.position, stickerPacks[currentStickerPack].transform.position, speed * Time.deltaTime);
+            stickerPacks[currentStickerPack + val].transform.parent.position = Vector3.MoveTowards(stickerPacks[currentStickerPack + val].transform.parent.position, stickerPacks[currentStickerPack].transform.parent.position, speed * Time.deltaTime);
             yield return null;
         }
         yield return new WaitForSeconds(0.5f);
 
-        while (Vector3.Distance(stickerPacks[currentStickerPack].transform.position, newPos) > 0.001f)
+        while (Vector3.Distance(stickerPacks[currentStickerPack].transform.parent.position, newPos) > 0.001f)
         {
-            stickerPacks[currentStickerPack].transform.position = Vector3.MoveTowards(stickerPacks[currentStickerPack].transform.position, newPos, speed * Time.deltaTime);
+            stickerPacks[currentStickerPack].transform.parent.position = Vector3.MoveTowards(stickerPacks[currentStickerPack].transform.parent.position, newPos, speed * Time.deltaTime);
             yield return null;
         }
 
