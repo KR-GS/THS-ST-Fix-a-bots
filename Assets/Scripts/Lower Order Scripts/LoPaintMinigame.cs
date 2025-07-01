@@ -44,34 +44,34 @@ public class LoPaintMinigame : MonoBehaviour
     void Awake()
     {
         partSides = new GameObject[numOfSides];
+
+        partSides[0] = FindFirstObjectByType<RobotPaintPart>().transform.parent.gameObject;
     }
     void Start()
     {
         float posY;
         float posX;
         RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
-        RobotPaintPart roboPart = FindFirstObjectByType<RobotPaintPart>();
+        //Transform roboPart = FindFirstObjectByType<RobotPaintPart>().transform.parent;
 
         numberPattern = patternGameManager.ReturnPatternArray(numOfSides).ToArray();
 
         Debug.Log("Number of current sticker packs: " + stickerPacks.Length);
         Debug.Log("sticker pack name: " + stickerPacks[0].name);
 
-        roboPart.transform.parent.GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
+        partSides[0].GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
 
-        posY = -roboPart.transform.parent.position.y * 15;
+        posY = partSides[0].transform.position.y;
 
-        posX = roboPart.transform.parent.position.x;
-
-        partSides[0] = roboPart.transform.parent.gameObject;
+        posX = partSides[0].transform.position.x;
 
         for (int i = 1; i< numOfSides; i++)
         {
-            partSides[i] = Instantiate(roboPart.transform.parent.gameObject);
+            partSides[i] = Instantiate(partSides[0].gameObject);
 
-            partSides[i].transform.position = new Vector3(posX, posY - ((i - 1) * 20), partSides[i].transform.position.z);
+            partSides[i].transform.position = new Vector3(posX, posY - (i * 25), partSides[i].transform.position.z);
 
-            partSides[i].name = roboPart.transform.parent.name+ " " + i;
+            partSides[i].name = partSides[0].name+ " " + i;
 
             partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
         }
@@ -89,7 +89,7 @@ public class LoPaintMinigame : MonoBehaviour
             }
         }
 
-        Debug.Log(roboPart.name);
+        Debug.Log(partSides[0].name);
     }
 
     // Update is called once per frame
