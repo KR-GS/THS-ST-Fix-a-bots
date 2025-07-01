@@ -38,11 +38,11 @@ public class StageSelectManager : MonoBehaviour
         var stageConfigs = new (int max, float cycInt, float cycLen, int prePressed,
         bool formSeen, bool lockCoef, bool lockConst, int coef, int constant)[]
         {
-            (25, 1f, 0.6f, 3, true,  true,  true,  2,  2),
-            (25, 1f, 0.6f, 3, false, false, true,  3, -2),
-            (25, 1f, 0.6f, 3, false, false, false, 3, -1),
-            (25, 1f, 0.6f, 0, true,  true,  true,  3,  1),
-            (25, 1f, 0.6f, 0, false, false, false, 4, -3)
+            (25, 2f, 1.5f, 3, true,  true,  true,  2,  2),
+            (25, 2f, 1.5f, 3, false, false, true,  3, -2),
+            (25, 2f, 1.5f, 3, false, false, false, 3, -1),
+            (25, 2f, 1.5f, 0, true,  true,  true,  3,  1),
+            (25, 2f, 1.5f, 0, false, false, false, 4, -3)
         };
 
         for (int i = 0; i < stageButtons.Length; i++)

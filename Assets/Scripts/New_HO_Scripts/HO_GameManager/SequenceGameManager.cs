@@ -282,7 +282,7 @@ public class SequenceGameManager : MonoBehaviour
     // Just to make time for the cycling
     IEnumerator DelayedStartCycle()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         feedbackText.text = "3";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "2";
@@ -341,10 +341,15 @@ public class SequenceGameManager : MonoBehaviour
             }
 
             // Makes sure player has time to start
-            
+
             if (currentCycleIndex == 0)
             {
                 yield return new WaitForSeconds(1f);
+                statusAnimator.SetBool("MissTrigger", false);
+                statusAnimator.SetBool("AnticipateTrigger", false);
+                statusAnimator.SetBool("HitTrigger", false);
+                statusAnimator.SetBool("WrongTrigger", false);
+                statusAnimator.SetBool("IdleTrigger", true);
             }
             
         
@@ -369,6 +374,7 @@ public class SequenceGameManager : MonoBehaviour
             statusAnimator.SetBool("AnticipateTrigger", false);
             statusAnimator.SetBool("HitTrigger", false);
             statusAnimator.SetBool("WrongTrigger", false);
+            statusAnimator.SetBool("IdleTrigger", true);
             soundEffectsManager.playIdleSound();
 
             while (timer < cycleInterval && currentCycleIndex >= 0)
@@ -384,7 +390,7 @@ public class SequenceGameManager : MonoBehaviour
                         statusAnimator.SetBool("IdleTrigger", false);
                         statusAnimator.SetBool("AnticipateTrigger", true);
                         // If the Sequence was pre pressed, automatically plays hit animation
-                        if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.10f)
+                        if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.01f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("HitTrigger", true);
