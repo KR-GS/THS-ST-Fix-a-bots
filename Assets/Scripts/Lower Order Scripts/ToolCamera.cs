@@ -30,7 +30,7 @@ public class ToolCamera : MonoBehaviour
         originalSize = GetComponent<Camera>().orthographicSize;
 
         transform.position = new Vector3(tilingManager.TileMidPoint(), (tilingManager.TileMidPoint() / 4), transform.position.z);
-        GetComponent<Camera>().orthographicSize = Mathf.Ceil(tilingManager.TileMidPoint());
+        GetComponent<Camera>().orthographicSize = 17;
         zoomInCanvas.gameObject.SetActive(false);
         toolCanvas.gameObject.SetActive(false);
         overViewCanvas.gameObject.SetActive(true);
@@ -48,25 +48,25 @@ public class ToolCamera : MonoBehaviour
 
     public void CameraTrigger(Vector3 firstFastenerPosition, float speed)
     {
-        SubmitCameraMovement(firstFastenerPosition, speed*4);
-        SubmitCameraZoom();
+        StartCoroutine(SubmitCameraMovement(firstFastenerPosition, speed*4));
+        StartCoroutine(SubmitCameraZoom());
     }
 
-    public async void SubmitCameraMovement(Vector3 firstFastenerPosition, float speed)
+    public IEnumerator SubmitCameraMovement(Vector3 firstFastenerPosition, float speed)
     {
         while (Vector3.Distance(transform.position, firstFastenerPosition) > 0.001f)
         {
             transform.position = Vector3.MoveTowards(transform.position, firstFastenerPosition, speed * Time.deltaTime);
-            await Task.Yield();
+            yield return null;
         }
     }
 
-    public async void SubmitCameraZoom()
+    public IEnumerator SubmitCameraZoom()
     {
         while (GetComponent<Camera>().orthographicSize > originalSize)
         {
             GetComponent<Camera>().orthographicSize--;
-            await Task.Yield();
+            yield return null;
         }
     }
 }

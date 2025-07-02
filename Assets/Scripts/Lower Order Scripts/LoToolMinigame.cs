@@ -233,7 +233,8 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
 
-        randFastenerVal = Random.Range(0, fastenerList.Length);
+        //randFastenerVal = Random.Range(0, fastenerList.Length);
+        randFastenerVal = 0;
 
 
         for (int i = 0; i< patternLength; i++)
@@ -285,6 +286,7 @@ public class LoToolMinigame : MonoBehaviour
         {
             if(rayHit.transform.gameObject.TryGetComponent(out Tool tool))
             {
+                StartCoroutine(tool.TriggerToolAnimation());
                 if (numberToDisplay[currentInt]<24)
                 {
                     numberToDisplay[currentInt]++;
@@ -295,6 +297,7 @@ public class LoToolMinigame : MonoBehaviour
                     numberToDisplay[currentInt]++;
                     textCounter.text = numberToDisplay[currentInt].ToString();
                 }
+                //animator.SetBool("IsHitting", false);
             }
             else if(rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
             {
@@ -327,6 +330,7 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
     }
+
 
     public void CheckNumber()
     {
@@ -397,26 +401,22 @@ public class LoToolMinigame : MonoBehaviour
 
 
         //remove other visible tools from toolHolder
-        if (currentTool != null)
-        {
-            Destroy(currentTool);
-            currentTool = null;
-        }
+        
 
         //unselect all buttons but this one 
-        foreach (var tool in toolButtons)
-        {
-            if (tool != selectedToolBtn)
-            {
-                tool.Unselect();
-            }
-        }
 
 
         if (toolUsed == currentFastenerVal)
         {
+            if(currentTool != null)
+            {
+                Destroy(currentTool);
+            }
+
             currentTool = Instantiate(toolBtn.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
-            
+
+            toolBtn.GetComponent<ToolBtn>().Select();
+
             Debug.Log("What is happening???");
         }
         else
@@ -522,7 +522,7 @@ public class LoToolMinigame : MonoBehaviour
 
                 Debug.Log(Camera.main.transform.name);
 
-                Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed);
+                StartCoroutine(Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed));
 
                 yield return null;
             }
@@ -551,7 +551,7 @@ public class LoToolMinigame : MonoBehaviour
         Vector3 newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
         button.interactable = false;
         yield return null;
-        Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed);
+        StartCoroutine(Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed));
         yield return null;
         fastenerObj[currentInt].SetActive(true);
         yield return new WaitForSeconds(0.5f);

@@ -27,7 +27,6 @@ public class ToolBtn : MonoBehaviour
 
     public int GetToolType()
     {
-        Select();
         return toolValue;
     }
 
