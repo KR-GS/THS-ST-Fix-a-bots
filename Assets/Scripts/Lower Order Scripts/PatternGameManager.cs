@@ -17,6 +17,9 @@ public class PatternGameManager : MonoBehaviour
     [SerializeField] 
     private int diff_Highest;
 
+    [SerializeField]
+    private DifficultyManager difficulty;
+
     private int generatedDifference;
 
     private List<int> numberPatternList = new List<int>();
@@ -37,10 +40,20 @@ public class PatternGameManager : MonoBehaviour
     {
         int baseHolder = Random.Range(base_Lowest, base_Highest);
 
-
-        for(int i = 1; i<= patternLen; i++)
+        if (difficulty.GetDifficulty() == "easy")
         {
-            numberPatternList.Add(baseHolder + (generatedDifference * i));
+            for (int i = 1; i <= patternLen; i++)
+            {
+                numberPatternList.Add(baseHolder + (generatedDifference * i));
+            }
+        }
+        else if (difficulty.GetDifficulty() == "hard")
+        {
+            for (int i = 1; i <= patternLen; i++)
+            {
+                baseHolder = baseHolder + (generatedDifference + i);
+                numberPatternList.Add(baseHolder);
+            }
         }
     }
 

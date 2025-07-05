@@ -3645,6 +3645,7 @@ MonoBehaviour:
   base_Highest: 3
   diff_Lowest: 1
   diff_Highest: 3
+  difficulty: {fileID: 202945636}
 --- !u!4 &1883860793
 Transform:
   m_ObjectHideFlags: 0
