@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9167262084332901439}
   - component: {fileID: 913561619679722941}
   - component: {fileID: 9062815949886110137}
+  - component: {fileID: 802112098671023117}
   m_Layer: 0
   m_Name: flatSprite
   m_TagString: Untagged
@@ -110,6 +111,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &802112098671023117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969502017745993540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0ed97342c742e4586f6b2934640652, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5915793044961681256
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,4 +215,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d7fdd809db7ab4cb9c03e370a44eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusAnimator: {fileID: 9062815949886110137}

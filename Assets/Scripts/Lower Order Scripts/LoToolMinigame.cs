@@ -421,6 +421,12 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
+
+        numberToDisplay[currentInt] = 0;
+        foreach(Transform child in fastenerObj[currentInt].transform) 
+        {
+            Destroy(child.gameObject);    
+        }
     }
 
     public void SelectTool(Button toolBtn)
@@ -593,6 +599,7 @@ public class LoToolMinigame : MonoBehaviour
                 partTile.GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
                 partTile.GetComponent<PartTile>().SetIsWrong(false);
                 partTile.GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+
             }
         }
     }
