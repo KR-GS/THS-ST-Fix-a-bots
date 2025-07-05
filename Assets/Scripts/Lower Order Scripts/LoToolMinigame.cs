@@ -295,20 +295,19 @@ public class LoToolMinigame : MonoBehaviour
                 numberToDisplay[currentInt]++;
                 if (numberToDisplay[currentInt]<24)
                 {
-                    
+                    fastenerObj[currentInt].SetActive(true);
+                    textCounter.gameObject.SetActive(false);
                     //hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
                     useCountManager = true;
                 }
                 else
                 {
-                    //textCounter.text = numberToDisplay[currentInt].ToString();
+                    fastenerObj[currentInt].SetActive(false);
+                    textCounter.gameObject.SetActive(true);
                     useCountManager = false;
                 }
 
-                if (useCountManager)
-                {
-                    StartCoroutine(HitAnimation(tool, useCountManager));
-                }
+                StartCoroutine(HitAnimation(tool, useCountManager));
             }
             else if(rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
             {
@@ -344,16 +343,15 @@ public class LoToolMinigame : MonoBehaviour
 
     private IEnumerator HitAnimation(Tool tool, bool value)
     {
-        yield return StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
         if (value)
         {
             hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
         }
         else
         {
-            fastenerObj[currentInt].SetActive(false);
             textCounter.text = numberToDisplay[currentInt].ToString();
         }
+        yield return StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
     }
 
 
