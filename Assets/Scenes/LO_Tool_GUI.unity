@@ -2841,7 +2841,7 @@ GameObject:
   - component: {fileID: 808992275}
   - component: {fileID: 808992274}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Done UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2894,7 +2894,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808992273}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -5703,6 +5703,7 @@ MonoBehaviour:
   zoomInCanvas: {fileID: 2018880989}
   toolCanvas: {fileID: 310669089}
   overViewCanvas: {fileID: 1357695579}
+  doneCanvas: {fileID: 808992276}
 --- !u!1 &1805694482
 GameObject:
   m_ObjectHideFlags: 0
@@ -6339,7 +6340,7 @@ GameObject:
   - component: {fileID: 2018880988}
   - component: {fileID: 2018880987}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Zoom UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7052,6 +7053,6 @@ SceneRoots:
   - {fileID: 2018880990}
   - {fileID: 310669090}
   - {fileID: 808992277}
-  - {fileID: 743482644}
   - {fileID: 1357695580}
+  - {fileID: 743482644}
   - {fileID: 223477260}
