@@ -16,6 +16,8 @@ public class StaticData
     public static bool isWireDone = false;
     public static bool isPaintDone = false;
 
+    public static int diffInt = 0; // 0 = easy, 1 = medium, 2 = hard
+
     public static int maxNumber, coefficient, constant, prePressedCount, stageNum;
     public static float cycleInterval;
     public static float cycleLeniency;
