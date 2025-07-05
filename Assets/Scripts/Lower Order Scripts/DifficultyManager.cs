@@ -34,6 +34,21 @@ public class DifficultyManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        Debug.Log("Static Data for Day Number is....: " + StaticData.dayNo);
+        if(StaticData.dayNo > 0 && StaticData.dayNo < 5)
+        {
+            level = Difficulty.easy;
+        }
+        else if (StaticData.dayNo >= 5 && StaticData.dayNo < 10)
+        {
+            level = Difficulty.medium;
+        }
+        else if (StaticData.dayNo >= 10)
+        {
+            level = Difficulty.hard;
+        }
+        
+
         if (level == Difficulty.easy)
         {
             missingVals = 0;
