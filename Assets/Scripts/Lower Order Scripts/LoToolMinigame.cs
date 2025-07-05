@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 public class LoToolMinigame : MonoBehaviour
 {
@@ -43,8 +44,8 @@ public class LoToolMinigame : MonoBehaviour
     private int currentInt;
     private int[] numberToDisplay;
     private int patternLength;
-    private int slotToFill;
-    private int slotToFix;
+    private int slotToFill = 0;
+    private int slotToFix = 0;
     private GameObject[] tiledParts;
     private int[] fastenerValues;
     private int[] originalHitValues;
@@ -485,12 +486,38 @@ public class LoToolMinigame : MonoBehaviour
 
     public void UndoHitCounts()
     {
+        Transform holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
 
-        numberToDisplay[currentInt] = originalHitValues[currentInt];
+        if (currentInt < patternLength - slotToFill)
+        {
+            numberToDisplay[currentInt] = originalHitValues[currentInt];
 
-        Debug.Log("Undo Value: " + originalHitValues[currentInt]);
+            fastenerValues[currentInt] = fastenerCheckVal[currentInt];
 
-        StartCoroutine(ResetHitCoroutine());
+            if (holder.childCount > 0)
+            {
+                Destroy(holder.transform.GetChild(0).gameObject);
+            }
+
+            Instantiate(fastenerList[fastenerValues[currentInt]-1].GetFastenerSprite(), holder);
+            tiledParts[currentInt].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+
+            Debug.Log("Undo Value: " + originalHitValues[currentInt]);
+
+            StartCoroutine(ResetHitCoroutine());
+        }
+        else
+        {
+            foreach (Transform child in fastenerObj[currentInt].transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+
+            if (holder.childCount > 0)
+            {
+                Destroy(holder.transform.GetChild(0).gameObject);
+            }
+        }
     }
 
     private IEnumerator ResetHitCoroutine()
@@ -548,7 +575,7 @@ public class LoToolMinigame : MonoBehaviour
 
             yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[i].GetComponent<PartTile>()));
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
 
             fastenerObj[i].SetActive(false);
 

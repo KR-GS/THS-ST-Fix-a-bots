@@ -23,7 +23,7 @@ public class Tool : MonoBehaviour
         GetComponentInChildren<ToolEvent>().SetCurrentFastener(fastener);
         GetComponent<Collider2D>().enabled = false;
         statusAnimator.SetTrigger("IsUsed");
-        yield return null;
+        yield return new WaitForSeconds(1);
         GetComponent<Collider2D>().enabled = true;
     }
 
