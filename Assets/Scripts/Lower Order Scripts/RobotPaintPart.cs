@@ -15,6 +15,7 @@ public class RobotPaintPart : MonoBehaviour
     private int sideVal;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /*
     void Awake()
     {
         testObject = new GameObject();
@@ -25,6 +26,7 @@ public class RobotPaintPart : MonoBehaviour
         testObject.transform.parent = transform;
         defaultObj.transform.parent = transform;
     }
+    */
 
     public void AddSticker(Sticker newSticker)
     {
@@ -47,6 +49,7 @@ public class RobotPaintPart : MonoBehaviour
         {
             
             GameObject sticker = Instantiate(stickerToAdd.gameObject);
+            sticker.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
             Vector3 newPos = new Vector3(Random.Range(boxLength_L, boxLength_R), Random.Range(boxLength_D, boxLength_U), sticker.transform.position.z);
             sticker.transform.position = newPos;
             sticker.transform.SetParent(defaultObj.transform);
@@ -84,11 +87,6 @@ public class RobotPaintPart : MonoBehaviour
             }
             sticker.ToggleIsOnPart();
         }
-    }
-
-    public int GetCurrentStickerSideCount()
-    {
-        return defaultObj.transform.childCount + testObject.transform.childCount;
     }
 
     public void ClearStickersOnSide()
@@ -129,26 +127,23 @@ public class RobotPaintPart : MonoBehaviour
         return defaultObj.transform;
     }
 
-    public int GetStickeyTypeCount(int stickerType)
+    public int GetCurrentStickerSideCount()
     {
-        int typeCount = 0;
+        return defaultObj.transform.childCount + testObject.transform.childCount;
+    }
+
+    public bool GetStickeyTypeCount(int stickerType)
+    {
 
         foreach(Transform child in testObject.transform)
         {
-            if (child.GetComponent<Sticker>().GetStickerNum() == stickerType)
+            if (child.GetComponent<Sticker>().GetStickerNum() != stickerType)
             {
-                typeCount++;
+                return false;
             }
+            
         }
 
-        foreach (Transform child in defaultObj.transform)
-        {
-            if (child.GetComponent<Sticker>().GetStickerNum() == stickerType)
-            {
-                typeCount++;
-            }
-        }
-
-        return typeCount;
+        return true;
     }
 }

@@ -29,6 +29,15 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private Button[] moveBtn;
 
+    [SerializeField]
+    private StickerRobot rightIndicator;
+
+    [SerializeField]
+    private Canvas doneUI;
+
+    [SerializeField]
+    private Canvas overviewUI;
+
     private GameObject[] partSides;
 
     private int currentSide = 0;
@@ -44,8 +53,6 @@ public class LoPaintMinigame : MonoBehaviour
     void Awake()
     {
         partSides = new GameObject[numOfSides];
-
-        partSides[0] = FindFirstObjectByType<RobotPaintPart>().transform.parent.gameObject;
     }
     void Start()
     {
@@ -59,11 +66,15 @@ public class LoPaintMinigame : MonoBehaviour
         Debug.Log("Number of current sticker packs: " + stickerPacks.Length);
         Debug.Log("sticker pack name: " + stickerPacks[0].name);
 
+        partSides[0] = FindFirstObjectByType<RobotPaintPart>().transform.parent.gameObject;
+
         partSides[0].GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
 
         posY = partSides[0].transform.position.y;
 
         posX = partSides[0].transform.position.x;
+
+
 
         for (int i = 1; i< numOfSides; i++)
         {
@@ -186,6 +197,7 @@ public class LoPaintMinigame : MonoBehaviour
                 else
                 {
                     draggableObject = Instantiate(sticker.transform.gameObject);
+                    draggableObject.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
                     draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();
                     Debug.Log(draggableObject.GetComponent<Sticker>().IsADuplicate());
                     
@@ -203,41 +215,83 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void CheckSideValues()
     {
+        
+        StartCoroutine(ValueCheckCoroutine());
+    }
+
+    public IEnumerator ValueCheckCoroutine()
+    {
+        int prevSide = currentSide;
+        PaintMinimapManager mapSelect = FindAnyObjectByType<PaintMinimapManager>();
+        overviewUI.enabled = false;
         Debug.Log("Hello from checking");
         int correctAnsNo = 0;
         int correntTypeNo = 0;
-        for (int i = 0; i < numOfSides; i++) 
+        bool countCorrect = false;
+        bool typeCorrect = false;
+        for (int i = 0; i < numOfSides; i++)
         {
+            ChangeSide(i);
+            mapSelect.ChangeSelectedSide(i);
+            yield return new WaitForSeconds(1);
+
             if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount() == numberPattern[i])
             {
                 correctAnsNo++;
+                countCorrect = true;
+                
+            }
+            else
+            {
+                countCorrect = false;
+                Debug.Log("Count is wrong");
             }
 
-            if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetStickeyTypeCount(packUsed) == numberPattern[i])
+            if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetStickeyTypeCount(packUsed))
             {
                 correntTypeNo++;
+                typeCorrect = true;
             }
+            else
+            {
+                typeCorrect = false;
+                Debug.Log("Some type is wrong");
+            }
+
+            if (!typeCorrect || !countCorrect)
+            {
+                rightIndicator.SetWrongSprite();
+            }
+            else
+            {
+                rightIndicator.SetRightSprite();
+            }
+
+            yield return new WaitForSeconds(3);
+            rightIndicator.DefaultSprite();
         }
 
 
-        if (correctAnsNo == numOfSides)
+        if (correctAnsNo == numOfSides && correntTypeNo == numOfSides)
         {
             Debug.Log("All Numbers Correct!");
+            Debug.Log("All Types Correct!");
+            doneUI.enabled = true;
+            overviewUI.enabled = false;
         }
         else
         {
             Debug.Log("Some number's wrong");
-        }
-
-        if (correntTypeNo == numOfSides)
-        {
-            Debug.Log("All Types Correct!");
-        }
-        else
-        {
             Debug.Log("Some type's wrong");
+            overviewUI.enabled = true;
         }
+        yield return null;
+
+        mapSelect.ChangeSelectedSide(prevSide);
+        ChangeSide(prevSide);
+        
     }
+
     public void ChangeSide(int val)
     {
         Vector3 tempPos = partSides[currentSide].transform.position;
