@@ -54,9 +54,14 @@ public class Exp_Station : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.touchCount > 0)
         {
-            Debug.Log("Mouse clicked");
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                Debug.Log("Touch began!");
+            }
         }
     }
 
