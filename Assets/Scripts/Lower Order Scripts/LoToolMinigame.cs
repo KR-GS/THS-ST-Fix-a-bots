@@ -36,6 +36,8 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    
+
     private GameObject[] counterHolder;
     private List<int> generatedList = new List<int>();
     private int currentInt;
@@ -560,9 +562,21 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
 
-        if(totalCorrect == patternLength)
+        yield return null;
+
+        Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
+
+        yield return null;
+
+        ToggleOverviewCounters(true);
+
+        Destroy(currentTool);
+
+        if (totalCorrect == patternLength)
         {
             Debug.Log("All correct!");
+
+            Camera.main.GetComponent<ToolCamera>().TriggerDoneCanvas();
 
             StaticData.isToolDone = true;
 
@@ -575,17 +589,12 @@ public class LoToolMinigame : MonoBehaviour
         else
         {
             Debug.Log("Something is wrong!");
+            foreach (GameObject partTile in tiledParts) {
+                partTile.GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
+                partTile.GetComponent<PartTile>().SetIsWrong(false);
+                partTile.GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+            }
         }
-
-        yield return null;
-
-        Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
-
-        yield return null;
-
-        ToggleOverviewCounters(true);
-
-        Destroy(currentTool);
     }
 
     private IEnumerator TriggerFastenerChange(Button button)

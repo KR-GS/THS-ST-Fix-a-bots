@@ -15,9 +15,6 @@ public class ToolBtn : MonoBehaviour
     [SerializeField]
     private Sprite unselectedSprite;
 
-    //public Button Button;
-
-    private bool selected = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject GetToolSprite()

@@ -21,6 +21,9 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private Canvas overViewCanvas;
 
+    [SerializeField]
+    private Canvas doneCanvas;
+
     private Vector3 originalPosition;
     private float originalSize;
 
@@ -31,9 +34,9 @@ public class ToolCamera : MonoBehaviour
 
         transform.position = new Vector3(tilingManager.TileMidPoint(), (tilingManager.TileMidPoint() / 4), transform.position.z);
         GetComponent<Camera>().orthographicSize = 17;
-        zoomInCanvas.gameObject.SetActive(false);
-        toolCanvas.gameObject.SetActive(false);
-        overViewCanvas.gameObject.SetActive(true);
+        zoomInCanvas.enabled = false;
+        toolCanvas.enabled = false;
+        overViewCanvas.enabled = true;
     }
 
     public void FocusedCameraView(float partPosition)
@@ -41,9 +44,9 @@ public class ToolCamera : MonoBehaviour
         transform.position = new Vector3(partPosition, originalPosition.y, originalPosition.z);
         GetComponent<Camera>().orthographicSize = originalSize;
 
-        zoomInCanvas.gameObject.SetActive(true);
-        toolCanvas.gameObject.SetActive(true);
-        overViewCanvas.gameObject.SetActive(false);
+        zoomInCanvas.enabled = true;
+        toolCanvas.enabled = true;
+        overViewCanvas.enabled = false;
     }
 
     public void CameraTrigger(Vector3 firstFastenerPosition, float speed)
@@ -68,5 +71,13 @@ public class ToolCamera : MonoBehaviour
             GetComponent<Camera>().orthographicSize--;
             yield return null;
         }
+    }
+
+    public void TriggerDoneCanvas()
+    {
+        overViewCanvas.enabled = false;
+        doneCanvas.enabled = true;
+        zoomInCanvas.enabled = false;
+        toolCanvas.enabled = false;
     }
 }
