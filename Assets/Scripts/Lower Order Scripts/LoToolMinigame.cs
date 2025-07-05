@@ -5,7 +5,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class LoToolMinigame : MonoBehaviour
 {
@@ -293,15 +292,15 @@ public class LoToolMinigame : MonoBehaviour
             if(rayHit.transform.gameObject.TryGetComponent(out Tool tool))
             {
                 bool useCountManager = false;
+                numberToDisplay[currentInt]++;
                 if (numberToDisplay[currentInt]<24)
                 {
-                    numberToDisplay[currentInt]++;
+                    
                     //hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
                     useCountManager = true;
                 }
                 else
                 {
-                    numberToDisplay[currentInt]++;
                     //textCounter.text = numberToDisplay[currentInt].ToString();
                     useCountManager = false;
                 }
@@ -352,6 +351,7 @@ public class LoToolMinigame : MonoBehaviour
         }
         else
         {
+            fastenerObj[currentInt].SetActive(false);
             textCounter.text = numberToDisplay[currentInt].ToString();
         }
     }
