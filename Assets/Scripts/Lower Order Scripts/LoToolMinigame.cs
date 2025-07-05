@@ -573,7 +573,7 @@ public class LoToolMinigame : MonoBehaviour
 
             yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[i].GetComponent<PartTile>()));
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1.5f);
 
             fastenerObj[i].SetActive(false);
 
