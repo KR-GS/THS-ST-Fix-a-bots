@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 
 public class RobotPaintPart : MonoBehaviour
 {

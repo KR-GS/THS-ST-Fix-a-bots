@@ -14,4 +14,9 @@ public class PartTile : MonoBehaviour
     {
         return fastenerHolder;
     }
+
+    public void SetFastenerPosition(float newPos)
+    {
+        fastenerHolder.GetChild(0).localPosition = new Vector3(0, newPos, 0);
+    }
 }

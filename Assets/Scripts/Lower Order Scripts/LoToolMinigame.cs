@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -286,7 +285,8 @@ public class LoToolMinigame : MonoBehaviour
         {
             if(rayHit.transform.gameObject.TryGetComponent(out Tool tool))
             {
-                StartCoroutine(tool.TriggerToolAnimation());
+                StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>(), -0.7f));
+                
                 if (numberToDisplay[currentInt]<24)
                 {
                     numberToDisplay[currentInt]++;
@@ -297,7 +297,6 @@ public class LoToolMinigame : MonoBehaviour
                     numberToDisplay[currentInt]++;
                     textCounter.text = numberToDisplay[currentInt].ToString();
                 }
-                //animator.SetBool("IsHitting", false);
             }
             else if(rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
             {
@@ -332,9 +331,18 @@ public class LoToolMinigame : MonoBehaviour
     }
 
 
-    public void CheckNumber()
+    public void CheckNumber(Transform tools)
     {
         ToggleOverviewCounters(false);
+
+        foreach (Transform child in tools)
+        {
+            if(child.GetComponent<ToolBtn>().GetToolType() == 1)
+            {
+                currentTool = Instantiate(child.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
+                break;
+            }
+        }
 
         StartCoroutine(ValueCheckCoroutine());    
     }
@@ -490,9 +498,13 @@ public class LoToolMinigame : MonoBehaviour
         {
             fastenerObj[i].SetActive(true);
 
+            toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
+
+            yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[i].GetComponent<PartTile>(), -1.0f));
+
             if (numberToDisplay[i] != generatedList[i] || fastenerCheckVal[i] != fastenerValues[i])
             {
-                Debug.Log("Incorrect Number");
+                Debug.Log("Incorrect!!");
 
                 yield return new WaitForSeconds(1);
 
@@ -544,6 +556,8 @@ public class LoToolMinigame : MonoBehaviour
         yield return null;
 
         ToggleOverviewCounters(true);
+
+        Destroy(currentTool);
     }
 
     private IEnumerator TriggerFastenerChange(Button button)

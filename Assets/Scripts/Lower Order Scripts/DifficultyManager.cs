@@ -42,7 +42,7 @@ public class DifficultyManager : MonoBehaviour
             if (gameType == Minigame.tool)
             {
                 incorrectVals = Random.Range(1, 2);
-                patternLength = Random.Range(4, 7);
+                patternLength = Random.Range(5, 6);
             }
             else
             {
