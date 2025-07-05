@@ -8,6 +8,21 @@ public class StationExit : MonoBehaviour
     public StationType type;
 
     public void ExitStation(){
+
+        switch (type)
+        {
+            case StationType.Tool:
+                Debug.Log("Exiting Tool Station");
+                break;
+            case StationType.Paint:
+                Debug.Log("Exiting Paint Station");
+                break;
+        }
+
+        SceneManager.LoadScene("LO_Stage_Select");
+        /*
+        // Remove if experiment is finished
+
         Order currentOrder = OrderManager.Instance?.GetCurrentOrder();
         if (currentOrder != null)
         {
@@ -37,5 +52,6 @@ public class StationExit : MonoBehaviour
         }
 
         SceneManager.LoadScene("LO_Workshop");
+        */
     }
 }

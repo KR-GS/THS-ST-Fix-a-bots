@@ -595,6 +595,7 @@ GameObject:
   - component: {fileID: 408360015}
   - component: {fileID: 408360014}
   - component: {fileID: 408360013}
+  - component: {fileID: 408360016}
   m_Layer: 5
   m_Name: Leave Btn
   m_TagString: Untagged
@@ -665,9 +666,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
-        m_MethodName: ChangeToLeftElement
+      - m_Target: {fileID: 408360016}
+        m_TargetAssemblyTypeName: StationExit, Assembly-CSharp
+        m_MethodName: ExitStation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -715,6 +716,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408360011}
   m_CullTransparentMesh: 1
+--- !u!114 &408360016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408360011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7839acc8ea72334691cb13f6624aef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
 --- !u!1 &423445674
 GameObject:
   m_ObjectHideFlags: 0
