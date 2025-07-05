@@ -85,9 +85,9 @@ public class DifficultyManager : MonoBehaviour
             noOfTypes = Random.Range(1, 3);
             if (gameType == Minigame.tool)
             {
-                patternLength = Random.Range(6, 12);
+                patternLength = 6;
                 incorrectVals = 0;
-                missingVals = Random.Range(3, 5);
+                missingVals = 1;
             }
             else
             {

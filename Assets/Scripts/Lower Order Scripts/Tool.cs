@@ -5,21 +5,32 @@ public class Tool : MonoBehaviour
 {
     private Animator statusAnimator;
     private AnimationClip[] clips;
-
+    private AnimationEvent[] events;
+    
     void Start()
     {
         statusAnimator = GetComponentInChildren<Animator>();
         clips = statusAnimator.runtimeAnimatorController.animationClips;
-        Debug.Log(clips[1].length);
+        Debug.Log(clips.Length);
+        events = clips[1].events;
+
+        events[0].functionName = "SetHeightValue";
+        Debug.Log("Event time: " + events[0].time);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public IEnumerator TriggerToolAnimation(PartTile fastener, float posY)
+    public IEnumerator TriggerToolAnimation(PartTile fastener)
     {
+        GetComponentInChildren<ToolEvent>().SetCurrentFastener(fastener);
         GetComponent<Collider2D>().enabled = false;
         statusAnimator.SetTrigger("IsUsed");
-        yield return new WaitForSeconds(clips[1].length +0.5f);
-        fastener.SetFastenerPosition(posY);
+        yield return null;
         GetComponent<Collider2D>().enabled = true;
     }
+
+    public void SetHeightValue(float value)
+    {
+        GetComponentInChildren<ToolEvent>().SetHeightToSet(value);
+    }
+
 
 }

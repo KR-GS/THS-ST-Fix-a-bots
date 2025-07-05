@@ -2,39 +2,20 @@ using UnityEngine;
 
 public class Fastener : MonoBehaviour
 {
-    private enum FastenerType
+    [SerializeField]
+    private Sprite brokenSprite;
+
+    [SerializeField]
+    private Sprite fixedSprite;
+
+
+    public void SetBrokenSprite()
     {
-        nail,
-        philips,
-        flat,
-        bolt
+        GetComponentInChildren<SpriteRenderer>().sprite = brokenSprite;
     }
 
-    [SerializeField]
-    private GameObject fastenerPrefab;
-
-    [SerializeField]
-    private GameObject fastenerHitPrefab;
-
-    [SerializeField]
-    private FastenerType fastenerType;
-
-    [SerializeField]
-    private int fastenerValue;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    public GameObject GetFastenerSprite()
+    public void SetFixedSprite()
     {
-        return fastenerPrefab;
-    }
-
-    public GameObject GetHitIcon()
-    {
-        return fastenerHitPrefab;
-    }
-
-    public int GetFastenerType()
-    {
-        return fastenerValue;
+        GetComponentInChildren<SpriteRenderer>().sprite = fixedSprite;
     }
 }

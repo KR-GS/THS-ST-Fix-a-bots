@@ -457,7 +457,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: -1957689310, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
-    m_PressedSprite: {fileID: -1957689310, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+    m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -1100,8 +1100,8 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: -740555216, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
-    m_PressedSprite: {fileID: -740555216, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
-    m_SelectedSprite: {fileID: -740555216, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1792,7 +1792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &462270655
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4398,8 +4398,8 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: -1403518528, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
-    m_PressedSprite: {fileID: -1403518528, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
-    m_SelectedSprite: {fileID: -1403518528, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -5334,8 +5334,8 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: -1427984567, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
-    m_PressedSprite: {fileID: -1427984567, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
-    m_SelectedSprite: {fileID: -1427984567, guid: b45adbc93ff2c1046a1d179ad34cc54f, type: 3}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal

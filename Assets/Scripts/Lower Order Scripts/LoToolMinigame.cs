@@ -47,7 +47,7 @@ public class LoToolMinigame : MonoBehaviour
     private int[] fastenerValues;
     private int[] originalHitValues;
     private GameObject currentTool;
-    private Fastener[] fastenerList = new Fastener[4];
+    private FastenerBtn[] fastenerList = new FastenerBtn[4];
     private int[] fastenerCheckVal;
 
     [SerializeField]
@@ -56,9 +56,9 @@ public class LoToolMinigame : MonoBehaviour
 
     void Awake()
     {
-        fastenerList = FindObjectsByType<Fastener>(FindObjectsSortMode.None);
+        fastenerList = FindObjectsByType<FastenerBtn>(FindObjectsSortMode.None);
         int index;
-        Fastener temp;
+        FastenerBtn temp;
 
         for (int i=0; i<4-1; i ++)
         {
@@ -77,7 +77,7 @@ public class LoToolMinigame : MonoBehaviour
             fastenerList[index] = temp;
         }
 
-        foreach (Fastener fastener in fastenerList)
+        foreach (FastenerBtn fastener in fastenerList)
         {
             Debug.Log("Fastener ID: " + fastener.GetFastenerType());
         }
@@ -209,8 +209,10 @@ public class LoToolMinigame : MonoBehaviour
                 break;
         }
 
-        originalHitValues = numberToDisplay;
-
+        for(int i=0; i<patternLength; i++)
+        {
+            originalHitValues[i] = numberToDisplay[i];
+        }
 
         textCounter.text = numberToDisplay[currentInt].ToString();
 
@@ -241,7 +243,9 @@ public class LoToolMinigame : MonoBehaviour
             if (numberToDisplay[i] > 0)
             {
                 Instantiate(fastenerList[randFastenerVal].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
-                
+                tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+
+
                 Debug.Log("Adding Fastener");
                 fastenerValues[i] = randFastenerVal+1;
             }
@@ -285,17 +289,23 @@ public class LoToolMinigame : MonoBehaviour
         {
             if(rayHit.transform.gameObject.TryGetComponent(out Tool tool))
             {
-                StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>(), -0.7f));
-                
+                bool useCountManager = false;
                 if (numberToDisplay[currentInt]<24)
                 {
                     numberToDisplay[currentInt]++;
-                    hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+                    //hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+                    useCountManager = true;
                 }
                 else
                 {
                     numberToDisplay[currentInt]++;
-                    textCounter.text = numberToDisplay[currentInt].ToString();
+                    //textCounter.text = numberToDisplay[currentInt].ToString();
+                    useCountManager = false;
+                }
+
+                if (useCountManager)
+                {
+                    StartCoroutine(HitAnimation(tool, useCountManager));
                 }
             }
             else if(rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
@@ -327,6 +337,19 @@ public class LoToolMinigame : MonoBehaviour
                     fastenerObj[currentInt].SetActive(true);
                 }
             }
+        }
+    }
+
+    private IEnumerator HitAnimation(Tool tool, bool value)
+    {
+        yield return StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
+        if (value)
+        {
+            hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+        }
+        else
+        {
+            textCounter.text = numberToDisplay[currentInt].ToString();
         }
     }
 
@@ -385,8 +408,8 @@ public class LoToolMinigame : MonoBehaviour
     public void SelectFastener(Button fastenerBtn)
     {
         Transform holder = null;
-        Debug.Log(fastenerBtn.GetComponent<Fastener>().GetFastenerType());
-        fastenerValues[currentInt] = fastenerBtn.GetComponent<Fastener>().GetFastenerType();
+        Debug.Log(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType());
+        fastenerValues[currentInt] = fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType();
 
         holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
 
@@ -395,7 +418,7 @@ public class LoToolMinigame : MonoBehaviour
             Destroy(holder.transform.GetChild(0).gameObject);
         }
 
-        Instantiate(fastenerBtn.GetComponent<Fastener>().GetFastenerSprite(), holder);
+        Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
     }
 
     public void SelectTool(Button toolBtn)
@@ -422,6 +445,7 @@ public class LoToolMinigame : MonoBehaviour
             }
 
             currentTool = Instantiate(toolBtn.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
+            currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
 
             toolBtn.GetComponent<ToolBtn>().Select();
 
@@ -494,33 +518,29 @@ public class LoToolMinigame : MonoBehaviour
         Camera.main.GetComponent<ToolCamera>().CameraTrigger(newCameraPos, speed);
         yield return null;
 
+        currentTool.GetComponent<Tool>().SetHeightValue(-1f);
+
         while (i<patternLength)
         {
             fastenerObj[i].SetActive(true);
 
             toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
-            yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[i].GetComponent<PartTile>(), -1.0f));
-
             if (numberToDisplay[i] != generatedList[i] || fastenerCheckVal[i] != fastenerValues[i])
             {
+                tiledParts[i].GetComponent<PartTile>().SetIsWrong(false);
                 Debug.Log("Incorrect!!");
-
-                yield return new WaitForSeconds(1);
-
-                //insert wrong indicator
             }
             else
             {
                 totalCorrect++;
+                tiledParts[i].GetComponent<PartTile>().SetIsWrong(true);
                 Debug.Log("Correct!!");
-
-                yield return new WaitForSeconds(1);
-
-                //insert wrong indicator
             }
 
-            yield return new WaitForSeconds(2);
+            yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[i].GetComponent<PartTile>()));
+
+            yield return new WaitForSeconds(3);
 
             fastenerObj[i].SetActive(false);
 
