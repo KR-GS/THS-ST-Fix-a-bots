@@ -10,14 +10,17 @@ public class StageSelectManager : MonoBehaviour
     public Button randButton;
 
     [Header("Stage Info UI")]
-    public GameObject stageInfoPanel;
-    public TMP_Text livesText, restartsText, timeText;
-    public Button yesButton, noButton;
+    public GameObject stageInfoPanel, speedPanel;
+    public TMP_Text livesText, restartsText, timeText, speedText;
+    public Button yesButton, noButton, decreaseButton, increaseButton, confirmSpeedButton, confirmSpeedPanelButton;
+
+    private string[] speedLabels = { "Slowest", "Slow", "Average", "Fast", "Fastest" };
+    private float[] speedValues = { 2f, 1.5f, 1f, 0.75f, 0.5f };
+    private int currentSpeedIndex = 2; 
+    private float confirmedSpeed = 1f; 
 
     private int selectedStageNum;
     private (int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef, bool lockConst, int coef, int constant) selectedConfig;
-
-    
 
     IEnumerator Start()
     {
@@ -33,32 +36,72 @@ public class StageSelectManager : MonoBehaviour
             Debug.LogError("The DataPersistence.Instance is NULL!!!");
         }
 
-        //LoadGame() here for StaticData.numStageDone, StaticData.stageLives[], StaticData.stageRestarts[], StaticData.stageTime[]
-        stageInfoPanel.SetActive(false);
-        var stageConfigs = new (int max, float cycInt, float cycLen, int prePressed,
-        bool formSeen, bool lockCoef, bool lockConst, int coef, int constant)[]
-        {
-            (25, 2f, 1.5f, 3, true,  true,  true,  2,  2),
-            (25, 2f, 1.5f, 3, false, false, true,  3, -2),
-            (25, 2f, 1.5f, 3, false, false, false, 3, -1),
-            (25, 2f, 1.5f, 0, true,  true,  true,  3,  1),
-            (25, 2f, 1.5f, 0, false, false, false, 4, -3)
-        };
+        UpdateSpeedDisplay();
 
         for (int i = 0; i < stageButtons.Length; i++)
         {
             int stageNum = i;
-            var cfg = stageConfigs[i];
-
             stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
 
-            stageButtons[i].onClick.AddListener(() => ShowStageInfo(stageNum, cfg));
+            stageButtons[i].onClick.AddListener(() =>
+            {
+                var configs = GetStageConfigs(); // Use the latest confirmed speed
+                ShowStageInfo(stageNum, configs[stageNum]);
+            });
         }
 
-        randButton.onClick.AddListener(() => LoadStage(5, 25, 1f, 0.6f, 0, false, false, false, 0, 0, true));
+        randButton.onClick.AddListener(() =>
+            LoadStage(5, 25, 1f, 0.6f, 0, false, false, false, 0, 0, true)
+        );
 
         yesButton.onClick.AddListener(ConfirmStageSelection);
         noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
+        confirmSpeedPanelButton.onClick.AddListener(() => speedPanel.SetActive(true));
+        increaseButton.onClick.AddListener(IncreaseSpeed);
+        decreaseButton.onClick.AddListener(DecreaseSpeed);
+        confirmSpeedButton.onClick.AddListener(ConfirmSpeed);
+    }
+
+    private (int, float, float, int, bool, bool, bool, int, int)[] GetStageConfigs()
+    {
+        return new (int, float, float, int, bool, bool, bool, int, int)[]
+        {
+            (25, confirmedSpeed, confirmedSpeed - 0.25f, 3, true,  true,  true,  2,  2),
+            (25, confirmedSpeed, confirmedSpeed - 0.25f, 3, false, false, true,  3, -2),
+            (25, confirmedSpeed, confirmedSpeed - 0.25f, 3, false, false, false, 3, -1),
+            (25, confirmedSpeed, confirmedSpeed - 0.25f, 0, true,  true,  true,  3,  1),
+            (25, confirmedSpeed, confirmedSpeed - 0.25f, 0, false, false, false, 4, -3)
+        };
+    }
+
+    void IncreaseSpeed()
+    {
+        if (currentSpeedIndex < speedLabels.Length - 1)
+        {
+            currentSpeedIndex++;
+            UpdateSpeedDisplay();
+        }
+    }
+
+    void DecreaseSpeed()
+    {
+        if (currentSpeedIndex > 0)
+        {
+            currentSpeedIndex--;
+            UpdateSpeedDisplay();
+        }
+    }
+
+    void UpdateSpeedDisplay()
+    {
+        speedText.text = speedLabels[currentSpeedIndex];
+    }
+
+    void ConfirmSpeed()
+    {
+        confirmedSpeed = speedValues[currentSpeedIndex];
+        speedPanel.SetActive(false);
+        Debug.Log("Speed confirmed: " + confirmedSpeed);
     }
 
     void ShowStageInfo(int stageNum, (int, float, float, int, bool, bool, bool, int, int) config)
@@ -66,7 +109,6 @@ public class StageSelectManager : MonoBehaviour
         selectedStageNum = stageNum;
         selectedConfig = config;
 
-        // Safety check
         if (stageNum == StaticData.stageLives.Count)
         {
             livesText.text = "N/A";
@@ -77,7 +119,7 @@ public class StageSelectManager : MonoBehaviour
         {
             livesText.text = $"{StaticData.stageLives[stageNum]}";
             restartsText.text = $"{StaticData.stageRestarts[stageNum]}";
-            timeText.text = $"{Mathf.Round(StaticData.stageTime[stageNum]*100)/100.0}s";
+            timeText.text = $"{Mathf.Round(StaticData.stageTime[stageNum] * 100) / 100.0}s";
         }
 
         stageInfoPanel.SetActive(true);
@@ -87,10 +129,12 @@ public class StageSelectManager : MonoBehaviour
     {
         var cfg = selectedConfig;
 
+        stageInfoPanel.SetActive(false);
+        speedPanel.SetActive(false);
+
         LoadStage(selectedStageNum, cfg.max, cfg.cycInt, cfg.cycLen,
             cfg.prePressed, cfg.formSeen, cfg.lockCoef, cfg.lockConst,
             cfg.coef, cfg.constant, false);
-
     }
 
     public void LoadStage(int stageNum, int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef,

@@ -85,6 +85,7 @@ public class SequenceGameManager : MonoBehaviour
 
     void GetData()
     {
+        
         maxNumber = StaticData.maxNumber;
         cycleInterval = StaticData.cycleInterval;
         cycleLeniency = StaticData.cycleLeniency;
@@ -103,6 +104,7 @@ public class SequenceGameManager : MonoBehaviour
         stageData.SetNumRestarts(0);
         stageData.SetElapsedTime(0f);
         stageData.SetNumLives(5);
+        Time.timeScale = 1;
     }
 
     void InitializeStageUi()
@@ -152,20 +154,19 @@ public class SequenceGameManager : MonoBehaviour
 
     IEnumerator ResumeGame()
     {
+        Time.timeScale = 1;
         if (stageData.GetNumLives() <= 0)
         {
             SceneManager.LoadScene(sceneName);
         }
         if (nextStage)
         {
-            Time.timeScale = 1;
             pausePanel.SetActive(false);
             gameTimer.ResumeTimer();
             canTap = true;
         }
         if (!nextStage && !isCycling)
         {
-            Time.timeScale = 1;
             pausePanel.SetActive(false);
             if (!gameTimer.GetIsRunning())
             {
@@ -175,7 +176,6 @@ public class SequenceGameManager : MonoBehaviour
         }
         if (!nextStage && isCycling)
         {
-            Time.timeScale = 1;
             isCycling = false;
             pausePanel.SetActive(false);
             restartStageButton.enabled = false;
@@ -186,7 +186,6 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = "1";
             yield return new WaitForSeconds(1);
             gameTimer.ResumeTimer();
-            //pauseButton.enabled = true;
             isCycling = true;
             restartStageButton.enabled = true;
             canTap = true;
