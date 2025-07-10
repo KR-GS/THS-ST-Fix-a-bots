@@ -218,6 +218,9 @@ public class LoToolMinigame : MonoBehaviour
 
         textCounter.text = numberToDisplay[currentInt].ToString();
 
+        //randFastenerVal = Random.Range(0, fastenerList.Length);
+        randFastenerVal = 0;
+
         for (int i = 0; i < patternLength; i++)
         {
             Debug.Log("Creating Object number " + i);
@@ -227,7 +230,7 @@ public class LoToolMinigame : MonoBehaviour
             Debug.Log(i+ " value: " + numberToDisplay[i]);
             if (numberToDisplay[i] > 0)
             {
-                hitCountManager.PresetCounter(numberToDisplay[i], fastenerObj[i], fastenerList[0].GetHitIcon());
+                hitCountManager.PresetCounter(numberToDisplay[i], fastenerObj[i], fastenerList[randFastenerVal].GetHitIcon());
             }
 
             if (i != currentInt)
@@ -235,10 +238,6 @@ public class LoToolMinigame : MonoBehaviour
                 fastenerObj[i].SetActive(false);
             }
         }
-
-        //randFastenerVal = Random.Range(0, fastenerList.Length);
-        randFastenerVal = 0;
-
 
         for (int i = 0; i< patternLength; i++)
         {
@@ -262,7 +261,7 @@ public class LoToolMinigame : MonoBehaviour
 
             counterHolder[i].transform.position = position;
 
-            counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i]);
+            counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerCheckVal[i] - 1].GetHitIcon());
         }
 
         Destroy(originalCounter);
@@ -648,7 +647,15 @@ public class LoToolMinigame : MonoBehaviour
         {
             for (int i = 0; i < patternLength; i++)
             {
-                counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i]);
+                if(fastenerValues[i] > 0)
+                {
+                    counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerValues[i] - 1].GetHitIcon());
+                }
+                else
+                {
+                    counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerCheckVal[i] - 1].GetHitIcon());
+                }
+                
                 counterHolder[i].SetActive(true);
             }
         }

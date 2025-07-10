@@ -4,36 +4,19 @@ using UnityEngine;
 public class OverviewCounter : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] counterArr;
+    private GameObject counterObj;
 
-    public void SetCounterVal(int count)
+    public void SetCounterVal(int count, GameObject fastenerType)
     {
-        int counterSlot = count % 5;
-
-        if(counterSlot == 0 && count>0)
+        if(count == 0)
         {
-            counterSlot = 5;
+            counterObj.GetComponentInChildren<TextMeshProUGUI>().text = "?";
+            counterObj.GetComponentInChildren<SpriteRenderer>().sprite = null;
         }
-
-        for(int i=0; i<5; i++)
+        else
         {
-            if (i<counterSlot)
-            {
-                counterArr[i].GetComponent<SpriteRenderer>().color = Color.white;
-            }
-            else
-            {
-                counterArr[i].GetComponent<SpriteRenderer>().color = Color.gray;
-            }
-
-            if (i == counterSlot-1)
-            {
-                counterArr[i].GetComponentInChildren<TextMeshProUGUI>().text = count.ToString();
-            }
-            else
-            {
-                counterArr[i].GetComponentInChildren<TextMeshProUGUI>().text = "";
-            }
+            counterObj.GetComponentInChildren<TextMeshProUGUI>().text = count.ToString();
+            counterObj.GetComponentInChildren<SpriteRenderer>().sprite = fastenerType.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
         }
     }
 }
