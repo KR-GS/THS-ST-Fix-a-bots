@@ -14,7 +14,7 @@ public class SequenceGameManager : MonoBehaviour
 
     [Header("UI & Prefabs")]
     public GameObject timePeriodButtonPrefab;
-    public Transform buttonsParent;   
+    public Transform buttonsParent, buttonsParent2;   
     public TextMeshProUGUI feedbackText, formulaText, timerText, livesText, restartText;
     public Button nextStageButton, restartStageButton, pauseButton;
     public FormulaInputPanel formulaPanel;
@@ -45,6 +45,7 @@ public class SequenceGameManager : MonoBehaviour
     private Sequence currentSequence;
     public FormulaInputPanel formulaInputPanel;
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
+    private List<TimePeriodButton> buttons2 = new List<TimePeriodButton>();
     private int currentCycleIndex = 0;
     private List<int> pressedNumbers = new List<int>();
     private bool isCycling = false, isCorrect = true, canTap = true, isStart = true,
@@ -163,7 +164,6 @@ public class SequenceGameManager : MonoBehaviour
         {
             pausePanel.SetActive(false);
             gameTimer.ResumeTimer();
-            canTap = true;
         }
         if (!nextStage && !isCycling)
         {
@@ -240,6 +240,7 @@ public class SequenceGameManager : MonoBehaviour
         {
             GameObject go = Instantiate(timePeriodButtonPrefab, buttonsParent);
             TimePeriodButton btn = go.GetComponent<TimePeriodButton>();
+
             btn.ButtonNumber = i;
             btn.SetHighlighted(false);
             buttons.Add(btn);
@@ -281,7 +282,7 @@ public class SequenceGameManager : MonoBehaviour
     // Just to make time for the cycling
     IEnumerator DelayedStartCycle()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         feedbackText.text = "3";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "2";
@@ -386,10 +387,8 @@ public class SequenceGameManager : MonoBehaviour
                     }
                     else if (inSequence)
                     {
-                        statusAnimator.SetBool("IdleTrigger", false);
-                        statusAnimator.SetBool("AnticipateTrigger", true);
                         // If the Sequence was pre pressed, automatically plays hit animation
-                        if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.01f)
+                        if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.10f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("HitTrigger", true);
@@ -558,6 +557,8 @@ public class SequenceGameManager : MonoBehaviour
         isCycling = false;
         StopAllCoroutines(); // stops the button cycling
         feedbackText.text = "";
+
+        buttonsParent.localPosition = new Vector3(0, -500, 0);
         
         foreach (var btn in buttons)
             btn.SetHighlighted(false);
@@ -567,8 +568,22 @@ public class SequenceGameManager : MonoBehaviour
             buttons[num - 1].SetGreen();
         }
 
+        foreach (Transform child in buttonsParent2)
+            Destroy(child.gameObject);
+        buttons2.Clear();
+
+        for (int i = 1; i <= maxNumber; i++)
+        {
+            GameObject go2 = Instantiate(timePeriodButtonPrefab, buttonsParent2);
+            TimePeriodButton btn2 = go2.GetComponent<TimePeriodButton>();
+
+            btn2.ButtonNumber = i;
+            btn2.SetHighlighted(false);
+            buttons2.Add(btn2);
+        }
+
         // Show formula panel with current sequence
         formulaPanel.gameObject.SetActive(true);
-        formulaPanel.ShowPanel(currentSequence, gameTimer, stageData, buttons);
+        formulaPanel.ShowPanel(currentSequence, gameTimer, stageData, buttons2);
     }
 }

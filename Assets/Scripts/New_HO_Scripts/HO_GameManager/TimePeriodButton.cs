@@ -5,7 +5,7 @@ public class TimePeriodButton : MonoBehaviour
 {
     private Vector3 originalPosition;
     private RectTransform rectTransform;
-    private float moveAmount = 10f; 
+    private float moveAmount = 15f;
     private bool isInitialized = false;
     public int ButtonNumber;
     public bool isSelected = false;
@@ -26,23 +26,35 @@ public class TimePeriodButton : MonoBehaviour
         Debug.Log(originalPosition);*/
     }
 
+    void Update()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        if (!isInitialized)
+        {
+            originalPosition = rectTransform.anchoredPosition;
+            if (originalPosition != new Vector3(0, 0, 0))
+            {
+                isInitialized = true;
+                Debug.Log("Btn " + ButtonNumber + " " + originalPosition);
+            }
+
+        }
+    }
+
     private void Start()
     {
-        
+
     }
 
     public void SetHighlighted(bool selected)
     {
-        /*if (!isInitialized)
-        {
-            originalPosition = transform.localPosition;
-            isInitialized = true;
-        }*/
-
         buttonImage.color = selected ? Color.yellow : Color.white;
-        /*rectTransform.localPosition = selected
-            ? originalPosition + new Vector3(0, moveAmount , 0)
-            : originalPosition;*/
+        if (isInitialized)
+        {
+            rectTransform.anchoredPosition = selected
+                ? originalPosition + new Vector3(0, moveAmount, 0)
+                : originalPosition;
+        }
     }
 
     public void SetRed()
@@ -84,5 +96,10 @@ public class TimePeriodButton : MonoBehaviour
     public bool GetWasSelected()
     {
         return wasSelected;
+    }
+    
+    public Vector3 GetOriginalPosition()
+    {
+        return originalPosition;
     }
 }

@@ -24,6 +24,10 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     [Header("UI References")]
     public TMP_Text coefficientText, constantText, feedbackText;
+
+    public GameObject linePrefab, horizontalLinePrefab;
+    public RectTransform buttonContainer;
+    private List<GameObject> activeLines = new List<GameObject>();
     public TextMeshProUGUI signText;
 
     public Button coefUpButton, coefDownButton, constUpButton, constDownButton, submitButton;
@@ -83,6 +87,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         {
             if (numStars >= StaticData.stageStars[stageData.GetStageNum()])
             {
+                StaticData.stageStars[stageData.GetStageNum()] = numStars;
                 if (StaticData.stageTime[stageData.GetStageNum()] > stageData.GetElapsedTime())
                 {
                     StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
@@ -95,11 +100,76 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 {
                     StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
                 }
-                if (StaticData.formulaAttempts[stageData.GetStageNum()].Length > stageStringAttempt.Length)
-                {
-                    StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
-                }
+                StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
+                
             }
+        }
+    }
+
+    private void ShowLinesForCoefficient(int startValue, int coef)
+    {
+        // Clear existing lines
+        foreach (var line in activeLines)
+            Destroy(line);
+        activeLines.Clear();
+
+        if (coef == 0) return;
+
+        List<int> linePositions = new List<int>();
+        List<int> horizontalPositions = new List<int>();
+        int val = startValue;
+
+        //getting the vert lines
+        while (val <= buttons.Count)
+        {
+            linePositions.Add(val);
+            val += coef;
+        }
+
+        val = startValue;
+
+        //getting the horizontal lines
+        while (val <= buttons.Count)
+        {
+            if (!linePositions.Contains(val) && val < linePositions[linePositions.Count - 1])
+            {
+                horizontalPositions.Add(val);
+            }
+            val++;
+        }
+
+        foreach (int pos in linePositions)
+        {
+            if (pos < 1 || pos > buttons.Count) continue;
+
+            TimePeriodButton button = buttons[pos - 1];
+            RectTransform btnRect = button.GetComponent<RectTransform>();
+
+            // Create line
+            GameObject line = Instantiate(linePrefab, btnRect);
+            activeLines.Add(line);
+
+            RectTransform lineRect = line.GetComponent<RectTransform>();
+
+            lineRect.SetAsLastSibling();
+            lineRect.anchoredPosition = new Vector3(0, 40f, 0);
+        }
+        
+        foreach (int pos in horizontalPositions)
+        {
+            if (pos < 1 || pos > buttons.Count) continue;
+
+            TimePeriodButton button = buttons[pos - 1];
+            RectTransform btnRect = button.GetComponent<RectTransform>();
+
+            // Create line
+            GameObject line = Instantiate(horizontalLinePrefab, btnRect);
+            activeLines.Add(line);
+
+            RectTransform horizontalLineRect = line.GetComponent<RectTransform>();
+
+            horizontalLineRect.SetAsLastSibling();
+            horizontalLineRect.anchoredPosition = new Vector3(0, 75f, 0);
         }
     }
 
@@ -134,6 +204,8 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 buttons[num - 1].SetGreen();
             }
         }
+
+        ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
     }
 
     public void ShowPanel(Sequence sequence, GameTimer gameTimer1, HOStageData sd, List<TimePeriodButton> btns)

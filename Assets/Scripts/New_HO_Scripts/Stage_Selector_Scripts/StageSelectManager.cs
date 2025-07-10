@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
-public class StageSelectManager : MonoBehaviour
+public class StageSelectManager : MonoBehaviour, IDataPersistence
 {
     public Button[] stageButtons;
     public Button randButton;
@@ -16,8 +16,8 @@ public class StageSelectManager : MonoBehaviour
 
     private string[] speedLabels = { "Slowest", "Slow", "Average", "Fast", "Fastest" };
     private float[] speedValues = { 2f, 1.5f, 1f, 0.75f, 0.5f };
-    private int currentSpeedIndex = 2; 
-    private float confirmedSpeed = 1f; 
+    private int currentSpeedIndex = 2;
+    private float confirmedSpeed = 1f;
 
     private int selectedStageNum;
     private (int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef, bool lockConst, int coef, int constant) selectedConfig;
@@ -66,11 +66,11 @@ public class StageSelectManager : MonoBehaviour
     {
         return new (int, float, float, int, bool, bool, bool, int, int)[]
         {
-            (25, confirmedSpeed, confirmedSpeed - 0.25f, 3, true,  true,  true,  2,  2),
-            (25, confirmedSpeed, confirmedSpeed - 0.25f, 3, false, false, true,  3, -2),
-            (25, confirmedSpeed, confirmedSpeed - 0.25f, 3, false, false, false, 3, -1),
-            (25, confirmedSpeed, confirmedSpeed - 0.25f, 0, true,  true,  true,  3,  1),
-            (25, confirmedSpeed, confirmedSpeed - 0.25f, 0, false, false, false, 4, -3)
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 3, true,  true,  true,  2,  2),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 3, false, false, true,  3, -2),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 3, false, false, false, 3, -1),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 0, true,  true,  true,  3,  1),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 0, false, false, false, 4, -3)
         };
     }
 
@@ -101,6 +101,7 @@ public class StageSelectManager : MonoBehaviour
     {
         confirmedSpeed = speedValues[currentSpeedIndex];
         speedPanel.SetActive(false);
+        DataPersistenceManager.Instance.SaveGame();
         Debug.Log("Speed confirmed: " + confirmedSpeed);
     }
 
@@ -154,4 +155,17 @@ public class StageSelectManager : MonoBehaviour
 
         SceneManager.LoadScene("HO_BotFightScene");
     }
+
+    public void LoadData(GameData data)
+    {
+        confirmedSpeed = data.stageSpeed;
+        Debug.Log("[StageDataLoader] Data loaded into StaticData");
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.stageSpeed = confirmedSpeed;
+        Debug.Log("[StageDataLoader] Data saved from StaticData");
+    }
 }
+

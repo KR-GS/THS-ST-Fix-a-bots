@@ -21,6 +21,7 @@ public class GameData
 
     public int currentOrderIndex;
 
+    [Header("High Order Data")]
     public List<int> lives;
 
     public List<int> restarts;
@@ -32,6 +33,8 @@ public class GameData
     public List<int> stageStars;
 
     public int stageDone;
+
+    public float stageSpeed;
 
 
     public GameData()
@@ -50,6 +53,7 @@ public class GameData
         this.formulaAttempts = new List<string>(new string[stageCount]);
         this.stageStars = new List<int>(new int[stageCount]);
         this.stageDone = 0;
+        this.stageSpeed = 1f;
     }
 
 
