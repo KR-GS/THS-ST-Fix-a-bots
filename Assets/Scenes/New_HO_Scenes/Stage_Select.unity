@@ -2071,6 +2071,18 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1354459348540566301, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    - target: {fileID: 1354459348540566301, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    - target: {fileID: 1354459348540566301, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     - target: {fileID: 1535458827091833079, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -2239,6 +2251,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7388150109208253951, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    - target: {fileID: 7388150109208253951, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    - target: {fileID: 7388150109208253951, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     - target: {fileID: 7757640208390459138, guid: 7260388b92f58c7469651fde7cb10434, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
