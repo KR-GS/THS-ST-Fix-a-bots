@@ -25,7 +25,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     [Header("UI References")]
     public TMP_Text coefficientText, constantText, feedbackText;
 
-    public GameObject linePrefab, horizontalLinePrefab;
+    public GameObject linePrefab, horizontalLinePrefab, yellowLinePrefab;
     public RectTransform buttonContainer;
     private List<GameObject> activeLines = new List<GameObject>();
     public TextMeshProUGUI signText;
@@ -113,7 +113,25 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             Destroy(line);
         activeLines.Clear();
 
-        if (coef == 0) return;
+        //makes sure const with 1 or less don't spawn
+        
+
+        for (i = 1; i <= currentConst; i++)
+        {
+            TimePeriodButton button = buttons[i - 1];
+            RectTransform btnRect = button.GetComponent<RectTransform>();
+
+            // Create line
+            GameObject line = Instantiate(yellowLinePrefab, btnRect);
+            activeLines.Add(line);
+
+            RectTransform lineRect = line.GetComponent<RectTransform>();
+
+            lineRect.SetAsLastSibling();
+            lineRect.anchoredPosition = new Vector3(0, 60f, 0);
+        }
+
+        if (coef <= 1) return;
 
         List<int> linePositions = new List<int>();
         List<int> horizontalPositions = new List<int>();
@@ -131,14 +149,14 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         //getting the horizontal lines
         while (val <= buttons.Count)
         {
-            if (!linePositions.Contains(val) && val < linePositions[linePositions.Count - 1])
+            if (!linePositions.Contains(val) && val < linePositions[linePositions.Count - 1] && val > 0)
             {
                 horizontalPositions.Add(val);
             }
             val++;
         }
 
-        //spawning of horizontal lines
+        //spawning of vertical lines
         foreach (int pos in linePositions)
         {
             if (pos < 1 || pos > buttons.Count) continue;
@@ -156,10 +174,10 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             lineRect.anchoredPosition = new Vector3(0, 40f, 0);
         }
 
-        //spawning of vertical lines
+        //spawning of horizontal lines
         foreach (int pos in horizontalPositions)
         {
-            if (pos < 1 || pos > buttons.Count) continue;
+            if (pos < 1 || pos > buttons.Count || pos == 1) continue;
 
             TimePeriodButton button = buttons[pos - 1];
             RectTransform btnRect = button.GetComponent<RectTransform>();
@@ -183,6 +201,8 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         foreach (var btn in buttons)
             btn.SetHighlighted(false);
 
+        //highlights the const
+        /*
         if (currentConst >= 1)
         {
             for (i = 0; i < currentConst; i++)
@@ -190,30 +210,35 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 buttons[i].SetHighlighted(true);
             }
         }
+        */
 
+        //shows the coef 
         foreach (int num in predictedSequence)
         {
             if (num >= 1 && num <= buttons.Count)
             {
-                buttons[num - 1].SetRed();
+                buttons[num - 1].SetBlue();
             }
         }
-
-        foreach (int num in targetSequence.Numbers)
-        {
-            if (num >= 1 && num <= buttons.Count)
+        
+    //used to show the if the predicted to the actual matches
+    /*
+            foreach (int num in targetSequence.Numbers)
             {
-                buttons[num - 1].SetGray();
+                if (num >= 1 && num <= buttons.Count)
+                {
+                    buttons[num - 1].SetGray();
+                }
             }
-        }
 
-        foreach (int num in predictedSequence)
-        {
-            if (targetSequence.Numbers.Contains(num) && num >= 1 && num <= buttons.Count)
+            foreach (int num in predictedSequence)
             {
-                buttons[num - 1].SetGreen();
+                if (targetSequence.Numbers.Contains(num) && num >= 1 && num <= buttons.Count)
+                {
+                    buttons[num - 1].SetGreen();
+                }
             }
-        }
+        */
 
         ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
     }

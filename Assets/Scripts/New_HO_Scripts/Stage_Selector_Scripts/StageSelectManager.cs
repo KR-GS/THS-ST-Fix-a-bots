@@ -66,11 +66,11 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     {
         return new (int, float, float, int, bool, bool, bool, int, int)[]
         {
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 3, true,  true,  true,  2,  2),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 3, false, false, true,  3, -2),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 3, false, false, false, 3, -1),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 0, true,  true,  true,  3,  1),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 5, 0, false, false, false, 4, -3)
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true,  2,  2),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, false, true,  3, -2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, false, false, 3, -1),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, true,  true,  true,  3,  1),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, 4, -3)
         };
     }
 

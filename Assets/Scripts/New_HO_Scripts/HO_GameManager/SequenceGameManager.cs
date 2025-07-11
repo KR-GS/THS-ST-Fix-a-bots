@@ -86,7 +86,6 @@ public class SequenceGameManager : MonoBehaviour
 
     void GetData()
     {
-        
         maxNumber = StaticData.maxNumber;
         cycleInterval = StaticData.cycleInterval;
         cycleLeniency = StaticData.cycleLeniency;
@@ -242,6 +241,7 @@ public class SequenceGameManager : MonoBehaviour
             TimePeriodButton btn = go.GetComponent<TimePeriodButton>();
 
             btn.ButtonNumber = i;
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = i.ToString();
             btn.SetHighlighted(false);
             buttons.Add(btn);
         }
@@ -600,6 +600,7 @@ public class SequenceGameManager : MonoBehaviour
             TimePeriodButton btn2 = go2.GetComponent<TimePeriodButton>();
 
             btn2.ButtonNumber = i;
+            btn2.GetComponentInChildren<TextMeshProUGUI>().text = i.ToString();
             btn2.SetHighlighted(false);
             buttons2.Add(btn2);
         }

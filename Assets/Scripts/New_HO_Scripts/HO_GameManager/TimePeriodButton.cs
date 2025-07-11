@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,7 @@ public class TimePeriodButton : MonoBehaviour
 {
     private Vector3 originalPosition;
     private RectTransform rectTransform;
+    private TextMeshPro buttontext;
     private float moveAmount = 15f;
     private bool isInitialized = false;
     public int ButtonNumber;
@@ -21,6 +23,7 @@ public class TimePeriodButton : MonoBehaviour
     private void Awake()
     {
         buttonImage = GetComponent<Image>();
+        //this.GetComponentInChildren<Text>().text = ButtonNumber.ToString();
         /*rectTransform = GetComponent<RectTransform>();
         originalPosition = rectTransform.localPosition;
         Debug.Log(originalPosition);*/
@@ -70,6 +73,11 @@ public class TimePeriodButton : MonoBehaviour
     public void SetRed()
     {
         buttonImage.color = Color.red;
+    }
+
+    public void SetBlue()
+    {
+        buttonImage.color = new Color32(100, 164, 237, 255);
     }
 
     public void SetGreen()
