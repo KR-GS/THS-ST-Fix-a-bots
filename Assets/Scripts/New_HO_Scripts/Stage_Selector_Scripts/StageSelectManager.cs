@@ -43,6 +43,14 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             int stageNum = i;
             stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
 
+            if (i < StaticData.numStageDone)
+            {
+                var color = stageButtons[i].targetGraphic.color;
+                color.a = 125; 
+                stageButtons[i].targetGraphic.color = color;
+            }
+            
+
             stageButtons[i].onClick.AddListener(() =>
             {
                 var configs = GetStageConfigs(); // Use the latest confirmed speed
@@ -63,13 +71,19 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     }
 
     private (int, float, float, int, bool, bool, bool, int, int)[] GetStageConfigs()
+    //num of buttons, speed, leniency, prepressed, is the formula seen, is coef locked, is const locked, coef, constant
     {
         return new (int, float, float, int, bool, bool, bool, int, int)[]
         {
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true,  2,  2),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, false, true,  3, -2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, false, false, 3, -1),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, true,  true,  true,  3,  1),
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true,  2, 3),
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true,  3, 1),
+            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, 4, 1),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true,  3, -1),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, 4, -3),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, true,  false, 2, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true,  3, -2),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, 3, -1),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false,  true,  3, 1),
             (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, 4, -3)
         };
     }

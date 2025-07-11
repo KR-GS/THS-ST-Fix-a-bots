@@ -283,7 +283,15 @@ public class SequenceGameManager : MonoBehaviour
     IEnumerator DelayedStartCycle()
     {
         // More time to give the students time to read the tutorial
-        yield return new WaitForSeconds(5f);
+        if (stageNum <= 3)
+        {
+            yield return new WaitForSeconds(5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+        }
+        
         feedbackText.text = "3";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "2";
@@ -442,8 +450,8 @@ public class SequenceGameManager : MonoBehaviour
                 if (CheckSequenceComplete() && isCorrect)
                 {
                     feedbackText.text = "Great job! Sequence completed!";
-                    nextStageButton.gameObject.SetActive(true);
                     isStageFinished = true;
+                    nextStageButton.gameObject.SetActive(true);
                     nextStageButton.onClick.AddListener(() => OnNextStageButtonClicked());
                     canTap = false;
                 }
@@ -565,6 +573,13 @@ public class SequenceGameManager : MonoBehaviour
             stageData.SetNumRestarts(stageData.GetNumRestarts() + 1);
             restartText.text = $"{stageData.GetNumRestarts()}";
         } 
+
+        statusAnimator.SetBool("MissTrigger", false);
+        statusAnimator.SetBool("AnticipateTrigger", false);
+        statusAnimator.SetBool("HitTrigger", false);
+        statusAnimator.SetBool("WrongTrigger", false);
+        statusAnimator.SetBool("IdleTrigger", true);
+        
         StartCoroutine(RestartCycle());
     }
 

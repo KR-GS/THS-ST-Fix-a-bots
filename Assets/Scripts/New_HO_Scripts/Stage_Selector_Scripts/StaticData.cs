@@ -4,7 +4,7 @@ using UnityEngine;
 public class StaticData
 {
     
-    private const int STAGE_COUNT = 5; 
+    private const int STAGE_COUNT = 10; 
 
     public static List<int> stageLives, stageRestarts, stageStars;
     public static List<float> stageTime;
