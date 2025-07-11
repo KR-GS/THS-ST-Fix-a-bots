@@ -49,12 +49,22 @@ public class TimePeriodButton : MonoBehaviour
     public void SetHighlighted(bool selected)
     {
         buttonImage.color = selected ? Color.yellow : Color.white;
-        if (isInitialized)
+        /*if (isInitialized)
         {
             rectTransform.anchoredPosition = selected
                 ? originalPosition + new Vector3(0, moveAmount, 0)
                 : originalPosition;
-        }
+        }*/
+    }
+
+    public void SetHeight(bool selected)
+    {
+        rectTransform.anchoredPosition = selected ? originalPosition + new Vector3(0, moveAmount, 0) : originalPosition;
+    }
+
+    public void SetGray()
+    {
+        buttonImage.color = Color.gray;
     }
 
     public void SetRed()

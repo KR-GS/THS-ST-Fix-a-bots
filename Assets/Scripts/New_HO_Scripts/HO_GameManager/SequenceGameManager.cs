@@ -282,7 +282,8 @@ public class SequenceGameManager : MonoBehaviour
     // Just to make time for the cycling
     IEnumerator DelayedStartCycle()
     {
-        yield return new WaitForSeconds(3f);
+        // More time to give the students time to read the tutorial
+        yield return new WaitForSeconds(5f);
         feedbackText.text = "3";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "2";
@@ -387,6 +388,8 @@ public class SequenceGameManager : MonoBehaviour
                     }
                     else if (inSequence)
                     {
+                        statusAnimator.SetBool("IdleTrigger", false);
+                        statusAnimator.SetBool("AnticipateTrigger", true);
                         // If the Sequence was pre pressed, automatically plays hit animation
                         if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.10f)
                         {
@@ -430,6 +433,12 @@ public class SequenceGameManager : MonoBehaviour
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
             {
+                statusAnimator.SetBool("MissTrigger", false);
+                statusAnimator.SetBool("AnticipateTrigger", false);
+                statusAnimator.SetBool("HitTrigger", false);
+                statusAnimator.SetBool("WrongTrigger", false);
+                statusAnimator.SetBool("IdleTrigger", true);
+
                 if (CheckSequenceComplete() && isCorrect)
                 {
                     feedbackText.text = "Great job! Sequence completed!";
@@ -452,24 +461,33 @@ public class SequenceGameManager : MonoBehaviour
 
     void HighlightButton(int index)
     {
-        
+        foreach (var btn in buttons)
+        {
+            btn.SetHighlighted(false);
+            btn.SetHeight(false);
+        }
+        /*
         if (index > 0 && !buttons[index - 1].GetSelected())
         {
             buttons[index - 1].SetHighlighted(false);
         }
+        */
         if (index > 0 && buttons[index - 1].GetSelected())
         {
             buttons[index - 1].SetGreen();
         }
-        if (index == 0  && !buttons[maxNumber - 1].GetSelected())
+        /*
+        if (index == 0 && !buttons[maxNumber - 1].GetSelected())
         {
             buttons[maxNumber - 1].SetHighlighted(false);
         }
-        if (index == 0  && buttons[maxNumber - 1].GetSelected())
+        */
+        if (index == 0 && buttons[maxNumber - 1].GetSelected())
         {
             buttons[maxNumber - 1].SetGreen();
         }
         buttons[index].SetHighlighted(true);
+        buttons[index].SetHeight(true);
     }
 
     void HandleUserTap(int btnNumber, bool inSequence)
@@ -559,9 +577,13 @@ public class SequenceGameManager : MonoBehaviour
         feedbackText.text = "";
 
         buttonsParent.localPosition = new Vector3(0, -500, 0);
-        
+
         foreach (var btn in buttons)
+        {
             btn.SetHighlighted(false);
+            btn.SetHeight(false);
+        }
+            
 
         foreach (int num in currentSequence.Numbers)
         {
@@ -583,6 +605,7 @@ public class SequenceGameManager : MonoBehaviour
         }
 
         // Show formula panel with current sequence
+        statusAnimator.enabled = false;
         formulaPanel.gameObject.SetActive(true);
         formulaPanel.ShowPanel(currentSequence, gameTimer, stageData, buttons2);
     }

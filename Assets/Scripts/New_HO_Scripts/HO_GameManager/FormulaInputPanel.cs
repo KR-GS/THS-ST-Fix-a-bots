@@ -138,6 +138,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             val++;
         }
 
+        //spawning of horizontal lines
         foreach (int pos in linePositions)
         {
             if (pos < 1 || pos > buttons.Count) continue;
@@ -154,7 +155,8 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             lineRect.SetAsLastSibling();
             lineRect.anchoredPosition = new Vector3(0, 40f, 0);
         }
-        
+
+        //spawning of vertical lines
         foreach (int pos in horizontalPositions)
         {
             if (pos < 1 || pos > buttons.Count) continue;
@@ -169,7 +171,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             RectTransform horizontalLineRect = line.GetComponent<RectTransform>();
 
             horizontalLineRect.SetAsLastSibling();
-            horizontalLineRect.anchoredPosition = new Vector3(0, 75f, 0);
+            horizontalLineRect.anchoredPosition = new Vector3(0, 60f, 0);
         }
     }
 
@@ -181,11 +183,19 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         foreach (var btn in buttons)
             btn.SetHighlighted(false);
 
+        if (currentConst >= 1)
+        {
+            for (i = 0; i < currentConst; i++)
+            {
+                buttons[i].SetHighlighted(true);
+            }
+        }
+
         foreach (int num in predictedSequence)
         {
             if (num >= 1 && num <= buttons.Count)
             {
-                buttons[num - 1].SetHighlighted(true);
+                buttons[num - 1].SetRed();
             }
         }
 
@@ -193,7 +203,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         {
             if (num >= 1 && num <= buttons.Count)
             {
-                buttons[num - 1].SetRed();
+                buttons[num - 1].SetGray();
             }
         }
 
