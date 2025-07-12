@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class LoPaintMinigame : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class LoPaintMinigame : MonoBehaviour
 
     [SerializeField]
     private Canvas overviewUI;
+
+    [SerializeField]
+    private Canvas notesUI;
 
     private GameObject[] partSides;
 
@@ -87,7 +91,7 @@ public class LoPaintMinigame : MonoBehaviour
             partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
         }
 
-        int packToUse = Random.Range(0, stickerPacks.Length-1);
+        int packToUse = Random.Range(0, stickerPacks.Length);
 
         packUsed = stickerPacks[packToUse].GetStickerNum();
 
@@ -110,9 +114,12 @@ public class LoPaintMinigame : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                if (!dragging)
+                if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    HandleClickEvent(Input.GetTouch(0).position);
+                    if (!dragging)
+                    {
+                        HandleClickEvent(Input.GetTouch(0).position);
+                    }
                 }
             }
             else if(Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -224,6 +231,7 @@ public class LoPaintMinigame : MonoBehaviour
         int prevSide = currentSide;
         PaintMinimapManager mapSelect = FindAnyObjectByType<PaintMinimapManager>();
         overviewUI.enabled = false;
+        notesUI.enabled = false;
         Debug.Log("Hello from checking");
         int correctAnsNo = 0;
         int correntTypeNo = 0;
@@ -278,6 +286,7 @@ public class LoPaintMinigame : MonoBehaviour
             Debug.Log("All Types Correct!");
             doneUI.enabled = true;
             overviewUI.enabled = false;
+            notesUI.enabled = false;
         }
         else
         {
