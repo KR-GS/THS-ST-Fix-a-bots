@@ -546,6 +546,9 @@ public class LoToolMinigame : MonoBehaviour
         Vector3 newCameraPos = new Vector3(fastenerObj[0].transform.position.x, 0, Camera.main.transform.position.z);
 
         Camera.main.GetComponent<ToolCamera>().CameraTrigger(newCameraPos, speed);
+
+        Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
+
         yield return null;
 
         while (i<patternLength)
@@ -631,8 +634,8 @@ public class LoToolMinigame : MonoBehaviour
                 partTile.GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
                 partTile.GetComponent<PartTile>().SetIsWrong(false);
                 partTile.GetComponent<PartTile>().SetFastenerPosition(-0.7f);
-
             }
+            Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
         }
     }
 
@@ -678,6 +681,15 @@ public class LoToolMinigame : MonoBehaviour
             {
                 count.SetActive(false);
             }
+        }
+    }
+
+    public void ToggleCollider()
+    {
+        Camera.main.GetComponent<ToolCamera>().ToggleCanvas();
+        foreach (GameObject part in tiledParts)
+        {
+            part.GetComponent<BoxCollider2D>().enabled = !part.GetComponent<BoxCollider2D>().enabled;
         }
     }
 }
