@@ -75,16 +75,16 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     {
         return new (int, float, float, int, bool, bool, bool, int, int)[]
         {
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true,  2, 3),
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true,  3, 1),
-            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, 4, 1),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true,  3, -1),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, 4, -3),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, true,  false, 2, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true,  3, -2),
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, 2, 3),
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, 3, 1),
+            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, 4, 1),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, 3, -1),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, 4, -3),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, true, false, 2, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, 3, -2),
             (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, 3, -1),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false,  true,  3, 1),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, 4, -3)
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, 4, 1),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, 5, -3)
         };
     }
 

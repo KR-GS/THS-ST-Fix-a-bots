@@ -24,13 +24,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     [Header("UI References")]
     public TMP_Text coefficientText, constantText, feedbackText;
-
-    public GameObject linePrefab, horizontalLinePrefab, yellowLinePrefab;
+    public GameObject linePrefab, horizontalLinePrefab, yellowLinePrefab, continuePanel;
     public RectTransform buttonContainer;
     private List<GameObject> activeLines = new List<GameObject>();
     public TextMeshProUGUI signText;
-
-    public Button coefUpButton, coefDownButton, constUpButton, constDownButton, submitButton;
+    public Button coefUpButton, coefDownButton, constUpButton, constDownButton, submitButton, continueButton;
 
     [Header("Lock Settings")]
     private bool lockCoefficient = false, lockConstant = false;
@@ -276,6 +274,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     }
 
+    private void LoadStageSelectScene()
+    {
+        SceneManager.LoadScene("Stage_Select");
+    }
+
     private void Start()
     {
         coefUpButton.onClick.AddListener(() => { currentCoef += 1; UpdateFormulaText(); });
@@ -286,6 +289,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 currentCoef -= 1;
                 UpdateFormulaText();
             }
+        });
+
+        continueButton.onClick.AddListener(() =>
+        {
+            LoadStageSelectScene();
         });
 
         constUpButton.onClick.AddListener(() => { currentConst += 1; UpdateFormulaText(); });
@@ -357,7 +365,8 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 stageData.SetElapsedTime(gameTimer.GetElapsedTime());
                 StoreStageData();
                 DataPersistenceManager.Instance.SaveGame();
-                SceneManager.LoadScene("Stage_Select");
+
+                continuePanel.SetActive(true);
             }
         }
     }
