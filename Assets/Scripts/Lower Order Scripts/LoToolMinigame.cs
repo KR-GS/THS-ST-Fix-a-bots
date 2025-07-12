@@ -469,6 +469,11 @@ public class LoToolMinigame : MonoBehaviour
     {
         Transform holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
 
+        if (currentTool != null)
+        {
+            Destroy(currentTool);
+        }
+
         if (currentInt < patternLength - slotToFill)
         {
             numberToDisplay[currentInt] = originalHitValues[currentInt];
@@ -482,6 +487,8 @@ public class LoToolMinigame : MonoBehaviour
 
             Instantiate(fastenerList[fastenerValues[currentInt]-1].GetFastenerSprite(), tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
             tiledParts[currentInt].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+
+            SelectTool(fastenerList[fastenerValues[currentInt] - 1].GetFastenerType() - 1, currentInt);
 
             Debug.Log("Undo Value: " + originalHitValues[currentInt]);
 
@@ -499,6 +506,8 @@ public class LoToolMinigame : MonoBehaviour
                 Destroy(holder.transform.GetChild(0).gameObject);
             }
         }
+
+
     }
 
     private IEnumerator ResetHitCoroutine()
