@@ -2294,6 +2294,11 @@ MonoBehaviour:
   fastenerType: 1
   fastenerValue: 2
   tool: {fileID: 5915793044961681256, guid: 5d6931c3f7498b944a62cd117aeba6a8, type: 3}
+--- !u!223 &536181604 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5314409936409160288, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+  m_PrefabInstance: {fileID: 1866970316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &542453340
 GameObject:
   m_ObjectHideFlags: 0
@@ -4350,7 +4355,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1352238369}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1450728182}
+        m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
+        m_MethodName: AddTenEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1352238369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4581,6 +4598,18 @@ MonoBehaviour:
       - m_Target: {fileID: 239067187}
         m_TargetAssemblyTypeName: NotesManager, Assembly-CSharp
         m_MethodName: OpenNoteSystem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1450728182}
+        m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
+        m_MethodName: ToggleCollider
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5386,6 +5415,7 @@ MonoBehaviour:
   toolCanvas: {fileID: 310669089}
   overViewCanvas: {fileID: 1357695579}
   doneCanvas: {fileID: 808992276}
+  notesCanvas: {fileID: 536181604}
 --- !u!1 &1805694482
 GameObject:
   m_ObjectHideFlags: 0
@@ -5783,6 +5813,10 @@ PrefabInstance:
       propertyPath: m_GlobalFontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
+    - target: {fileID: 4535012888227056460, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_Name
+      value: Done Btn
+      objectReference: {fileID: 0}
     - target: {fileID: 4542668423674252260, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -5834,6 +5868,34 @@ PrefabInstance:
     - target: {fileID: 7585994262349667129, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_Name
       value: Notes
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1450728182}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ToggleCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoToolMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

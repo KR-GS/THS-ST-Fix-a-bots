@@ -480,7 +480,7 @@ public class LoToolMinigame : MonoBehaviour
                 Destroy(holder.transform.GetChild(0).gameObject);
             }
 
-            Instantiate(fastenerList[fastenerValues[currentInt]-1].GetFastenerSprite(), holder);
+            Instantiate(fastenerList[fastenerValues[currentInt]-1].GetFastenerSprite(), tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
             tiledParts[currentInt].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
 
             Debug.Log("Undo Value: " + originalHitValues[currentInt]);
@@ -516,11 +516,15 @@ public class LoToolMinigame : MonoBehaviour
 
         if (numberToDisplay[currentInt] < 24)
         {
+            textCounter.gameObject.SetActive(false);
+            fastenerObj[currentInt].SetActive(true);
             hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt]-1].GetHitIcon());
         }
         else
         {
             SetZoomedInTextCounter(currentInt);
+            fastenerObj[currentInt].SetActive(false);
+            textCounter.gameObject.SetActive(true);
         }
     }
 
@@ -691,5 +695,47 @@ public class LoToolMinigame : MonoBehaviour
         {
             part.GetComponent<BoxCollider2D>().enabled = !part.GetComponent<BoxCollider2D>().enabled;
         }
+    }
+
+    public void AddTenEvent()
+    {
+        bool useCountManager = false;
+        numberToDisplay[currentInt] = numberToDisplay[currentInt]+10;
+        if (numberToDisplay[currentInt] < 24)
+        {
+            fastenerObj[currentInt].SetActive(true);
+            textCounter.gameObject.SetActive(false);
+            //hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+            useCountManager = true;
+        }
+        else
+        {
+            fastenerObj[currentInt].SetActive(false);
+            textCounter.gameObject.SetActive(true);
+            useCountManager = false;
+        }
+
+        StartCoroutine(AddMoreCoroutine());
+    }
+
+    private IEnumerator AddMoreCoroutine()
+    {
+        foreach (Transform child in fastenerObj[currentInt].transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        yield return null;
+
+        if (numberToDisplay[currentInt] < 24)
+        {
+            hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt] - 1].GetHitIcon());
+        }
+        else
+        {
+            SetZoomedInTextCounter(currentInt);
+        }
+
+        yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
     }
 }
