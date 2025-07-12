@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LoToolMinigame : MonoBehaviour
@@ -25,7 +28,7 @@ public class LoToolMinigame : MonoBehaviour
     [Header("Tool Objects")]
 
     [SerializeField]
-    private TextMeshProUGUI textCounter;
+    private Transform textCounter;
 
     [SerializeField]
     private GameObject[] fastenerObj;
@@ -35,8 +38,6 @@ public class LoToolMinigame : MonoBehaviour
 
     [SerializeField]
     private float speed;
-
-    
 
     private GameObject[] counterHolder;
     private List<int> generatedList = new List<int>();
@@ -216,10 +217,8 @@ public class LoToolMinigame : MonoBehaviour
             originalHitValues[i] = numberToDisplay[i];
         }
 
-        textCounter.text = numberToDisplay[currentInt].ToString();
-
-        //randFastenerVal = Random.Range(0, fastenerList.Length);
-        randFastenerVal = 0;
+        randFastenerVal = Random.Range(0, fastenerList.Length-1);
+        //randFastenerVal = 0;
 
         for (int i = 0; i < patternLength; i++)
         {
@@ -273,11 +272,14 @@ public class LoToolMinigame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                HandleClickEvent();
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    HandleClickEvent();
+                }
             }
         }
         
@@ -322,9 +324,14 @@ public class LoToolMinigame : MonoBehaviour
                     ToggleOverviewCounters(false);
                 }
 
+                if (fastenerValues[currentInt] > 0)
+                {
+                    SelectTool(fastenerValues[currentInt]-1, currentInt);
+                }
+
                 fastenerObj[currentInt].SetActive(true);
 
-                textCounter.text = numberToDisplay[currentInt].ToString();
+                SetZoomedInTextCounter(currentInt);
 
                 if (numberToDisplay[currentInt] > 24)
                 {
@@ -344,11 +351,11 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (value)
         {
-            hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+            hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[fastenerValues[currentInt]-1].GetHitIcon());
         }
         else
         {
-            textCounter.text = numberToDisplay[currentInt].ToString();
+            SetZoomedInTextCounter(currentInt);
         }
         yield return StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
     }
@@ -357,15 +364,6 @@ public class LoToolMinigame : MonoBehaviour
     public void CheckNumber(Transform tools)
     {
         ToggleOverviewCounters(false);
-
-        foreach (Transform child in tools)
-        {
-            if(child.GetComponent<ToolBtn>().GetToolType() == 1)
-            {
-                currentTool = Instantiate(child.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
-                break;
-            }
-        }
 
         StartCoroutine(ValueCheckCoroutine());    
     }
@@ -377,9 +375,11 @@ public class LoToolMinigame : MonoBehaviour
             
             fastenerObj[currentInt].SetActive(false);
             currentInt--;
-            textCounter.text = numberToDisplay[currentInt].ToString();
-            
+            SetZoomedInTextCounter(currentInt);
+
             StartCoroutine(TriggerFastenerChange(button));
+
+
 
             if (currentTool != null)
             {
@@ -394,8 +394,9 @@ public class LoToolMinigame : MonoBehaviour
         {
             fastenerObj[currentInt].SetActive(false);
             currentInt++;
-            textCounter.text = numberToDisplay[currentInt].ToString();
-            
+
+            SetZoomedInTextCounter(currentInt);
+
             StartCoroutine(TriggerFastenerChange(button));
 
             if(currentTool != null)
@@ -420,6 +421,8 @@ public class LoToolMinigame : MonoBehaviour
 
         Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
 
+        SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType()-1, currentInt);
+
         numberToDisplay[currentInt] = 0;
         foreach(Transform child in fastenerObj[currentInt].transform) 
         {
@@ -427,40 +430,21 @@ public class LoToolMinigame : MonoBehaviour
         }
     }
 
-    public void SelectTool(Button toolBtn)
+    private void SelectTool(int value, int i)
     {
-        ToolBtn selectedToolBtn = toolBtn.GetComponent<ToolBtn>();
-        int toolUsed = toolBtn.GetComponent<ToolBtn>().GetToolType();
-        int currentFastenerVal = fastenerValues[currentInt];
-        Debug.Log("Tool Chosen: " + toolUsed);
+        int currentFastenerVal = fastenerValues[i];
         Debug.Log("Fastener in place: " + currentFastenerVal);
-        toolHolder.position = new Vector3(fastenerObj[currentInt].transform.position.x, toolHolder.position.y, toolHolder.position.z);
+        toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
-
-        //remove other visible tools from toolHolder
-        
-
-        //unselect all buttons but this one 
-
-
-        if (toolUsed == currentFastenerVal)
+        if (currentTool != null)
         {
-            if(currentTool != null)
-            {
-                Destroy(currentTool);
-            }
-
-            currentTool = Instantiate(toolBtn.GetComponent<ToolBtn>().GetToolSprite(), toolHolder);
-            currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
-
-            toolBtn.GetComponent<ToolBtn>().Select();
-
-            Debug.Log("What is happening???");
+            Destroy(currentTool);
         }
-        else
-        {
-            Debug.Log("Can't use tool T_T");
-        }
+
+        currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
+        currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
+
+        Debug.Log("What is happening???");
     }
 
     public void OverheadView()
@@ -532,11 +516,25 @@ public class LoToolMinigame : MonoBehaviour
 
         if (numberToDisplay[currentInt] < 24)
         {
-            hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[0].GetHitIcon());
+            hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt]-1].GetHitIcon());
         }
         else
         {
-            textCounter.text = numberToDisplay[currentInt].ToString();
+            SetZoomedInTextCounter(currentInt);
+        }
+    }
+
+    private void SetZoomedInTextCounter(int value)
+    {
+        if (fastenerValues[currentInt]>0)
+        {
+            textCounter.GetComponentInChildren<TextMeshProUGUI>().text = numberToDisplay[value].ToString();
+            textCounter.GetComponentInChildren<Image>().sprite = fastenerList[fastenerValues[value] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+        }
+        else
+        {
+            textCounter.GetComponentInChildren<TextMeshProUGUI>().text = "?";
+            textCounter.GetComponentInChildren<Image>().sprite = null;
         }
     }
 
@@ -550,11 +548,21 @@ public class LoToolMinigame : MonoBehaviour
         Camera.main.GetComponent<ToolCamera>().CameraTrigger(newCameraPos, speed);
         yield return null;
 
-        currentTool.GetComponent<Tool>().SetHeightValue(-1f);
-
         while (i<patternLength)
         {
-            fastenerObj[i].SetActive(true);
+            SelectTool(fastenerCheckVal[i] - 1, i);
+
+            currentTool.GetComponent<Tool>().SetHeightValue(-1f);
+
+            if (numberToDisplay[i] < 24)
+            {
+                fastenerObj[i].SetActive(true);
+            }
+            else
+            {
+                textCounter.gameObject.SetActive(true);
+                SetZoomedInTextCounter(i);
+            }
 
             toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
@@ -638,6 +646,11 @@ public class LoToolMinigame : MonoBehaviour
         fastenerObj[currentInt].SetActive(true);
         yield return new WaitForSeconds(0.5f);
         button.interactable = true;
+
+        if (fastenerValues[currentInt] > 0)
+        {
+            SelectTool(fastenerValues[currentInt] - 1, currentInt);
+        }
     }
 
     //toggles the view of the overview counter

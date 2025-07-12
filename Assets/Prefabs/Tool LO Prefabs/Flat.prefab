@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 913561619679722941}
   - component: {fileID: 9062815949886110137}
   - component: {fileID: 802112098671023117}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: flatSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 7364157421009370284}
   - component: {fileID: 6278423629877716245}
   - component: {fileID: 1402735819868974741}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Flat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

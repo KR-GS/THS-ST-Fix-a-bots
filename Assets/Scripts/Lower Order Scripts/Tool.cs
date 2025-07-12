@@ -7,14 +7,13 @@ public class Tool : MonoBehaviour
     private AnimationClip[] clips;
     private AnimationEvent[] events;
     
-    void Start()
+    void Awake()
     {
         statusAnimator = GetComponentInChildren<Animator>();
         clips = statusAnimator.runtimeAnimatorController.animationClips;
         Debug.Log(clips.Length);
         events = clips[1].events;
 
-        events[0].functionName = "SetHeightValue";
         Debug.Log("Event time: " + events[0].time);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created

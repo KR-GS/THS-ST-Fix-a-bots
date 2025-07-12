@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 913561619679722941}
   - component: {fileID: 2111066815228395626}
   - component: {fileID: 4164371167908129898}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: philipsSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 7364157421009370284}
   - component: {fileID: 6278423629877716245}
   - component: {fileID: 1402735819868974741}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Philips
   m_TagString: Untagged
   m_Icon: {fileID: 0}

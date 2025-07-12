@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1362103896113949254}
   - component: {fileID: 8614375217175639399}
   - component: {fileID: 7450564221196751329}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wrenchSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 9021013758019238289}
   - component: {fileID: 4698591497509508751}
   - component: {fileID: 4723267820852517908}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wrench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

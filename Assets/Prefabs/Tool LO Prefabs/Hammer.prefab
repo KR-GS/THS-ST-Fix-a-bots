@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8614375217175639399}
   - component: {fileID: 2722006327329409901}
   - component: {fileID: 7995694690291576605}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: initialToolAssets_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4698591497509508751}
   - component: {fileID: 4723267820852517908}
   - component: {fileID: -1416707398159327863}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
