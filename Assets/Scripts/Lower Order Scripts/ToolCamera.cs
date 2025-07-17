@@ -27,6 +27,9 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private Canvas notesCanvas;
 
+    [SerializeField]
+    private Canvas counterCanvas;
+
     private Vector3 originalPosition;
     private float originalSize;
 
@@ -41,6 +44,7 @@ public class ToolCamera : MonoBehaviour
         toolCanvas.enabled = false;
         overViewCanvas.enabled = true;
         notesCanvas.enabled = true;
+        counterCanvas.enabled = false;
     }
 
     public void FocusedCameraView(float partPosition)
@@ -50,6 +54,7 @@ public class ToolCamera : MonoBehaviour
 
         zoomInCanvas.enabled = true;
         toolCanvas.enabled = true;
+        counterCanvas.enabled = true;
         overViewCanvas.enabled = false;
         notesCanvas.enabled = false;
     }
@@ -95,5 +100,10 @@ public class ToolCamera : MonoBehaviour
     public void ToggleNoteCanvas()
     {
         notesCanvas.enabled = !notesCanvas.enabled;
+    }
+
+    public void ToggleCounterCanvas()
+    {
+        counterCanvas.enabled = !counterCanvas.enabled;
     }
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -280,9 +278,38 @@ public class LoToolMinigame : MonoBehaviour
                 {
                     HandleClickEvent();
                 }
+                else
+                {
+                    if (HandleUIClickEvent())
+                    {
+                        HandleClickEvent();
+                    }
+                }
             }
         }
         
+    }
+
+    private bool HandleUIClickEvent()
+    {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = Input.GetTouch(0).position;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, raycastResults);
+
+        if (raycastResults.Count > 0)
+        {
+            foreach (var go in raycastResults)
+            {
+                if (go.gameObject.transform.root.TryGetComponent(out OverviewCounter overviewCounter))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void HandleClickEvent()
@@ -539,7 +566,7 @@ public class LoToolMinigame : MonoBehaviour
 
     private void SetZoomedInTextCounter(int value)
     {
-        if (fastenerValues[currentInt]>0)
+        if (fastenerValues[value] >0)
         {
             textCounter.GetComponentInChildren<TextMeshProUGUI>().text = numberToDisplay[value].ToString();
             textCounter.GetComponentInChildren<Image>().sprite = fastenerList[fastenerValues[value] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
@@ -562,6 +589,8 @@ public class LoToolMinigame : MonoBehaviour
 
         Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
 
+        Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
+
         yield return null;
 
         while (i<patternLength)
@@ -573,10 +602,12 @@ public class LoToolMinigame : MonoBehaviour
             if (numberToDisplay[i] < 24)
             {
                 fastenerObj[i].SetActive(true);
+                textCounter.gameObject.SetActive(false);
             }
             else
             {
                 textCounter.gameObject.SetActive(true);
+                fastenerObj[i].SetActive(false);
                 SetZoomedInTextCounter(i);
             }
 
@@ -649,6 +680,7 @@ public class LoToolMinigame : MonoBehaviour
                 partTile.GetComponent<PartTile>().SetFastenerPosition(-0.7f);
             }
             Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
+            Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
         }
     }
 
