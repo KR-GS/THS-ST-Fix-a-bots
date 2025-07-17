@@ -53,7 +53,9 @@ public class LoToolMinigame : MonoBehaviour
 
     [SerializeField]
     private List<ToolBtn> toolButtons;
-    
+
+    [SerializeField]
+    private Button addTenBtn;
 
     void Awake()
     {
@@ -274,16 +276,9 @@ public class LoToolMinigame : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                if (!EventSystem.current.IsPointerOverGameObject())
+                if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
                 {
                     HandleClickEvent();
-                }
-                else
-                {
-                    if (HandleUIClickEvent())
-                    {
-                        HandleClickEvent();
-                    }
                 }
             }
         }
@@ -370,6 +365,8 @@ public class LoToolMinigame : MonoBehaviour
                     textCounter.gameObject.SetActive(false);
                     fastenerObj[currentInt].SetActive(true);
                 }
+
+                addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
             }
         }
     }
@@ -406,12 +403,12 @@ public class LoToolMinigame : MonoBehaviour
 
             StartCoroutine(TriggerFastenerChange(button));
 
-
-
             if (currentTool != null)
             {
                 Destroy(currentTool);
             }
+
+            addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
         }
     }
 
@@ -430,6 +427,8 @@ public class LoToolMinigame : MonoBehaviour
             {
                 Destroy(currentTool);
             }
+
+            addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
         }
     }
 
@@ -455,6 +454,8 @@ public class LoToolMinigame : MonoBehaviour
         {
             Destroy(child.gameObject);    
         }
+
+        addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
     }
 
     private void SelectTool(int value, int i)
