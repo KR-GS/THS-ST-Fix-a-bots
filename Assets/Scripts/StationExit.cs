@@ -36,6 +36,6 @@ public class StationExit : MonoBehaviour
             //OrderManager.Instance.TryCompleteOrder();
         }
 
-        SceneManager.LoadScene("LO_Workshop");
+        SceneManager.LoadScene("LO_WS2D");
     }
 }

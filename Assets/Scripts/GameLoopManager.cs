@@ -52,10 +52,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (cam != null)
         {
-            cam.gameObject.SetActive(scene.name == "LO_Workshop");
+            cam.gameObject.SetActive(scene.name == "LO_WS2D"); //LO_Workshop
         }
 
-        if (scene.name == "LO_Workshop")
+        if (scene.name == "LO_WS2D")
         {
             // Re-find and assign the new instance of the text
             GameObject dayTextObject = GameObject.Find("Day_Number");

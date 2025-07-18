@@ -37,7 +37,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "LO_Workshop")
+        if (scene.name == "LO_WS2D")
         {
             Debug.Log("Returned to WorkshopScene. Checking for completed orders...");
             StartCoroutine(HandleWorkshopSceneLoad());
