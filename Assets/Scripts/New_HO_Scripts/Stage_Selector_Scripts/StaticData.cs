@@ -14,7 +14,7 @@ public class StaticData
     public static int maxNumber, coefficient, constant, prePressedCount, stageNum;
     public static float cycleInterval;
     public static float cycleLeniency;
-    public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence;
+    public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
 
     /* static StaticData()
      {

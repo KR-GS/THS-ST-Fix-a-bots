@@ -13,7 +13,7 @@ public class SequenceGameManager : MonoBehaviour
     public EventSystem eventSystem;
 
     [Header("UI & Prefabs")]
-    public GameObject timePeriodButtonPrefab;
+    public GameObject timePeriodButtonPrefab, matchText, correctText;
     public Transform buttonsParent, buttonsParent2;   
     public TextMeshProUGUI feedbackText, formulaText, timerText, livesText, restartText;
     public Button nextStageButton, restartStageButton, pauseButton;
@@ -427,7 +427,7 @@ public class SequenceGameManager : MonoBehaviour
                     if ((Input.GetMouseButtonDown(0) ||IsScreenTapped()) && canTap && !IsPointerOverInteractableUi())
                     {
                         Debug.Log("Clicked: " + gameObject.name);
-                        HandleUserTap(btnNumber, inSequence);
+                        HandleUserTap(btnNumber, inSequence, timer);
                         hasNotClicked = false;
                     }
                 }
@@ -474,22 +474,10 @@ public class SequenceGameManager : MonoBehaviour
             btn.SetHighlighted(false);
             btn.SetHeight(false);
         }
-        /*
-        if (index > 0 && !buttons[index - 1].GetSelected())
-        {
-            buttons[index - 1].SetHighlighted(false);
-        }
-        */
         if (index > 0 && buttons[index - 1].GetSelected())
         {
             buttons[index - 1].SetGreen();
         }
-        /*
-        if (index == 0 && !buttons[maxNumber - 1].GetSelected())
-        {
-            buttons[maxNumber - 1].SetHighlighted(false);
-        }
-        */
         if (index == 0 && buttons[maxNumber - 1].GetSelected())
         {
             buttons[maxNumber - 1].SetGreen();
@@ -498,7 +486,7 @@ public class SequenceGameManager : MonoBehaviour
         buttons[index].SetHeight(true);
     }
 
-    void HandleUserTap(int btnNumber, bool inSequence)
+    void HandleUserTap(int btnNumber, bool inSequence, float timer)
     {
         
         if (pressedNumbers.Contains(btnNumber))
@@ -519,12 +507,21 @@ public class SequenceGameManager : MonoBehaviour
             soundEffectsManager.playHitSound();
             gotRight = true;
         }
+        if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency/2)
+        {
+            buttons[btnNumber].SetGreen();
+            buttons[btnNumber].SetWasSelected(true);
+            pressedNumbers.Add(btnNumber + 1);
+            buttons[btnNumber].SetSelected(true);
+            feedbackText.text = $"You pressed the right number: {btnNumber + 1}!";
+            gotRight = true;
+        }
         else
         {
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
-            statusAnimator.SetBool("WrongTrigger", true);  
+            statusAnimator.SetBool("WrongTrigger", true);
             isCorrect = false;
             soundEffectsManager.playMissSound();
             if (!isStageFinished)
@@ -591,7 +588,7 @@ public class SequenceGameManager : MonoBehaviour
         StopAllCoroutines(); // stops the button cycling
         feedbackText.text = "";
 
-        buttonsParent.localPosition = new Vector3(0, -500, 0);
+        
 
         foreach (var btn in buttons)
         {
@@ -618,6 +615,17 @@ public class SequenceGameManager : MonoBehaviour
             btn2.GetComponentInChildren<TextMeshProUGUI>().text = i.ToString();
             btn2.SetHighlighted(false);
             buttons2.Add(btn2);
+        }
+
+        if (!StaticData.refSeen)
+        {
+            matchText.SetActive(false);
+            buttonsParent2.transform.localScale = new Vector3(0, 0, 0);
+            correctText.transform.localPosition = new Vector3(0,100,0);
+        }
+        else
+        {
+            buttonsParent.localPosition = new Vector3(0, -500, 0);
         }
 
         // Show formula panel with current sequence
