@@ -11,7 +11,7 @@ public class StaticData
     public static List<string> formulaAttempts;
     public static int numStageDone = 0;
 
-    public static int maxNumber, coefficient, constant, prePressedCount, stageNum;
+    public static int maxNumber, coefficient, constant, prePressedCount, stageNum, tutorialType;
     public static float cycleInterval;
     public static float cycleLeniency;
     public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;

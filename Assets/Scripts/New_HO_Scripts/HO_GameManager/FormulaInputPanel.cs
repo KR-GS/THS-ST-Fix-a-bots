@@ -35,6 +35,9 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private int currentCoef = 1, currentConst = 0, numStars;
 
+    [Header("Tutorial")]
+    public FormulaInputTutorial formulaInputTutorial;
+
     private int i = 0;
     private Sequence targetSequence;
     private GameTimer gameTimer;
@@ -281,6 +284,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
+        formulaInputTutorial.ShowTutorial(StaticData.tutorialType);
         coefUpButton.onClick.AddListener(() => { currentCoef += 1; UpdateFormulaText(); });
         coefDownButton.onClick.AddListener(() =>
         {

@@ -20,7 +20,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     private float confirmedSpeed = 1f;
 
     private int selectedStageNum;
-    private (int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef, bool lockConst, bool refSeen, int coef, int constant) selectedConfig;
+    private (int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef, bool lockConst, bool refSeen, int coef, int constant, int tutorial) selectedConfig;
 
     IEnumerator Start()
     {
@@ -58,9 +58,9 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             });
         }
 
-        randButton.onClick.AddListener(() =>
+        /*randButton.onClick.AddListener(() =>
             LoadStage(5, 25, 1f, 0.6f, 0, false, false, false, false, 0, 0, true)
-        );
+        );*/
 
         yesButton.onClick.AddListener(ConfirmStageSelection);
         noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
@@ -70,21 +70,21 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         confirmSpeedButton.onClick.AddListener(ConfirmSpeed);
     }
 
-    private (int, float, float, int, bool, bool, bool, bool, int, int)[] GetStageConfigs()
-    //num of buttons, speed, leniency, prepressed, is the formula seen, is coef locked, is const locked, coef, constant
+    private (int, float, float, int, bool, bool, bool, bool, int, int, int)[] GetStageConfigs()
+    //num of buttons, speed, leniency, prepressed, is the formula seen, is coef locked, is const locked, isrefseen, coef, constant, tutorial
     {
-        return new (int, float, float, int, bool, bool, bool, bool, int, int)[]
+        return new (int, float, float, int, bool, bool, bool, bool, int, int, int)[]
         {
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3),
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1),
-            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, true, false, false, 2, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 3, -2),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, true, 4, 1),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, false, false, 5, -3)
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3, 0),
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1, 1),
+            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1, 1),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3)
         };
     }
 
@@ -119,7 +119,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         Debug.Log("Speed confirmed: " + confirmedSpeed);
     }
 
-    void ShowStageInfo(int stageNum, (int, float, float, int, bool, bool, bool, bool, int, int) config)
+    void ShowStageInfo(int stageNum, (int, float, float, int, bool, bool, bool, bool, int, int, int) config)
     {
         selectedStageNum = stageNum;
         selectedConfig = config;
@@ -149,11 +149,11 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
         LoadStage(selectedStageNum, cfg.max, cfg.cycInt, cfg.cycLen,
             cfg.prePressed, cfg.formSeen, cfg.lockCoef, cfg.lockConst,
-            cfg.refSeen, cfg.coef, cfg.constant, false);
+            cfg.refSeen, cfg.coef, cfg.constant, cfg.tutorial, false);
     }
 
     public void LoadStage(int stageNum, int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef,
-        bool lockConst, bool isRefSeen, int coef, int constant, bool randSeq)
+        bool lockConst, bool isRefSeen, int coef, int constant, int tutorial, bool randSeq)
     {
         StaticData.stageNum = stageNum;
         StaticData.maxNumber = max;
@@ -166,6 +166,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         StaticData.coefficient = coef;
         StaticData.refSeen = isRefSeen;
         StaticData.constant = constant;
+        StaticData.tutorialType = tutorial;
         StaticData.isRandomSequence = randSeq;
 
         SceneManager.LoadScene("HO_BotFightScene");

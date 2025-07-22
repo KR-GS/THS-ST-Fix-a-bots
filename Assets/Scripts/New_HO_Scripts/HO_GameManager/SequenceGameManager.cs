@@ -507,7 +507,7 @@ public class SequenceGameManager : MonoBehaviour
             soundEffectsManager.playHitSound();
             gotRight = true;
         }
-        if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency/2)
+        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency/2)
         {
             buttons[btnNumber].SetGreen();
             buttons[btnNumber].SetWasSelected(true);
