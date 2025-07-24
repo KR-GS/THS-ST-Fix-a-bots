@@ -155,4 +155,9 @@ public class DifficultyManager : MonoBehaviour
     {
         return level.ToString();
     }
+
+    public string GetMinigame()
+    {
+        return gameType.ToString();
+    }
 }

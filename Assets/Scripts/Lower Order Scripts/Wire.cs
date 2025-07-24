@@ -53,6 +53,11 @@ public class Wire : MonoBehaviour
         return wireEndPoint;
     }
 
+    public float GetWireHeight()
+    {
+        return wireSprite.bounds.size.y;
+    }
+
     public int GetWireNumber()
     {
         return wireNumberTotal; 

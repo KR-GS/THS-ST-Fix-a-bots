@@ -454,8 +454,6 @@ public class LoToolMinigame : MonoBehaviour
         {
             Destroy(child.gameObject);    
         }
-
-        addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
     }
 
     private void SelectTool(int value, int i)
@@ -468,6 +466,8 @@ public class LoToolMinigame : MonoBehaviour
         {
             Destroy(currentTool);
         }
+
+        addTenBtn.GetComponent<Image>().sprite = fastenerList[value].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 
         currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
         currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);

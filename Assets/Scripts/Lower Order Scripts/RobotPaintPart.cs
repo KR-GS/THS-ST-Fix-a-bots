@@ -12,7 +12,7 @@ public class RobotPaintPart : MonoBehaviour
     [SerializeField]
     private GameObject defaultObj;
 
-    private int sideVal;
+    private List<int> sideVal = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*
@@ -38,24 +38,27 @@ public class RobotPaintPart : MonoBehaviour
         Debug.Log(testObject.transform.childCount);
     }
 
-    public void SetStickersOnSide(Sticker stickerToAdd)
+    public void SetStickersOnSide(Sticker[] stickerToAdd, List<int> packUsed)
     {
         //Sticker stickers = stickersToAdd.GetPackContents();
         float boxLength_L = Base_LeftVal();
         float boxLength_R = Base_RightVal();
         float boxLength_U = Base_UpVal();
         float boxLength_D = Base_DownVal();
-        for (int i = 0; i < sideVal; i++)
+        for (int j = 0; j< sideVal.Count; j++)
         {
-            
-            GameObject sticker = Instantiate(stickerToAdd.gameObject);
-            sticker.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
-            Vector3 newPos = new Vector3(Random.Range(boxLength_L, boxLength_R), Random.Range(boxLength_D, boxLength_U), sticker.transform.position.z);
-            sticker.transform.position = newPos;
-            sticker.transform.SetParent(defaultObj.transform);
-            sticker.GetComponent<Sticker>().ToggleIsADuplicate();
-            sticker.GetComponent<Sticker>().ToggleIsDefault();
-            sticker.GetComponent<Sticker>().SetDefaultPos(newPos);
+            for (int i = 0; i < sideVal[j]; i++)
+            {
+                Debug.Log(packUsed[j]);
+                GameObject sticker = Instantiate(stickerToAdd[packUsed[j]].gameObject);
+                sticker.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+                Vector3 newPos = new Vector3(Random.Range(boxLength_L, boxLength_R), Random.Range(boxLength_D, boxLength_U), sticker.transform.position.z);
+                sticker.transform.position = newPos;
+                sticker.transform.SetParent(defaultObj.transform);
+                sticker.GetComponent<Sticker>().ToggleIsADuplicate();
+                sticker.GetComponent<Sticker>().ToggleIsDefault();
+                sticker.GetComponent<Sticker>().SetDefaultPos(newPos);
+            }
         }
     }
 
@@ -99,7 +102,7 @@ public class RobotPaintPart : MonoBehaviour
 
     public void SetSideValue(int value)
     {
-        sideVal = value; 
+        sideVal.Add(value); 
     }
 
     public float Base_LeftVal()
@@ -127,21 +130,47 @@ public class RobotPaintPart : MonoBehaviour
         return defaultObj.transform;
     }
 
-    public int GetCurrentStickerSideCount()
+    public int GetCurrentStickerSideCount(int stickerType)
     {
-        return defaultObj.transform.childCount + testObject.transform.childCount;
+        int total_Count = 0;
+
+        foreach (Transform child in defaultObj.transform)
+        {
+            if (child.GetComponent<Sticker>().GetStickerNum() == stickerType)
+            {
+                total_Count++;
+            }
+        }
+
+        foreach (Transform child in testObject.transform)
+        {
+            if (child.GetComponent<Sticker>().GetStickerNum() == stickerType)
+            {
+                total_Count++;
+            }
+        }
+
+        return total_Count;
     }
 
-    public bool GetStickeyTypeCount(int stickerType)
+    public bool GetStickeyTypeCount(List<int> stickerType)
     {
+        int typeCount = 0;
 
-        foreach(Transform child in testObject.transform)
+        foreach (int type in stickerType)
         {
-            if (child.GetComponent<Sticker>().GetStickerNum() != stickerType)
+            foreach (Transform child in testObject.transform)
             {
-                return false;
+                if (child.GetComponent<Sticker>().GetStickerNum() == type)
+                {
+                    typeCount++;
+                }
             }
-            
+        }
+
+        if(testObject.transform.childCount != typeCount)
+        {
+            return false;
         }
 
         return true;

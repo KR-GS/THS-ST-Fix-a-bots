@@ -22,44 +22,56 @@ public class PatternGameManager : MonoBehaviour
 
     private int generatedDifference;
 
-    private List<int> numberPatternList = new List<int>();
+    //private List<int> numberPatternList = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    void Awake()
-    {
-        generatedDifference = Random.Range(diff_Lowest, diff_Highest);
-    }
 
     public int ReturnDifference()
     {
         return generatedDifference;
     }
 
-    private void GeneratePatternArray(int patternLen)
+    private List<int> GeneratePatternArray(int patternLen)
     {
+        generatedDifference = Random.Range(diff_Lowest, diff_Highest);
+
         int baseHolder = Random.Range(base_Lowest, base_Highest);
 
-        if (difficulty.GetDifficulty() == "easy")
+        List<int> numberPatternList = new List<int>();
+
+        if (difficulty.GetMinigame() == "paint")
         {
             for (int i = 1; i <= patternLen; i++)
             {
                 numberPatternList.Add(baseHolder + (generatedDifference * i));
             }
         }
-        else if (difficulty.GetDifficulty() == "hard")
+        else
         {
-            for (int i = 1; i <= patternLen; i++)
+            if (difficulty.GetDifficulty() == "easy")
             {
-                baseHolder = baseHolder + (generatedDifference + i);
-                numberPatternList.Add(baseHolder);
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    numberPatternList.Add(baseHolder + (generatedDifference * i));
+                }
+            }
+            else if (difficulty.GetDifficulty() == "hard")
+            {
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    baseHolder = baseHolder + (generatedDifference + i);
+                    numberPatternList.Add(baseHolder);
+                }
             }
         }
+
+        return numberPatternList;
     }
 
     public List<int> ReturnPatternArray(int intInput)
     {
-        GeneratePatternArray(intInput);
+        List<int> numberPatternList = GeneratePatternArray(intInput);
         return numberPatternList;
     }
 }

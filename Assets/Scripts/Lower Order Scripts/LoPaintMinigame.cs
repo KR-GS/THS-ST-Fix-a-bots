@@ -42,15 +42,18 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private Canvas notesUI;
 
+    [SerializeField]
+    private DifficultyManager difficulty;
+
     private GameObject[] partSides;
 
     private int currentSide = 0;
 
     private int currentStickerPack = 0;
 
-    private int[] numberPattern;
+    private List<int[]> numberPattern = new List<int[]>();
 
-    private int packUsed;
+    private List<int> packUsed = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -63,9 +66,53 @@ public class LoPaintMinigame : MonoBehaviour
         float posY;
         float posX;
         RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
+
+        List<int> packToUse = new List<int>();
         //Transform roboPart = FindFirstObjectByType<RobotPaintPart>().transform.parent;
 
-        numberPattern = patternGameManager.ReturnPatternArray(numOfSides).ToArray();
+        if (difficulty.GetDifficulty() == "easy")
+        {
+            numberPattern.Add(patternGameManager.ReturnPatternArray(numOfSides).ToArray());
+            packToUse.Add(Random.Range(0, stickerPacks.Length));
+            packUsed.Add(stickerPacks[packToUse[0]].GetStickerNum());
+        }
+        else if(difficulty.GetDifficulty() == "hard")
+        {
+            Debug.Log("Else If triggered");
+            for(int i = 0; i<2; i++)
+            {
+                numberPattern.Add(patternGameManager.ReturnPatternArray(numOfSides).ToArray());
+            }
+
+            Debug.Log("Pattern Total: " + numberPattern.Count);
+
+            int j = 0;
+
+            while (j < 2)
+            {
+                int rand = Random.Range(0, stickerPacks.Length);
+                bool isFound = false;
+                foreach (int val in packToUse)
+                {
+                    if (val == rand)
+                    {
+                        isFound = true;
+                        break;
+                    }
+                }
+
+                if (!isFound)
+                {
+                    Debug.Log("Sticker Pack value to add: "+rand);
+                    packToUse.Add(rand);
+                    packUsed.Add(stickerPacks[packToUse[j]].GetStickerNum());
+                    j++;
+                }
+            }
+
+            Debug.Log(packToUse.Count);
+        }
+            
 
         Debug.Log("Number of current sticker packs: " + stickerPacks.Length);
         Debug.Log("sticker pack name: " + stickerPacks[0].name);
@@ -91,16 +138,17 @@ public class LoPaintMinigame : MonoBehaviour
             partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
         }
 
-        int packToUse = Random.Range(0, stickerPacks.Length);
-
-        packUsed = stickerPacks[packToUse].GetStickerNum();
-
-        for (int i = 0; i<numOfSides; i++)
+        for (int i = 0; i < numOfSides; i++)
         {
-            partSides[i].GetComponentInChildren<RobotPaintPart>().SetSideValue(numberPattern[i]);
-            if (i < numOfSides-1)
+            for (int j =0; j< numberPattern.Count; j++)
             {
-                partSides[i].GetComponentInChildren<RobotPaintPart>().SetStickersOnSide(stickerPacks[packToUse]);
+                partSides[i].GetComponentInChildren<RobotPaintPart>().SetSideValue(numberPattern[j][i]);
+            }
+
+            if (i < numOfSides - 1)
+            {
+                Debug.Log(packToUse.Count);
+                partSides[i].GetComponentInChildren<RobotPaintPart>().SetStickersOnSide(stickerPacks, packToUse);
             }
         }
 
@@ -243,16 +291,23 @@ public class LoPaintMinigame : MonoBehaviour
             mapSelect.ChangeSelectedSide(i);
             yield return new WaitForSeconds(1);
 
-            if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount() == numberPattern[i])
+            for (int j =0; j < numberPattern.Count; j++)
+            {
+                if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount(packUsed[j]) == numberPattern[j][i])
+                {
+                    countCorrect = true;
+                }
+                else
+                {
+                    countCorrect = false;
+                    Debug.Log("Count is wrong");
+                    break;
+                }
+            }
+
+            if (countCorrect)
             {
                 correctAnsNo++;
-                countCorrect = true;
-                
-            }
-            else
-            {
-                countCorrect = false;
-                Debug.Log("Count is wrong");
             }
 
             if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetStickeyTypeCount(packUsed))
@@ -260,6 +315,7 @@ public class LoPaintMinigame : MonoBehaviour
                 correntTypeNo++;
                 typeCorrect = true;
             }
+
             else
             {
                 typeCorrect = false;

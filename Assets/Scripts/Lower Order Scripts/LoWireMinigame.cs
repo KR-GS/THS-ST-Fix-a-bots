@@ -94,7 +94,7 @@ public class LoWireMinigame : MonoBehaviour
         for (int i = 0; i < intValue; i++)
         {
             generatedChildren.Add(Instantiate(wireToChange.transform.gameObject));
-            generatedChildren[i].transform.localScale = new Vector2(newLen, 1f);
+            generatedChildren[i].transform.localScale = new Vector2(newLen, wireToChange.GetWireHeight());
 
             generatedChildren[i].name = i.ToString();
 
@@ -109,7 +109,7 @@ public class LoWireMinigame : MonoBehaviour
                 generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.grey;
             }
 
-            generatedChildren[i].transform.position = new Vector2(generatePoints[i], generatedChildren[i].transform.position.y);
+            generatedChildren[i].transform.position = new Vector2(generatePoints[i], parent.transform.position.y);
         }
 
         Debug.Log("Current Value");

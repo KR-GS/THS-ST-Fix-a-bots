@@ -31,17 +31,15 @@ public class WireGenerator : MonoBehaviour
     {
         isDragging = false;
 
-        wireParent = new GameObject();
+        wireParent = new GameObject("Wire Parent");
 
-        wireParent.name = "Wire Parent";
+        wireParent.transform.SetParent(transform);
 
-        wireParent.transform.position = originalWire.transform.position;
-
-        createdWireChild.Add(Instantiate(originalWire.transform.gameObject));
+        createdWireChild.Add(Instantiate(originalWire.transform.gameObject, wireParent.transform));
 
         createdWireChild[0].name = "0";
 
-        createdWireChild[0].transform.SetParent(wireParent.transform);
+        wireParent.transform.position = originalWire.transform.position;
     }
 
     // Update is called once per frame
