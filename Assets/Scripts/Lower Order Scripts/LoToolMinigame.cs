@@ -38,6 +38,7 @@ public class LoToolMinigame : MonoBehaviour
     private float speed;
 
     private GameObject[] counterHolder;
+    private GameObject[] gapHolder;
     private List<int> generatedList = new List<int>();
     private int currentInt;
     private int[] numberToDisplay;
@@ -50,6 +51,8 @@ public class LoToolMinigame : MonoBehaviour
     private GameObject currentTool;
     private FastenerBtn[] fastenerList = new FastenerBtn[4];
     private int[] fastenerCheckVal;
+    private int[] gapToDisplay;
+    private int[] originalGaps;
 
     [SerializeField]
     private List<ToolBtn> toolButtons;
@@ -96,6 +99,8 @@ public class LoToolMinigame : MonoBehaviour
         int[] tempArr;
         GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
 
+        GameObject originalGap = FindFirstObjectByType<GapHolder>().gameObject;
+
         int difference = patternGameManager.ReturnDifference();
         patternLength = toolDifficulty.GetLengthOfPattern();
         fastenerObj = new GameObject[patternLength];
@@ -104,6 +109,9 @@ public class LoToolMinigame : MonoBehaviour
         numberToDisplay = new int[patternLength];
         counterHolder = new GameObject[patternLength];
         fastenerCheckVal = new int[patternLength];
+        gapToDisplay = new int[patternLength - 1];
+        originalGaps = new int[patternLength - 1];
+        gapHolder = new GameObject[patternLength - 1];
 
         generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
@@ -158,6 +166,9 @@ public class LoToolMinigame : MonoBehaviour
         {
             case true:
                 numberToDisplay = generatedList.ToArray();
+
+                difference = numberToDisplay[1] - numberToDisplay[0];
+                Debug.Log("Diff val: " + difference);
 
                 tempArr = new int[slotToFix];
 
@@ -217,6 +228,12 @@ public class LoToolMinigame : MonoBehaviour
             originalHitValues[i] = numberToDisplay[i];
         }
 
+        for(int i=0; i<patternLength-1; i++)
+        {
+            gapToDisplay[i] = numberToDisplay[i + 1] - numberToDisplay[i];
+            originalGaps[i] = generatedList[i + 1] - generatedList[i];
+        }
+
         randFastenerVal = Random.Range(0, fastenerList.Length-1);
         //randFastenerVal = 0;
 
@@ -253,17 +270,37 @@ public class LoToolMinigame : MonoBehaviour
             fastenerCheckVal[i] = randFastenerVal+1;
         }
 
-        for(int i = 0; i<patternLength; i++)
+        counterHolder[0] = originalCounter;
+
+        for (int i = 0; i<patternLength; i++)
         {
             Vector3 position = new Vector3(tiledParts[i].transform.position.x, originalCounter.transform.position.y, originalCounter.transform.position.z);
-            counterHolder[i] = Instantiate(originalCounter);
 
-            counterHolder[i].transform.position = position;
+            if (i > 0)
+            {
+                counterHolder[i] = Instantiate(originalCounter);
+
+                counterHolder[i].transform.position = position;
+            }
+                
 
             counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerCheckVal[i] - 1].GetHitIcon());
         }
 
-        Destroy(originalCounter);
+        gapHolder[0] = originalGap;
+
+        for (int i = 0;i<patternLength-1; i++)
+        {
+            Vector3 position = new Vector3((tiledParts[i].transform.position.x + tiledParts[i+1].transform.position.x)/2, originalGap.transform.position.y, originalGap.transform.position.z);
+            if (i > 0)
+            {
+                gapHolder[i] = Instantiate(originalGap);
+            }
+
+            gapHolder[i].transform.position = position;
+
+            gapHolder[i].GetComponent<GapHolder>().SetGapVal(gapToDisplay[i], originalGaps[i]);
+        }
 
         Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
         OverheadView();
@@ -316,6 +353,17 @@ public class LoToolMinigame : MonoBehaviour
             {
                 bool useCountManager = false;
                 numberToDisplay[currentInt]++;
+
+                if (currentInt == patternLength-1)
+                {
+                    gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
+                }
+                else
+                {
+                    gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
+                    gapToDisplay[currentInt] = numberToDisplay[currentInt+1] - numberToDisplay[currentInt];
+                }
+
                 if (numberToDisplay[currentInt]<24)
                 {
                     fastenerObj[currentInt].SetActive(true);
@@ -344,6 +392,7 @@ public class LoToolMinigame : MonoBehaviour
                         currentInt = i;
                     }
                     ToggleOverviewCounters(false);
+                    ToggleGapHolder(false);
                 }
 
                 if (fastenerValues[currentInt] > 0)
@@ -388,6 +437,8 @@ public class LoToolMinigame : MonoBehaviour
     public void CheckNumber(Transform tools)
     {
         ToggleOverviewCounters(false);
+
+        ToggleGapHolder(false);
 
         StartCoroutine(ValueCheckCoroutine());    
     }
@@ -486,6 +537,8 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         ToggleOverviewCounters(true);
+
+        ToggleGapHolder(true);
 
         if (currentTool != null)
         {
@@ -656,6 +709,8 @@ public class LoToolMinigame : MonoBehaviour
 
         ToggleOverviewCounters(true);
 
+        ToggleGapHolder(true);
+
         Destroy(currentTool);
 
         if (totalCorrect == patternLength)
@@ -726,6 +781,26 @@ public class LoToolMinigame : MonoBehaviour
             foreach(GameObject count in counterHolder)
             {
                 count.SetActive(false);
+            }
+        }
+    }
+
+    private void ToggleGapHolder(bool isShowing)
+    {
+        if (isShowing)
+        {
+            for (int i = 0; i < patternLength-1; i++)
+            {
+                gapHolder[i].GetComponent<GapHolder>().SetGapVal(gapToDisplay[i], originalGaps[i]);
+
+                gapHolder[i].SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (GameObject gap in gapHolder)
+            {
+                gap.SetActive(false);
             }
         }
     }

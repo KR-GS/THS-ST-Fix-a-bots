@@ -1665,6 +1665,7 @@ MonoBehaviour:
   doneUI: {fileID: 959629315}
   overviewUI: {fileID: 2018880989}
   notesUI: {fileID: 1847413831}
+  difficulty: {fileID: 202945636}
 --- !u!4 &707493500
 Transform:
   m_ObjectHideFlags: 0
