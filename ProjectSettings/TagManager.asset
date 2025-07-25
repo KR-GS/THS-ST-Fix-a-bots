@@ -18,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Draggable
-  - 
+  - Tool
   - 
   - 
   - 
@@ -46,6 +46,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Body
+    uniqueID: 283056113
+    locked: 0
+  - name: MinimapView
+    uniqueID: 3464993747
     locked: 0
   m_RenderingLayers:
   - Default

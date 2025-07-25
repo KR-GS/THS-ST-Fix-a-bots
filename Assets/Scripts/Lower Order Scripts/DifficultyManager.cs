@@ -34,6 +34,9 @@ public class DifficultyManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        /*
+        // This is for LO_Workshop, which we will need soon after this experiment
+         
         Debug.Log("Static Data for Day Number is....: " + StaticData.dayNo);
         if(StaticData.dayNo > 0 && StaticData.dayNo < 5)
         {
@@ -47,7 +50,25 @@ public class DifficultyManager : MonoBehaviour
         {
             level = Difficulty.hard;
         }
-        
+        */
+
+        if (StaticData.diffInt == 0)
+        {
+            Debug.Log("Static Data for difficulty is easy!" );
+            level = Difficulty.easy;
+        }
+        else if (StaticData.diffInt == 1)
+        {
+            Debug.Log("Static Data for difficulty is medium!");
+            level = Difficulty.medium;
+        }
+        else if (StaticData.diffInt == 2)
+        {
+            Debug.Log("Static Data for difficulty is hard!");
+            level = Difficulty.hard;
+        }
+
+
 
         if (level == Difficulty.easy)
         {
@@ -57,7 +78,7 @@ public class DifficultyManager : MonoBehaviour
             if (gameType == Minigame.tool)
             {
                 incorrectVals = Random.Range(1, 2);
-                patternLength = Random.Range(4, 7);
+                patternLength = Random.Range(5, 6);
             }
             else
             {
@@ -85,9 +106,9 @@ public class DifficultyManager : MonoBehaviour
             noOfTypes = Random.Range(1, 3);
             if (gameType == Minigame.tool)
             {
-                patternLength = Random.Range(6, 12);
+                patternLength = 6;
                 incorrectVals = 0;
-                missingVals = Random.Range(3, 5);
+                missingVals = 1;
             }
             else
             {
@@ -133,5 +154,10 @@ public class DifficultyManager : MonoBehaviour
     public string GetDifficulty()
     {
         return level.ToString();
+    }
+
+    public string GetMinigame()
+    {
+        return gameType.ToString();
     }
 }

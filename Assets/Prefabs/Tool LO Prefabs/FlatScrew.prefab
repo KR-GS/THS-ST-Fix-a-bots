@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7698653015851365593}
+  - component: {fileID: -8005613708562312381}
   m_Layer: 0
   m_Name: FlatScrew
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 9117164672484223486}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8005613708562312381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3200441463033314186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad82ce79a7aff2341bdc3afa8d8d7856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenSprite: {fileID: 1597143511, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  fixedSprite: {fileID: 180500846, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!1 &3574476730127780873
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +123,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -107298206, guid: bb64df5b4dd1c4b448c33bb94243cf04, type: 3}
+  m_Sprite: {fileID: 180500846, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -2,28 +2,157 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.EventSystems;
 
 public class LoPaintMinigame : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI stickerTextCounter;
 
+    [SerializeField]
+    private PatternGameManager patternGameManager;
+
     private bool dragging = false;
 
     private GameObject draggableObject;
 
     [SerializeField]
-    private List<Sticker> draggedObjects = new List<Sticker>();
+    private int numOfSides;
 
-    private RobotPaintPart roboPart;
+    [SerializeField]
+    private Sticker[] stickerPacks;
 
-    private LayerMask bodyMask;
+    [SerializeField]
+    private float speed;
+
+    [SerializeField]
+    private Button[] moveBtn;
+
+    [SerializeField]
+    private StickerRobot rightIndicator;
+
+    [SerializeField]
+    private Canvas doneUI;
+
+    [SerializeField]
+    private Canvas overviewUI;
+
+    [SerializeField]
+    private Canvas notesUI;
+
+    [SerializeField]
+    private DifficultyManager difficulty;
+
+    private GameObject[] partSides;
+
+    private int currentSide = 0;
+
+    private int currentStickerPack = 0;
+
+    private List<int[]> numberPattern = new List<int[]>();
+
+    private List<int> packUsed = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    void Awake()
+    {
+        partSides = new GameObject[numOfSides];
+    }
     void Start()
     {
-        roboPart = FindFirstObjectByType<RobotPaintPart>();
-        Debug.Log(roboPart.name);
+        float posY;
+        float posX;
+        RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
+
+        List<int> packToUse = new List<int>();
+        //Transform roboPart = FindFirstObjectByType<RobotPaintPart>().transform.parent;
+
+        if (difficulty.GetDifficulty() == "easy")
+        {
+            numberPattern.Add(patternGameManager.ReturnPatternArray(numOfSides).ToArray());
+            packToUse.Add(Random.Range(0, stickerPacks.Length));
+            packUsed.Add(stickerPacks[packToUse[0]].GetStickerNum());
+        }
+        else if(difficulty.GetDifficulty() == "hard")
+        {
+            Debug.Log("Else If triggered");
+            for(int i = 0; i<2; i++)
+            {
+                numberPattern.Add(patternGameManager.ReturnPatternArray(numOfSides).ToArray());
+            }
+
+            Debug.Log("Pattern Total: " + numberPattern.Count);
+
+            int j = 0;
+
+            while (j < 2)
+            {
+                int rand = Random.Range(0, stickerPacks.Length);
+                bool isFound = false;
+                foreach (int val in packToUse)
+                {
+                    if (val == rand)
+                    {
+                        isFound = true;
+                        break;
+                    }
+                }
+
+                if (!isFound)
+                {
+                    Debug.Log("Sticker Pack value to add: "+rand);
+                    packToUse.Add(rand);
+                    packUsed.Add(stickerPacks[packToUse[j]].GetStickerNum());
+                    j++;
+                }
+            }
+
+            Debug.Log(packToUse.Count);
+        }
+            
+
+        Debug.Log("Number of current sticker packs: " + stickerPacks.Length);
+        Debug.Log("sticker pack name: " + stickerPacks[0].name);
+
+        partSides[0] = FindFirstObjectByType<RobotPaintPart>().transform.parent.gameObject;
+
+        partSides[0].GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
+
+        posY = partSides[0].transform.position.y;
+
+        posX = partSides[0].transform.position.x;
+
+
+
+        for (int i = 1; i< numOfSides; i++)
+        {
+            partSides[i] = Instantiate(partSides[0].gameObject);
+
+            partSides[i].transform.position = new Vector3(posX, posY - (i * 25), partSides[i].transform.position.z);
+
+            partSides[i].name = partSides[0].name+ " " + i;
+
+            partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
+        }
+
+        for (int i = 0; i < numOfSides; i++)
+        {
+            for (int j =0; j< numberPattern.Count; j++)
+            {
+                partSides[i].GetComponentInChildren<RobotPaintPart>().SetSideValue(numberPattern[j][i]);
+            }
+
+            if (i < numOfSides - 1)
+            {
+                Debug.Log(packToUse.Count);
+                partSides[i].GetComponentInChildren<RobotPaintPart>().SetStickersOnSide(stickerPacks, packToUse);
+            }
+        }
+
+        Debug.Log(partSides[0].name);
     }
 
     // Update is called once per frame
@@ -33,9 +162,12 @@ public class LoPaintMinigame : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                if (!dragging)
+                if (!EventSystem.current.IsPointerOverGameObject())
                 {
-                    HandleClickEvent(Input.GetTouch(0).position);
+                    if (!dragging)
+                    {
+                        HandleClickEvent(Input.GetTouch(0).position);
+                    }
                 }
             }
             else if(Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -45,13 +177,49 @@ public class LoPaintMinigame : MonoBehaviour
                     if (draggableObject.GetComponent<Sticker>().IsOnPart())
                     {
                         dragging = false;
+                        if (draggableObject.GetComponent<Sticker>().IsADefault())
+                        {
+                            Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                            Debug.Log(currentSide);
+                            if(touchPos.x > partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_RightVal() + 0.5f)
+                            {
+                                touchPos.x = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_RightVal();
+                            }
+                            else if(touchPos.x < partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_LeftVal() - 0.5f)
+                            {
+                                touchPos.x = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_LeftVal();
+                            }
+
+                            if (touchPos.y > partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_UpVal() +0.5f)
+                            {
+                                touchPos.y = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_UpVal();
+                            }
+                            else if (touchPos.y < partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_DownVal() - 0.5f)
+                            {
+                                touchPos.y = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_DownVal();
+                            }
+
+                            Vector3 newPos = new Vector3(touchPos.x, touchPos.y, draggableObject.transform.position.z);
+
+                            draggableObject.GetComponent<Sticker>().SetDefaultPos(newPos);
+                            draggableObject.transform.position = newPos;
+                        }
+
                         draggableObject = null;
                     }
                     else
                     {
-                        draggedObjects.Remove(draggableObject.GetComponent<Sticker>());
-                        Destroy(draggableObject);
-                        dragging = false;
+                        if (!draggableObject.GetComponent<Sticker>().IsADefault())
+                        {
+                            Destroy(draggableObject);
+                            dragging = false;
+                        }
+                        else
+                        {
+                            draggableObject.transform.position = draggableObject.GetComponent<Sticker>().GetDefaultPos();
+                            draggableObject = null; 
+                            dragging = false;
+                        }
                     }
                 }
             }
@@ -65,7 +233,7 @@ public class LoPaintMinigame : MonoBehaviour
             }
         }
 
-        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
+        //stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
     }
 
     private void HandleClickEvent(Vector2 position)
@@ -76,7 +244,6 @@ public class LoPaintMinigame : MonoBehaviour
             Debug.Log("Interacting with: " + rayHit.transform.name);
             if (rayHit.transform.gameObject.TryGetComponent(out Sticker sticker))
             {
-                Debug.Log("111Interacting with: " + rayHit.transform.name);
                 if (sticker.IsOnPart())
                 {
                     Debug.Log("This is on the robot");
@@ -85,9 +252,10 @@ public class LoPaintMinigame : MonoBehaviour
                 else
                 {
                     draggableObject = Instantiate(sticker.transform.gameObject);
+                    draggableObject.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
                     draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();
                     Debug.Log(draggableObject.GetComponent<Sticker>().IsADuplicate());
-                    draggedObjects.Add(sticker);
+                    
                 }
                 dragging = true;
                 Debug.Log(draggableObject.name);
@@ -97,18 +265,174 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void ClearStickers()
     {
-        roboPart.clearStickersOnSide();
+        partSides[currentSide].GetComponentInChildren<RobotPaintPart>().ClearStickersOnSide();
     }
 
-    public void TurnToRight()
+    public void CheckSideValues()
     {
-        roboPart.RotateToRight();
-        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
+        
+        StartCoroutine(ValueCheckCoroutine());
     }
 
-    public void TurnToLeft()
+    public IEnumerator ValueCheckCoroutine()
     {
-        roboPart.RotateToLeft();
-        stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
+        int prevSide = currentSide;
+        PaintMinimapManager mapSelect = FindAnyObjectByType<PaintMinimapManager>();
+        overviewUI.enabled = false;
+        notesUI.enabled = false;
+        Debug.Log("Hello from checking");
+        int correctAnsNo = 0;
+        int correntTypeNo = 0;
+        bool countCorrect = false;
+        bool typeCorrect = false;
+        for (int i = 0; i < numOfSides; i++)
+        {
+            ChangeSide(i);
+            mapSelect.ChangeSelectedSide(i);
+            yield return new WaitForSeconds(1);
+
+            for (int j =0; j < numberPattern.Count; j++)
+            {
+                if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount(packUsed[j]) == numberPattern[j][i])
+                {
+                    countCorrect = true;
+                }
+                else
+                {
+                    countCorrect = false;
+                    Debug.Log("Count is wrong");
+                    break;
+                }
+            }
+
+            if (countCorrect)
+            {
+                correctAnsNo++;
+            }
+
+            if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetStickeyTypeCount(packUsed))
+            {
+                correntTypeNo++;
+                typeCorrect = true;
+            }
+
+            else
+            {
+                typeCorrect = false;
+                Debug.Log("Some type is wrong");
+            }
+
+            if (!typeCorrect || !countCorrect)
+            {
+                rightIndicator.SetWrongSprite();
+            }
+            else
+            {
+                rightIndicator.SetRightSprite();
+            }
+
+            yield return new WaitForSeconds(3);
+            rightIndicator.DefaultSprite();
+        }
+
+
+        if (correctAnsNo == numOfSides && correntTypeNo == numOfSides)
+        {
+            Debug.Log("All Numbers Correct!");
+            Debug.Log("All Types Correct!");
+            doneUI.enabled = true;
+            overviewUI.enabled = false;
+            notesUI.enabled = false;
+        }
+        else
+        {
+            Debug.Log("Some number's wrong");
+            Debug.Log("Some type's wrong");
+            overviewUI.enabled = true;
+        }
+        yield return null;
+
+        mapSelect.ChangeSelectedSide(prevSide);
+        ChangeSide(prevSide);
+        
+    }
+
+    public void ChangeSide(int val)
+    {
+        Vector3 tempPos = partSides[currentSide].transform.position;
+        int prevVal = currentSide;
+        currentSide = val;
+
+        partSides[prevVal].transform.position = partSides[currentSide].transform.position;
+        partSides[currentSide].transform.position = tempPos;
+        Transform defaultObj = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().GetDefaultHolder();
+
+        for (int i = 0; i < defaultObj.childCount; i++) 
+        {
+            defaultObj.GetChild(i).GetComponent<Sticker>().SetDefaultPos(Vector3.zero);
+        }
+    }
+
+    public void ChangeStickerUp()
+    {
+        
+        if (currentStickerPack > 0)
+        {
+            //Vector3 newPos = stickerPacks[currentStickerPack].transform.position;
+            //currentStickerPack--;
+            //stickerPacks[currentStickerPack+1].transform.position = stickerPacks[currentStickerPack].transform.position;
+            //stickerPacks[currentStickerPack].transform.position = newPos;
+            StartCoroutine(TriggerPackChange(1));
+        }
+    }
+
+    public void ChangeStickerDown()
+    {
+        if (currentStickerPack < stickerPacks.Length-1)
+        {
+            Debug.Log("Hello World");
+            //stickerPacks[currentStickerPack - 1].transform.position = stickerPacks[currentStickerPack].transform.position;
+            //stickerPacks[currentStickerPack].transform.position = newPos;
+            StartCoroutine(TriggerPackChange(-1));
+        }
+    }
+
+    private IEnumerator TriggerPackChange(int val)
+    {
+        Debug.Log("Coroutine Triggered");
+
+        foreach(Button button in moveBtn)
+        {
+            button.interactable = false;
+        }
+
+        Vector3 newPos = stickerPacks[currentStickerPack].transform.parent.position;
+        
+        if(val == 1)
+        {
+            currentStickerPack--;
+        }
+        else
+        {
+            currentStickerPack++;
+        }
+
+        while (Vector3.Distance(stickerPacks[currentStickerPack + val].transform.parent.position, stickerPacks[currentStickerPack].transform.parent.position) > 0.001f)
+        {
+            stickerPacks[currentStickerPack + val].transform.parent.position = Vector3.MoveTowards(stickerPacks[currentStickerPack + val].transform.parent.position, stickerPacks[currentStickerPack].transform.parent.position, speed * Time.deltaTime);
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.5f);
+
+        while (Vector3.Distance(stickerPacks[currentStickerPack].transform.parent.position, newPos) > 0.001f)
+        {
+            stickerPacks[currentStickerPack].transform.parent.position = Vector3.MoveTowards(stickerPacks[currentStickerPack].transform.parent.position, newPos, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        foreach (Button button in moveBtn)
+        {
+            button.interactable = true;
+        }
     }
 }

@@ -21,6 +21,15 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private Canvas overViewCanvas;
 
+    [SerializeField]
+    private Canvas doneCanvas;
+
+    [SerializeField]
+    private Canvas notesCanvas;
+
+    [SerializeField]
+    private Canvas counterCanvas;
+
     private Vector3 originalPosition;
     private float originalSize;
 
@@ -30,10 +39,12 @@ public class ToolCamera : MonoBehaviour
         originalSize = GetComponent<Camera>().orthographicSize;
 
         transform.position = new Vector3(tilingManager.TileMidPoint(), (tilingManager.TileMidPoint() / 4), transform.position.z);
-        GetComponent<Camera>().orthographicSize = Mathf.Ceil(tilingManager.TileMidPoint());
-        zoomInCanvas.gameObject.SetActive(false);
-        toolCanvas.gameObject.SetActive(false);
-        overViewCanvas.gameObject.SetActive(true);
+        GetComponent<Camera>().orthographicSize = 17;
+        zoomInCanvas.enabled = false;
+        toolCanvas.enabled = false;
+        overViewCanvas.enabled = true;
+        notesCanvas.enabled = true;
+        counterCanvas.enabled = false;
     }
 
     public void FocusedCameraView(float partPosition)
@@ -41,32 +52,58 @@ public class ToolCamera : MonoBehaviour
         transform.position = new Vector3(partPosition, originalPosition.y, originalPosition.z);
         GetComponent<Camera>().orthographicSize = originalSize;
 
-        zoomInCanvas.gameObject.SetActive(true);
-        toolCanvas.gameObject.SetActive(true);
-        overViewCanvas.gameObject.SetActive(false);
+        zoomInCanvas.enabled = true;
+        toolCanvas.enabled = true;
+        counterCanvas.enabled = true;
+        overViewCanvas.enabled = false;
+        notesCanvas.enabled = false;
     }
 
     public void CameraTrigger(Vector3 firstFastenerPosition, float speed)
     {
-        SubmitCameraMovement(firstFastenerPosition, speed*4);
-        SubmitCameraZoom();
+        StartCoroutine(SubmitCameraMovement(firstFastenerPosition, speed*4));
+        StartCoroutine(SubmitCameraZoom());
     }
 
-    public async void SubmitCameraMovement(Vector3 firstFastenerPosition, float speed)
+    public IEnumerator SubmitCameraMovement(Vector3 firstFastenerPosition, float speed)
     {
         while (Vector3.Distance(transform.position, firstFastenerPosition) > 0.001f)
         {
             transform.position = Vector3.MoveTowards(transform.position, firstFastenerPosition, speed * Time.deltaTime);
-            await Task.Yield();
+            yield return null;
         }
     }
 
-    public async void SubmitCameraZoom()
+    public IEnumerator SubmitCameraZoom()
     {
         while (GetComponent<Camera>().orthographicSize > originalSize)
         {
             GetComponent<Camera>().orthographicSize--;
-            await Task.Yield();
+            yield return null;
         }
+    }
+
+    public void TriggerDoneCanvas()
+    {
+        notesCanvas.enabled = false;
+        overViewCanvas.enabled = false;
+        doneCanvas.enabled = true;
+        zoomInCanvas.enabled = false;
+        toolCanvas.enabled = false;
+    }
+
+    public void ToggleCanvas()
+    {
+        overViewCanvas.enabled = !overViewCanvas.enabled;
+    }
+
+    public void ToggleNoteCanvas()
+    {
+        notesCanvas.enabled = !notesCanvas.enabled;
+    }
+
+    public void ToggleCounterCanvas()
+    {
+        counterCanvas.enabled = !counterCanvas.enabled;
     }
 }
