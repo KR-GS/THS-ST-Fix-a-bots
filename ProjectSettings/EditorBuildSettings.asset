@@ -20,9 +20,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/New_HO_Scenes/HO_BotFightScene.unity
     guid: df4a6c3eee62b9d40b7c3b609f5e9a99
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LO_Stage_Select.unity
     guid: 686c6b6cfbda4fe49b022d3b6f6b7085
+  - enabled: 1
+    path: Assets/Scenes/LO_WS2D.unity
+    guid: 8805b86981fd9cc46988e85c904100e5
   - enabled: 1
     path: Assets/Scenes/LO_Tool_GUI.unity
     guid: beea7f4e3baeece4593f5456aa2832a6

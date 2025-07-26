@@ -1,4 +1,7 @@
 using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
+
 //using System;
 using TMPro;
 using UnityEngine;
@@ -21,6 +24,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public TextMeshPro dayNumber;
 
     public TextMeshPro moneyText;
+
+    public TextMeshPro remainingOrders;
 
     private TimerScript timer;
 
@@ -86,12 +91,30 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 }
                 else
                 {
-                    Debug.LogWarning("TextMeshPro component not found on DayText object.");
+                    Debug.LogWarning("TextMeshPro component not found on MoneyText object.");
                 }
             }
             else
             {
                 Debug.LogWarning("MoneyText object not found in LO_Workshop.");
+            }
+
+            GameObject remainingOrderObj = GameObject.Find("RemainingOrders");
+            if (remainingOrderObj != null)
+            {
+                remainingOrders = remainingOrderObj.GetComponent<TextMeshPro>();
+                if (remainingOrders != null)
+                {
+                    UpdateRemainingOrders(); 
+                }
+                else
+                {
+                    Debug.LogWarning("TextMeshPro component not found on RemainingOrders object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
             }
 
             if (TimerScript.instance != null)
@@ -142,21 +165,30 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.money = this.money;
     }
 
+    public void UpdateMoneyText()
+    {
+        if (moneyText != null)
+        {
+            moneyText.text = "Money: " + money;
+        }
+    }
+
+    public void UpdateRemainingOrders()
+    {
+        if (remainingOrders != null && OrderManager.Instance != null)
+        {
+            remainingOrders.text = "Remaining Orders: " + OrderManager.Instance.orderList.Count;
+        }
+    }
+
     public void StartNewLevel()
     {
+        OrderManager.Instance.SetStatus(false);
         level++;
         StaticData.dayNo = level;
-        money += OrderManager.Instance.GetPrize();
-        OrderManager.Instance.SetStatus(false);
+        OrderManager.Instance.orderReceived = false; // Reset order received status
+        //OrderManager.Instance.SetStatus(false);
         RaycastInteractor ri = Object.FindFirstObjectByType<RaycastInteractor>();
-        if (ri != null)
-        {
-            ri.SetFinished(false);
-        }
-        else
-        {
-            Debug.LogWarning("RaycastInteractor not found in scene.");
-        }
         dayNumber.text = "Day: " + this.level;
         moneyText.text = "Money: " + this.money;
         Debug.Log("Starting Level " + level);
@@ -166,7 +198,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         TimerScript.instance.ResetTimer();
     }
-
+    
     public void CompleteLevel()
     {
         Debug.Log("Level " + level + " complete!");

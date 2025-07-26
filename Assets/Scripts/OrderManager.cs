@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -15,6 +16,13 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     private bool isFinished = false;
 
     public List<Order> orderList = new List<Order>();
+    public List<Order> activeOrders = new List<Order>();
+    public Queue<Order> pendingOrders = new Queue<Order>();
+    private Coroutine deliveryRoutine;
+    public Order currentOrder;
+    public bool orderReceived;
+
+
     public int currentOrderIndex = -1;
 
 
@@ -63,16 +71,14 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     public Order CreateNewOrder()
     {
-        if (TimerScript.instance != null)
-        {
-            TimerScript.instance.timer.gameObject.SetActive(true);  // show
-        }
-  
+
         Order newOrder = new Order
         {
-            needsTool = Random.value > 0.5f,
-            needsPaint = Random.value > 0.5f,
-            needsWire = Random.value > 0.5f
+            needsTool = Random.value > 0.99f
+
+            //needsTool = Random.value > 0.5f,
+            //needsPaint = Random.value > 0.5f,
+            //needsWire = Random.value > 0.5f
         };
 
         // Ensure at least one requirement
@@ -80,7 +86,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsTool = true;
 
         orderList.Add(newOrder);
-        currentOrderIndex = orderList.Count - 1;
+        currentOrderIndex = 0;
 
         Debug.Log("New Order Created!");
 
@@ -92,45 +98,95 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         return newOrder;
     }
 
+    public void AddToActiveOrders(Order order)
+    {
+        activeOrders.Add(order);
+    }
+
+
+    public void StartOrderBatch()
+    {
+        pendingOrders.Clear();
+        if (!orderReceived)
+        {
+            orderReceived = true;
+            for (int i = 0; i < 5; i++)
+            {
+                Order o = CreateNewOrder();
+                pendingOrders.Enqueue(o);
+            }
+            Instance.StartCoroutine(ScheduleNextOrder());
+        }
+    }
+
+    private IEnumerator ScheduleNextOrder()
+    {
+        while (pendingOrders.Count > 0)
+        {
+            yield return new WaitForSeconds(5f);
+            var nextOrder = pendingOrders.Dequeue();
+            AddToActiveOrders(nextOrder); // Your existing method
+            Debug.Log("Delivered order!");
+        }
+    }
     public void TryCompleteOrder()
     {
-        if (GetCurrentOrder()?.IsComplete() ?? false)
+        if (orderList == null || orderList.Count == 0)
+            return;
+
+ 
+        if (orderList[0].IsComplete())
         {
-            isFinished = true;
             Debug.Log("Order Complete!");
+            
+            orderList.RemoveAt(0);
+            activeOrders.RemoveAt(0); 
+            StaticData.isToolDone = false;
+            StaticData.isPaintDone = false;
+            StaticData.isWireDone = false;           
+
             if (TimerScript.instance != null)
             {
-                TimerScript.instance.StopTimer();
-                if (TimerScript.instance.timeLft >= 240f)
+                if(TimerScript.instance.timeLft > 0)
                 {
-                    prize = 5;
-                }
-                else if (TimerScript.instance.timeLft >= 180f && TimerScript.instance.timeLft < 240f)
-                {
-                    prize = 4;
-                }
-                else if (TimerScript.instance.timeLft >= 120f && TimerScript.instance.timeLft < 180f)
-                {
-                    prize = 3;
-                }
-                else if (TimerScript.instance.timeLft >= 60f && TimerScript.instance.timeLft < 120f)
-                {
-                    prize = 2;
-                }
-                else if (TimerScript.instance.timeLft >= 1f && TimerScript.instance.timeLft < 60f)
-                {
-                    prize = 1;
+                    Debug.Log("Order completed on time! You receive full amount as payment!");
+                    GameLoopManager.Instance.money += 50; //Base value 50
+                    GameLoopManager.Instance.UpdateMoneyText();
                 }
                 else
                 {
-                    prize = 0;
+                    Debug.Log("Order completed late! You receive half amount as payment!");
+                    GameLoopManager.Instance.money += 25; //Base value 50
+                    GameLoopManager.Instance.UpdateMoneyText();
                 }
             }
+        }
+
+        GameLoopManager.Instance.UpdateRemainingOrders();
+
+        if (orderList.Count == 0)
+        {
+            isFinished = true;
+            Debug.Log("All Orders Complete!");
+            TimerScript.instance.StopTimer();
             ShowOrderCompletePanel();
             raycastInteractor.enabled = false;
-            orderList.RemoveAt(currentOrderIndex);
-            currentOrderIndex = Mathf.Clamp(currentOrderIndex - 1, 0, orderList.Count - 1);
+
         }
+
+
+    }
+
+    public Order GetNextPendingOrder()
+    {
+        foreach (var order in pendingOrders)
+        {
+            if (!order.IsComplete())
+            {
+                return order;
+            }
+        }
+        return null;
     }
 
     public Order GetCurrentOrder()
@@ -143,35 +199,21 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     public void ShowOrderCompletePanel()
     {
+        /*
         Transform prizeTextFind = orderCompletePanel.transform.Find("PrizeText");
         if (prizeTextFind != null)
         {
             TextMeshProUGUI prizeTexts = prizeTextFind.GetComponent<TextMeshProUGUI>();
-            if (prize == 5)
+            if (prize == 1)
             {
-                prizeTexts.text = "Excellent in all marks! Earned 5 currency!";
-            }
-            else if (prize == 4)
-            {
-                prizeTexts.text = "Very good job! Earned 4 currency!";
-            }
-            else if (prize == 3)
-            {
-                prizeTexts.text = "Good job! Earned 3 currency!";
-            }
-            else if (prize == 2)
-            {
-                prizeTexts.text = "Nice! Earned 2 currency!";
-            }
-            else if (prize == 1)
-            {
-                prizeTexts.text = "You took too long... but it's acceptable. Earned 1 currency.";
+                prizeTexts.text = "Order completed on time!";
             }
             else
             {
                 prizeTexts.text = "That was disappointing... Earned nothing.";
             }
         }
+        */
         orderCompletePanel.SetActive(true);
     }
 
@@ -189,7 +231,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        this.orderReceived = data.orderReceived;
         this.orderList = data.savedOrders ?? new List<Order>();
+        this.activeOrders = data.savedActiveOrders ?? new List<Order>();
         this.currentOrderIndex = data.currentOrderIndex;
         this.isFinished = data.finished;
         this.prize = data.prize;
@@ -199,12 +243,30 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             TimerScript.instance.StartTimer();
             Debug.Log("Timer started from OrderManager.LoadData");
         }
+
+        if (data.pendingOrdersList != null)
+        {
+            this.pendingOrders = new Queue<Order>(data.pendingOrdersList);
+        }
+        else
+        {
+            Debug.Log("There are no saved pending orders. Initializing empty queue.");
+            this.pendingOrders = new Queue<Order>();
+        }
+
+        if (orderReceived && pendingOrders.Count > 0)
+        {
+            StartCoroutine(ScheduleNextOrder());
+        }
     }
 
     public void SaveData(ref GameData data)
     {
         data.savedOrders = this.orderList;
+        data.savedActiveOrders = this.activeOrders;
+        data.pendingOrdersList = new List<Order>(this.pendingOrders);
         data.currentOrderIndex = this.currentOrderIndex;
+        data.orderReceived = this.orderReceived;
         data.finished = this.isFinished;
         data.prize = this.prize;
     }

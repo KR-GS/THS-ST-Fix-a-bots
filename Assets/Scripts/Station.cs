@@ -20,7 +20,7 @@ public class Station : MonoBehaviour
             case StationType.Tool:
                 if (currentOrder.needsTool && !currentOrder.toolDone)
                 {
-                    SceneManager.LoadScene("LO_Tool");
+                    SceneManager.LoadScene("LO_Tool_GUI");
                     //currentOrder.toolDone = true;
                     Debug.Log("Tool station activated!");
                 }
@@ -29,7 +29,7 @@ public class Station : MonoBehaviour
             case StationType.Paint:
                 if (currentOrder.needsPaint && !currentOrder.paintDone)
                 {
-                    SceneManager.LoadScene("LO_Paint");
+                    SceneManager.LoadScene("LO_Paint_GUI");
                     //currentOrder.paintDone = true;
                     Debug.Log("Paint station activated!");
                 }

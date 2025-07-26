@@ -29,6 +29,10 @@ public class GameData
 
     public List<float> stageTimes;
 
+    public List<Order> savedActiveOrders;
+
+    public List<Order> pendingOrdersList;
+
     public int stageDone;
 
     public GameData()
