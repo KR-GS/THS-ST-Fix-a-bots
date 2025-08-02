@@ -19,6 +19,8 @@ public class GameData
 
     public bool finished;
 
+    public bool isPatternStarted;
+
     public bool orderReceived;
 
     public int currentOrderIndex;
@@ -49,6 +51,7 @@ public class GameData
         this.restarts = new List<int>();
         this.stageDone = 0;
         this.stageTimes = new List<float>();
+        this.isPatternStarted = false;
     }
 
 

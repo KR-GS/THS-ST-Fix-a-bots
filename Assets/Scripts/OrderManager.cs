@@ -143,7 +143,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             activeOrders.RemoveAt(0); 
             StaticData.isToolDone = false;
             StaticData.isPaintDone = false;
-            StaticData.isWireDone = false;           
+            StaticData.isWireDone = false;
+            GameLoopManager.Instance.GenerateAndStorePattern();
 
             if (TimerScript.instance != null)
             {

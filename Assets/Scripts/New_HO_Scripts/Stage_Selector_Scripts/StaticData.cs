@@ -18,6 +18,15 @@ public class StaticData
 
     public static int diffInt = 0; // 0 = easy, 1 = medium, 2 = hard
 
+    public static List<int> toolPattern;
+    public static List<int> paintPattern;
+
+    public static int sequenceDiff;
+    public static int patternLength;
+    public static int incorrectVals;
+    public static int missingVals;
+    public static int noOfTypes;
+
     public static int maxNumber, coefficient, constant, prePressedCount, stageNum;
     public static float cycleInterval;
     public static float cycleLeniency;

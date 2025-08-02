@@ -11,8 +11,8 @@ public class LoToolMinigame : MonoBehaviour
 {
     [Header("Minigame Managers")]
 
-    [SerializeField]
-    private PatternGameManager patternGameManager;
+    //[SerializeField]
+    //private PatternGameManager patternGameManager;
 
     [SerializeField]
     private HitCountManager hitCountManager;
@@ -20,8 +20,8 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private ToolTilingManager toolTilingManager;
 
-    [SerializeField]
-    private DifficultyManager toolDifficulty;
+    //[SerializeField]
+    //private DifficultyManager toolDifficulty;
 
     [Header("Tool Objects")]
 
@@ -101,8 +101,10 @@ public class LoToolMinigame : MonoBehaviour
 
         GameObject originalGap = FindFirstObjectByType<GapHolder>().gameObject;
 
-        int difference = patternGameManager.ReturnDifference();
-        patternLength = toolDifficulty.GetLengthOfPattern();
+        int difference = StaticData.sequenceDiff;
+        //int difference = patternGameManager.ReturnDifference();
+        patternLength = StaticData.patternLength;
+        //patternLength = toolDifficulty.GetLengthOfPattern();
         fastenerObj = new GameObject[patternLength];
         fastenerValues = new int[patternLength];
         originalHitValues = new int[patternLength];
@@ -113,19 +115,34 @@ public class LoToolMinigame : MonoBehaviour
         originalGaps = new int[patternLength - 1];
         gapHolder = new GameObject[patternLength - 1];
 
-        generatedList = patternGameManager.ReturnPatternArray(patternLength);
+        generatedList = StaticData.toolPattern;
+        //generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
-        Debug.Log(toolDifficulty.GetDifficulty());
+        if (StaticData.diffInt == 0)
+        {
+            Debug.Log("easy");
+        }
+        else if (StaticData.diffInt == 1)
+        {
+            Debug.Log("medium");
+        }
+        else if (StaticData.diffInt == 2)
+        {
+            Debug.Log("hard");
+        }
+
 
         //Checks for minigame's difficulty
-        switch (toolDifficulty.GetDifficulty())
+        switch (StaticData.diffInt)
         {
-            case "easy":
-                slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
+            case 0:
+                slotToFix = StaticData.incorrectVals;
+                //slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
                 isFix = true;
-                Debug.Log("Fixing in " + toolDifficulty.GetDifficulty());
+                Debug.Log("Fixing in easy!");
+                //Debug.Log("Fixing in " + toolDifficulty.GetDifficulty());
                 break;
-            case "medium":
+            case 1:
                 //Randomize between missing and incorrect value where:
                 //  0 = incorrect value
                 //  1 = missing value
@@ -134,21 +151,24 @@ public class LoToolMinigame : MonoBehaviour
                 if (medValue <= 5)
                 {
                     slotToFill = 0;
-                    slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
-                    isFix= true;
+                    slotToFix = StaticData.incorrectVals;
+                    //slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
+                    isFix = true;
                     Debug.Log("Method to follow: fix");
                 }
                 else
                 {
                     slotToFix = 0;
-                    slotToFill = toolDifficulty.GetNumberOfMissingVal();
+                    slotToFill = StaticData.missingVals;
+                    //slotToFill = toolDifficulty.GetNumberOfMissingVal();
                     isFix = false;
                     Debug.Log("Method to follow: fill");
                 }
                 break;
-            case "hard":
+            case 2:
                 slotToFix = 0;
-                slotToFill = toolDifficulty.GetNumberOfMissingVal();
+                slotToFill = StaticData.missingVals;
+                //slotToFill = toolDifficulty.GetNumberOfMissingVal();
                 isFix = false;
                 Debug.Log("Filling");
                 break;
@@ -187,7 +207,8 @@ public class LoToolMinigame : MonoBehaviour
                 }
                 break;
             case false: 
-                if(toolDifficulty.GetDifficulty() == "hard")
+                //if(toolDifficulty.GetDifficulty() == "hard")
+                if(StaticData.diffInt == 2)
                 {
                     for (int i = 0; i < patternLength - slotToFill; i++)
                     {
