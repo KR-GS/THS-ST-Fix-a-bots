@@ -156,11 +156,28 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 StaticData.diffInt = 2; // Hard
             }
 
-            if (isPatternStarted == false)
+        }
+    }
+
+    public void HandleSceneInitialization()
+    {
+        if (SceneManager.GetActiveScene().name == "LO_WS2D")
+        {
+            Debug.Log("Post-load Init: IsPatternStarted value is..." + isPatternStarted);
+
+            if (!isPatternStarted)
             {
                 GenerateAndStorePattern();
                 isPatternStarted = true;
+                StaticData.isPatternStarted = true;
+
+                DataPersistenceManager.Instance.SaveGame();
+
+                Debug.Log("Pattern generated and flag set to true.");
             }
+
+            Debug.Log($"Correct pattern: {string.Join(", ", StaticData.toolPattern ?? new List<int>())}");
+            Debug.Log($"Incorrect pattern: {string.Join(", ", StaticData.incorrectToolPattern ?? new List<int>())}");
         }
     }
     public enum DifficultyLevel
@@ -183,8 +200,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         this.level = data.level;
         this.money = data.money;
         this.isPatternStarted = data.isPatternStarted;
+        
 
         StaticData.dayNo = this.level;
+        StaticData.isPatternStarted = this.isPatternStarted;
 
         if (dayNumber != null)
         {
@@ -197,6 +216,32 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         Debug.Log("Level: " + level);
         Debug.Log("Money: " + money);
+
+        StaticData.patternLength = data.patternLength;
+        if (data.correctPattern != null)
+        {
+            currentPattern = new List<int>(data.correctPattern);
+            StaticData.toolPattern = new List<int>(data.correctPattern);
+        }
+        if (data.incorrectPattern != null)
+        {
+            StaticData.incorrectToolPattern = new List<int>(data.incorrectPattern);
+        }
+        if (data.incorrectIndices != null)
+        {
+            StaticData.incorrectIndices = new List<int>(data.incorrectIndices);
+        }
+        if (data.incorrectValues != null)
+        {
+            StaticData.incorrectValues = new List<int>(data.incorrectValues);
+        }
+        if (data.selectedFastenerIndex.HasValue)
+        {
+            StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
+        }
+        
+
+        HandleSceneInitialization();
     }
 
     public void SaveData(ref GameData data)
@@ -204,6 +249,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.level = this.level;
         data.money = this.money;
         data.isPatternStarted = this.isPatternStarted;
+        data.correctPattern = new List<int>(currentPattern); // Store the current pattern
+        data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
+        data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
+        data.incorrectValues = new List<int>(StaticData.incorrectValues); // Store incorrect values
+        data.selectedFastenerIndex = StaticData.selectedFastenerIndex;
+        data.patternLength = StaticData.patternLength;
     }
 
     public void UpdateMoneyText()
@@ -349,6 +400,52 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         Debug.Log("Pattern generated on game start: " + string.Join(", ", currentPattern));
         StaticData.toolPattern = currentPattern; // Store in StaticData for tool pattern
+
+        if (StaticData.incorrectIndices != null && StaticData.incorrectIndices.Count > 0 &&
+        StaticData.incorrectValues != null && StaticData.incorrectValues.Count == StaticData.incorrectIndices.Count)
+        {
+            // Already generated; use stored values
+            List<int> loadedPattern = new List<int>(currentPattern);
+            for (int i = 0; i < StaticData.incorrectIndices.Count; i++)
+            {
+                int idx = StaticData.incorrectIndices[i];
+                loadedPattern[idx] = StaticData.incorrectValues[i];
+            }
+            StaticData.incorrectToolPattern = loadedPattern;
+            Debug.Log("Loaded incorrect pattern from StaticData: " + string.Join(", ", loadedPattern));
+        }
+        else
+        {
+            // First time: generate incorrect pattern
+            List<int> incorrectPattern = new List<int>(currentPattern);
+            StaticData.incorrectIndices = new List<int>();
+            StaticData.incorrectValues = new List<int>();
+
+            HashSet<int> changedIndices = new HashSet<int>();
+            while (changedIndices.Count < incorrectVals)
+            {
+                int randIndex = Random.Range(0, incorrectPattern.Count);
+                if (!changedIndices.Contains(randIndex))
+                {
+                    int original = incorrectPattern[randIndex];
+                    int newVal;
+                    do
+                    {
+                        newVal = original + Random.Range(-3, 4);
+                    } while (newVal == original || newVal < 0);
+
+                    incorrectPattern[randIndex] = newVal;
+                    changedIndices.Add(randIndex);
+
+                    // Store incorrect index and value
+                    StaticData.incorrectIndices.Add(randIndex);
+                    StaticData.incorrectValues.Add(newVal);
+                }
+            }
+
+            StaticData.incorrectToolPattern = incorrectPattern;
+            Debug.Log("Incorrect pattern saved: " + string.Join(", ", incorrectPattern));
+        }
     }
 
     public void StartNewLevel()

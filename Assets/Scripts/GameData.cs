@@ -35,7 +35,19 @@ public class GameData
 
     public List<Order> pendingOrdersList;
 
+    public List<int> correctPattern;
+
+    public List<int> incorrectPattern;
+
+    public List<int> incorrectIndices;
+
+    public List<int> incorrectValues;
+
+    public int? selectedFastenerIndex;
+
     public int stageDone;
+
+    public int patternLength;
 
     public GameData()
     {
@@ -52,7 +64,13 @@ public class GameData
         this.stageDone = 0;
         this.stageTimes = new List<float>();
         this.isPatternStarted = false;
-    }
+        this.correctPattern = new List<int>();
+        this.incorrectPattern = new List<int>();
+        this.selectedFastenerIndex = -1;
+        this.incorrectIndices = new List<int>();
+        this.incorrectValues = new List<int>();
+        this.patternLength = 5;
+}
 
 
 }

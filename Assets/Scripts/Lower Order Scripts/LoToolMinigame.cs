@@ -111,8 +111,34 @@ public class LoToolMinigame : MonoBehaviour
         numberToDisplay = new int[patternLength];
         counterHolder = new GameObject[patternLength];
         fastenerCheckVal = new int[patternLength];
+
+        Debug.Log("patternLength: " + patternLength);
+        Debug.Log("numberToDisplay.Length: " + (numberToDisplay?.Length ?? -1));
+        Debug.Log("generatedList.Count: " + (generatedList?.Count ?? -1));
+
+        patternLength = numberToDisplay.Length; // Ensure consistency
         gapToDisplay = new int[patternLength - 1];
         originalGaps = new int[patternLength - 1];
+
+        /*
+        if (patternLength >= 2)
+        {
+            gapToDisplay = new int[patternLength - 1];
+            originalGaps = new int[patternLength - 1];
+
+            for (int i = 0; i < patternLength - 1; i++)
+            {
+                gapToDisplay[i] = numberToDisplay[i + 1] - numberToDisplay[i];
+                originalGaps[i] = generatedList[i + 1] - generatedList[i];
+            }
+        }
+        else
+        {
+            Debug.LogError("Pattern length too short to compute gaps.");
+            return; // exit Start() early to avoid other errors
+        }
+        */
+
         gapHolder = new GameObject[patternLength - 1];
 
         generatedList = StaticData.toolPattern;
@@ -190,20 +216,27 @@ public class LoToolMinigame : MonoBehaviour
                 difference = numberToDisplay[1] - numberToDisplay[0];
                 Debug.Log("Diff val: " + difference);
 
-                tempArr = new int[slotToFix];
-
-                for (int i = 0; i < slotToFix; i++)
+                if (StaticData.incorrectIndices.Count == 0)
                 {
-                    randomValue = Random.Range(0, patternLength);
-
-                    while (tempArr.Contains(randomValue))
+                    HashSet<int> usedIndices = new HashSet<int>();
+                    while (StaticData.incorrectIndices.Count < slotToFix)
                     {
-                        randomValue = Random.Range(0, patternLength);
+                        int randIndex = Random.Range(0, patternLength);
+                        if (!usedIndices.Contains(randIndex))
+                        {
+                            usedIndices.Add(randIndex);
+                            StaticData.incorrectIndices.Add(randIndex);
+                            StaticData.incorrectValues.Add(generatedList[randIndex] - difference);
+                        }
                     }
+                }
 
-                    numberToDisplay[randomValue] = numberToDisplay[randomValue] - difference;
+                numberToDisplay = generatedList.ToArray();
 
-                    tempArr[i] = randomValue;
+                for (int i = 0; i < StaticData.incorrectIndices.Count; i++)
+                {
+                    int index = StaticData.incorrectIndices[i];
+                    numberToDisplay[index] = StaticData.incorrectValues[i];
                 }
                 break;
             case false: 
@@ -256,6 +289,14 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         randFastenerVal = Random.Range(0, fastenerList.Length-1);
+        /*
+        if (!StaticData.selectedFastenerIndex.HasValue)
+        {
+            StaticData.selectedFastenerIndex = Random.Range(0, fastenerList.Length);
+
+        }*/
+
+        //randFastenerVal = StaticData.selectedFastenerIndex.Value;
         //randFastenerVal = 0;
 
         for (int i = 0; i < patternLength; i++)
@@ -267,6 +308,7 @@ public class LoToolMinigame : MonoBehaviour
             Debug.Log(i+ " value: " + numberToDisplay[i]);
             if (numberToDisplay[i] > 0)
             {
+                Debug.Log($"Index i = {i}, fastenerCheckVal[i] = {fastenerCheckVal[i]}, fastenerList.Length = {fastenerList.Length}");
                 hitCountManager.PresetCounter(numberToDisplay[i], fastenerObj[i], fastenerList[randFastenerVal].GetHitIcon());
             }
 

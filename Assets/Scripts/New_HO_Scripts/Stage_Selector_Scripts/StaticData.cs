@@ -15,11 +15,18 @@ public class StaticData
     public static bool isToolDone = false;
     public static bool isWireDone = false;
     public static bool isPaintDone = false;
+    public static int? selectedFastenerIndex = null;
+
+    public static bool isPatternStarted;
 
     public static int diffInt = 0; // 0 = easy, 1 = medium, 2 = hard
 
     public static List<int> toolPattern;
+    public static List<int> incorrectToolPattern;
     public static List<int> paintPattern;
+
+    public static List<int> incorrectIndices = new List<int>();
+    public static List<int> incorrectValues = new List<int>();
 
     public static int sequenceDiff;
     public static int patternLength;
