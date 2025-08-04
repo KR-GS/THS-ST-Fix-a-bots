@@ -218,6 +218,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         Debug.Log("Money: " + money);
 
         StaticData.patternLength = data.patternLength;
+        StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
         if (data.correctPattern != null)
         {
             currentPattern = new List<int>(data.correctPattern);
@@ -235,10 +236,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             StaticData.incorrectValues = new List<int>(data.incorrectValues);
         }
-        if (data.selectedFastenerIndex.HasValue)
-        {
-            StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
-        }
+        
         
 
         HandleSceneInitialization();
@@ -401,6 +399,30 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         Debug.Log("Pattern generated on game start: " + string.Join(", ", currentPattern));
         StaticData.toolPattern = currentPattern; // Store in StaticData for tool pattern
 
+        if (StaticData.incorrectIndices != null && StaticData.incorrectValues != null)
+        {
+            for (int i = 0; i < StaticData.incorrectValues.Count; i++)
+            {
+                int idx = StaticData.incorrectIndices[i];
+                if (idx >= currentPattern.Count) // Prevent out-of-range crash
+                {
+                    StaticData.incorrectIndices = null;
+                    StaticData.incorrectValues = null;
+                    break;
+                }
+
+                int original = currentPattern[idx];
+                int loaded = StaticData.incorrectValues[i];
+                if (loaded >= original)
+                {
+                    Debug.LogWarning("Old incorrect pattern is invalid — regenerating.");
+                    StaticData.incorrectIndices = null;
+                    StaticData.incorrectValues = null;
+                    break;
+                }
+            }
+        }
+
         if (StaticData.incorrectIndices != null && StaticData.incorrectIndices.Count > 0 &&
         StaticData.incorrectValues != null && StaticData.incorrectValues.Count == StaticData.incorrectIndices.Count)
         {
@@ -431,7 +453,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                     int newVal;
                     do
                     {
-                        newVal = original + Random.Range(-3, 4);
+                        newVal = original + Random.Range(-4, -1);
+                        //newVal = original + Random.Range(-3, 4); //values can either be up or down of the value
                     } while (newVal == original || newVal < 0);
 
                     incorrectPattern[randIndex] = newVal;
@@ -446,6 +469,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             StaticData.incorrectToolPattern = incorrectPattern;
             Debug.Log("Incorrect pattern saved: " + string.Join(", ", incorrectPattern));
         }
+
+        StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
     }
 
     public void StartNewLevel()

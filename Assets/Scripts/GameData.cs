@@ -43,7 +43,7 @@ public class GameData
 
     public List<int> incorrectValues;
 
-    public int? selectedFastenerIndex;
+    public int selectedFastenerIndex;
 
     public int stageDone;
 
@@ -66,7 +66,7 @@ public class GameData
         this.isPatternStarted = false;
         this.correctPattern = new List<int>();
         this.incorrectPattern = new List<int>();
-        this.selectedFastenerIndex = -1;
+        this.selectedFastenerIndex = 0;
         this.incorrectIndices = new List<int>();
         this.incorrectValues = new List<int>();
         this.patternLength = 5;

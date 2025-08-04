@@ -15,7 +15,7 @@ public class StaticData
     public static bool isToolDone = false;
     public static bool isWireDone = false;
     public static bool isPaintDone = false;
-    public static int? selectedFastenerIndex = null;
+    public static int selectedFastenerIndex;
 
     public static bool isPatternStarted;
 

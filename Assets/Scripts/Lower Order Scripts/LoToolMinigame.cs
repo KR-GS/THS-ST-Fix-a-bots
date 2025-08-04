@@ -120,24 +120,7 @@ public class LoToolMinigame : MonoBehaviour
         gapToDisplay = new int[patternLength - 1];
         originalGaps = new int[patternLength - 1];
 
-        /*
-        if (patternLength >= 2)
-        {
-            gapToDisplay = new int[patternLength - 1];
-            originalGaps = new int[patternLength - 1];
-
-            for (int i = 0; i < patternLength - 1; i++)
-            {
-                gapToDisplay[i] = numberToDisplay[i + 1] - numberToDisplay[i];
-                originalGaps[i] = generatedList[i + 1] - generatedList[i];
-            }
-        }
-        else
-        {
-            Debug.LogError("Pattern length too short to compute gaps.");
-            return; // exit Start() early to avoid other errors
-        }
-        */
+        
 
         gapHolder = new GameObject[patternLength - 1];
 
@@ -288,7 +271,8 @@ public class LoToolMinigame : MonoBehaviour
             originalGaps[i] = generatedList[i + 1] - generatedList[i];
         }
 
-        randFastenerVal = Random.Range(0, fastenerList.Length-1);
+        //randFastenerVal = Random.Range(0, fastenerList.Length-1);
+        randFastenerVal = StaticData.selectedFastenerIndex;
         /*
         if (!StaticData.selectedFastenerIndex.HasValue)
         {
