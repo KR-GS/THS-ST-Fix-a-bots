@@ -24,10 +24,12 @@ public class StaticData
     public static List<int> toolPattern;
     public static List<int> incorrectToolPattern;
     public static List<int> paintPattern;
-
+    public static List<int> incorrectPaintPattern;
+    public static int selectedStickerIndex;
     public static List<int> incorrectIndices = new List<int>();
     public static List<int> incorrectValues = new List<int>();
 
+    public static int paintDiff;
     public static int sequenceDiff;
     public static int patternLength;
     public static int incorrectVals;

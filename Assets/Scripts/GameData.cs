@@ -39,11 +39,17 @@ public class GameData
 
     public List<int> incorrectPattern;
 
+    public List<int> paintPattern;
+
+    public List<int> incorrectPaintPattern;
+
     public List<int> incorrectIndices;
 
     public List<int> incorrectValues;
 
     public int selectedFastenerIndex;
+
+    public int selectedStickerIndex;
 
     public int stageDone;
 
@@ -67,6 +73,7 @@ public class GameData
         this.correctPattern = new List<int>();
         this.incorrectPattern = new List<int>();
         this.selectedFastenerIndex = 0;
+        this.selectedStickerIndex = 0;
         this.incorrectIndices = new List<int>();
         this.incorrectValues = new List<int>();
         this.patternLength = 5;

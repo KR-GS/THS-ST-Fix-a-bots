@@ -25,7 +25,15 @@ public class StationExit : MonoBehaviour
                     }
                     break;
                 case StationType.Paint:
-                    currentOrder.paintDone = true;
+                    if (StaticData.isPaintDone)
+                    {
+                        currentOrder.paintDone = true;
+                        Debug.Log("Paint task completed, marking paintDone = true");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tool task not completed yet!");
+                    }
                     break;
                 case StationType.Wire:
                     currentOrder.wireDone = true;

@@ -74,10 +74,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         Order newOrder = new Order
         {
-            needsTool = Random.value > 0.99f
+            //needsTool = Random.value > 0.99f
 
-            //needsTool = Random.value > 0.5f,
-            //needsPaint = Random.value > 0.5f,
+            needsTool = Random.value > 0.75f,
+            needsPaint = Random.value > 0.5f,
             //needsWire = Random.value > 0.5f
         };
 

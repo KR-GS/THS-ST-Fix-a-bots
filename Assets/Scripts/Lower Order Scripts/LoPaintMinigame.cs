@@ -11,8 +11,10 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI stickerTextCounter;
 
+    
     [SerializeField]
     private PatternGameManager patternGameManager;
+    
 
     private bool dragging = false;
 
@@ -42,8 +44,10 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private Canvas notesUI;
 
+    /*
     [SerializeField]
     private DifficultyManager difficulty;
+    */
 
     private GameObject[] partSides;
 
@@ -70,13 +74,15 @@ public class LoPaintMinigame : MonoBehaviour
         List<int> packToUse = new List<int>();
         //Transform roboPart = FindFirstObjectByType<RobotPaintPart>().transform.parent;
 
-        if (difficulty.GetDifficulty() == "easy")
+        /*
+        if (StaticData.diffInt == 0 || StaticData.diffInt == 1)
         {
             numberPattern.Add(patternGameManager.ReturnPatternArray(numOfSides).ToArray());
+            Debug.Log("Number of sides: " + numOfSides);
             packToUse.Add(Random.Range(0, stickerPacks.Length));
             packUsed.Add(stickerPacks[packToUse[0]].GetStickerNum());
         }
-        else if(difficulty.GetDifficulty() == "hard")
+        else if(StaticData.diffInt == 2)
         {
             Debug.Log("Else If triggered");
             for(int i = 0; i<2; i++)
@@ -112,7 +118,61 @@ public class LoPaintMinigame : MonoBehaviour
 
             Debug.Log(packToUse.Count);
         }
-            
+        */
+        
+        if (StaticData.paintPattern != null && StaticData.paintPattern.Count > 0)
+        {
+            Debug.Log("Loading paint pattern from StaticData");
+
+            if (StaticData.diffInt == 0 || StaticData.diffInt == 1)
+            {
+                numberPattern.Add(StaticData.paintPattern.ToArray());
+
+                int randPack = StaticData.selectedStickerIndex;
+                //int randPack = Random.Range(0, stickerPacks.Length);
+                packToUse.Add(randPack);
+
+                if (randPack >= 0 && randPack < stickerPacks.Length)
+                {
+                    packUsed.Add(stickerPacks[randPack].GetStickerNum());
+                }
+                else
+                {
+                    Debug.LogError($"Invalid sticker pack index: {randPack}");
+                }
+            }
+            else if (StaticData.diffInt == 2)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    numberPattern.Add(StaticData.paintPattern.ToArray()); // reuse pattern twice
+                }
+
+                int j = 0;
+                while (j < 2)
+                {
+                    int rand = Random.Range(0, stickerPacks.Length);
+                    if (!packToUse.Contains(rand))
+                    {
+                        packToUse.Add(rand);
+                        if (rand >= 0 && rand < stickerPacks.Length)
+                        {
+                            packUsed.Add(stickerPacks[rand].GetStickerNum());
+                        }
+                        else
+                        {
+                            Debug.LogError($"Invalid sticker pack index: {rand}");
+                        }
+                        j++;
+                    }
+                }
+            }
+        }
+        
+        else
+        {
+            Debug.LogWarning("StaticData.paintPattern is empty. This shouldn't happen if GameLoopManager generated and stored it properly.");
+        }
 
         Debug.Log("Number of current sticker packs: " + stickerPacks.Length);
         Debug.Log("sticker pack name: " + stickerPacks[0].name);
@@ -140,9 +200,16 @@ public class LoPaintMinigame : MonoBehaviour
 
         for (int i = 0; i < numOfSides; i++)
         {
-            for (int j =0; j< numberPattern.Count; j++)
+            for (int j = 0; j < numberPattern.Count; j++)
             {
-                partSides[i].GetComponentInChildren<RobotPaintPart>().SetSideValue(numberPattern[j][i]);
+                if (i < numberPattern[j].Length)
+                {
+                    partSides[i].GetComponentInChildren<RobotPaintPart>().SetSideValue(numberPattern[j][i]);
+                }
+                else
+                {
+                    Debug.LogWarning($"Pattern index out of range: numberPattern[{j}].Length = {numberPattern[j].Length}, but i = {i}");
+                }
             }
 
             if (i < numOfSides - 1)
@@ -343,6 +410,13 @@ public class LoPaintMinigame : MonoBehaviour
             doneUI.enabled = true;
             overviewUI.enabled = false;
             notesUI.enabled = false;
+            StaticData.isPaintDone = true;
+
+            if (DataPersistenceManager.Instance != null)
+            {
+                DataPersistenceManager.Instance.SaveGame();
+                Debug.Log("Paint station completion saved to StaticData.");
+            }
         }
         else
         {

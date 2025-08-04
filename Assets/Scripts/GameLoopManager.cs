@@ -21,6 +21,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> currentPattern;
 
+    private List<int> currentPaintPattern;
+
     public static GameLoopManager Instance;
 
     public static DataPersistenceManager dpm;
@@ -140,22 +142,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 }
             }
 
-            if (level >= 1 && level < 5)
-            {
-                Debug.Log("Static Data for difficulty is easy!");
-                StaticData.diffInt = 0; // Easy
-            }
-            else if (level >= 5 && level < 10)
-            {
-                Debug.Log("Static Data for difficulty is medium!");
-                StaticData.diffInt = 1; // Medium
-            }
-            else if (level >= 10)
-            {
-                Debug.Log("Static Data for difficulty is hard!");
-                StaticData.diffInt = 2; // Hard
-            }
-
         }
     }
 
@@ -215,14 +201,37 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             moneyText.text = "Money: " + this.money;
         }
         Debug.Log("Level: " + level);
+
+        if (level >= 1 && level < 5)
+        {
+            Debug.Log("Static Data for difficulty is easy!");
+            StaticData.diffInt = 0; // Easy
+        }
+        else if (level >= 5 && level < 10)
+        {
+            Debug.Log("Static Data for difficulty is medium!");
+            StaticData.diffInt = 1; // Medium
+        }
+        else if (level >= 10)
+        {
+            Debug.Log("Static Data for difficulty is hard!");
+            StaticData.diffInt = 2; // Hard
+        }
+
         Debug.Log("Money: " + money);
 
         StaticData.patternLength = data.patternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
+        StaticData.selectedStickerIndex = data.selectedStickerIndex;
         if (data.correctPattern != null)
         {
             currentPattern = new List<int>(data.correctPattern);
             StaticData.toolPattern = new List<int>(data.correctPattern);
+        }
+        if(data.paintPattern != null)
+        {
+            currentPaintPattern = new List<int>(data.paintPattern);
+            StaticData.paintPattern = new List<int>(data.paintPattern);
         }
         if (data.incorrectPattern != null)
         {
@@ -250,8 +259,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.correctPattern = new List<int>(currentPattern); // Store the current pattern
         data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
         data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
+        data.paintPattern = new List<int>(currentPaintPattern); // Store the current paint pattern
+
         data.incorrectValues = new List<int>(StaticData.incorrectValues); // Store incorrect values
         data.selectedFastenerIndex = StaticData.selectedFastenerIndex;
+        data.selectedStickerIndex = StaticData.selectedStickerIndex;
         data.patternLength = StaticData.patternLength;
     }
 
@@ -309,9 +321,31 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         return numberPatternList;
     }
 
+    private List<int> GeneratePaintPatternArray(int patternLen)
+    {
+        generatedDifference = Random.Range(diff_Lowest, diff_Highest);
+        StaticData.sequenceDiff = generatedDifference; // Store in StaticData for sequence difference
+        int baseHolder = Random.Range(base_Lowest, base_Highest);
+
+        List<int> numberPaintPatternList = new List<int>();
+        
+        for (int i = 1; i <= patternLen; i++)
+        {
+            numberPaintPatternList.Add(baseHolder + (generatedDifference * i));
+        }
+        
+
+        return numberPaintPatternList;
+    }
+
     public List<int> GetPattern(int length)
     {
         return GeneratePatternArray(length);
+    }
+
+    public List<int> GetPaintPattern(int length)
+    {
+        return GeneratePaintPatternArray(length);
     }
 
     private void ConfigureDifficulty(out int patternLength, out int incorrectVals, out int missingVals, out int noOfTypes, Minigame gameType)
@@ -325,6 +359,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             case 2: level = DifficultyLevel.hard; break;
         }
 
+        
         patternLength = 5;
         incorrectVals = 1;
         missingVals = 0;
@@ -378,11 +413,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
         }
 
-        if (gameType != Minigame.tool)
-        {
-            patternLength = 4;
-        }
-
+        
         StaticData.patternLength = patternLength;
         StaticData.incorrectVals = incorrectVals;
         StaticData.missingVals = missingVals;
@@ -393,11 +424,16 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
 
         ConfigureDifficulty(out int patternLength, out int incorrectVals, out int missingVals, out int noOfTypes, Minigame.tool);
-
         currentPattern = GeneratePatternArray(patternLength);
+        StaticData.toolPattern = currentPattern;
+
+        // Paint generation
+        currentPaintPattern = GeneratePaintPatternArray(6);
+        StaticData.paintPattern = currentPaintPattern;
 
         Debug.Log("Pattern generated on game start: " + string.Join(", ", currentPattern));
         StaticData.toolPattern = currentPattern; // Store in StaticData for tool pattern
+        StaticData.paintPattern = currentPaintPattern;
 
         if (StaticData.incorrectIndices != null && StaticData.incorrectValues != null)
         {
@@ -471,6 +507,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
 
         StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
+        StaticData.selectedStickerIndex = Random.Range(0, 3);
     }
 
     public void StartNewLevel()
