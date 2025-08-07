@@ -25,7 +25,7 @@ public class StaticData
     public static List<int> incorrectToolPattern;
     public static List<int> paintPattern;
     public static List<int> incorrectPaintPattern;
-    public static int selectedStickerIndex;
+    public static int selectedStickerIndex, selectedStickerIndexTwo;
     public static List<int> incorrectIndices = new List<int>();
     public static List<int> incorrectValues = new List<int>();
 

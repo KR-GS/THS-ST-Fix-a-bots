@@ -51,6 +51,8 @@ public class GameData
 
     public int selectedStickerIndex;
 
+    public int selectedStickerIndexTwo;
+
     public int stageDone;
 
     public int patternLength;
@@ -74,6 +76,7 @@ public class GameData
         this.incorrectPattern = new List<int>();
         this.selectedFastenerIndex = 0;
         this.selectedStickerIndex = 0;
+        this.selectedStickerIndexTwo = 0;
         this.incorrectIndices = new List<int>();
         this.incorrectValues = new List<int>();
         this.patternLength = 5;

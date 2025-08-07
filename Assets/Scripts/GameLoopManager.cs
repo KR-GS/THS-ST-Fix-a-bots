@@ -41,6 +41,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public TextMeshPro remainingOrders;
 
+    public TextMeshPro ordersOnboard;
+
     private TimerScript timer;
 
     private void Awake()
@@ -123,6 +125,25 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 else
                 {
                     Debug.LogWarning("TextMeshPro component not found on RemainingOrders object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
+            }
+
+            GameObject ordersOnboardObj = GameObject.Find("OrdersOnboard");
+            if (ordersOnboardObj != null)
+            {
+                ordersOnboard = ordersOnboardObj.GetComponent<TextMeshPro>();
+                if (ordersOnboard != null)
+                {
+                    UpdateOrdersOnboard();
+                    StartCoroutine(UpdateOrdersOnboardPeriodically());
+                }
+                else
+                {
+                    Debug.LogWarning("TextMeshPro component not found on OrdersOnboard object.");
                 }
             }
             else
@@ -223,6 +244,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.patternLength = data.patternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
         StaticData.selectedStickerIndex = data.selectedStickerIndex;
+        StaticData.selectedStickerIndexTwo = data.selectedStickerIndexTwo;
         if (data.correctPattern != null)
         {
             currentPattern = new List<int>(data.correctPattern);
@@ -264,6 +286,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.incorrectValues = new List<int>(StaticData.incorrectValues); // Store incorrect values
         data.selectedFastenerIndex = StaticData.selectedFastenerIndex;
         data.selectedStickerIndex = StaticData.selectedStickerIndex;
+        data.selectedStickerIndexTwo = StaticData.selectedStickerIndexTwo;
         data.patternLength = StaticData.patternLength;
     }
 
@@ -283,6 +306,22 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    private IEnumerator UpdateOrdersOnboardPeriodically()
+    {
+        while (true)
+        {
+            UpdateOrdersOnboard();
+            yield return new WaitForSeconds(1f); // update every 1 second
+        }
+    }
+
+    public void UpdateOrdersOnboard()
+    {
+        if (ordersOnboard != null && OrderManager.Instance != null)
+        {
+            ordersOnboard.text = "Pending Orders: " + OrderManager.Instance.activeOrders.Count;
+        }
+    }
     private List<int> GeneratePatternArray(int patternLen)
     {
         generatedDifference = Random.Range(diff_Lowest, diff_Highest);
@@ -508,6 +547,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
         StaticData.selectedStickerIndex = Random.Range(0, 3);
+        StaticData.selectedStickerIndex = Random.Range(0, 3);
+        if (StaticData.selectedStickerIndex == StaticData.selectedFastenerIndex) // Ensure different indices
+        {
+            StaticData.selectedStickerIndex = (StaticData.selectedStickerIndex + 1) % 3; // Wrap around if same index
+        }
     }
 
     public void StartNewLevel()

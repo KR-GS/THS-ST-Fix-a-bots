@@ -151,7 +151,16 @@ public class LoPaintMinigame : MonoBehaviour
                 int j = 0;
                 while (j < 2)
                 {
-                    int rand = Random.Range(0, stickerPacks.Length);
+                    int rand = 0;
+
+                    if (j == 0)
+                    {
+                        rand = StaticData.selectedStickerIndex;
+                    }
+                    else if (j == 1)
+                    {
+                        rand = StaticData.selectedStickerIndexTwo;
+                    }
                     if (!packToUse.Contains(rand))
                     {
                         packToUse.Add(rand);
