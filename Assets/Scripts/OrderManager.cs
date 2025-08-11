@@ -21,6 +21,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     private Coroutine deliveryRoutine;
     public Order currentOrder;
     public bool orderReceived;
+    public SpriteRenderer TVSprite;
+    public Sprite TVSpriteIP;
+    public Sprite TVSpriteNO;
 
 
     public int currentOrderIndex = -1;
@@ -127,6 +130,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             var nextOrder = pendingOrders.Dequeue();
             AddToActiveOrders(nextOrder); // Your existing method
             Debug.Log("Delivered order!");
+            TVSprite.sprite = TVSpriteNO;
         }
     }
     public void TryCompleteOrder()

@@ -35,13 +35,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public bool isPatternStarted;
 
-    public TextMeshPro dayNumber;
+    public TextMeshProUGUI dayNumber;
 
-    public TextMeshPro moneyText;
+    public TextMeshProUGUI moneyText;
 
-    public TextMeshPro remainingOrders;
+    public TextMeshProUGUI remainingOrders;
 
-    public TextMeshPro ordersOnboard;
+    public TextMeshProUGUI ordersOnboard;
 
     private TimerScript timer;
 
@@ -78,17 +78,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (scene.name == "LO_WS2D")
         {
             // Re-find and assign the new instance of the text
-            GameObject dayTextObject = GameObject.Find("Day_Number");
+            GameObject dayTextObject = GameObject.Find("DayNumber");
             if (dayTextObject != null)
             {
-                dayNumber = dayTextObject.GetComponent<TextMeshPro>();
+                dayNumber = dayTextObject.GetComponent<TextMeshProUGUI>();
                 if (dayNumber != null)
                 {
                     dayNumber.text = "Day: " + level;
                 }
                 else
                 {
-                    Debug.LogWarning("TextMeshPro component not found on DayText object.");
+                    Debug.LogWarning("TextMeshProUGUI component not found on DayText object.");
                 }
             }
             else
@@ -96,10 +96,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 Debug.LogWarning("DayText object not found in LO_Workshop.");
             }
 
-            GameObject moneyTextObject = GameObject.Find("MoneyText");
+            GameObject moneyTextObject = GameObject.Find("Money_Text");
             if (moneyTextObject != null)
             {
-                moneyText = moneyTextObject.GetComponent<TextMeshPro>();
+                moneyText = moneyTextObject.GetComponent<TextMeshProUGUI>();
                 if (moneyText != null)
                 {
                     moneyText.text = "Money: " + money;
@@ -117,7 +117,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             GameObject remainingOrderObj = GameObject.Find("RemainingOrders");
             if (remainingOrderObj != null)
             {
-                remainingOrders = remainingOrderObj.GetComponent<TextMeshPro>();
+                remainingOrders = remainingOrderObj.GetComponent<TextMeshProUGUI>();
                 if (remainingOrders != null)
                 {
                     UpdateRemainingOrders(); 
@@ -135,7 +135,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             GameObject ordersOnboardObj = GameObject.Find("OrdersOnboard");
             if (ordersOnboardObj != null)
             {
-                ordersOnboard = ordersOnboardObj.GetComponent<TextMeshPro>();
+                ordersOnboard = ordersOnboardObj.GetComponent<TextMeshProUGUI>();
                 if (ordersOnboard != null)
                 {
                     UpdateOrdersOnboard();

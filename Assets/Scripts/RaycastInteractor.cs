@@ -22,6 +22,9 @@ public class RaycastInteractor : MonoBehaviour
     public Button okButton;
     public Order currentOrder;
     private Queue<Order> pendingOrders = new Queue<Order>();
+    public SpriteRenderer TVSprite;
+    public Sprite TVSpriteIP;
+    public Sprite TVSpriteNO;
 
     private void Awake()
     {
@@ -63,6 +66,11 @@ public class RaycastInteractor : MonoBehaviour
         {
             Debug.Log("Hiding order sheet panel.");
             orderSheetPanel.SetActive(false);
+            if(TVSprite.sprite == TVSpriteNO)
+            {
+                TVSprite.sprite = TVSpriteIP;
+            }
+            
         }
         else
         {

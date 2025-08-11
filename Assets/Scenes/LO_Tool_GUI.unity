@@ -3137,55 +3137,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823367650}
   m_CullTransparentMesh: 1
---- !u!1 &880415423
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 880415425}
-  - component: {fileID: 880415424}
-  m_Layer: 0
-  m_Name: Pattern Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &880415424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880415423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0ac233f3207d5d47a13af486875afc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  base_Lowest: 1
-  base_Highest: 5
-  diff_Lowest: 1
-  diff_Highest: 3
-  difficulty: {fileID: 207959253}
---- !u!4 &880415425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880415423}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 901.87854, y: 607.7861, z: -6.3734856}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &935172298
 GameObject:
   m_ObjectHideFlags: 0
@@ -4753,10 +4704,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51aa8a89d5fbed448da1a1ab916512f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patternGameManager: {fileID: 880415424}
   hitCountManager: {fileID: 442830206}
   toolTilingManager: {fileID: 410368349}
-  toolDifficulty: {fileID: 207959253}
   textCounter: {fileID: 2106628651}
   fastenerObj: []
   toolHolder: {fileID: 743482644}
@@ -6923,7 +6872,6 @@ SceneRoots:
   - {fileID: 1742507108}
   - {fileID: 1450728183}
   - {fileID: 442830207}
-  - {fileID: 880415425}
   - {fileID: 410368350}
   - {fileID: 207959252}
   - {fileID: 965964301}
