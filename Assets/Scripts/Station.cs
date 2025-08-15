@@ -9,6 +9,8 @@ public class Station : MonoBehaviour
     public void Interact()
     {
         Order currentOrder = OrderManager.Instance.GetCurrentOrder();
+        
+
         if (currentOrder == null)
         {
             Debug.LogWarning("No current order found.");
