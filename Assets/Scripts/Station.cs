@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,7 +6,43 @@ public class Station : MonoBehaviour
 {
     public enum StationType { Tool, Paint, Wire }
     public StationType type;
+    public static List<Station> AllStations = new List<Station>();
 
+    private void Awake()
+    {
+        if (!AllStations.Contains(this))
+            AllStations.Add(this);
+    }
+
+    private void OnDestroy()
+    {
+        AllStations.Remove(this);
+    }
+
+    private void Start()
+    {
+        SetStationVisibility();
+    }
+
+    public void SetStationVisibility()
+    {
+        int currentLevel = GameLoopManager.Instance.level;
+
+        switch (type)
+        {
+            case StationType.Tool:
+                gameObject.SetActive(true);
+                break;
+
+            case StationType.Paint:
+                gameObject.SetActive(currentLevel >= 6);
+                break;
+
+            case StationType.Wire:
+                gameObject.SetActive(currentLevel >= 11);
+                break;
+        }
+    }
     public void Interact()
     {
         Order currentOrder = OrderManager.Instance.GetCurrentOrder();

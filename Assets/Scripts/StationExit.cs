@@ -42,6 +42,11 @@ public class StationExit : MonoBehaviour
 
             Debug.Log($"Successfully returned from {type} station!");
             //OrderManager.Instance.TryCompleteOrder();
+            GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+            GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            GameLoopManager.Instance.ShowTV(true);
         }
 
         SceneManager.LoadScene("LO_WS2D");

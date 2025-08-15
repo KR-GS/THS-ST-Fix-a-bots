@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 //using System;
 using TMPro;
@@ -18,6 +19,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     [SerializeField] private int diff_Highest = 5;
 
     private int generatedDifference;
+
+    public GameObject TV;
 
     private List<int> currentPattern;
 
@@ -44,6 +47,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public TextMeshProUGUI ordersOnboard;
 
     private TimerScript timer;
+
+    public Button nextdayButton;
 
     private void Awake()
     {
@@ -163,7 +168,18 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 }
             }
 
+            StartCoroutine(UpdateStationsNextFrame());
+
         }
+        else
+        {
+            if (dayNumber != null) dayNumber.gameObject.SetActive(false);
+            if (moneyText != null) moneyText.gameObject.SetActive(false);
+            if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
+            if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
+            ShowTV(false);
+        }
+
     }
 
     public void HandleSceneInitialization()
@@ -185,6 +201,15 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             Debug.Log($"Correct pattern: {string.Join(", ", StaticData.toolPattern ?? new List<int>())}");
             Debug.Log($"Incorrect pattern: {string.Join(", ", StaticData.incorrectToolPattern ?? new List<int>())}");
+        }
+    }
+
+    private IEnumerator UpdateStationsNextFrame()
+    {
+        yield return null; // wait one frame
+        foreach (Station station in Station.AllStations)
+        {
+            station.SetStationVisibility();
         }
     }
     public enum DifficultyLevel
@@ -554,6 +579,24 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void ShowTV(bool response)
+    {
+        if (response == false)
+        {
+            if (TV != null)
+            {
+                TV.SetActive(false);
+            }
+        }
+        else if (response == true)
+        {
+            if (TV != null)
+            {
+                TV.SetActive(true);
+            }
+        }
+    }
+
     public void StartNewLevel()
     {
         OrderManager.Instance.SetStatus(false);
@@ -575,7 +618,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Static Data for difficulty is hard!");
             StaticData.diffInt = 2; // Hard
         }
-
+        foreach (Station station in Station.AllStations)
+        {
+            station.SetStationVisibility();
+        }
         GenerateAndStorePattern();
 
 

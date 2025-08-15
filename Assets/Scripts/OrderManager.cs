@@ -44,6 +44,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         }
 
         HideOrderCompletePanel();
+
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -64,7 +65,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             Debug.Log("isFinished was true. Showing complete panel...");
             ShowOrderCompletePanel();
-            raycastInteractor.enabled = false;
+            //raycastInteractor.enabled = false;
         }
         else
         {
@@ -79,8 +80,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             //needsTool = Random.value > 0.99f
 
-            needsTool = Random.value > 0.75f,
-            needsPaint = Random.value > 0.5f,
+            needsTool = Random.value > 0.0f,
+            needsPaint = Random.value > 1.0f,
             //needsWire = Random.value > 0.5f
         };
 
@@ -175,7 +176,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Debug.Log("All Orders Complete!");
             TimerScript.instance.StopTimer();
             ShowOrderCompletePanel();
-            raycastInteractor.enabled = false;
+            //raycastInteractor.enabled = false;
 
         }
 
@@ -231,7 +232,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     {
         HideOrderCompletePanel();
         GameLoopManager.Instance.CompleteLevel();
-        raycastInteractor.enabled = true;
+        //raycastInteractor.enabled = true;
     }
 
     public void LoadData(GameData data)

@@ -10,10 +10,12 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 
+
 public class RaycastInteractor : MonoBehaviour
 {
     public static RaycastInteractor Instance;
     public float rayLength = 10f;
+    public TextMeshProUGUI timeText;
     [SerializeField] private GameLoopManager gameLoopManager;
     public GameObject orderSheetPanel;
     public TextMeshProUGUI toolStatus;
@@ -22,13 +24,23 @@ public class RaycastInteractor : MonoBehaviour
     public Button okButton;
     public Order currentOrder;
     private Queue<Order> pendingOrders = new Queue<Order>();
-    public SpriteRenderer TVSprite;
-    public Sprite TVSpriteIP;
+    public SpriteRenderer TVSprite;       
+    public Sprite TVSpriteIP;             
     public Sprite TVSpriteNO;
+
+    
 
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         StartCoroutine(DelayedOrderUISetup());
     }
 
@@ -66,11 +78,20 @@ public class RaycastInteractor : MonoBehaviour
         {
             Debug.Log("Hiding order sheet panel.");
             orderSheetPanel.SetActive(false);
-            if(TVSprite.sprite == TVSpriteNO)
+
+            if (TVSprite != null && TVSprite.sprite == TVSpriteNO)
             {
                 TVSprite.sprite = TVSpriteIP;
             }
-            
+
+            GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+            GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            if (timeText != null)
+            {
+                timeText.gameObject.SetActive(true); // Hide the time text
+            }
         }
         else
         {
@@ -152,6 +173,7 @@ public class RaycastInteractor : MonoBehaviour
     void ShowOrderUI()
     {
         //Get all the data from StaticData
+        
 
         if (OrderManager.Instance.activeOrders.Count == 0)
         {
@@ -162,6 +184,15 @@ public class RaycastInteractor : MonoBehaviour
         Order order = OrderManager.Instance.activeOrders[0]; // Get the first active order
 
         orderSheetPanel.gameObject.SetActive(true);
+
+        GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
+        GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
+        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+        if(timeText != null)
+        {
+            timeText.gameObject.SetActive(false); // Hide the time text
+        }
 
         if (order.needsTool)
         {

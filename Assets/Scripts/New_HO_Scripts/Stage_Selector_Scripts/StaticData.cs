@@ -36,6 +36,8 @@ public class StaticData
     public static int missingVals;
     public static int noOfTypes;
 
+    public static Sprite lastTVSprite;
+
     public static int maxNumber, coefficient, constant, prePressedCount, stageNum;
     public static float cycleInterval;
     public static float cycleLeniency;
