@@ -57,6 +57,14 @@ public class GameData
 
     public int patternLength;
 
+    public bool isToolDone;
+
+    public bool isPaintDone;
+
+    public bool isWireDone;
+
+    public bool isOrderChecked;
+
     public GameData()
     {
         this.level = 1;
@@ -80,7 +88,11 @@ public class GameData
         this.incorrectIndices = new List<int>();
         this.incorrectValues = new List<int>();
         this.patternLength = 5;
-}
+        this.isPaintDone = false;
+        this.isWireDone = false;
+        this.isToolDone = false;
+        this.isOrderChecked = false;
+    }
 
 
 }

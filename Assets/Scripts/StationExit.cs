@@ -18,10 +18,12 @@ public class StationExit : MonoBehaviour
                     {
                         currentOrder.toolDone = true;
                         Debug.Log("Tool task completed, marking toolDone = true");
+                        RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
                     }
                     else
                     {
                         Debug.LogWarning("Tool task not completed yet!");
+                        
                     }
                     break;
                 case StationType.Paint:
@@ -29,10 +31,13 @@ public class StationExit : MonoBehaviour
                     {
                         currentOrder.paintDone = true;
                         Debug.Log("Paint task completed, marking paintDone = true");
+                        
+
                     }
                     else
                     {
-                        Debug.LogWarning("Tool task not completed yet!");
+                        Debug.LogWarning("Paint task not completed yet!");
+                       
                     }
                     break;
                 case StationType.Wire:
@@ -47,6 +52,22 @@ public class StationExit : MonoBehaviour
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
             GameLoopManager.Instance.ShowTV(true);
+
+            
+            if(currentOrder.needsTool && !StaticData.isToolDone)
+            {
+                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsPaint && !StaticData.isPaintDone)
+            {
+                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsWire && !StaticData.isWireDone)
+            {
+                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+            }
+            
+
         }
 
         SceneManager.LoadScene("LO_WS2D");

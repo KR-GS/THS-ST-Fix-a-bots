@@ -178,6 +178,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
             ShowTV(false);
+            if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
+            if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
+            if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);
         }
 
     }
@@ -248,17 +251,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         Debug.Log("Level: " + level);
 
-        if (level >= 1 && level < 5)
+        if (level >= 1 && level < 6)
         {
             Debug.Log("Static Data for difficulty is easy!");
             StaticData.diffInt = 0; // Easy
         }
-        else if (level >= 5 && level < 10)
+        else if (level >= 6 && level < 11)
         {
             Debug.Log("Static Data for difficulty is medium!");
             StaticData.diffInt = 1; // Medium
         }
-        else if (level >= 10)
+        else if (level >= 11)
         {
             Debug.Log("Static Data for difficulty is hard!");
             StaticData.diffInt = 2; // Hard

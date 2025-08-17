@@ -17,6 +17,8 @@ public class StaticData
     public static bool isPaintDone = false;
     public static int selectedFastenerIndex;
 
+    public static bool isOrderChecked = false;
+
     public static bool isPatternStarted;
 
     public static int diffInt = 0; // 0 = easy, 1 = medium, 2 = hard

@@ -18,9 +18,12 @@ public class RaycastInteractor : MonoBehaviour
     public TextMeshProUGUI timeText;
     [SerializeField] private GameLoopManager gameLoopManager;
     public GameObject orderSheetPanel;
-    public TextMeshProUGUI toolStatus;
-    public TextMeshProUGUI wireStatus;
-    public TextMeshProUGUI paintStatus;
+    public bool isOrderChecked = false;
+
+    //public TextMeshProUGUI toolStatus;
+    //public TextMeshProUGUI wireStatus;
+    //public TextMeshProUGUI paintStatus;
+
     public Button okButton;
     public Order currentOrder;
     private Queue<Order> pendingOrders = new Queue<Order>();
@@ -28,7 +31,30 @@ public class RaycastInteractor : MonoBehaviour
     public Sprite TVSpriteIP;             
     public Sprite TVSpriteNO;
 
-    
+    public Image ToolIndicator;
+    public Image WireIndicator;
+    public Image PaintIndicator;
+
+    [Header("Station Statuses")]
+    public UIStationStatus toolStatus;
+    public UIStationStatus wireStatus;
+    public UIStationStatus paintStatus;
+
+    [Header("Status Sprites")]
+    public Sprite completeSprite;
+    public Sprite notDoneSprite;
+
+    [System.Serializable]
+    public class UIStationStatus
+    {
+        public GameObject root;         
+        public Image iconImage;         
+        public TextMeshProUGUI dash;    
+        public Image statusImage;       
+        public Sprite stationSprite;    
+    }
+
+
 
     private void Awake()
     {
@@ -41,7 +67,25 @@ public class RaycastInteractor : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
+        if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
+        if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
+
         StartCoroutine(DelayedOrderUISetup());
+    }
+
+    private void UpdateUIStation(UIStationStatus status, bool needed, bool isDone)
+    {
+        if (status.root == null) return;
+
+        status.root.SetActive(needed);
+
+        if (needed)
+        {
+            status.iconImage.sprite = status.stationSprite;
+            status.dash.text = "-";
+            status.statusImage.sprite = isDone ? completeSprite : notDoneSprite;
+        }
     }
 
     private IEnumerator DelayedOrderUISetup()
@@ -79,10 +123,13 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("Hiding order sheet panel.");
             orderSheetPanel.SetActive(false);
 
+            Order savedOrder = OrderManager.Instance.GetCurrentOrder();
+
             if (TVSprite != null && TVSprite.sprite == TVSpriteNO)
             {
                 TVSprite.sprite = TVSpriteIP;
             }
+
 
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
@@ -92,6 +139,57 @@ public class RaycastInteractor : MonoBehaviour
             {
                 timeText.gameObject.SetActive(true); // Hide the time text
             }
+
+            isOrderChecked = StaticData.isOrderChecked;
+            Debug.Log("isOrderChecked status: " + isOrderChecked);
+
+            if (!isOrderChecked && savedOrder != null)
+            {
+
+                Debug.Log("Setting indicators active...");
+
+                if (savedOrder.needsTool)
+                {
+                    ToolIndicator.gameObject.SetActive(true);
+                    Debug.Log("ToolIndicator enabled");
+                }
+                if (savedOrder.needsWire)
+                {
+                    WireIndicator.gameObject.SetActive(true);
+                    Debug.Log("WireIndicator enabled");
+                }
+                if (savedOrder.needsPaint)
+                {
+                    PaintIndicator.gameObject.SetActive(true);
+                    Debug.Log("PaintIndicator enabled");
+                }
+
+                isOrderChecked = true;
+                StaticData.isOrderChecked = true; 
+            }
+            else if (isOrderChecked && savedOrder != null)
+            {
+                Debug.Log("Order is checked, returning old indicators...");
+
+                if (currentOrder.needsTool && !StaticData.isToolDone)
+                {
+                    ToolIndicator.gameObject.SetActive(true);
+                }
+                if (currentOrder.needsPaint && !StaticData.isPaintDone)
+                {
+                    PaintIndicator.gameObject.SetActive(true);
+                }
+                if (currentOrder.needsWire && !StaticData.isWireDone)
+                {
+                    WireIndicator.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                Debug.Log($"Indicators not set. isOrderChecked={isOrderChecked}, currentOrder={savedOrder}");
+            }
+
+
         }
         else
         {
@@ -189,11 +287,23 @@ public class RaycastInteractor : MonoBehaviour
         GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
-        if(timeText != null)
+
+        if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
+        if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
+        if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
+
+        if (timeText != null)
         {
             timeText.gameObject.SetActive(false); // Hide the time text
         }
 
+        UpdateUIStation(toolStatus, order.needsTool, StaticData.isToolDone);
+        UpdateUIStation(wireStatus, order.needsWire, StaticData.isWireDone);
+        UpdateUIStation(paintStatus, order.needsPaint, StaticData.isPaintDone);
+
+
+
+        /*
         if (order.needsTool)
         {
             toolStatus.gameObject.SetActive(true);
@@ -223,6 +333,7 @@ public class RaycastInteractor : MonoBehaviour
         {
             paintStatus.gameObject.SetActive(false);
         }
+        */
 
         okButton.gameObject.SetActive(true);
         okButton.onClick.RemoveAllListeners();

@@ -75,7 +75,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     public Order CreateNewOrder()
     {
-
+        /*
         Order newOrder = new Order
         {
             //needsTool = Random.value > 0.99f
@@ -84,7 +84,35 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             needsPaint = Random.value > 1.0f,
             //needsWire = Random.value > 0.5f
         };
+        */
 
+        int level = GameLoopManager.Instance.level; // adjust if you track level differently
+        Order newOrder = new Order();
+
+      
+        if (level >= 1 && level < 6)
+        {
+            newOrder.needsTool = true;
+            newOrder.needsPaint = false;
+            newOrder.needsWire = false;
+        }
+
+        else if (level >= 6 && level < 11)
+        {
+            float rand = Random.value;
+            newOrder.needsTool = Random.value < 0.5f;
+            newOrder.needsPaint = Random.value < 0.5f;
+            newOrder.needsWire = false;
+        }
+ 
+        else if (level >= 11)
+        {
+            float rand = Random.value;
+            newOrder.needsTool = Random.value < 0.5f;
+            newOrder.needsPaint = Random.value < 0.5f;
+            newOrder.needsWire = false;
+        }
+        
         // Ensure at least one requirement
         if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)
             newOrder.needsTool = true;
@@ -129,7 +157,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             yield return new WaitForSeconds(5f);
             var nextOrder = pendingOrders.Dequeue();
-            AddToActiveOrders(nextOrder); // Your existing method
+            AddToActiveOrders(nextOrder); 
             Debug.Log("Delivered order!");
             TVSprite.sprite = TVSpriteNO;
         }
@@ -149,6 +177,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             StaticData.isToolDone = false;
             StaticData.isPaintDone = false;
             StaticData.isWireDone = false;
+            StaticData.isOrderChecked = false;
             GameLoopManager.Instance.GenerateAndStorePattern();
 
             if (TimerScript.instance != null)
@@ -243,6 +272,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         this.currentOrderIndex = data.currentOrderIndex;
         this.isFinished = data.finished;
         this.prize = data.prize;
+        StaticData.isPaintDone = data.isPaintDone;
+        StaticData.isToolDone = data.isToolDone;
+        StaticData.isWireDone = data.isWireDone;
+        StaticData.isOrderChecked = data.isOrderChecked;
 
         if (TimerScript.instance != null && GetCurrentOrder() != null)
         {
@@ -275,6 +308,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         data.orderReceived = this.orderReceived;
         data.finished = this.isFinished;
         data.prize = this.prize;
+        data.isPaintDone = StaticData.isPaintDone;
+        data.isToolDone = StaticData.isToolDone;
+        data.isWireDone = StaticData.isWireDone;
+        data.isOrderChecked = StaticData.isOrderChecked;
     }
 
     public int GetPrize()
