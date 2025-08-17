@@ -23,6 +23,10 @@ public class StaticData
 
     public static int diffInt = 0; // 0 = easy, 1 = medium, 2 = hard
 
+    public static int toolDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
+    public static int paintDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
+    public static int wireDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
+
     public static List<int> toolPattern;
     public static List<int> incorrectToolPattern;
     public static List<int> paintPattern;
@@ -37,6 +41,11 @@ public class StaticData
     public static int incorrectVals;
     public static int missingVals;
     public static int noOfTypes;
+
+    public static int toolWrong = 0;
+    public static int paintWrong = 0;
+    public static int wireWrong = 0;   
+
 
     public static Sprite lastTVSprite;
 

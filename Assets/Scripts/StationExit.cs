@@ -19,6 +19,21 @@ public class StationExit : MonoBehaviour
                         currentOrder.toolDone = true;
                         Debug.Log("Tool task completed, marking toolDone = true");
                         RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
+                        if (StaticData.toolWrong == 0)
+                        {
+                            Debug.Log("All tools used correctly! Earn 10 points!");
+                            GameLoopManager.Instance.toolScore += 10;
+                        }
+                        else if (StaticData.toolWrong > 0 && StaticData.toolWrong < 3)
+                        {
+                            Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                            GameLoopManager.Instance.toolScore += 5;
+                        }
+                        else if (StaticData.toolWrong >= 3)
+                        {
+                            Debug.Log("You performed poorly! Earn 1 point!");
+                            GameLoopManager.Instance.toolScore += 1;
+                        }
                     }
                     else
                     {
@@ -31,8 +46,21 @@ public class StationExit : MonoBehaviour
                     {
                         currentOrder.paintDone = true;
                         Debug.Log("Paint task completed, marking paintDone = true");
-                        
-
+                        if (StaticData.paintWrong == 0)
+                        {
+                            Debug.Log("All tools used correctly! Earn 10 points!");
+                            GameLoopManager.Instance.paintScore += 10;
+                        }
+                        else if (StaticData.paintWrong > 0 && StaticData.paintWrong < 3)
+                        {
+                            Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                            GameLoopManager.Instance.paintScore += 5;
+                        }
+                        else if (StaticData.paintWrong >= 3)
+                        {
+                            Debug.Log("You performed poorly! Earn 1 points!");
+                            GameLoopManager.Instance.paintScore += 1;
+                        }
                     }
                     else
                     {

@@ -127,22 +127,22 @@ public class LoToolMinigame : MonoBehaviour
         generatedList = StaticData.toolPattern;
         //generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
-        if (StaticData.diffInt == 0)
+        if (StaticData.toolDifficulty == 0)
         {
             Debug.Log("easy");
         }
-        else if (StaticData.diffInt == 1)
+        else if (StaticData.toolDifficulty == 1)
         {
             Debug.Log("medium");
         }
-        else if (StaticData.diffInt == 2)
+        else if (StaticData.toolDifficulty == 2)
         {
             Debug.Log("hard");
         }
 
 
         //Checks for minigame's difficulty
-        switch (StaticData.diffInt)
+        switch (StaticData.toolDifficulty)
         {
             case 0:
                 slotToFix = StaticData.incorrectVals;
@@ -155,6 +155,7 @@ public class LoToolMinigame : MonoBehaviour
                 //Randomize between missing and incorrect value where:
                 //  0 = incorrect value
                 //  1 = missing value
+                Debug.Log("Fixing in medium!");
                 medValue = Random.Range(1, 10);
                 Debug.Log("Choosing: " + medValue);
                 if (medValue <= 5)
@@ -175,6 +176,7 @@ public class LoToolMinigame : MonoBehaviour
                 }
                 break;
             case 2:
+                Debug.Log("Fixing in hard!");
                 slotToFix = 0;
                 slotToFill = StaticData.missingVals;
                 //slotToFill = toolDifficulty.GetNumberOfMissingVal();
@@ -224,7 +226,7 @@ public class LoToolMinigame : MonoBehaviour
                 break;
             case false: 
                 //if(toolDifficulty.GetDifficulty() == "hard")
-                if(StaticData.diffInt == 2)
+                if(StaticData.toolDifficulty == 2)
                 {
                     for (int i = 0; i < patternLength - slotToFill; i++)
                     {
@@ -784,6 +786,9 @@ public class LoToolMinigame : MonoBehaviour
             }
             Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
             Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
+
+            StaticData.toolWrong += 1;
+            Debug.Log("Added one penalty to tool score");
         }
     }
 

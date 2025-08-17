@@ -124,7 +124,7 @@ public class LoPaintMinigame : MonoBehaviour
         {
             Debug.Log("Loading paint pattern from StaticData");
 
-            if (StaticData.diffInt == 0 || StaticData.diffInt == 1)
+            if (StaticData.paintDifficulty == 0 || StaticData.paintDifficulty == 1)
             {
                 numberPattern.Add(StaticData.paintPattern.ToArray());
 
@@ -141,7 +141,7 @@ public class LoPaintMinigame : MonoBehaviour
                     Debug.LogError($"Invalid sticker pack index: {randPack}");
                 }
             }
-            else if (StaticData.diffInt == 2)
+            else if (StaticData.paintDifficulty == 2)   
             {
                 for (int i = 0; i < 2; i++)
                 {
@@ -432,6 +432,8 @@ public class LoPaintMinigame : MonoBehaviour
             Debug.Log("Some number's wrong");
             Debug.Log("Some type's wrong");
             overviewUI.enabled = true;
+            StaticData.paintWrong += 1;
+            Debug.Log("Added one penalty to paint score");
         }
         yield return null;
 

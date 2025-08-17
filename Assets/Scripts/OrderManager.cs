@@ -187,6 +187,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                     Debug.Log("Order completed on time! You receive full amount as payment!");
                     GameLoopManager.Instance.money += 50; //Base value 50
                     GameLoopManager.Instance.UpdateMoneyText();
+
                 }
                 else
                 {

@@ -65,6 +65,12 @@ public class GameData
 
     public bool isOrderChecked;
 
+    public int toolScore;
+
+    public int paintScore;
+
+    public int wireScore;
+
     public GameData()
     {
         this.level = 1;
@@ -92,6 +98,9 @@ public class GameData
         this.isWireDone = false;
         this.isToolDone = false;
         this.isOrderChecked = false;
+        this.toolScore = 0;
+        this.paintScore = 0;
+        this.wireScore = 0;
     }
 
 
