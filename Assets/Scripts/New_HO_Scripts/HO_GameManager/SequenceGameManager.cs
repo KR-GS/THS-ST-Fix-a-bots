@@ -41,6 +41,14 @@ public class SequenceGameManager : MonoBehaviour
 
     [Header("Audio Files")]
     public SoundEffectsManager soundEffectsManager;
+
+    [Header("Swipes")]
+    private Vector2 swipeStartPos;
+    private Vector2 swipeEndPos;
+    private List<string> expectedSwipeSequence;
+    private int currentSwipeIndex = 0;
+    private float minSwipeDistance = 10f; 
+
     private HOStageData stageData;
     private Sequence currentSequence;
     public FormulaInputPanel formulaInputPanel;
@@ -73,15 +81,16 @@ public class SequenceGameManager : MonoBehaviour
 
         return false;
     }
+    
     bool IsScreenTapped()
     {
-    #if UNITY_EDITOR
-        return Input.GetMouseButtonDown(0);
-    #elif UNITY_ANDROID || UNITY_IOS
-        return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
-    #else
-        return false;
-    #endif
+        #if UNITY_EDITOR
+            return Input.GetMouseButtonDown(0);
+        #elif UNITY_ANDROID || UNITY_IOS
+            return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
+        #else
+            return false;
+        #endif
     }
 
     void GetData()
@@ -95,6 +104,8 @@ public class SequenceGameManager : MonoBehaviour
         stageNum = StaticData.stageNum;
         formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient);
         formulaInputPanel.SetLockConstant(StaticData.lockConstant);
+        expectedSwipeSequence = StaticData.stageSwipes[stageNum + 1];
+        
     }
 
     void InitilizeStageData()
@@ -390,11 +401,20 @@ public class SequenceGameManager : MonoBehaviour
             {
                 if (hasNotClicked)
                 {
-                    if (!inSequence)
+                    string swipeDir = DetectSwipe();
+
+                    if (swipeDir != null && canTap && !IsPointerOverInteractableUi())
+                    {
+                        Debug.Log("Swipe detected: " + swipeDir);
+                        HandleUserSwipe(swipeDir, btnNumber, inSequence, timer);
+                        hasNotClicked = false;
+                    }
+
+                    if (!inSequence && hasNotClicked)
                     {
                         statusAnimator.SetBool("IdleTrigger", true);
                     }
-                    else if (inSequence)
+                    else if (inSequence && hasNotClicked)
                     {
                         statusAnimator.SetBool("IdleTrigger", false);
                         statusAnimator.SetBool("AnticipateTrigger", true);
@@ -414,6 +434,7 @@ public class SequenceGameManager : MonoBehaviour
                             statusAnimator.SetBool("MissTrigger", true);
                             soundEffectsManager.playMissSound();
                             isCorrect = false;
+                            currentSwipeIndex++;
                             if (!isStageFinished)
                             {
                                 stageData.SetNumLives(stageData.GetNumLives() - 1);
@@ -423,13 +444,17 @@ public class SequenceGameManager : MonoBehaviour
                             hasNotClicked = false;
                         }
                     }
+    
+
                     // Listens to player tapping the screen
-                    if ((Input.GetMouseButtonDown(0) ||IsScreenTapped()) && canTap && !IsPointerOverInteractableUi())
+                    /*
+                    if ((Input.GetMouseButtonDown(0) || IsScreenTapped()) && canTap && !IsPointerOverInteractableUi())
                     {
                         Debug.Log("Clicked: " + gameObject.name);
                         HandleUserTap(btnNumber, inSequence, timer);
                         hasNotClicked = false;
                     }
+                    */
                 }
                 if (isCycling)
                 {
@@ -484,6 +509,150 @@ public class SequenceGameManager : MonoBehaviour
         }
         buttons[index].SetHighlighted(true);
         buttons[index].SetHeight(true);
+    }
+
+    //Detects Swipe
+    private string DetectSwipe()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                swipeStartPos = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                swipeEndPos = touch.position;
+                Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+
+                if (swipeDelta.magnitude >= minSwipeDistance)
+                {
+                    float x = swipeDelta.x;
+                    float y = swipeDelta.y;
+
+                    if (Mathf.Abs(x) > Mathf.Abs(y))
+                    {
+                        return x > 0 ? "Right" : "Left";
+                    }
+                    else
+                    {
+                        return y > 0 ? "Up" : "Down";
+                    }
+                }
+            }
+        }
+        #if UNITY_EDITOR || UNITY_STANDALONE
+            if (Input.GetMouseButtonDown(0))
+            {
+                swipeStartPos = Input.mousePosition;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                swipeEndPos = (Vector2)Input.mousePosition;
+                Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+
+                if (swipeDelta.magnitude >= minSwipeDistance)
+                {
+                    float x = swipeDelta.x;
+                    float y = swipeDelta.y;
+
+                    if (Mathf.Abs(x) > Mathf.Abs(y))
+                    {
+                        return x > 0 ? "Right" : "Left";
+                    }
+                    else
+                    {
+                        return y > 0 ? "Up" : "Down";
+                    }
+                }
+        }
+#endif
+        return null;
+    }
+
+    void HandleUserSwipe(string direction, int btnNumber, bool inSequence, float timer)
+    {
+        if (pressedNumbers.Contains(btnNumber))
+        {
+            feedbackText.text = $"You already swiped for {btnNumber}.";
+            return;
+        }
+    
+        //Early swipes
+        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency / 2)
+        {
+            buttons[btnNumber].SetGreen();
+            buttons[btnNumber].SetWasSelected(true);
+            pressedNumbers.Add(btnNumber + 1);
+            buttons[btnNumber].SetSelected(true);
+            feedbackText.text = $"Correct swipe {direction} for: {btnNumber + 1}!";
+            currentSwipeIndex++;
+            gotRight = true;
+
+        }
+
+        //Swipe not in sequence
+        else if (!inSequence)
+        {
+            buttons[btnNumber - 1].SetHighlighted(true);
+            feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
+            statusAnimator.SetBool("IdleTrigger", false);
+            statusAnimator.SetBool("WrongTrigger", true);
+            isCorrect = false;
+            soundEffectsManager.playMissSound();
+            if (!isStageFinished)
+            {
+                stageData.SetNumLives(stageData.GetNumLives() - 1);
+                livesText.text = $"{stageData.GetNumLives()}";
+                healthBar.SetHealth(stageData.GetNumLives());
+                isCorrect = false;
+            }
+        }
+        //Correct Swipes
+        else if (inSequence)
+        {
+            if (currentSwipeIndex < expectedSwipeSequence.Count)
+            {
+                string expected = expectedSwipeSequence[currentSwipeIndex];
+
+                if (direction == expected)
+                {
+                    buttons[btnNumber - 1].SetGreen();
+                    buttons[btnNumber - 1].SetWasSelected(true);
+                    pressedNumbers.Add(btnNumber);
+                    buttons[btnNumber - 1].SetSelected(true);
+
+                    feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
+                    statusAnimator.SetBool("IdleTrigger", false);
+                    statusAnimator.SetBool("HitTrigger", true);
+                    soundEffectsManager.playHitSound();
+                    gotRight = true;
+
+                    currentSwipeIndex++;
+                }
+                //Wrong Swipes But in Sequence
+                else
+                {
+                    buttons[btnNumber - 1].SetHighlighted(true);
+                    feedbackText.text = $"Wrong swipe!";
+                    statusAnimator.SetBool("IdleTrigger", false);
+                    statusAnimator.SetBool("MissTrigger", true);
+                    soundEffectsManager.playMissSound();
+                    isCorrect = false;
+                    currentSwipeIndex++;
+
+                    if (!isStageFinished)
+                    {
+                        stageData.SetNumLives(stageData.GetNumLives() - 1);
+                        livesText.text = $"{stageData.GetNumLives()}";
+                        healthBar.SetHealth(stageData.GetNumLives());
+                    }
+                }
+            }
+
+        }
     }
 
     void HandleUserTap(int btnNumber, bool inSequence, float timer)
@@ -547,6 +716,7 @@ public class SequenceGameManager : MonoBehaviour
 
     void ResetSequence()
     {
+        currentSwipeIndex = 0;
         restartStageButton.enabled = false;
         //pauseButton.enabled = false;
         for (int i = 0; i < buttons.Count; i++)

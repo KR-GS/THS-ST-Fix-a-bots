@@ -16,6 +16,13 @@ public class StaticData
     public static float cycleLeniency;
     public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
 
+    public static Dictionary<int, List<string>> stageSwipes = new Dictionary<int, List<string>>()
+    {
+        { 1, new List<string> { "Up", "Up", "Left" } },
+        { 2, new List<string> { "Right", "Down", "Left", "Up" } },
+        { 3, new List<string> { "Left", "Left", "Up" } }
+    };
+
     /* static StaticData()
      {
          ResetStageData();
