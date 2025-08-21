@@ -6,7 +6,6 @@ public class PowerManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private float pointer_speed;
-    [SerializeField] private float movement_gap;
     [SerializeField] private int movement_direction;
     [SerializeField] private Transform[] end_points;
 
@@ -55,13 +54,19 @@ public class PowerManager : MonoBehaviour
     {
         if (collision.transform.name == "green")
         {
-            current_value = 10;
+            current_value = 20;
 
             Debug.Log(current_value);
         }
         else if (collision.transform.name == "yellow")
         {
-            current_value = 20;
+            current_value = 10;
+
+            Debug.Log(current_value);
+        }
+        else if(collision.transform.name == "red")
+        {
+            current_value = 5;
 
             Debug.Log(current_value);
         }
