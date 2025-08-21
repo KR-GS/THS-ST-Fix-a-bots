@@ -184,6 +184,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
             ShowTV(false);
+            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            {
+                TimerScript.instance.timer.gameObject.SetActive(false); // hide
+            }
             if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
             if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
             if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);

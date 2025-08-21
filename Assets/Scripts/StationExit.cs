@@ -80,9 +80,13 @@ public class StationExit : MonoBehaviour
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
             GameLoopManager.Instance.ShowTV(true);
+            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            {
+                TimerScript.instance.timer.gameObject.SetActive(true); // hide
+            }
 
-            
-            if(currentOrder.needsTool && !StaticData.isToolDone)
+
+            if (currentOrder.needsTool && !StaticData.isToolDone)
             {
                 RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
             }

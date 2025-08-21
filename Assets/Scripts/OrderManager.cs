@@ -93,7 +93,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         if (level >= 1 && level < 6)
         {
             newOrder.needsTool = true;
-            newOrder.needsPaint = false;
+            newOrder.needsPaint = true; //originally false, gonna QA
             newOrder.needsWire = false;
         }
 
