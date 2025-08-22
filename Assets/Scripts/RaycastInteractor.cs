@@ -19,6 +19,7 @@ public class RaycastInteractor : MonoBehaviour
     [SerializeField] private GameLoopManager gameLoopManager;
     public GameObject orderSheetPanel;
     public bool isOrderChecked = false;
+    
 
     //public TextMeshProUGUI toolStatus;
     //public TextMeshProUGUI wireStatus;
@@ -258,13 +259,15 @@ public class RaycastInteractor : MonoBehaviour
     {
         while (pendingOrders.Count > 0)
         {
-            yield return new WaitForSeconds(5f); // Delay between orders
+
+            yield return new WaitForSeconds(1f); // small delay before showing next order
 
             Order nextOrder = pendingOrders.Dequeue();
-            OrderManager.Instance.AddToActiveOrders(nextOrder); // Push to active orders
+            OrderManager.Instance.AddToActiveOrders(nextOrder);
+            currentOrder = nextOrder;
 
             Debug.Log("Order delivered to active queue!");
-            // You can play a notification sound or blink the TV here
+            
         }
     }
 
@@ -301,6 +304,12 @@ public class RaycastInteractor : MonoBehaviour
         UpdateUIStation(wireStatus, order.needsWire, StaticData.isWireDone);
         UpdateUIStation(paintStatus, order.needsPaint, StaticData.isPaintDone);
 
+        okButton.gameObject.SetActive(true);
+        okButton.onClick.RemoveAllListeners();
+        okButton.onClick.AddListener(() =>
+        {
+            HideOrderSheetPanel();
+        });
 
 
         /*
@@ -334,13 +343,6 @@ public class RaycastInteractor : MonoBehaviour
             paintStatus.gameObject.SetActive(false);
         }
         */
-
-        okButton.gameObject.SetActive(true);
-        okButton.onClick.RemoveAllListeners();
-        okButton.onClick.AddListener(() =>
-        {
-            HideOrderSheetPanel();
-        });
     }
 
 }

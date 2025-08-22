@@ -388,7 +388,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1069410942}
         m_TargetAssemblyTypeName: OrderManager, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: HideOrderCompletePanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2841,6 +2841,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderCompletePanel: {fileID: 1469403745}
   raycastInteractor: {fileID: 458572020}
+  nextdayButton: {fileID: 184135436}
+  completeText: {fileID: 1577558179}
   orderList: []
   activeOrders: []
   currentOrder:
@@ -2899,7 +2901,6 @@ MonoBehaviour:
   moneyText: {fileID: 1265102638}
   remainingOrders: {fileID: 556654219}
   ordersOnboard: {fileID: 745443303}
-  nextdayButton: {fileID: 0}
   toolScore: 0
   paintScore: 0
   wireScore: 0
