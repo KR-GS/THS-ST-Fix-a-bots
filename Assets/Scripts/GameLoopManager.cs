@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 //using System;
 using TMPro;
@@ -18,6 +19,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     [SerializeField] private int diff_Highest = 5;
 
     private int generatedDifference;
+
+    public GameObject TV;
 
     private List<int> currentPattern;
 
@@ -44,6 +47,14 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public TextMeshProUGUI ordersOnboard;
 
     private TimerScript timer;
+
+    public Button nextdayButton;
+
+    public int toolScore;
+
+    public int paintScore;
+
+    public int wireScore;
 
     private void Awake()
     {
@@ -163,7 +174,25 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 }
             }
 
+            StartCoroutine(UpdateStationsNextFrame());
+
         }
+        else
+        {
+            if (dayNumber != null) dayNumber.gameObject.SetActive(false);
+            if (moneyText != null) moneyText.gameObject.SetActive(false);
+            if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
+            if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
+            ShowTV(false);
+            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            {
+                TimerScript.instance.timer.gameObject.SetActive(false); // hide
+            }
+            if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
+            if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
+            if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);
+        }
+
     }
 
     public void HandleSceneInitialization()
@@ -187,6 +216,15 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log($"Incorrect pattern: {string.Join(", ", StaticData.incorrectToolPattern ?? new List<int>())}");
         }
     }
+
+    private IEnumerator UpdateStationsNextFrame()
+    {
+        yield return null; // wait one frame
+        foreach (Station station in Station.AllStations)
+        {
+            station.SetStationVisibility();
+        }
+    }
     public enum DifficultyLevel
     {
         tutorial,
@@ -207,7 +245,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         this.level = data.level;
         this.money = data.money;
         this.isPatternStarted = data.isPatternStarted;
-        
+        this.toolScore = data.toolScore;
+        this.paintScore = data.paintScore;
+        this.wireScore = data.wireScore;
+
 
         StaticData.dayNo = this.level;
         StaticData.isPatternStarted = this.isPatternStarted;
@@ -223,21 +264,72 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         Debug.Log("Level: " + level);
 
-        if (level >= 1 && level < 5)
+        /*
+        if (level >= 1 && level < 6)
         {
             Debug.Log("Static Data for difficulty is easy!");
             StaticData.diffInt = 0; // Easy
         }
-        else if (level >= 5 && level < 10)
+        else if (level >= 6 && level < 11)
         {
             Debug.Log("Static Data for difficulty is medium!");
             StaticData.diffInt = 1; // Medium
         }
-        else if (level >= 10)
+        else if (level >= 11)
         {
             Debug.Log("Static Data for difficulty is hard!");
             StaticData.diffInt = 2; // Hard
         }
+        */
+
+        if (toolScore >= 0 && toolScore < 150)
+        {
+            StaticData.toolDifficulty = 0; // Easy
+            Debug.Log("Static Data for tool difficulty is easy!");
+        }
+        else if (toolScore >= 150 && toolScore < 350)
+        {
+            StaticData.toolDifficulty = 1; // Medium
+            Debug.Log("Static Data for tool difficulty is medium!");
+        }
+        else if (toolScore >= 350)
+        {
+            StaticData.toolDifficulty = 2; // Hard
+            Debug.Log("Static Data for tool difficulty is hard!");
+        }
+
+        if (paintScore >= 0 && paintScore < 150)
+        {
+            StaticData.paintDifficulty = 0; // Easy
+            Debug.Log("Static Data for paint difficulty is easy!");
+        }
+        else if (paintScore >= 150 && paintScore < 350)
+        {
+            StaticData.paintDifficulty = 1; // Medium
+            Debug.Log("Static Data for paint difficulty is medium!");
+        }
+        else if (paintScore >= 350)
+        {
+            StaticData.paintDifficulty = 2; // Hard
+            Debug.Log("Static Data for paint difficulty is hard!");
+        }
+
+        if (wireScore >= 0 && wireScore < 250) //We do not have wire yet
+        {
+            StaticData.wireDifficulty = 0; // Easy
+            Debug.Log("Static Data for wire difficulty is easy!");
+        }
+        else if (wireScore >= 250 && wireScore < 500)
+        {
+            StaticData.wireDifficulty = 1; // Medium
+            Debug.Log("Static Data for wire difficulty is medium!");
+        }
+        else if (wireScore >= 500)
+        {
+            StaticData.wireDifficulty = 2; // Hard
+            Debug.Log("Static Data for wire difficulty is hard!");
+        }
+
 
         Debug.Log("Money: " + money);
 
@@ -282,7 +374,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
         data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
         data.paintPattern = new List<int>(currentPaintPattern); // Store the current paint pattern
-
+        data.paintScore = this.paintScore;
+        data.toolScore = this.toolScore;
+        data.wireScore = this.wireScore;
         data.incorrectValues = new List<int>(StaticData.incorrectValues); // Store incorrect values
         data.selectedFastenerIndex = StaticData.selectedFastenerIndex;
         data.selectedStickerIndex = StaticData.selectedStickerIndex;
@@ -322,7 +416,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             ordersOnboard.text = "Pending Orders: " + OrderManager.Instance.activeOrders.Count;
         }
     }
-    private List<int> GeneratePatternArray(int patternLen)
+    private List<int> GeneratePatternArray(int patternLen) //This is for tool
     {
         generatedDifference = Random.Range(diff_Lowest, diff_Highest);
         StaticData.sequenceDiff = generatedDifference; // Store in StaticData for sequence difference
@@ -332,7 +426,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         DifficultyLevel difficulty = DifficultyLevel.easy;
 
-        switch (StaticData.diffInt)
+        switch (StaticData.paintDifficulty)
         {
             case 0: difficulty = DifficultyLevel.easy; break;
             case 1: difficulty = DifficultyLevel.medium; break;
@@ -391,14 +485,45 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         DifficultyLevel level = DifficultyLevel.easy;
 
+        /*
         switch (StaticData.diffInt)
         {
             case 0: level = DifficultyLevel.easy; break;
             case 1: level = DifficultyLevel.medium; break;
             case 2: level = DifficultyLevel.hard; break;
         }
+        */
 
-        
+        switch (gameType)
+        {
+            case Minigame.tool:
+                switch (StaticData.toolDifficulty)
+                {
+                    case 0: level = DifficultyLevel.easy; break;
+                    case 1: level = DifficultyLevel.medium; break;
+                    case 2: level = DifficultyLevel.hard; break;
+                }
+                break;
+
+            case Minigame.paint:
+                switch (StaticData.paintDifficulty)
+                {
+                    case 0: level = DifficultyLevel.easy; break;
+                    case 1: level = DifficultyLevel.medium; break;
+                    case 2: level = DifficultyLevel.hard; break;
+                }
+                break;
+
+            case Minigame.wire:
+                switch (StaticData.wireDifficulty)
+                {
+                    case 0: level = DifficultyLevel.easy; break;
+                    case 1: level = DifficultyLevel.medium; break;
+                    case 2: level = DifficultyLevel.hard; break;
+                }
+                break;
+        }
+
         patternLength = 5;
         incorrectVals = 1;
         missingVals = 0;
@@ -467,6 +592,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.toolPattern = currentPattern;
 
         // Paint generation
+        ConfigureDifficulty(out patternLength, out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
         currentPaintPattern = GeneratePaintPatternArray(6);
         StaticData.paintPattern = currentPaintPattern;
 
@@ -554,12 +680,31 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void ShowTV(bool response)
+    {
+        if (response == false)
+        {
+            if (TV != null)
+            {
+                TV.SetActive(false);
+            }
+        }
+        else if (response == true)
+        {
+            if (TV != null)
+            {
+                TV.SetActive(true);
+            }
+        }
+    }
+
     public void StartNewLevel()
     {
         OrderManager.Instance.SetStatus(false);
         level++;
         StaticData.dayNo = level;
-        
+
+        /*
         if(level >= 1 && level < 5)
         {
             Debug.Log("Static Data for difficulty is easy!");
@@ -575,9 +720,66 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Static Data for difficulty is hard!");
             StaticData.diffInt = 2; // Hard
         }
+        */
 
+        if (toolScore >= 0 && toolScore < 50)
+        {
+            StaticData.toolDifficulty = 0; // Easy
+            Debug.Log("Static Data for tool difficulty is easy!");
+        }
+        else if (toolScore >= 50 && toolScore < 250)
+        {
+            StaticData.toolDifficulty = 1; // Medium
+            Debug.Log("Static Data for tool difficulty is medium!");
+        }
+        else if (toolScore >= 250)
+        {
+            StaticData.toolDifficulty = 2; // Hard
+            Debug.Log("Static Data for tool difficulty is hard!");
+        }
+
+        if (paintScore >= 0 && paintScore < 50)
+        {
+            StaticData.paintDifficulty = 0; // Easy
+            Debug.Log("Static Data for paint difficulty is easy!");
+        }
+        else if (paintScore >= 50 && paintScore < 250)
+        {
+            StaticData.paintDifficulty = 1; // Medium
+            Debug.Log("Static Data for paint difficulty is medium!");
+        }
+        else if (paintScore >= 250)
+        {
+            StaticData.paintDifficulty = 2; // Hard
+            Debug.Log("Static Data for paint difficulty is hard!");
+        }
+
+        if (wireScore >= 0 && wireScore < 250) //We do not have wire yet
+        {
+            StaticData.wireDifficulty = 0; // Easy
+            Debug.Log("Static Data for wire difficulty is easy!");
+        }
+        else if (wireScore >= 250 && wireScore < 500)
+        {
+            StaticData.wireDifficulty = 1; // Medium
+            Debug.Log("Static Data for wire difficulty is medium!");
+        }
+        else if (wireScore >= 500)
+        {
+            StaticData.wireDifficulty = 2; // Hard
+            Debug.Log("Static Data for wire difficulty is hard!");
+        }
+
+
+        foreach (Station station in Station.AllStations)
+        {
+            station.SetStationVisibility();
+        }
         GenerateAndStorePattern();
 
+        StaticData.paintWrong = 0;
+        StaticData.toolWrong = 0;
+        StaticData.wireWrong = 0; 
 
         OrderManager.Instance.orderReceived = false; // Reset order received status
         //OrderManager.Instance.SetStatus(false);
