@@ -171,15 +171,15 @@ public class RaycastInteractor : MonoBehaviour
             {
                 Debug.Log("Order is checked, returning old indicators...");
 
-                if (currentOrder.needsTool && !StaticData.isToolDone)
+                if (savedOrder.needsTool && !StaticData.isToolDone)
                 {
                     ToolIndicator.gameObject.SetActive(true);
                 }
-                if (currentOrder.needsPaint && !StaticData.isPaintDone)
+                if (savedOrder.needsPaint && !StaticData.isPaintDone)
                 {
                     PaintIndicator.gameObject.SetActive(true);
                 }
-                if (currentOrder.needsWire && !StaticData.isWireDone)
+                if (savedOrder.needsWire && !StaticData.isWireDone)
                 {
                     WireIndicator.gameObject.SetActive(true);
                 }
