@@ -493,7 +493,7 @@ public class LoToolMinigame : MonoBehaviour
 
     public void CheckNumber(Transform tools)
     {
-        ToggleOverviewCounters(false);
+        //ToggleOverviewCounters(true);
 
         ToggleGapHolder(false);
 
@@ -700,7 +700,9 @@ public class LoToolMinigame : MonoBehaviour
 
         Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
 
-        Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
+        //Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
+
+        Camera.main.GetComponent<ToolCamera>().ToggleCanvas();
 
         yield return null;
 
@@ -710,17 +712,19 @@ public class LoToolMinigame : MonoBehaviour
 
             currentTool.GetComponent<Tool>().SetHeightValue(-1f);
 
-            if (numberToDisplay[i] < 24)
-            {
-                fastenerObj[i].SetActive(true);
-                textCounter.gameObject.SetActive(false);
-            }
-            else
-            {
-                textCounter.gameObject.SetActive(true);
-                fastenerObj[i].SetActive(false);
-                SetZoomedInTextCounter(i);
-            }
+            /*
+                if (numberToDisplay[i] < 24)
+                {
+                    fastenerObj[i].SetActive(true);
+                    textCounter.gameObject.SetActive(false);
+                }
+                else
+                {
+                    textCounter.gameObject.SetActive(true);
+                    fastenerObj[i].SetActive(false);
+                    SetZoomedInTextCounter(i);
+                }
+            */
 
             toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
 
@@ -738,7 +742,7 @@ public class LoToolMinigame : MonoBehaviour
 
             yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[i].GetComponent<PartTile>()));
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
 
             fastenerObj[i].SetActive(false);
 
@@ -752,21 +756,21 @@ public class LoToolMinigame : MonoBehaviour
 
                 Debug.Log(Camera.main.transform.name);
 
-                StartCoroutine(Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed));
+                //StartCoroutine(Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed));
 
                 yield return null;
             }
         }
 
+        /*
         yield return null;
 
         Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
 
         yield return null;
+        */
 
-        ToggleOverviewCounters(true);
-
-        ToggleGapHolder(true);
+        //ToggleOverviewCounters(true);
 
         Destroy(currentTool);
 
@@ -774,7 +778,7 @@ public class LoToolMinigame : MonoBehaviour
         {
             Debug.Log("All correct!");
 
-            Camera.main.GetComponent<ToolCamera>().TriggerDoneCanvas();
+            Camera.main.GetComponent<ToolCamera>().SetResultPanel(true);
 
             StaticData.isToolDone = true;
 
@@ -786,7 +790,11 @@ public class LoToolMinigame : MonoBehaviour
         }
         else
         {
+            Camera.main.GetComponent<ToolCamera>().SetResultPanel(false);
             Debug.Log("Something is wrong!");
+
+            yield return new WaitForSeconds(3f);
+
             foreach (GameObject partTile in tiledParts) {
                 partTile.GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
                 partTile.GetComponent<PartTile>().SetIsWrong(false);
@@ -794,10 +802,16 @@ public class LoToolMinigame : MonoBehaviour
             }
             Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
             Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
+            Camera.main.GetComponent<ToolCamera>().ToggleCanvas();
+            Camera.main.GetComponent<ToolCamera>().ToggleCheckingCanvas();
 
             StaticData.toolWrong += 1;
             Debug.Log("Added one penalty to tool score");
+
+            ToggleGapHolder(true);
         }
+
+        
     }
 
     private IEnumerator TriggerFastenerChange(Button button)

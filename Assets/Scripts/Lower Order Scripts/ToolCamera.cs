@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ToolCamera : MonoBehaviour
@@ -30,6 +31,15 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private Canvas counterCanvas;
 
+    [SerializeField]
+    private Canvas checkingCanvas;
+
+    [SerializeField]
+    private Sprite correct_sprite;
+
+    [SerializeField]
+    private Sprite wrong_sprite;
+
     private Vector3 originalPosition;
     private float originalSize;
 
@@ -45,6 +55,7 @@ public class ToolCamera : MonoBehaviour
         overViewCanvas.enabled = true;
         notesCanvas.enabled = true;
         counterCanvas.enabled = false;
+        checkingCanvas.enabled = false;
     }
 
     public void FocusedCameraView(float partPosition)
@@ -61,8 +72,11 @@ public class ToolCamera : MonoBehaviour
 
     public void CameraTrigger(Vector3 firstFastenerPosition, float speed)
     {
-        StartCoroutine(SubmitCameraMovement(firstFastenerPosition, speed*4));
-        StartCoroutine(SubmitCameraZoom());
+        checkingCanvas.enabled = true;
+        checkingCanvas.transform.Find("Result Image").gameObject.SetActive(false);
+        checkingCanvas.transform.Find("Button").gameObject.SetActive(false);
+        //StartCoroutine(SubmitCameraMovement(firstFastenerPosition, speed*4));
+        //StartCoroutine(SubmitCameraZoom());
     }
 
     public IEnumerator SubmitCameraMovement(Vector3 firstFastenerPosition, float speed)
@@ -81,6 +95,23 @@ public class ToolCamera : MonoBehaviour
             GetComponent<Camera>().orthographicSize--;
             yield return null;
         }
+    }
+
+    public void SetResultPanel(bool result)
+    {
+        if (result)
+        {
+            checkingCanvas.transform.Find("Result Image").GetComponent<Image>().sprite = correct_sprite;
+            checkingCanvas.transform.Find("Button").gameObject.SetActive(true);
+        }
+        else
+        {
+            checkingCanvas.transform.Find("Result Image").GetComponent<Image>().sprite = wrong_sprite;
+        }
+
+        checkingCanvas.transform.Find("Result Image").gameObject.SetActive(true);
+
+
     }
 
     public void TriggerDoneCanvas()
@@ -105,5 +136,10 @@ public class ToolCamera : MonoBehaviour
     public void ToggleCounterCanvas()
     {
         counterCanvas.enabled = !counterCanvas.enabled;
+    }
+
+    public void ToggleCheckingCanvas()
+    {
+        checkingCanvas.enabled = !checkingCanvas.enabled;
     }
 }
