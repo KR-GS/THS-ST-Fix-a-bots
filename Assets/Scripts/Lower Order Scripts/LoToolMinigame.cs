@@ -409,8 +409,16 @@ public class LoToolMinigame : MonoBehaviour
                 }
                 else
                 {
-                    gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
-                    gapToDisplay[currentInt] = numberToDisplay[currentInt+1] - numberToDisplay[currentInt];
+                    if(currentInt > 0)
+                    {
+                        gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
+                        gapToDisplay[currentInt] = numberToDisplay[currentInt+1] - numberToDisplay[currentInt];
+                    }
+                    else
+                    {
+                        gapToDisplay[currentInt] = numberToDisplay[currentInt + 1] - numberToDisplay[currentInt];
+                    }
+                        
                 }
 
                 if (numberToDisplay[currentInt]<24)

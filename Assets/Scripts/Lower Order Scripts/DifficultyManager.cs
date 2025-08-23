@@ -79,7 +79,7 @@ public class DifficultyManager : MonoBehaviour
             if (gameType == Minigame.tool)
             {
                 incorrectVals = Random.Range(1, 2);
-                patternLength = Random.Range(5, 6);
+                patternLength = 6;
             }
             else
             {
@@ -92,9 +92,9 @@ public class DifficultyManager : MonoBehaviour
 
             if (gameType == Minigame.tool)
             {
-                patternLength = Random.Range(5, 10);
+                patternLength = 6;
                 incorrectVals = Random.Range(2, 3);
-                missingVals = Random.Range(1, 3);
+                missingVals = Random.Range(1, 2);
             }
             else
             {
@@ -113,7 +113,7 @@ public class DifficultyManager : MonoBehaviour
             }
             else
             {
-                patternLength = Random.Range(5, 10);
+                patternLength = Random.Range(5, 6);
                 incorrectVals = 0;
                 missingVals = 2;
             }
@@ -127,7 +127,7 @@ public class DifficultyManager : MonoBehaviour
 
         if (gameType != Minigame.tool)
         {
-            patternLength = 4;
+            patternLength = 6;
         }
     }
 
