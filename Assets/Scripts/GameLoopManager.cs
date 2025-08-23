@@ -524,7 +524,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 break;
         }
 
-        patternLength = 5;
+        patternLength = 6;
         incorrectVals = 1;
         missingVals = 0;
         noOfTypes = 1;
@@ -536,8 +536,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             if (gameType == Minigame.tool)
             {
+                patternLength = 6;
                 incorrectVals = Random.Range(1, 2);
-                patternLength = Random.Range(5, 6);
             }
             else
             {
@@ -550,9 +550,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             if (gameType == Minigame.tool)
             {
-                patternLength = Random.Range(5, 10);
+                patternLength = 6;
                 incorrectVals = Random.Range(2, 3);
-                missingVals = Random.Range(1, 3);
+                missingVals = Random.Range(1, 2);
             }
             else
             {
@@ -571,13 +571,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
             else
             {
-                patternLength = Random.Range(5, 10);
+                patternLength = Random.Range(5, 6);
                 incorrectVals = 0;
                 missingVals = 2;
             }
         }
 
-        
+        if (gameType != Minigame.tool)
+        {
+            patternLength = 6;
+        }
+
         StaticData.patternLength = patternLength;
         StaticData.incorrectVals = incorrectVals;
         StaticData.missingVals = missingVals;
