@@ -12,8 +12,11 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject orderCompletePanel;
     [SerializeField] private RaycastInteractor raycastInteractor;
     private Button button;
+    public Button nextdayButton;
+    public TextMeshProUGUI completeText;
     private int prize;
     private bool isFinished = false;
+    private bool sendNewOrder = false;
 
     public List<Order> orderList = new List<Order>();
     public List<Order> activeOrders = new List<Order>();
@@ -43,7 +46,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
-        HideOrderCompletePanel();
+        if (orderCompletePanel != null)
+            HideOrderCompletePanel();
+        else
+            Debug.LogWarning("Order Complete Panel not assigned yet!");
 
     }
 
@@ -61,17 +67,28 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     {
         yield return null;
 
+        if (orderCompletePanel != null)
+        {
+            HideOrderCompletePanel();
+        }
+        else
+        {
+            Debug.LogWarning("Order Complete Panel not assigned yet!");
+        }
+        
+
         if (isFinished)
         {
             Debug.Log("isFinished was true. Showing complete panel...");
             ShowOrderCompletePanel();
-            //raycastInteractor.enabled = false;
         }
         else
         {
-            TryCompleteOrder(); 
+            TryCompleteOrder();
         }
     }
+
+    
 
     public Order CreateNewOrder()
     {
@@ -147,6 +164,21 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 Order o = CreateNewOrder();
                 pendingOrders.Enqueue(o);
             }
+
+            if (pendingOrders.Count > 0)
+            {
+                var firstOrder = pendingOrders.Dequeue();
+                AddToActiveOrders(firstOrder);
+                currentOrder = firstOrder;
+                Debug.Log("First order delivered!");
+                TVSprite.sprite = TVSpriteNO;
+
+                // lock sending more until this order is completed
+                sendNewOrder = false;
+                StaticData.sendNewOrder = false;
+            }
+
+            // start coroutine to handle the rest
             Instance.StartCoroutine(ScheduleNextOrder());
         }
     }
@@ -155,11 +187,18 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     {
         while (pendingOrders.Count > 0)
         {
+            yield return new WaitUntil(() => sendNewOrder);
             yield return new WaitForSeconds(5f);
             var nextOrder = pendingOrders.Dequeue();
             AddToActiveOrders(nextOrder); 
             Debug.Log("Delivered order!");
+            Debug.Log("isChecked status: " + StaticData.isOrderChecked);
             TVSprite.sprite = TVSpriteNO;
+
+            sendNewOrder = false;
+            StaticData.sendNewOrder = false;
+            Debug.Log("Order will be sent after you complete this task!"); 
+            Debug.Log("SendNewOrder status: " + sendNewOrder);
         }
     }
     public void TryCompleteOrder()
@@ -195,6 +234,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                     GameLoopManager.Instance.money += 25; //Base value 50
                     GameLoopManager.Instance.UpdateMoneyText();
                 }
+            }
+
+            if (RaycastInteractor.Instance != null)
+            {
+                sendNewOrder = true;
+                StaticData.sendNewOrder = true;
             }
         }
 
@@ -233,23 +278,16 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         return null;
     }
 
+    public Order GetActiveOrder()
+    {
+        if(activeOrders.Count > 0)
+            return activeOrders[0];
+
+        return null;
+    }
+    /*
     public void ShowOrderCompletePanel()
     {
-        /*
-        Transform prizeTextFind = orderCompletePanel.transform.Find("PrizeText");
-        if (prizeTextFind != null)
-        {
-            TextMeshProUGUI prizeTexts = prizeTextFind.GetComponent<TextMeshProUGUI>();
-            if (prize == 1)
-            {
-                prizeTexts.text = "Order completed on time!";
-            }
-            else
-            {
-                prizeTexts.text = "That was disappointing... Earned nothing.";
-            }
-        }
-        */
         orderCompletePanel.SetActive(true);
     }
 
@@ -264,6 +302,56 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.CompleteLevel();
         //raycastInteractor.enabled = true;
     }
+    */
+
+    public void ShowOrderCompletePanel()
+    {
+        if (orderCompletePanel == null)
+        {
+            Debug.LogError("[OrderManager] Order Complete Panel is not assigned!");
+            return;
+        }
+
+        orderCompletePanel.SetActive(true);
+        Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
+
+        //completeText.gameObject.SetActive(true);
+        GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
+        GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
+        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+
+        if (nextdayButton != null)
+        {
+            nextdayButton.gameObject.SetActive(true);
+            nextdayButton.onClick.RemoveAllListeners();
+            nextdayButton.onClick.AddListener(() =>
+            {
+                HideOrderCompletePanel();
+                GameLoopManager.Instance.CompleteLevel();
+            });
+        }
+    }
+
+    public void HideOrderCompletePanel()
+    {
+        if (orderCompletePanel == null)
+        {
+            Debug.LogWarning("[OrderManager] Order Complete Panel not assigned — nothing to hide.");
+            return;
+        }
+
+        orderCompletePanel.SetActive(false);
+        Debug.Log("[OrderManager] Hiding panel: " + orderCompletePanel.name);
+
+        //completeText.gameObject.SetActive(false);
+        GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+        GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+    }
+
+
 
     public void LoadData(GameData data)
     {
@@ -277,6 +365,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         StaticData.isToolDone = data.isToolDone;
         StaticData.isWireDone = data.isWireDone;
         StaticData.isOrderChecked = data.isOrderChecked;
+        StaticData.sendNewOrder = data.sendNewOrder;
 
         if (TimerScript.instance != null && GetCurrentOrder() != null)
         {
@@ -313,6 +402,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         data.isToolDone = StaticData.isToolDone;
         data.isWireDone = StaticData.isWireDone;
         data.isOrderChecked = StaticData.isOrderChecked;
+        data.sendNewOrder = StaticData.sendNewOrder;
     }
 
     public int GetPrize()

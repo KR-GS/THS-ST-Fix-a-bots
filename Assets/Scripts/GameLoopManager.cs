@@ -48,8 +48,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private TimerScript timer;
 
-    public Button nextdayButton;
-
     public int toolScore;
 
     public int paintScore;
@@ -282,33 +280,33 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         */
 
-        if (toolScore >= 0 && toolScore < 150)
+        if (toolScore >= 0 && toolScore < 200)
         {
             StaticData.toolDifficulty = 0; // Easy
             Debug.Log("Static Data for tool difficulty is easy!");
         }
-        else if (toolScore >= 150 && toolScore < 350)
+        else if (toolScore >= 200 && toolScore < 400)
         {
             StaticData.toolDifficulty = 1; // Medium
             Debug.Log("Static Data for tool difficulty is medium!");
         }
-        else if (toolScore >= 350)
+        else if (toolScore >= 400)
         {
             StaticData.toolDifficulty = 2; // Hard
             Debug.Log("Static Data for tool difficulty is hard!");
         }
 
-        if (paintScore >= 0 && paintScore < 150)
+        if (paintScore >= 0 && paintScore < 200)
         {
             StaticData.paintDifficulty = 0; // Easy
             Debug.Log("Static Data for paint difficulty is easy!");
         }
-        else if (paintScore >= 150 && paintScore < 350)
+        else if (paintScore >= 200 && paintScore < 400)
         {
             StaticData.paintDifficulty = 1; // Medium
             Debug.Log("Static Data for paint difficulty is medium!");
         }
-        else if (paintScore >= 350)
+        else if (paintScore >= 400)
         {
             StaticData.paintDifficulty = 2; // Hard
             Debug.Log("Static Data for paint difficulty is hard!");
@@ -332,6 +330,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
 
         Debug.Log("Money: " + money);
+
+
 
         StaticData.patternLength = data.patternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
@@ -701,26 +701,15 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public void StartNewLevel()
     {
         OrderManager.Instance.SetStatus(false);
+        OrderManager.Instance.orderReceived = false; // Reset order received status
         level++;
         StaticData.dayNo = level;
 
-        /*
-        if(level >= 1 && level < 5)
-        {
-            Debug.Log("Static Data for difficulty is easy!");
-            StaticData.diffInt = 0; // Easy
-        }
-        else if (level >= 5 && level < 10)
-        {
-            Debug.Log("Static Data for difficulty is medium!");
-            StaticData.diffInt = 1; // Medium
-        }
-        else if (level >= 10)
-        {
-            Debug.Log("Static Data for difficulty is hard!");
-            StaticData.diffInt = 2; // Hard
-        }
-        */
+        StaticData.incorrectIndices.Clear();
+        StaticData.incorrectValues.Clear();
+        StaticData.missingVals = 0; 
+        StaticData.incorrectVals = 0; 
+        StaticData.selectedFastenerIndex = Random.Range(0, 3);
 
         if (toolScore >= 0 && toolScore < 50)
         {
@@ -781,7 +770,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.toolWrong = 0;
         StaticData.wireWrong = 0; 
 
-        OrderManager.Instance.orderReceived = false; // Reset order received status
+        
         //OrderManager.Instance.SetStatus(false);
         RaycastInteractor ri = Object.FindFirstObjectByType<RaycastInteractor>();
         dayNumber.text = "Day: " + this.level;
@@ -800,12 +789,4 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StartNewLevel();
     }
 
-    /*
-    public void OnTimerExpired()
-    {
-        Debug.Log("Time's up! Game Over or auto-submit.");
-        // Call any fail screen or auto-fail logic here
-        // Example: Load failure screen or retry?
-    }
-    */
 }
