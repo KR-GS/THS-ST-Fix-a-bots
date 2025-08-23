@@ -715,33 +715,33 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.incorrectVals = 0; 
         StaticData.selectedFastenerIndex = Random.Range(0, 3);
 
-        if (toolScore >= 0 && toolScore < 50)
+        if (toolScore >= 0 && toolScore < 200)
         {
             StaticData.toolDifficulty = 0; // Easy
             Debug.Log("Static Data for tool difficulty is easy!");
         }
-        else if (toolScore >= 50 && toolScore < 250)
+        else if (toolScore >= 200 && toolScore < 400)
         {
             StaticData.toolDifficulty = 1; // Medium
             Debug.Log("Static Data for tool difficulty is medium!");
         }
-        else if (toolScore >= 250)
+        else if (toolScore >= 400)
         {
             StaticData.toolDifficulty = 2; // Hard
             Debug.Log("Static Data for tool difficulty is hard!");
         }
 
-        if (paintScore >= 0 && paintScore < 50)
+        if (paintScore >= 0 && paintScore < 200)
         {
             StaticData.paintDifficulty = 0; // Easy
             Debug.Log("Static Data for paint difficulty is easy!");
         }
-        else if (paintScore >= 50 && paintScore < 250)
+        else if (paintScore >= 200 && paintScore < 400)
         {
             StaticData.paintDifficulty = 1; // Medium
             Debug.Log("Static Data for paint difficulty is medium!");
         }
-        else if (paintScore >= 250)
+        else if (paintScore >= 400)
         {
             StaticData.paintDifficulty = 2; // Hard
             Debug.Log("Static Data for paint difficulty is hard!");
