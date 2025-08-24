@@ -701,7 +701,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
         }
     }
-
     public void StartNewLevel()
     {
         OrderManager.Instance.SetStatus(false);
@@ -714,6 +713,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.missingVals = 0; 
         StaticData.incorrectVals = 0; 
         StaticData.selectedFastenerIndex = Random.Range(0, 3);
+        StaticData.paintWrong = 0;
+        StaticData.toolWrong = 0;
+        StaticData.wireWrong = 0;
+
 
         if (toolScore >= 0 && toolScore < 200)
         {
@@ -770,13 +773,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         GenerateAndStorePattern();
 
-        StaticData.paintWrong = 0;
-        StaticData.toolWrong = 0;
-        StaticData.wireWrong = 0; 
-
-        
-        //OrderManager.Instance.SetStatus(false);
-        RaycastInteractor ri = Object.FindFirstObjectByType<RaycastInteractor>();
         dayNumber.text = "Day: " + this.level;
         moneyText.text = "Money: " + this.money;
         Debug.Log("Starting Level " + level);
@@ -785,8 +781,19 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             TimerScript.instance.timer.gameObject.SetActive(false); // hide
         }
         TimerScript.instance.ResetTimer();
+
+        StartCoroutine(EnableInteractorAfterFrame());
     }
-    
+
+
+    private IEnumerator EnableInteractorAfterFrame()
+    {
+        yield return null; // wait one frame
+        RaycastInteractor ri = Object.FindFirstObjectByType<RaycastInteractor>();
+        if (ri != null) ri.enabled = true;
+    }
+
+
     public void CompleteLevel()
     {
         Debug.Log("Level " + level + " complete!");

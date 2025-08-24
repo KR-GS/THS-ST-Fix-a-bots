@@ -31,6 +31,7 @@ public class RaycastInteractor : MonoBehaviour
     public SpriteRenderer TVSprite;       
     public Sprite TVSpriteIP;             
     public Sprite TVSpriteNO;
+    public Sprite TVSpriteNoOrder;
 
     public Image ToolIndicator;
     public Image WireIndicator;
@@ -73,6 +74,18 @@ public class RaycastInteractor : MonoBehaviour
         if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
 
         StartCoroutine(DelayedOrderUISetup());
+
+    }
+
+    private void Start()
+    {
+        if (OrderManager.Instance != null && OrderManager.Instance.GetCurrentOrder() != null)
+        {
+            if (TVSprite != null)
+            {
+                TVSprite.sprite = TVSpriteIP;
+            }
+        }
     }
 
     private void UpdateUIStation(UIStationStatus status, bool needed, bool isDone)
@@ -314,38 +327,6 @@ public class RaycastInteractor : MonoBehaviour
             HideOrderSheetPanel();
         });
 
-
-        /*
-        if (order.needsTool)
-        {
-            toolStatus.gameObject.SetActive(true);
-            toolStatus.text = StaticData.isToolDone ? "Tool - Complete" : "Tool - Not Done";
-        }
-        else
-        {
-            toolStatus.gameObject.SetActive(false);
-        }
-
-        if (order.needsWire)
-        {
-            wireStatus.gameObject.SetActive(true);
-            wireStatus.text = StaticData.isWireDone ? "Wire - Complete" : "Wire - Not Done";
-        }
-        else
-        {
-            wireStatus.gameObject.SetActive(false);
-        }
-
-        if (order.needsPaint)
-        {
-            paintStatus.gameObject.SetActive(true);
-            paintStatus.text = StaticData.isPaintDone ? "Paint - Complete" : "Paint - Not Done";
-        }
-        else
-        {
-            paintStatus.gameObject.SetActive(false);
-        }
-        */
     }
 
 }

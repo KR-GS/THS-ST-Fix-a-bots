@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -25,6 +26,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     public Order currentOrder;
     public bool orderReceived;
     public SpriteRenderer TVSprite;
+    public Sprite TVSpriteNoOrder;
     public Sprite TVSpriteIP;
     public Sprite TVSpriteNO;
 
@@ -210,7 +212,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         if (orderList[0].IsComplete())
         {
             Debug.Log("Order Complete!");
-            
+            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
             orderList.RemoveAt(0);
             activeOrders.RemoveAt(0); 
             StaticData.isToolDone = false;
