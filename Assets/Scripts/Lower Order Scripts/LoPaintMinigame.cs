@@ -33,16 +33,19 @@ public class LoPaintMinigame : MonoBehaviour
     private Button[] moveBtn;
 
     [SerializeField]
-    private StickerRobot rightIndicator;
-
-    [SerializeField]
-    private Canvas doneUI;
+    private Canvas checkUI;
 
     [SerializeField]
     private Canvas overviewUI;
 
     [SerializeField]
     private Canvas notesUI;
+
+    [SerializeField]
+    private Sprite correct_sprite;
+
+    [SerializeField]
+    private Sprite wrong_sprite;
 
     /*
     [SerializeField]
@@ -346,7 +349,9 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void CheckSideValues()
     {
-        
+        checkUI.transform.Find("Result Image").gameObject.SetActive(false);
+        checkUI.transform.Find("Button").gameObject.SetActive(false);
+        checkUI.enabled = true;
         StartCoroutine(ValueCheckCoroutine());
     }
 
@@ -361,6 +366,7 @@ public class LoPaintMinigame : MonoBehaviour
         int correntTypeNo = 0;
         bool countCorrect = false;
         bool typeCorrect = false;
+
         for (int i = 0; i < numOfSides; i++)
         {
             ChangeSide(i);
@@ -398,25 +404,15 @@ public class LoPaintMinigame : MonoBehaviour
                 Debug.Log("Some type is wrong");
             }
 
-            if (!typeCorrect || !countCorrect)
-            {
-                rightIndicator.SetWrongSprite();
-            }
-            else
-            {
-                rightIndicator.SetRightSprite();
-            }
-
-            yield return new WaitForSeconds(3);
-            rightIndicator.DefaultSprite();
+            yield return new WaitForSeconds(1);
         }
 
+        checkUI.transform.Find("Result Image").gameObject.SetActive(true);
 
         if (correctAnsNo == numOfSides && correntTypeNo == numOfSides)
         {
             Debug.Log("All Numbers Correct!");
             Debug.Log("All Types Correct!");
-            doneUI.enabled = true;
             overviewUI.enabled = false;
             notesUI.enabled = false;
             StaticData.isPaintDone = true;
@@ -426,6 +422,8 @@ public class LoPaintMinigame : MonoBehaviour
                 DataPersistenceManager.Instance.SaveGame();
                 Debug.Log("Paint station completion saved to StaticData.");
             }
+            checkUI.transform.Find("Result Image").GetComponent<Image>().sprite = correct_sprite;
+            checkUI.transform.Find("Button").gameObject.SetActive(true);
         }
         else
         {
@@ -434,7 +432,14 @@ public class LoPaintMinigame : MonoBehaviour
             overviewUI.enabled = true;
             StaticData.paintWrong += 1;
             Debug.Log("Added one penalty to paint score");
+            checkUI.transform.Find("Result Image").GetComponent<Image>().sprite = wrong_sprite;
+            checkUI.transform.Find("Button").gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(2f);
+
+            checkUI.enabled = false;
         }
+
         yield return null;
 
         mapSelect.ChangeSelectedSide(prevSide);
