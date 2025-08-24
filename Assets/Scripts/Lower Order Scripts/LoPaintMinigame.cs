@@ -70,6 +70,7 @@ public class LoPaintMinigame : MonoBehaviour
     }
     void Start()
     {
+        checkUI.enabled = false;
         float posY;
         float posX;
         RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();

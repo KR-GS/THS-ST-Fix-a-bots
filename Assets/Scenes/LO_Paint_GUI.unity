@@ -1619,8 +1619,8 @@ MonoBehaviour:
   checkUI: {fileID: 604964466}
   overviewUI: {fileID: 2018880989}
   notesUI: {fileID: 1847413831}
-  correct_sprite: {fileID: 0}
-  wrong_sprite: {fileID: 0}
+  correct_sprite: {fileID: 21300000, guid: 54ea72d062d2b514b8762b3c829572c4, type: 3}
+  wrong_sprite: {fileID: 21300000, guid: d3b82f9ed35395f4cb625d292b0973f0, type: 3}
 --- !u!4 &707493500
 Transform:
   m_ObjectHideFlags: 0
