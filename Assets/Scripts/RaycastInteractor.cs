@@ -131,6 +131,9 @@ public class RaycastInteractor : MonoBehaviour
                 TVSprite.sprite = TVSpriteIP;
             }
 
+            Debug.Log("Internal tool score: " + GameLoopManager.Instance.toolScore);
+            Debug.Log("Internal paint score: " + GameLoopManager.Instance.paintScore);
+            Debug.Log("Internal wire score: " + GameLoopManager.Instance.wireScore);
 
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
