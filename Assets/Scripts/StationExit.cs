@@ -34,6 +34,7 @@ public class StationExit : MonoBehaviour
                             Debug.Log("You performed poorly! Earn 1 point!");
                             GameLoopManager.Instance.toolScore += 1;
                         }
+
                     }
                     else
                     {
@@ -61,6 +62,7 @@ public class StationExit : MonoBehaviour
                             Debug.Log("You performed poorly! Earn 1 points!");
                             GameLoopManager.Instance.paintScore += 1;
                         }
+
                     }
                     else
                     {
