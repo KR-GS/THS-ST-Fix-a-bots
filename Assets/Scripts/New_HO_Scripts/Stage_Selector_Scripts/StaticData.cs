@@ -18,9 +18,16 @@ public class StaticData
 
     public static Dictionary<int, List<string>> stageSwipes = new Dictionary<int, List<string>>()
     {
-        { 1, new List<string> { "Up", "Up", "Left" } },
-        { 2, new List<string> { "Right", "Down", "Left", "Up" } },
-        { 3, new List<string> { "Left", "Left", "Up" } }
+        { 1, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 2, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 3, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 4, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 5, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 6, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 7, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 8, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 9, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 10, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
     };
 
     /* static StaticData()

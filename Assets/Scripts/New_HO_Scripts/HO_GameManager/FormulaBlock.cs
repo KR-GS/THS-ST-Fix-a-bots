@@ -1,0 +1,568 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
+
+// New enum for block types
+public enum BlockType
+{
+    Coefficient,
+    Sign,
+    Constant,
+    Variable
+}
+
+// New enum for snap positions
+public enum SnapPosition
+{
+    Left,
+    Right
+}
+
+[System.Serializable]
+public class FormulaResult
+{
+    public int coefficient;
+    public int constant;
+    public bool isComplete;
+    
+    public FormulaResult()
+    {
+        coefficient = 0;
+        constant = 0;
+        isComplete = false;
+    }
+    
+    public FormulaResult(int coef, int constt, bool complete)
+    {
+        coefficient = coef;
+        constant = constt;
+        isComplete = complete;
+    }
+    
+    public override string ToString()
+    {
+        string sign = constant >= 0 ? "+" : "-";
+        int absConst = Mathf.Abs(constant);
+        return $"{coefficient}n {sign} {absConst}";
+    }
+}
+
+public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+{
+    [Header("Block Settings")]
+    public BlockType blockType;
+    public int value;
+    public string symbol;
+    public Color blockColor = Color.white;
+
+    [Header("UI References")]
+    public TextMeshProUGUI blockText;
+    public Image blockImage;
+
+    [Header("Snap Slots")]
+    public BlockSnapSlot leftSnapSlot;
+    public BlockSnapSlot rightSnapSlot;
+
+    private RectTransform rectTransform;
+    private Canvas canvas;
+    private CanvasGroup canvasGroup;
+    private Vector3 originalPosition;
+    private Transform originalParent;
+    private bool isDragging = false;
+    private bool isLocked = false;
+
+    // Connected blocks
+    private FormulaBlock leftConnectedBlock;
+    private FormulaBlock rightConnectedBlock;
+    private FormulaBlock parentBlock; // The block this is connected to
+
+    public bool IsLocked => isLocked;
+    public int Value => value;
+    public string Symbol => symbol;
+    public FormulaBlock LeftConnectedBlock => leftConnectedBlock;
+    public FormulaBlock RightConnectedBlock => rightConnectedBlock;
+    public bool HasLeftConnection => leftConnectedBlock != null;
+    public bool HasRightConnection => rightConnectedBlock != null;
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+        {
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        originalPosition = rectTransform.anchoredPosition;
+        originalParent = transform.parent;
+
+        // Set up snap slots if they don't exist
+        SetupSnapSlots();
+
+        // Set up the block appearance
+        UpdateBlockAppearance();
+    }
+
+    private void SetupSnapSlots()
+    {
+        // Create snap slots based on block type
+        switch (blockType)
+        {
+            case BlockType.Variable: // n block - can accept coefficient on left, sign on right
+                if (leftSnapSlot == null)
+                    leftSnapSlot = CreateSnapSlot(SnapPosition.Left, BlockType.Coefficient);
+                if (rightSnapSlot == null)
+                    rightSnapSlot = CreateSnapSlot(SnapPosition.Right, BlockType.Sign);
+                break;
+
+            case BlockType.Sign: // sign block - can accept constant on right
+                if (rightSnapSlot == null)
+                    rightSnapSlot = CreateSnapSlot(SnapPosition.Right, BlockType.Constant);
+                break;
+
+            case BlockType.Coefficient: // coefficient - no snap slots (gets connected to others)
+            case BlockType.Constant: // constant - no snap slots (gets connected to others)
+                break;
+        }
+    }
+
+    private BlockSnapSlot CreateSnapSlot(SnapPosition position, BlockType acceptedType)
+    {
+        GameObject slotObj = new GameObject($"{position}SnapSlot");
+        slotObj.transform.SetParent(transform);
+
+        RectTransform slotRect = slotObj.AddComponent<RectTransform>();
+        BlockSnapSlot snapSlot = slotObj.AddComponent<BlockSnapSlot>();
+
+        // Position the snap slot
+        float xOffset = position == SnapPosition.Left ? -100f : 120f;
+        slotRect.anchoredPosition = new Vector2(xOffset, -30);
+        slotRect.sizeDelta = new Vector2(60f, 60f);
+
+        snapSlot.Initialize(acceptedType, this, position);
+
+        return snapSlot;
+    }
+
+    public void Initialize(BlockType type, int val, string sym, Color color)
+    {
+        blockType = type;
+        value = val;
+        symbol = sym;
+        blockColor = color;
+        UpdateBlockAppearance();
+        SetupSnapSlots();
+    }
+
+    private void UpdateBlockAppearance()
+    {
+        if (blockText != null)
+        {
+            blockText.text = blockType == BlockType.Variable ? symbol :
+                           blockType == BlockType.Sign ? symbol : value.ToString();
+        }
+
+        if (blockImage != null)
+        {
+            blockImage.color = blockColor;
+        }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (isLocked) return;
+
+        isDragging = true;
+
+        // Special handling for Variable block (n) - move entire chain
+        if (blockType == BlockType.Variable)
+        {
+            StartDragChain();
+        }
+        else
+        {
+            // Disconnect from parent if connected
+            DisconnectFromParent();
+            StartSingleDrag();
+        }
+    }
+
+    private void StartDragChain()
+    {
+        // Make all connected blocks semi-transparent and non-interactive
+        List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
+        foreach (FormulaBlock block in chainBlocks)
+        {
+            block.canvasGroup.alpha = 0.6f;
+            block.canvasGroup.blocksRaycasts = false;
+        }
+
+        // Move entire chain to top layer
+        transform.SetParent(canvas.transform);
+        transform.SetAsLastSibling();
+    }
+
+    private void StartSingleDrag()
+    {
+        originalPosition = rectTransform.anchoredPosition;
+        originalParent = transform.parent;
+
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
+
+        transform.SetParent(canvas.transform);
+        transform.SetAsLastSibling();
+    }
+
+    // Replace the OnDrag method in FormulaBlock with this improved version
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (isDragging && !isLocked)
+        {
+            Vector2 deltaPosition = eventData.delta / canvas.scaleFactor;
+
+            if (blockType == BlockType.Variable)
+            {
+                Vector2 currentPos = rectTransform.anchoredPosition;
+                rectTransform.anchoredPosition = currentPos + deltaPosition;
+                /*// Move entire chain - but move all blocks by the same delta
+                List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
+                foreach (FormulaBlock block in chainBlocks)
+                {
+                    // Move each block by the exact same delta to prevent drift
+                    Vector2 currentPos = block.rectTransform.anchoredPosition;
+                    block.rectTransform.anchoredPosition = currentPos + deltaPosition;
+                }*/
+            }
+            else
+            {
+                Vector2 currentPos = rectTransform.anchoredPosition;
+                rectTransform.anchoredPosition = currentPos + deltaPosition;
+            }
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (isLocked) return;
+
+        isDragging = false;
+
+        if (blockType == BlockType.Variable)
+        {
+            EndDragChain();
+        }
+        else
+        {
+            EndSingleDrag();
+        }
+    }
+
+    private void EndDragChain()
+    {
+        // Restore all connected blocks
+        List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
+        foreach (FormulaBlock block in chainBlocks)
+        {
+            block.canvasGroup.alpha = 1f;
+            block.canvasGroup.blocksRaycasts = true;
+        }
+
+        // Try to snap the entire chain to a valid position
+        EnsureChainInBounds();
+    }
+
+    private void EndSingleDrag()
+    {
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+
+        // Try to find a valid snap target
+        BlockSnapSlot nearestSlot = FindNearestValidSnapSlot();
+
+        if (nearestSlot != null && nearestSlot.CanAcceptBlock(this))
+        {
+            // Snap to the slot
+            ConnectToSlot(nearestSlot);
+        }
+        else
+        {
+            // Stay where dropped - don't return to original position
+            // Just ensure it stays in a reasonable container
+            EnsureBlockInReasonableContainer();
+            
+        }
+    }
+
+    private void EnsureBlockInReasonableContainer()
+    {
+        // If the block was dropped outside any reasonable container,
+        // move it to the block container or keep it on the canvas
+        
+        // Option 1: Keep it on the canvas (current behavior)
+        // Do nothing - block stays where it was dropped
+        
+        // Option 2: Move it to a default container if it's not in a reasonable place
+        // You can implement this if you have a specific "unused blocks" area
+        
+        // For now, just ensure it's a child of the canvas for proper layering
+        if (transform.parent == canvas.transform)
+        {
+            // It's already on the canvas, which is fine
+            return;
+        }
+    }
+
+    private void DisconnectFromParent()
+    {
+        if (parentBlock == null) return;
+
+        // Store the parent reference before nullifying
+        FormulaBlock previousParent = parentBlock;
+
+        if (parentBlock.leftConnectedBlock == this)
+        {
+            parentBlock.leftConnectedBlock = null;
+            if (parentBlock.leftSnapSlot != null)
+                parentBlock.leftSnapSlot.SetConnectedBlock(null);
+        }
+        else if (parentBlock.rightConnectedBlock == this)
+        {
+            parentBlock.rightConnectedBlock = null;
+            if (parentBlock.rightSnapSlot != null)
+                parentBlock.rightSnapSlot.SetConnectedBlock(null);
+        }
+
+        // Clear the parent reference
+        parentBlock = null;
+
+        // Notify about the disconnection
+        FormulaInputPanel.Instance?.OnBlockDisconnected(this, previousParent);
+        
+        // Update chain positions for the remaining connected blocks
+        if (previousParent != null)
+        {
+            previousParent.UpdateChainPositions();
+        }
+    }
+
+    // Add this method to update the original position when blocks are initially placed
+    public void UpdateOriginalPosition()
+    {
+        originalPosition = rectTransform.anchoredPosition;
+        originalParent = transform.parent;
+    }
+
+    // Modified ReturnToOriginalPosition - now optional and explicit
+    public void ForceReturnToOriginalPosition()
+    {
+        DisconnectFromParent();
+        transform.SetParent(originalParent);
+        rectTransform.anchoredPosition = originalPosition;
+    }
+
+    private BlockSnapSlot FindNearestValidSnapSlot()
+    {
+        BlockSnapSlot[] allSlots = FindObjectsOfType<BlockSnapSlot>();
+        BlockSnapSlot nearestSlot = null;
+        float nearestDistance = float.MaxValue;
+        float maxSnapDistance = 100f;
+
+        foreach (BlockSnapSlot slot in allSlots)
+        {
+            if (!slot.CanAcceptBlock(this)) continue;
+
+            float distance = Vector3.Distance(rectTransform.position, slot.transform.position);
+            if (distance < nearestDistance && distance < maxSnapDistance)
+            {
+                nearestDistance = distance;
+                nearestSlot = slot;
+            }
+        }
+
+        return nearestSlot;
+    }
+
+    public void ConnectToSlot(BlockSnapSlot slot)
+    {
+        // Position this block at the slot
+        transform.SetParent(slot.transform);
+        rectTransform.anchoredPosition = Vector2.zero;
+
+        // Establish the connection
+        FormulaBlock targetBlock = slot.GetOwnerBlock();
+
+        if (slot.GetPosition() == SnapPosition.Left)
+        {
+            targetBlock.leftConnectedBlock = this;
+            parentBlock = targetBlock;
+        }
+        else
+        {
+            targetBlock.rightConnectedBlock = this;
+            parentBlock = targetBlock;
+        }
+
+        slot.SetConnectedBlock(this);
+
+        // Notify the formula panel
+        FormulaInputPanel.Instance?.OnBlockConnected(this, targetBlock, slot.GetPosition());
+
+        // Update positions of all blocks in chain
+        UpdateChainPositions();
+    }
+
+    public bool IsSnapped()
+    {
+        return parentBlock != null;
+    }
+
+    public void ReturnToOriginalPosition()
+    {
+        transform.SetParent(originalParent);
+        rectTransform.anchoredPosition = originalPosition;
+    }
+
+    private List<FormulaBlock> GetAllConnectedBlocks()
+    {
+        List<FormulaBlock> blocks = new List<FormulaBlock>();
+        CollectConnectedBlocks(blocks);
+        return blocks;
+    }
+
+    private void CollectConnectedBlocks(List<FormulaBlock> blocks)
+    {
+        if (blocks.Contains(this)) return;
+
+        blocks.Add(this);
+
+        if (leftConnectedBlock != null)
+            leftConnectedBlock.CollectConnectedBlocks(blocks);
+
+        if (rightConnectedBlock != null)
+            rightConnectedBlock.CollectConnectedBlocks(blocks);
+    }
+
+    private void UpdateChainPositions()
+    {
+        // Starting from the leftmost block, position all blocks in sequence
+        FormulaBlock leftmostBlock = GetLeftmostBlock();
+        leftmostBlock.PositionChainFromThis(Vector2.zero);
+    }
+
+    private FormulaBlock GetLeftmostBlock()
+    {
+        FormulaBlock current = this;
+        while (current.leftConnectedBlock != null)
+        {
+            current = current.leftConnectedBlock;
+        }
+        return current;
+    }
+
+    private void PositionChainFromThis(Vector2 startPosition)
+    {
+        rectTransform.anchoredPosition = startPosition;
+
+        if (rightConnectedBlock != null)
+        {
+            Vector2 nextPosition = startPosition + new Vector2(100f, 0); // Spacing between blocks
+            rightConnectedBlock.PositionChainFromThis(nextPosition);
+        }
+    }
+
+    private void EnsureChainInBounds()
+    {
+        // Simple bounds checking - keep the chain within the canvas
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        Vector2 canvasSize = canvasRect.sizeDelta;
+
+        List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
+
+        // Find bounds of the entire chain
+        float minX = float.MaxValue, maxX = float.MinValue;
+        foreach (FormulaBlock block in chainBlocks)
+        {
+            Vector3[] corners = new Vector3[4];
+            block.rectTransform.GetWorldCorners(corners);
+
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 localPoint;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    canvasRect, corners[i], null, out localPoint);
+
+                minX = Mathf.Min(minX, localPoint.x);
+                maxX = Mathf.Max(maxX, localPoint.x);
+            }
+        }
+
+        // Adjust position if out of bounds
+        float adjustment = 0;
+        if (minX < -canvasSize.x / 2)
+            adjustment = (-canvasSize.x / 2) - minX + 50f;
+        else if (maxX > canvasSize.x / 2)
+            adjustment = (canvasSize.x / 2) - maxX - 50f;
+
+        if (adjustment != 0)
+        {
+            foreach (FormulaBlock block in chainBlocks)
+            {
+                block.rectTransform.anchoredPosition += new Vector2(adjustment, 0);
+            }
+        }
+    }
+
+    public void SetLocked(bool locked)
+    {
+        isLocked = locked;
+        canvasGroup.interactable = !locked;
+
+        if (locked)
+        {
+            blockImage.color = Color.Lerp(blockColor, Color.gray, 0.5f);
+        }
+        else
+        {
+            blockImage.color = blockColor;
+        }
+    }
+
+    public bool IsPartOfCompleteFormula()
+    {
+        // Check if this block is part of a complete formula chain
+        FormulaBlock nBlock = FindVariableBlockInChain();
+        if (nBlock == null) return false;
+
+        return nBlock.HasLeftConnection && nBlock.HasRightConnection &&
+               nBlock.rightConnectedBlock.HasRightConnection;
+    }
+
+    private FormulaBlock FindVariableBlockInChain()
+    {
+        List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
+        return chainBlocks.Find(b => b.blockType == BlockType.Variable);
+    }
+
+    public FormulaResult GetFormulaResult()
+    {
+        FormulaBlock nBlock = FindVariableBlockInChain();
+        if (nBlock == null || !IsPartOfCompleteFormula())
+            return new FormulaResult();
+
+        int coefficient = nBlock.leftConnectedBlock.value;
+        string sign = nBlock.rightConnectedBlock.symbol;
+        int constant = nBlock.rightConnectedBlock.rightConnectedBlock.value;
+
+        int finalConstant = sign == "+" ? constant : -constant;
+
+        return new FormulaResult(coefficient, finalConstant, true);
+    }
+}
+
+
+

@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -20,21 +20,18 @@ public class FormulaAttempt
 
 public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 {
-    public static FormulaInputPanel Instance;
+
 
     [Header("UI References")]
-    public TMP_Text feedbackText;
+    public TMP_Text coefficientText, constantText, feedbackText;
     public GameObject linePrefab, horizontalLinePrefab, yellowLinePrefab, continuePanel;
     public RectTransform buttonContainer;
     private List<GameObject> activeLines = new List<GameObject>();
-    public Button submitButton, continueButton;
-
-    [Header("Block System")]
-    public BlockManager blockManager;
+    public TextMeshProUGUI signText;
+    public Button coefUpButton, coefDownButton, constUpButton, constDownButton, submitButton, continueButton;
 
     [Header("Lock Settings")]
-    private bool lockCoefficient = false;
-    private bool lockConstant = false;
+    private bool lockCoefficient = false, lockConstant = false;
 
     private int currentCoef = 1, currentConst = 0, numStars;
 
@@ -51,16 +48,10 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private DataPersistenceManager dpm;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     public void SetLockConstant(bool constant)
     {
         lockConstant = constant;
     }
-
     public void SetLockCoefficient(bool coef)
     {
         lockCoefficient = coef;
@@ -111,6 +102,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                     StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
                 }
                 StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
+                
             }
         }
     }
@@ -122,10 +114,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             Destroy(line);
         activeLines.Clear();
 
+        //makes sure const with 1 or less don't spawn
+        
+
         for (i = 1; i <= currentConst; i++)
         {
-            if (i - 1 >= buttons.Count) break;
-
             TimePeriodButton button = buttons[i - 1];
             RectTransform btnRect = button.GetComponent<RectTransform>();
 
@@ -201,23 +194,24 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         }
     }
 
+
     private void UpdateButtonHighlights()
     {
-        if (buttons.Count == 0 || currentCoef == 0)
-        {
-            foreach (var btn in buttons)
-                btn.SetHighlighted(false);
-                
-            ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
-            return;
-        }
-
-        
-
         List<int> predictedSequence = new Sequence(buttons.Count, currentCoef, currentConst).Numbers;
 
         foreach (var btn in buttons)
             btn.SetHighlighted(false);
+
+        //highlights the const
+        /*
+        if (currentConst >= 1)
+        {
+            for (i = 0; i < currentConst; i++)
+            {
+                buttons[i].SetHighlighted(true);
+            }
+        }
+        
 
         //shows the coef 
         foreach (int num in predictedSequence)
@@ -227,6 +221,25 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 buttons[num - 1].SetBlue();
             }
         }
+        
+    //used to show the if the predicted to the actual matches
+    /*
+            foreach (int num in targetSequence.Numbers)
+            {
+                if (num >= 1 && num <= buttons.Count)
+                {
+                    buttons[num - 1].SetGray();
+                }
+            }
+
+            foreach (int num in predictedSequence)
+            {
+                if (targetSequence.Numbers.Contains(num) && num >= 1 && num <= buttons.Count)
+                {
+                    buttons[num - 1].SetGreen();
+                }
+            }
+        
 
         ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
     }
@@ -241,121 +254,27 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         currentCoef = 0;
         currentConst = 0;
 
-        SetupBlocks();
         ApplyLockSettings();
-        feedbackText.text = "Drag blocks to build the formula and submit.";
-    }
+        UpdateFormulaText();
+        feedbackText.text = "Adjust the formula and submit.";
 
-    private void SetupBlocks()
-    {
-        if (blockManager == null)
-        {
-            Debug.LogError("FormulaInputPanel: BlockManager not assigned!");
-            return;
-        }
-
-        blockManager.CreateAllBlocks();
-
-        // Organize blocks in container
-        blockManager.OrganizeBlocks();
     }
 
     private void ApplyLockSettings()
     {
-        if (lockCoefficient && targetSequence != null)
+        if (lockCoefficient)
         {
-            // Find the n block and the correct coefficient block
-            FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
-            FormulaBlock correctCoefBlock = blockManager.FindBlock(BlockType.Coefficient, targetSequence.Coefficient);
-
-            if (nBlock != null && correctCoefBlock != null && nBlock.leftSnapSlot != null)
-            {
-                correctCoefBlock.ConnectToSlot(nBlock.leftSnapSlot);
-                correctCoefBlock.SetLocked(true);
-            }
+            coefUpButton.transform.localScale = new Vector3(0, 0, 0);
+            coefDownButton.transform.localScale = new Vector3(0, 0, 0);
+            currentCoef = targetSequence.Coefficient;
+        }
+        if (lockConstant)
+        {
+            constUpButton.transform.localScale = new Vector3(0, 0, 0);
+            constDownButton.transform.localScale = new Vector3(0, 0, 0);
+            currentConst = targetSequence.Constant;
         }
 
-        if (lockConstant && targetSequence != null)
-        {
-            // Find the n block and create the sign->constant chain
-            FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
-
-            int absConstant = Mathf.Abs(targetSequence.Constant);
-            FormulaBlock correctConstBlock = blockManager.FindBlock(BlockType.Constant, absConstant);
-
-            string signSymbol = targetSequence.Constant >= 0 ? "+" : "-";
-            FormulaBlock correctSignBlock = blockManager.FindBlock(BlockType.Sign, 0, signSymbol);
-
-            if (nBlock != null && correctSignBlock != null && nBlock.rightSnapSlot != null)
-            {
-                // Connect sign to n block
-                correctSignBlock.ConnectToSlot(nBlock.rightSnapSlot);
-                correctSignBlock.SetLocked(true);
-
-                // Connect constant to sign block
-                if (correctConstBlock != null && correctSignBlock.rightSnapSlot != null)
-                {
-                    correctConstBlock.ConnectToSlot(correctSignBlock.rightSnapSlot);
-                    correctConstBlock.SetLocked(true);
-                }
-            }
-        }
-    }
-
-    public void OnBlockConnected(FormulaBlock connectedBlock, FormulaBlock targetBlock, SnapPosition position)
-    {
-        UpdateCurrentFormula();
-        UpdateButtonHighlights();
-
-        // Visual feedback
-        Debug.Log($"Block {connectedBlock.blockType} connected to {targetBlock.blockType} on {position} side");
-    }
-
-    public void OnBlockDisconnected(FormulaBlock disconnectedBlock, FormulaBlock fromBlock)
-    {
-        UpdateCurrentFormula();
-        UpdateButtonHighlights();
-
-        Debug.Log($"Block {disconnectedBlock.blockType} disconnected from {fromBlock.blockType}");
-    }
-
-    private void UpdateCurrentFormula()
-    {
-        // Find the variable block (n) to get the complete formula
-        FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
-
-        if (nBlock == null)
-        {
-            currentCoef = 0;
-            currentConst = 0;
-            return;
-        }
-
-        // Get coefficient from left connection
-        if (nBlock.HasLeftConnection)
-        {
-            currentCoef = nBlock.LeftConnectedBlock.value;
-        }
-        else
-        {
-            currentCoef = 0;
-        }
-
-        // Get constant and sign from right connections
-        if (nBlock.HasRightConnection && nBlock.RightConnectedBlock.HasRightConnection)
-        {
-            FormulaBlock signBlock = nBlock.RightConnectedBlock;
-            FormulaBlock constantBlock = signBlock.RightConnectedBlock;
-
-            int signMultiplier = signBlock.symbol == "+" ? 1 : -1;
-            currentConst = constantBlock.value * signMultiplier;
-        }
-        else
-        {
-            currentConst = 0;
-        }
-
-        Debug.Log($"Current Formula: {currentCoef}n {(currentConst >= 0 ? "+" : "")} {currentConst}");
     }
 
     private void LoadStageSelectScene()
@@ -365,39 +284,47 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        /*
-        if (formulaInputTutorial != null)
+        formulaInputTutorial.ShowTutorial(StaticData.tutorialType);
+        coefUpButton.onClick.AddListener(() => { currentCoef += 1; UpdateFormulaText(); });
+        coefDownButton.onClick.AddListener(() =>
         {
-            formulaInputTutorial.ShowTutorial(StaticData.tutorialType);
-        }
-        */
-
-        if (continueButton != null)
-        {
-            continueButton.onClick.AddListener(() =>
+            if (currentCoef > 1)
             {
-                LoadStageSelectScene();
-            });
-        }
+                currentCoef -= 1;
+                UpdateFormulaText();
+            }
+        });
 
-        if (submitButton != null)
+        continueButton.onClick.AddListener(() =>
         {
-            submitButton.onClick.AddListener(ValidateFormula);
+            LoadStageSelectScene();
+        });
+
+        constUpButton.onClick.AddListener(() => { currentConst += 1; UpdateFormulaText(); });
+        constDownButton.onClick.AddListener(() =>
+        {
+            if (currentConst > -currentCoef)
+            {
+                currentConst -= 1; UpdateFormulaText();
+            }
+        });
+
+        submitButton.onClick.AddListener(ValidateFormula);
+    }
+
+    private void UpdateFormulaText()
+    {
+        coefficientText.text = $"{currentCoef}";
+        signText.text = currentConst >= 0 ? "+" : "-";
+        constantText.text = currentConst >= 0 ? $"{currentConst}" : $"{-currentConst}";
+        if (currentCoef != 0)
+        {
+            UpdateButtonHighlights();
         }
     }
 
     private void ValidateFormula()
     {
-        // Update formula from current blocks
-        UpdateCurrentFormula();
-
-        // Check if formula is complete using the n block
-        FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
-        if (!IsFormulaComplete(nBlock))
-        {
-            feedbackText.text = "Please complete the formula by connecting all required blocks.";
-            return;
-        }
 
         string sign = currentConst >= 0 ? "+" : "-";
         int absConst = Mathf.Abs(currentConst);
@@ -409,10 +336,14 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         stageStringAttempt += attempt;
 
         StaticData.EnsureStageListSizes();
+       /* StaticData.formulaAttempts[stageData.GetStageNum()] = stageFormulaAttempts;
+
+        Debug.Log($"[Formula] Current attempts: {StaticData.formulaAttempts[stageData.GetStageNum()]}");
+
 
         if (currentCoef != targetSequence.Coefficient && currentConst != targetSequence.Constant)
         {
-            feedbackText.text = "Both coefficient and constant are wrong";
+            feedbackText.text = "Both are wrong";
         }
         else if (currentCoef != targetSequence.Coefficient && currentConst == targetSequence.Constant)
         {
@@ -424,7 +355,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         }
         else if (currentCoef == targetSequence.Coefficient && currentConst == targetSequence.Constant)
         {
-            feedbackText.text = "Perfect! Both coefficient and constant are correct!";
+            feedbackText.text = "Both are right";
 
             Debug.Log("Stage Formula Attempts = " + stageStringAttempt);
 
@@ -444,72 +375,22 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         }
     }
 
-    private bool IsFormulaComplete(FormulaBlock nBlock)
-    {
-        if (nBlock == null) return false;
-
-        // Check the complete chain: Coefficient -> n -> Sign -> Constant
-        bool hasCoefficient = nBlock.HasLeftConnection;
-        bool hasSign = nBlock.HasRightConnection;
-        bool hasConstant = hasSign && nBlock.RightConnectedBlock.HasRightConnection;
-
-        return hasCoefficient && hasSign && hasConstant;
-    }
-
-    public void ResetFormula()
-    {
-        if (blockManager != null)
-        {
-            blockManager.ResetAllBlocks();
-        }
-
-        // Reset current formula values
-        currentCoef = 0;
-        currentConst = 0;
-
-        // Clear visual elements
-        foreach (var line in activeLines)
-        {
-            Destroy(line);
-        }
-        activeLines.Clear();
-
-        // Reset button highlights
-        foreach (var btn in buttons)
-        {
-            btn.SetHighlighted(false);
-        }
-
-        feedbackText.text = "Formula reset. Drag blocks to connect them and build the formula.";
-    }
-
     public void LoadData(GameData data)
     {
     }
 
     public void SaveData(ref GameData data)
-    {
-        StaticData.EnsureStageListSizes();
+{
+    StaticData.EnsureStageListSizes();
 
-        data.lives = new List<int>(StaticData.stageLives);
-        data.restarts = new List<int>(StaticData.stageRestarts);
-        data.stageTimes = new List<float>(StaticData.stageTime);
-        data.formulaAttempts = new List<string>(StaticData.formulaAttempts);
-        data.stageStars = new List<int>(StaticData.stageStars);
-        data.stageDone = StaticData.numStageDone;
+    data.lives = new List<int>(StaticData.stageLives);
+    data.restarts = new List<int>(StaticData.stageRestarts);
+    data.stageTimes = new List<float>(StaticData.stageTime);
+    data.formulaAttempts = new List<string>(StaticData.formulaAttempts);
+    data.stageStars = new List<int>(StaticData.stageStars);
+    data.stageDone = StaticData.numStageDone;
 
-        Debug.Log("[FormulaInputPanel] Data saved from StaticData");
-    }
-
-
-    private void OnDestroy()
-    {
-        // Clean up any remaining lines
-        foreach (var line in activeLines)
-        {
-            if (line != null)
-                Destroy(line);
-        }
-        activeLines.Clear();
-    }
+    Debug.Log("[StageDataLoader] Data saved from StaticData");
 }
+}
+*/
