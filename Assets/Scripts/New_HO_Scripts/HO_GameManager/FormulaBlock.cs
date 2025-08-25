@@ -342,12 +342,6 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         // Notify about the disconnection
         FormulaInputPanel.Instance?.OnBlockDisconnected(this, previousParent);
-        
-        // Update chain positions for the remaining connected blocks
-        if (previousParent != null)
-        {
-            previousParent.UpdateChainPositions();
-        }
     }
 
     // Add this method to update the original position when blocks are initially placed
@@ -357,13 +351,6 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         originalParent = transform.parent;
     }
 
-    // Modified ReturnToOriginalPosition - now optional and explicit
-    public void ForceReturnToOriginalPosition()
-    {
-        DisconnectFromParent();
-        transform.SetParent(originalParent);
-        rectTransform.anchoredPosition = originalPosition;
-    }
 
     private BlockSnapSlot FindNearestValidSnapSlot()
     {
@@ -449,28 +436,47 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void UpdateChainPositions()
     {
-        // Starting from the leftmost block, position all blocks in sequence
-        FormulaBlock leftmostBlock = GetLeftmostBlock();
-        leftmostBlock.PositionChainFromThis(Vector2.zero);
-    }
-
-    private FormulaBlock GetLeftmostBlock()
-    {
-        FormulaBlock current = this;
-        while (current.leftConnectedBlock != null)
+        // Only update positions if this is the variable block (center of formula)
+        if (blockType != BlockType.Variable) return;
+        
+        // Keep the variable block where it is, just update connected blocks relative to it
+        Vector2 nPosition = rectTransform.anchoredPosition;
+        
+        // Position coefficient (left of n)
+        if (leftConnectedBlock != null)
         {
-            current = current.leftConnectedBlock;
+            leftConnectedBlock.rectTransform.anchoredPosition = nPosition + new Vector2(-100f, 0);
         }
-        return current;
+        
+        // Position sign (right of n)
+        if (rightConnectedBlock != null)
+        {
+            rightConnectedBlock.rectTransform.anchoredPosition = nPosition + new Vector2(100f, 0);
+            
+            // Position constant (right of sign)
+            if (rightConnectedBlock.rightConnectedBlock != null)
+            {
+                rightConnectedBlock.rightConnectedBlock.rectTransform.anchoredPosition = nPosition + new Vector2(200f, 0);
+            }
+        }
     }
 
     private void PositionChainFromThis(Vector2 startPosition)
     {
-        rectTransform.anchoredPosition = startPosition;
+        // Don't move the variable block if it's already positioned
+        if (blockType == BlockType.Variable && rectTransform.anchoredPosition != Vector2.zero)
+        {
+            // Use the current position of the variable block as the reference
+            startPosition = rectTransform.anchoredPosition;
+        }
+        else
+        {
+            rectTransform.anchoredPosition = startPosition;
+        }
 
         if (rightConnectedBlock != null)
         {
-            Vector2 nextPosition = startPosition + new Vector2(100f, 0); // Spacing between blocks
+            Vector2 nextPosition = startPosition + new Vector2(100f, 0);
             rightConnectedBlock.PositionChainFromThis(nextPosition);
         }
     }
@@ -546,21 +552,6 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
         return chainBlocks.Find(b => b.blockType == BlockType.Variable);
-    }
-
-    public FormulaResult GetFormulaResult()
-    {
-        FormulaBlock nBlock = FindVariableBlockInChain();
-        if (nBlock == null || !IsPartOfCompleteFormula())
-            return new FormulaResult();
-
-        int coefficient = nBlock.leftConnectedBlock.value;
-        string sign = nBlock.rightConnectedBlock.symbol;
-        int constant = nBlock.rightConnectedBlock.rightConnectedBlock.value;
-
-        int finalConstant = sign == "+" ? constant : -constant;
-
-        return new FormulaResult(coefficient, finalConstant, true);
     }
 }
 

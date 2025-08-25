@@ -29,38 +29,9 @@ public class BlockSnapSlot : MonoBehaviour
         acceptedBlockType = acceptedType;
         ownerBlock = owner;
         position = pos;
-        
-        SetupVisuals();
         SetupCollider();
     }
     
-    private void SetupVisuals()
-    {
-        // Add Image component for visual feedback
-        slotImage = gameObject.AddComponent<Image>();
-        slotImage.color = normalColor;
-        slotImage.raycastTarget = false;
-        
-        // Create a simple circle sprite or use a default UI sprite
-        slotImage.sprite = CreateCircleSprite();
-        
-        // Add a small text indicator
-        GameObject textObj = new GameObject("SlotText");
-        textObj.transform.SetParent(transform);
-        
-        TextMeshProUGUI slotText = textObj.AddComponent<TextMeshProUGUI>();
-        slotText.text = GetSlotSymbol();
-        slotText.fontSize = 12f;
-        slotText.color = Color.white;
-        slotText.alignment = TextAlignmentOptions.Center;
-        slotText.raycastTarget = false;
-        
-        RectTransform textRect = textObj.GetComponent<RectTransform>();
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.sizeDelta = Vector2.zero;
-        textRect.anchoredPosition = Vector2.zero;
-    }
     
     private void SetupCollider()
     {
@@ -69,40 +40,7 @@ public class BlockSnapSlot : MonoBehaviour
         slotCollider.isTrigger = true;
         slotCollider.radius = 30f; // Snap detection radius
     }
-    
-    private Sprite CreateCircleSprite()
-    {
-        // Create a simple circle texture
-        int size = 64;
-        Texture2D texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
-        Color[] pixels = new Color[size * size];
-        
-        Vector2 center = new Vector2(size * 0.5f, size * 0.5f);
-        float radius = size * 0.4f;
-        
-        for (int y = 0; y < size; y++)
-        {
-            for (int x = 0; x < size; x++)
-            {
-                Vector2 pos = new Vector2(x, y);
-                float distance = Vector2.Distance(pos, center);
-                
-                if (distance <= radius)
-                {
-                    pixels[y * size + x] = Color.white;
-                }
-                else
-                {
-                    pixels[y * size + x] = Color.clear;
-                }
-            }
-        }
-        
-        texture.SetPixels(pixels);
-        texture.Apply();
-        
-        return Sprite.Create(texture, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f));
-    }
+
     
     private string GetSlotSymbol()
     {
