@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameLoopManager : MonoBehaviour, IDataPersistence
 {
@@ -33,6 +34,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     //[SerializeField] private String fileName;
 
     public int level = 0;
+
+    public int medValue = 0;
 
     public int money = 0;
 
@@ -177,6 +180,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             Debug.Log("[LOOK HERE] Pending orders count: " + OrderManager.Instance.pendingOrders.Count);
 
+            
+
+
             StartCoroutine(UpdateStationsNextFrame());
 
         }
@@ -203,17 +209,19 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
-            Debug.Log("Post-load Init: IsPatternStarted value is..." + isPatternStarted);
+            Debug.Log("Post-load Init: IsPatternStarted value is..." + StaticData.isPatternStarted);
 
-            if (!isPatternStarted)
+            if (!StaticData.isPatternStarted)
             {
                 GenerateAndStorePattern();
-                isPatternStarted = true;
+                //isPatternStarted = true;
                 StaticData.isPatternStarted = true;
-
                 DataPersistenceManager.Instance.SaveGame();
-
                 Debug.Log("Pattern generated and flag set to true.");
+            }
+            else
+            {
+                Debug.Log("Pattern already exists, not regenerating.");
             }
 
             Debug.Log($"Correct pattern: {string.Join(", ", StaticData.toolPattern ?? new List<int>())}");
@@ -248,14 +256,15 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         this.level = data.level;
         this.money = data.money;
-        this.isPatternStarted = data.isPatternStarted;
+        //this.isPatternStarted = data.isPatternStarted;
+        StaticData.isPatternStarted = data.isPatternStarted;
         this.toolScore = data.toolScore;
         this.paintScore = data.paintScore;
         this.wireScore = data.wireScore;
 
-
+        StaticData.medValue = data.medValue;
         StaticData.dayNo = this.level;
-        StaticData.isPatternStarted = this.isPatternStarted;
+        
 
         if (dayNumber != null)
         {
@@ -268,35 +277,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         Debug.Log("Level: " + level);
 
-        /*
-        if (level >= 1 && level < 6)
-        {
-            Debug.Log("Static Data for difficulty is easy!");
-            StaticData.diffInt = 0; // Easy
-        }
-        else if (level >= 6 && level < 11)
-        {
-            Debug.Log("Static Data for difficulty is medium!");
-            StaticData.diffInt = 1; // Medium
-        }
-        else if (level >= 11)
-        {
-            Debug.Log("Static Data for difficulty is hard!");
-            StaticData.diffInt = 2; // Hard
-        }
-        */
-
         if (toolScore >= 0 && toolScore < 200)
         {
             StaticData.toolDifficulty = 0; // Easy
             Debug.Log("Static Data for tool difficulty is easy!");
         }
-        else if (toolScore >= 200 && toolScore < 400)
+        else if (toolScore >= 200 && toolScore < 500)
         {
             StaticData.toolDifficulty = 1; // Medium
             Debug.Log("Static Data for tool difficulty is medium!");
         }
-        else if (toolScore >= 400)
+        else if (toolScore >= 500)
         {
             StaticData.toolDifficulty = 2; // Hard
             Debug.Log("Static Data for tool difficulty is hard!");
@@ -307,12 +298,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             StaticData.paintDifficulty = 0; // Easy
             Debug.Log("Static Data for paint difficulty is easy!");
         }
-        else if (paintScore >= 200 && paintScore < 400)
+        else if (paintScore >= 200 && paintScore < 500)
         {
             StaticData.paintDifficulty = 1; // Medium
             Debug.Log("Static Data for paint difficulty is medium!");
         }
-        else if (paintScore >= 400)
+        else if (paintScore >= 500)
         {
             StaticData.paintDifficulty = 2; // Hard
             Debug.Log("Static Data for paint difficulty is hard!");
@@ -375,7 +366,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         data.level = this.level;
         data.money = this.money;
-        data.isPatternStarted = this.isPatternStarted;
+        data.medValue = StaticData.medValue;
+        data.isPatternStarted = StaticData.isPatternStarted;
         data.correctPattern = new List<int>(currentPattern); // Store the current pattern
         data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
         data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
@@ -441,11 +433,28 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         
 
-        if (difficulty == DifficultyLevel.easy || difficulty == DifficultyLevel.medium)
+        if (difficulty == DifficultyLevel.easy)
         {
             for (int i = 1; i <= patternLen; i++)
             {
                 numberPatternList.Add(baseHolder + (generatedDifference * i));
+            }
+        }
+        else if (difficulty == DifficultyLevel.medium)
+        {
+            if (StaticData.medValue <= 5){
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    numberPatternList.Add(baseHolder + (generatedDifference * i));
+                }
+            }
+            else
+            {
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    baseHolder += (generatedDifference + i);
+                    numberPatternList.Add(baseHolder);
+                }
             }
         }
         else if (difficulty == DifficultyLevel.hard)
@@ -472,7 +481,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             numberPaintPatternList.Add(baseHolder + (generatedDifference * i));
         }
-        
 
         return numberPaintPatternList;
     }
@@ -490,15 +498,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     private void ConfigureDifficulty(out int patternLength, out int incorrectVals, out int missingVals, out int noOfTypes, Minigame gameType)
     {
         DifficultyLevel level = DifficultyLevel.easy;
-
-        /*
-        switch (StaticData.diffInt)
-        {
-            case 0: level = DifficultyLevel.easy; break;
-            case 1: level = DifficultyLevel.medium; break;
-            case 2: level = DifficultyLevel.hard; break;
-        }
-        */
 
         switch (gameType)
         {
@@ -539,6 +538,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             missingVals = 0;
             noOfTypes = 1;
+            Debug.Log("Ezpz wins the race");
 
             if (gameType == Minigame.tool)
             {
@@ -553,12 +553,14 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         else if (level == DifficultyLevel.medium)
         {
             noOfTypes = 2;
-
+            StaticData.medValue = Random.Range(1, 10);
+            Debug.Log("Medium with value: " + StaticData.medValue);
             if (gameType == Minigame.tool)
             {
                 patternLength = 6;
                 incorrectVals = Random.Range(2, 3);
                 missingVals = Random.Range(1, 2);
+                Debug.Log("Hey look, I went here! Incorrect vals: " + incorrectVals + ", Missing Vals: " + missingVals);
             }
             else
             {
@@ -569,6 +571,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         else if (level == DifficultyLevel.hard)
         {
             noOfTypes = Random.Range(1, 3);
+            Debug.Log("Hardcore indeed!");
             if (gameType == Minigame.tool)
             {
                 patternLength = 6;
@@ -592,94 +595,239 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.incorrectVals = incorrectVals;
         StaticData.missingVals = missingVals;
         StaticData.noOfTypes = noOfTypes;
+        Debug.Log("Final values: " + StaticData.incorrectVals + ", Missing Vals: " + StaticData.missingVals);
+
     }
 
     public void GenerateAndStorePattern()
     {
-
+        Debug.Log("Tooly tooly");
         ConfigureDifficulty(out int patternLength, out int incorrectVals, out int missingVals, out int noOfTypes, Minigame.tool);
         currentPattern = GeneratePatternArray(patternLength);
         StaticData.toolPattern = currentPattern;
 
-        // Paint generation
-        ConfigureDifficulty(out patternLength, out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
-        currentPaintPattern = GeneratePaintPatternArray(6);
-        StaticData.paintPattern = currentPaintPattern;
+       
 
         Debug.Log("Pattern generated on game start: " + string.Join(", ", currentPattern));
         StaticData.toolPattern = currentPattern; // Store in StaticData for tool pattern
         StaticData.paintPattern = currentPaintPattern;
 
-        if (StaticData.incorrectIndices != null && StaticData.incorrectValues != null)
+        if (StaticData.toolDifficulty == 0 || (StaticData.toolDifficulty == 1 && StaticData.medValue <= 5))
         {
-            for (int i = 0; i < StaticData.incorrectValues.Count; i++)
-            {
-                int idx = StaticData.incorrectIndices[i];
-                if (idx >= currentPattern.Count) // Prevent out-of-range crash
-                {
-                    StaticData.incorrectIndices = null;
-                    StaticData.incorrectValues = null;
-                    break;
-                }
+           
+            Debug.Log($"Starting incorrect pattern generation. incorrectVals: {StaticData.incorrectVals}");
+            Debug.Log($"Current pattern: " + string.Join(", ", currentPattern));
 
-                int original = currentPattern[idx];
-                int loaded = StaticData.incorrectValues[i];
-                if (loaded >= original)
-                {
-                    Debug.LogWarning("Old incorrect pattern is invalid — regenerating.");
-                    StaticData.incorrectIndices = null;
-                    StaticData.incorrectValues = null;
-                    break;
-                }
-            }
-        }
-
-        if (StaticData.incorrectIndices != null && StaticData.incorrectIndices.Count > 0 &&
-        StaticData.incorrectValues != null && StaticData.incorrectValues.Count == StaticData.incorrectIndices.Count)
-        {
-            // Already generated; use stored values
-            List<int> loadedPattern = new List<int>(currentPattern);
-            for (int i = 0; i < StaticData.incorrectIndices.Count; i++)
+            bool isValidIncorrect = false;
+       
+            if (StaticData.incorrectIndices != null && StaticData.incorrectValues != null)
             {
-                int idx = StaticData.incorrectIndices[i];
-                loadedPattern[idx] = StaticData.incorrectValues[i];
-            }
-            StaticData.incorrectToolPattern = loadedPattern;
-            Debug.Log("Loaded incorrect pattern from StaticData: " + string.Join(", ", loadedPattern));
-        }
-        else
-        {
-            // First time: generate incorrect pattern
-            List<int> incorrectPattern = new List<int>(currentPattern);
-            StaticData.incorrectIndices = new List<int>();
-            StaticData.incorrectValues = new List<int>();
-
-            HashSet<int> changedIndices = new HashSet<int>();
-            while (changedIndices.Count < incorrectVals)
-            {
-                int randIndex = Random.Range(0, incorrectPattern.Count);
-                if (!changedIndices.Contains(randIndex))
+                Debug.Log($"Existing data found - indices: {StaticData.incorrectIndices.Count}, values: {StaticData.incorrectValues.Count}");
+                if (StaticData.incorrectIndices.Count == StaticData.incorrectValues.Count &&
+                    StaticData.incorrectIndices.Count == StaticData.incorrectVals) 
                 {
-                    int original = incorrectPattern[randIndex];
-                    int newVal;
-                    do
+                    isValidIncorrect = true;
+                    for (int i = 0; i < StaticData.incorrectValues.Count; i++)
                     {
-                        newVal = original + Random.Range(-4, -1);
-                        //newVal = original + Random.Range(-3, 4); //values can either be up or down of the value
-                    } while (newVal == original || newVal < 0);
+                        int idx = StaticData.incorrectIndices[i];
+                        if (idx < 0 || idx >= currentPattern.Count)
+                        {
+                            Debug.Log($"Invalid index {idx} at position {i}");
+                            isValidIncorrect = false;
+                            break;
+                        }
+                        int original = currentPattern[idx];
+                        int loaded = StaticData.incorrectValues[i];
+                        // Must be different and non-negative
+                        if (loaded == original || loaded < 0)
+                        {
+                            Debug.Log($"Invalid value {loaded} for index {idx} (original: {original})");
+                            isValidIncorrect = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log("Count mismatch - regenerating");
+                }
+            }
+            else
+            {
+                Debug.Log("No existing data found - generating new");
+            }
 
-                    incorrectPattern[randIndex] = newVal;
-                    changedIndices.Add(randIndex);
+            if (isValidIncorrect)
+            {
+    
+                List<int> loadedPattern = new List<int>(currentPattern);
+                for (int i = 0; i < StaticData.incorrectIndices.Count; i++)
+                {
+                    loadedPattern[StaticData.incorrectIndices[i]] = StaticData.incorrectValues[i];
+                }
+                StaticData.incorrectToolPattern = loadedPattern;
+                Debug.Log("Loaded incorrect pattern from StaticData: " + string.Join(", ", loadedPattern));
+            }
+            else
+            {
+                // Generate a new incorrect pattern
+                List<int> incorrectPattern = new List<int>(currentPattern);
+                StaticData.incorrectIndices = new List<int>();
+                StaticData.incorrectValues = new List<int>();
+                HashSet<int> changedIndices = new HashSet<int>();
 
-                    // Store incorrect index and value
-                    StaticData.incorrectIndices.Add(randIndex);
-                    StaticData.incorrectValues.Add(newVal);
+                Debug.Log($"Generating {StaticData.incorrectVals} incorrect values");
+
+               
+                int attempts = 0;
+                int maxAttempts = 1000;
+
+       
+                while (changedIndices.Count < StaticData.incorrectVals && attempts < maxAttempts)
+                {
+                    attempts++;
+                    int randIndex = Random.Range(0, incorrectPattern.Count);
+                    Debug.Log($"Attempt {attempts}: Trying index {randIndex}, already changed: {changedIndices.Contains(randIndex)}");
+
+                    if (!changedIndices.Contains(randIndex))
+                    {
+                        int original = incorrectPattern[randIndex];
+                        int newVal;
+                        int innerAttempts = 0;
+                        int maxInnerAttempts = 100;
+
+                        Debug.Log($"Original value at index {randIndex}: {original}");
+
+          
+                        if (original <= 1)
+                        {
+        
+                            Debug.LogWarning($"Cannot generate incorrect value for {original} (too small)");
+                            continue;
+                        }
+
+                        do
+                        {
+                            innerAttempts++;
+                            newVal = Random.Range(1, original); 
+                            Debug.Log($"Inner attempt {innerAttempts}: newVal = Random.Range(1, {original}) = {newVal}");
+                        } while (newVal == original && innerAttempts < maxInnerAttempts);
+
+                        if (innerAttempts >= maxInnerAttempts)
+                        {
+                            Debug.LogError($"Could not generate valid value for index {randIndex} after {maxInnerAttempts} attempts");
+      
+                            newVal = Mathf.Max(1, original - 1);
+                        }
+
+                        Debug.Log($"Setting index {randIndex} from {original} to {newVal}");
+                        incorrectPattern[randIndex] = newVal;
+                        changedIndices.Add(randIndex);
+
+                        // Save wrong index and value
+                        StaticData.incorrectIndices.Add(randIndex);
+                        StaticData.incorrectValues.Add(newVal);
+
+                        Debug.Log($"Progress: {changedIndices.Count}/{StaticData.incorrectVals} changes made");
+                    }
+                }
+
+                if (attempts >= maxAttempts)
+                {
+                    Debug.LogError($"Could not generate {StaticData.incorrectVals} incorrect values after {maxAttempts} attempts");
+                }
+
+                StaticData.incorrectToolPattern = incorrectPattern;
+                Debug.Log("Final incorrect pattern generated: " + string.Join(", ", incorrectPattern));
+                Debug.Log("Changed indices: " + string.Join(", ", StaticData.incorrectIndices));
+                Debug.Log("Changed values: " + string.Join(", ", StaticData.incorrectValues));
+            }
+        }
+        else if (StaticData.toolDifficulty == 2 || (StaticData.toolDifficulty == 1 && StaticData.medValue > 5))
+        {
+            Debug.Log("Zero zero zero zero zero!");
+            bool isValidMissing = false;
+
+            if (StaticData.incorrectIndices != null && StaticData.incorrectValues != null)
+            {
+                if (StaticData.incorrectIndices.Count == StaticData.incorrectValues.Count &&
+                    StaticData.incorrectIndices.Count == StaticData.missingVals)
+                {
+                    isValidMissing = true;
+                    for (int i = 0; i < StaticData.incorrectValues.Count; i++)
+                    {
+                        int idx = StaticData.incorrectIndices[i];
+
+                        if (idx < 0 || idx >= currentPattern.Count)
+                        {
+                            isValidMissing = false;
+                            break;
+                        }
+
+                        int original = currentPattern[idx];
+                        int loaded = StaticData.incorrectValues[i];
+
+                        if (loaded == original || loaded < 0)
+                        {
+                            isValidMissing = false;
+                            break;
+                        }
+                    }
                 }
             }
 
-            StaticData.incorrectToolPattern = incorrectPattern;
-            Debug.Log("Incorrect pattern saved: " + string.Join(", ", incorrectPattern));
+
+            if (isValidMissing)
+            {
+                List<int> loadedPattern = new List<int>(currentPattern);
+                for (int i = 0; i < StaticData.incorrectIndices.Count; i++)
+                {
+                    loadedPattern[StaticData.incorrectIndices[i]] = StaticData.incorrectValues[i];
+                }
+                StaticData.incorrectToolPattern = loadedPattern;
+                Debug.Log("Loaded incorrect pattern from StaticData: " + string.Join(", ", loadedPattern));
+            }
+            else
+            {
+                List<int> incorrectPattern = new List<int>(currentPattern);
+                StaticData.incorrectIndices = new List<int>();
+                StaticData.incorrectValues = new List<int>();
+
+                HashSet<int> changedIndices = new HashSet<int>();
+
+                while (changedIndices.Count < StaticData.missingVals)
+                {
+                    int randIndex = Random.Range(0, incorrectPattern.Count);
+
+                    if (!changedIndices.Contains(randIndex))
+                    {
+                        int original = incorrectPattern[randIndex];
+                        int newVal;
+
+                        do
+                        {
+                            newVal = 0; 
+                        } while (newVal == original || newVal < 0);
+
+                        incorrectPattern[randIndex] = newVal;
+                        changedIndices.Add(randIndex);
+
+                        
+                        StaticData.incorrectIndices.Add(randIndex);
+                        StaticData.incorrectValues.Add(newVal);
+                    }
+                }
+
+                StaticData.incorrectToolPattern = incorrectPattern;
+                Debug.Log("Missing pattern generated: " + string.Join(", ", incorrectPattern));
+            }
         }
+
+
+        Debug.Log("Painty painty");
+        ConfigureDifficulty(out patternLength, out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
+        currentPaintPattern = GeneratePaintPatternArray(6);
+        StaticData.paintPattern = currentPaintPattern;
 
         StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
         StaticData.selectedStickerIndex = Random.Range(0, 3);
@@ -724,17 +872,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.wireWrong = 0;
 
 
-        if (toolScore >= 0 && toolScore < 200)
+        if (toolScore >= 0 && toolScore < 200) //Originally 200
         {
             StaticData.toolDifficulty = 0; // Easy
             Debug.Log("Static Data for tool difficulty is easy!");
         }
-        else if (toolScore >= 200 && toolScore < 400)
+        else if (toolScore >= 200 && toolScore < 500)
         {
             StaticData.toolDifficulty = 1; // Medium
             Debug.Log("Static Data for tool difficulty is medium!");
         }
-        else if (toolScore >= 400)
+        else if (toolScore >= 500)
         {
             StaticData.toolDifficulty = 2; // Hard
             Debug.Log("Static Data for tool difficulty is hard!");
@@ -745,12 +893,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             StaticData.paintDifficulty = 0; // Easy
             Debug.Log("Static Data for paint difficulty is easy!");
         }
-        else if (paintScore >= 200 && paintScore < 400)
+        else if (paintScore >= 200 && paintScore < 500)
         {
             StaticData.paintDifficulty = 1; // Medium
             Debug.Log("Static Data for paint difficulty is medium!");
         }
-        else if (paintScore >= 400)
+        else if (paintScore >= 500)
         {
             StaticData.paintDifficulty = 2; // Hard
             Debug.Log("Static Data for paint difficulty is hard!");

@@ -146,42 +146,42 @@ public class LoToolMinigame : MonoBehaviour
         {
             case 0:
                 slotToFix = StaticData.incorrectVals;
-                //slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
                 isFix = true;
                 Debug.Log("Fixing in easy!");
-                //Debug.Log("Fixing in " + toolDifficulty.GetDifficulty());
                 break;
             case 1:
-                //Randomize between missing and incorrect value where:
-                //  0 = incorrect value
-                //  1 = missing value
                 Debug.Log("Fixing in medium!");
-                medValue = Random.Range(1, 10);
-                Debug.Log("Choosing: " + medValue);
+
+                medValue = StaticData.medValue;
                 if (medValue <= 5)
                 {
                     slotToFill = 0;
                     slotToFix = StaticData.incorrectVals;
-                    //slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
                     isFix = true;
                     Debug.Log("Method to follow: fix");
                 }
                 else
                 {
-                    slotToFix = 0;
-                    slotToFill = StaticData.missingVals;
-                    //slotToFill = toolDifficulty.GetNumberOfMissingVal();
-                    isFix = false;
+                    //slotToFix = 0;
+                    slotToFix = StaticData.missingVals;
+                    isFix = true;
                     Debug.Log("Method to follow: fill");
                 }
                 break;
             case 2:
+                /*
                 Debug.Log("Fixing in hard!");
                 slotToFix = 0;
                 slotToFill = StaticData.missingVals;
-                //slotToFill = toolDifficulty.GetNumberOfMissingVal();
-                isFix = false;
+                isFix = true;
                 Debug.Log("Filling");
+                */
+                //slotToFix = 0;
+
+                slotToFix = StaticData.missingVals;
+                isFix = true;
+                Debug.Log("Filling");
+
                 break;
             default:
                 Debug.Log("Playing tutorial code");
@@ -196,6 +196,7 @@ public class LoToolMinigame : MonoBehaviour
         switch (isFix)
         {
             case true:
+                Debug.Log("Fixing!");
                 numberToDisplay = generatedList.ToArray();
 
                 difference = numberToDisplay[1] - numberToDisplay[0];
@@ -224,9 +225,10 @@ public class LoToolMinigame : MonoBehaviour
                     numberToDisplay[index] = StaticData.incorrectValues[i];
                 }
                 break;
-            case false: 
+            case false:
                 //if(toolDifficulty.GetDifficulty() == "hard")
-                if(StaticData.toolDifficulty == 2)
+                Debug.Log("Filling!");
+                if(StaticData.toolDifficulty == 1 || StaticData.toolDifficulty == 2)
                 {
                     for (int i = 0; i < patternLength - slotToFill; i++)
                     {

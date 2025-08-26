@@ -53,13 +53,13 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         else
             Debug.LogWarning("Order Complete Panel not assigned yet!");
 
+        //DataPersistenceManager.Instance.LoadGame();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "LO_WS2D")
         {
-            
             Debug.Log("Returned to WorkshopScene. Checking for completed orders...");
             StartCoroutine(HandleWorkshopSceneLoad());
         }
@@ -89,8 +89,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             TryCompleteOrder();
         }
-    }
 
+    }
     
 
     public Order CreateNewOrder()
@@ -114,14 +114,16 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = false;
         }
- 
+
+        
         else if (level >= 11)
         {
             float rand = Random.value;
             newOrder.needsTool = Random.value < 0.5f;
             newOrder.needsPaint = Random.value < 0.5f;
-            newOrder.needsWire = false;
+            newOrder.needsWire = false; //Set to true if wire is finalized
         }
+        
         
         // Ensure at least one requirement
         if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)
@@ -148,9 +150,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     public void StartOrderBatch()
     {
-            pendingOrders.Clear();
             if (!orderReceived)
             {
+                pendingOrders.Clear();
                 orderReceived = true;
                 for (int i = 0; i < 5; i++)
                 {
@@ -174,6 +176,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 // start coroutine to handle the rest
                 Instance.StartCoroutine(ScheduleNextOrder());
             }
+            else if (orderReceived)
+            {
+            Debug.Log("Orders have already been received for this level.");
+        }
     }
 
     private IEnumerator ScheduleNextOrder()
@@ -210,7 +216,11 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             StaticData.isPaintDone = false;
             StaticData.isWireDone = false;
             StaticData.isOrderChecked = false;
+            StaticData.incorrectIndices.Clear();
+            StaticData.incorrectValues.Clear();
+            StaticData.missingVals = 0;
             GameLoopManager.Instance.GenerateAndStorePattern();
+
 
             if (TimerScript.instance != null)
             {
@@ -233,6 +243,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             {
                 sendNewOrder = true;
                 StaticData.sendNewOrder = true;
+                Debug.Log("sendNewOrder is now set to true!:" + sendNewOrder);
+                Debug.Log("StaticData.sendNewOrder is now set to true!:" + StaticData.sendNewOrder);
             }
         }
 
