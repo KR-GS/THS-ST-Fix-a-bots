@@ -77,6 +77,7 @@ public class StationExit : MonoBehaviour
 
             Debug.Log($"Successfully returned from {type} station!");
             //OrderManager.Instance.TryCompleteOrder();
+            GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);

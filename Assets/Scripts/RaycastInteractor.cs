@@ -79,12 +79,23 @@ public class RaycastInteractor : MonoBehaviour
 
     private void Start()
     {
-        if (OrderManager.Instance != null && OrderManager.Instance.GetCurrentOrder() != null)
+        if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() != null)
         {
             if (TVSprite != null)
             {
                 TVSprite.sprite = TVSpriteIP;
             }
+        }
+        else if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() == null)
+        {
+            if (TVSprite != null)
+            {
+                TVSprite.sprite = TVSpriteNoOrder;
+            }
+
+            if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
+            if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
+            if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
         }
     }
 
@@ -137,7 +148,7 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("Hiding order sheet panel.");
             orderSheetPanel.SetActive(false);
 
-            Order savedOrder = OrderManager.Instance.GetCurrentOrder();
+            Order savedOrder = OrderManager.Instance.GetActiveOrder();
 
             if (TVSprite != null && TVSprite.sprite == TVSpriteNO)
             {
@@ -148,6 +159,7 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("Internal paint score: " + GameLoopManager.Instance.paintScore);
             Debug.Log("Internal wire score: " + GameLoopManager.Instance.wireScore);
 
+            GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
@@ -298,10 +310,10 @@ public class RaycastInteractor : MonoBehaviour
             return;
         }
 
-        Order order = OrderManager.Instance.activeOrders[0]; // Get the first active order
+        Order order = OrderManager.Instance.GetActiveOrder(); // Get the first active order (activeOrders[0])
 
         orderSheetPanel.gameObject.SetActive(true);
-
+        GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);

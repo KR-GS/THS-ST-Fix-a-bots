@@ -48,6 +48,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private TimerScript timer;
 
+    public Image moneyImage;
+
     public int toolScore;
 
     public int paintScore;
@@ -87,6 +89,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (scene.name == "LO_WS2D")
         {
             // Re-find and assign the new instance of the text
+
             GameObject dayTextObject = GameObject.Find("DayNumber");
             if (dayTextObject != null)
             {
@@ -111,7 +114,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 moneyText = moneyTextObject.GetComponent<TextMeshProUGUI>();
                 if (moneyText != null)
                 {
-                    moneyText.text = "Money: " + money;
+                    moneyText.text = money.ToString();
                 }
                 else
                 {
@@ -172,6 +175,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 }
             }
 
+            Debug.Log("[LOOK HERE] Pending orders count: " + OrderManager.Instance.pendingOrders.Count);
+
             StartCoroutine(UpdateStationsNextFrame());
 
         }
@@ -181,6 +186,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (moneyText != null) moneyText.gameObject.SetActive(false);
             if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
+            if (moneyImage != null) moneyImage.gameObject.SetActive(false);
             ShowTV(false);
             if (TimerScript.instance != null && TimerScript.instance.timer != null)
             {
@@ -258,7 +264,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (moneyText != null)
         {
-            moneyText.text = "Money: " + this.money;
+            moneyText.text = this.money.ToString();
         }
         Debug.Log("Level: " + level);
 
@@ -388,7 +394,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         if (moneyText != null)
         {
-            moneyText.text = "Money: " + money;
+            moneyText.text = money.ToString();
         }
     }
 
@@ -774,7 +780,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         GenerateAndStorePattern();
 
         dayNumber.text = "Day: " + this.level;
-        moneyText.text = "Money: " + this.money;
+        moneyText.text = this.money.ToString();
         Debug.Log("Starting Level " + level);
         if (TimerScript.instance != null && TimerScript.instance.timer != null)
         {

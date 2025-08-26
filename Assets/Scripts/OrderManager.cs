@@ -29,7 +29,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     public Sprite TVSpriteNoOrder;
     public Sprite TVSpriteIP;
     public Sprite TVSpriteNO;
-
+    private Coroutine scheduleRoutine;
 
     public int currentOrderIndex = -1;
 
@@ -59,6 +59,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     {
         if (scene.name == "LO_WS2D")
         {
+            
             Debug.Log("Returned to WorkshopScene. Checking for completed orders...");
             StartCoroutine(HandleWorkshopSceneLoad());
         }
@@ -94,16 +95,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     public Order CreateNewOrder()
     {
-        /*
-        Order newOrder = new Order
-        {
-            //needsTool = Random.value > 0.99f
-
-            needsTool = Random.value > 0.0f,
-            needsPaint = Random.value > 1.0f,
-            //needsWire = Random.value > 0.5f
-        };
-        */
 
         int level = GameLoopManager.Instance.level; // adjust if you track level differently
         Order newOrder = new Order();
@@ -157,32 +148,32 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     public void StartOrderBatch()
     {
-        pendingOrders.Clear();
-        if (!orderReceived)
-        {
-            orderReceived = true;
-            for (int i = 0; i < 5; i++)
+            pendingOrders.Clear();
+            if (!orderReceived)
             {
-                Order o = CreateNewOrder();
-                pendingOrders.Enqueue(o);
+                orderReceived = true;
+                for (int i = 0; i < 5; i++)
+                {
+                    Order o = CreateNewOrder();
+                    pendingOrders.Enqueue(o);
+                }
+
+                if (pendingOrders.Count > 0)
+                {
+                    var firstOrder = pendingOrders.Dequeue();
+                    AddToActiveOrders(firstOrder);
+                    currentOrder = firstOrder;
+                    Debug.Log("First order delivered!");
+                    TVSprite.sprite = TVSpriteNO;
+
+                    // lock sending more until this order is completed
+                    sendNewOrder = false;
+                    StaticData.sendNewOrder = false;
+                }
+
+                // start coroutine to handle the rest
+                Instance.StartCoroutine(ScheduleNextOrder());
             }
-
-            if (pendingOrders.Count > 0)
-            {
-                var firstOrder = pendingOrders.Dequeue();
-                AddToActiveOrders(firstOrder);
-                currentOrder = firstOrder;
-                Debug.Log("First order delivered!");
-                TVSprite.sprite = TVSpriteNO;
-
-                // lock sending more until this order is completed
-                sendNewOrder = false;
-                StaticData.sendNewOrder = false;
-            }
-
-            // start coroutine to handle the rest
-            Instance.StartCoroutine(ScheduleNextOrder());
-        }
     }
 
     private IEnumerator ScheduleNextOrder()
@@ -318,6 +309,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
 
         //completeText.gameObject.SetActive(true);
+        GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
@@ -345,8 +337,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         orderCompletePanel.SetActive(false);
         Debug.Log("[OrderManager] Hiding panel: " + orderCompletePanel.name);
+        Debug.Log("[LOOK HERE] Pending orders count: " + pendingOrders.Count);
 
         //completeText.gameObject.SetActive(false);
+        GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
@@ -369,6 +363,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         StaticData.isOrderChecked = data.isOrderChecked;
         StaticData.sendNewOrder = data.sendNewOrder;
 
+     
         if (TimerScript.instance != null && GetCurrentOrder() != null)
         {
             TimerScript.instance.StartTimer();
@@ -384,11 +379,14 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Debug.Log("There are no saved pending orders. Initializing empty queue.");
             this.pendingOrders = new Queue<Order>();
         }
+     
+
 
         if (orderReceived && pendingOrders.Count > 0)
         {
             StartCoroutine(ScheduleNextOrder());
         }
+        
     }
 
     public void SaveData(ref GameData data)
