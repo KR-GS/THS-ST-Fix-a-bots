@@ -593,6 +593,7 @@ public class LoToolMinigame : MonoBehaviour
 
     public void OverheadView()
     {
+        Debug.Log(currentInt);
         fastenerObj[currentInt].SetActive(false);
         currentInt = -1;
 
@@ -820,7 +821,7 @@ public class LoToolMinigame : MonoBehaviour
             ToggleGapHolder(true);
         }
 
-        
+        Camera.main.GetComponent<ToolCamera>().ClearLoadingIcons();
     }
 
     private IEnumerator TriggerFastenerChange(Button button)

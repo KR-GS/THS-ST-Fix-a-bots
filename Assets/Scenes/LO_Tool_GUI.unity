@@ -867,8 +867,6 @@ MonoBehaviour:
   fastenerType: 3
   fastenerValue: 4
   tool: {fileID: 6710342850988161296, guid: d3af05035617e194fbe5682ffba3820b, type: 3}
-  wrong_attempt_sprite: {fileID: -936172528, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
-  correct_attempt_sprite: {fileID: -1890707645, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!1 &202795837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,8 +1601,6 @@ MonoBehaviour:
   fastenerType: 0
   fastenerValue: 1
   tool: {fileID: 6710342850988161296, guid: 562f8e9bcd9413846bf00c716d3e6f4e, type: 3}
-  wrong_attempt_sprite: {fileID: -876842769, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
-  correct_attempt_sprite: {fileID: -1948271735, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!1 &450526536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,8 +1751,6 @@ MonoBehaviour:
   fastenerType: 2
   fastenerValue: 3
   tool: {fileID: 5915793044961681256, guid: 54ebcf16cbb9745458c0f8f7bd5ccd5b, type: 3}
-  wrong_attempt_sprite: {fileID: 1597143511, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
-  correct_attempt_sprite: {fileID: 180500846, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!1 &462270654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2164,8 +2158,6 @@ MonoBehaviour:
   fastenerType: 1
   fastenerValue: 2
   tool: {fileID: 5915793044961681256, guid: 5d6931c3f7498b944a62cd117aeba6a8, type: 3}
-  wrong_attempt_sprite: {fileID: 737612968, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
-  correct_attempt_sprite: {fileID: -251369554, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!223 &536181604 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 5314409936409160288, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
@@ -6375,7 +6367,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1742507110}
         m_TargetAssemblyTypeName: ToolCamera, Assembly-CSharp
         m_MethodName: OverheadCameraView
         m_Mode: 1
