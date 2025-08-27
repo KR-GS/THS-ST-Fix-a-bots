@@ -73,6 +73,8 @@ public class GameData
 
     public int wireScore;
 
+    public int medValue;
+
     public GameData()
     {
         this.level = 1;
@@ -104,6 +106,7 @@ public class GameData
         this.toolScore = 0;
         this.paintScore = 0;
         this.wireScore = 0;
+        this.medValue = 0;
     }
 
 

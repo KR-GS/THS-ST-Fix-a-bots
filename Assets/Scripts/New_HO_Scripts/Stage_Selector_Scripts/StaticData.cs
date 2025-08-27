@@ -17,6 +17,8 @@ public class StaticData
     public static bool isPaintDone = false;
     public static int selectedFastenerIndex;
 
+    public static int medValue = 0;
+
     public static bool isOrderChecked = false;
 
     public static bool sendNewOrder = false;
