@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
@@ -12,7 +13,7 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private ToolTilingManager tilingManager;
 
-    [Header("Canvases")]
+    [Header("UI")]
     [SerializeField]
     private Canvas zoomInCanvas;
 
@@ -23,9 +24,6 @@ public class ToolCamera : MonoBehaviour
     private Canvas overViewCanvas;
 
     [SerializeField]
-    private Canvas doneCanvas;
-
-    [SerializeField]
     private Canvas notesCanvas;
 
     [SerializeField]
@@ -34,14 +32,19 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private Canvas checkingCanvas;
 
+    [Header("Sprites")]
     [SerializeField]
     private Sprite correct_sprite;
 
     [SerializeField]
     private Sprite wrong_sprite;
 
+    [SerializeField]
+    private GameObject loading_Prefab;
+
     private Vector3 originalPosition;
     private float originalSize;
+    private List<GameObject> loading_icons = new List<GameObject>();
 
     public void OverheadCameraView()
     {
@@ -118,7 +121,6 @@ public class ToolCamera : MonoBehaviour
     {
         notesCanvas.enabled = false;
         overViewCanvas.enabled = false;
-        doneCanvas.enabled = true;
         zoomInCanvas.enabled = false;
         toolCanvas.enabled = false;
     }
@@ -141,5 +143,24 @@ public class ToolCamera : MonoBehaviour
     public void ToggleCheckingCanvas()
     {
         checkingCanvas.enabled = !checkingCanvas.enabled;
+    }
+
+    public void CreateLoadingIcons(Vector3 spawn_pos)
+    {
+        loading_icons.Add(Instantiate(loading_Prefab, checkingCanvas.transform));
+
+        int latest_index = loading_icons.Count - 1;
+
+        loading_icons[latest_index].transform.position = spawn_pos;
+    }
+
+    public void DeleteLoadingIcons(int icon_to_delete)
+    {
+        Destroy(loading_icons[icon_to_delete]);
+    }
+
+    public void ClearLoadingIcons()
+    {
+        loading_icons.Clear();
     }
 }

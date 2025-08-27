@@ -867,6 +867,8 @@ MonoBehaviour:
   fastenerType: 3
   fastenerValue: 4
   tool: {fileID: 6710342850988161296, guid: d3af05035617e194fbe5682ffba3820b, type: 3}
+  wrong_attempt_sprite: {fileID: -936172528, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  correct_attempt_sprite: {fileID: -1890707645, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!1 &202795837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,6 +1603,8 @@ MonoBehaviour:
   fastenerType: 0
   fastenerValue: 1
   tool: {fileID: 6710342850988161296, guid: 562f8e9bcd9413846bf00c716d3e6f4e, type: 3}
+  wrong_attempt_sprite: {fileID: -876842769, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  correct_attempt_sprite: {fileID: -1948271735, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!1 &450526536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,6 +1755,8 @@ MonoBehaviour:
   fastenerType: 2
   fastenerValue: 3
   tool: {fileID: 5915793044961681256, guid: 54ebcf16cbb9745458c0f8f7bd5ccd5b, type: 3}
+  wrong_attempt_sprite: {fileID: 1597143511, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  correct_attempt_sprite: {fileID: 180500846, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!1 &462270654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,6 +2164,8 @@ MonoBehaviour:
   fastenerType: 1
   fastenerValue: 2
   tool: {fileID: 5915793044961681256, guid: 5d6931c3f7498b944a62cd117aeba6a8, type: 3}
+  wrong_attempt_sprite: {fileID: 737612968, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  correct_attempt_sprite: {fileID: -251369554, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
 --- !u!223 &536181604 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 5314409936409160288, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
@@ -5489,12 +5497,12 @@ MonoBehaviour:
   zoomInCanvas: {fileID: 2018880989}
   toolCanvas: {fileID: 310669089}
   overViewCanvas: {fileID: 1357695579}
-  doneCanvas: {fileID: 0}
   notesCanvas: {fileID: 536181604}
   counterCanvas: {fileID: 1194906380}
   checkingCanvas: {fileID: 1985247687}
   correct_sprite: {fileID: 21300000, guid: 54ea72d062d2b514b8762b3c829572c4, type: 3}
   wrong_sprite: {fileID: 21300000, guid: d3b82f9ed35395f4cb625d292b0973f0, type: 3}
+  loading_Prefab: {fileID: 630110251024977566, guid: b4db17b859d9bed4da396d8f735b2f0f, type: 3}
 --- !u!1 &1813378006
 GameObject:
   m_ObjectHideFlags: 0
@@ -5810,6 +5818,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6601697706049367235, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7585994262349667129, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_Name
       value: Notes
@@ -5864,7 +5876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1888608558
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6363,7 +6375,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1742507110}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ToolCamera, Assembly-CSharp
         m_MethodName: OverheadCameraView
         m_Mode: 1

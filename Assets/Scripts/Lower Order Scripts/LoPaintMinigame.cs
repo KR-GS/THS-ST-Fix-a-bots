@@ -405,7 +405,7 @@ public class LoPaintMinigame : MonoBehaviour
                 Debug.Log("Some type is wrong");
             }
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.75f);
         }
 
         checkUI.transform.Find("Result Image").gameObject.SetActive(true);

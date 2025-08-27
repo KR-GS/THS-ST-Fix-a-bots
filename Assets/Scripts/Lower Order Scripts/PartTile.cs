@@ -32,8 +32,8 @@ public class PartTile : MonoBehaviour
         return isRight;
     }
 
-    public void SetWrongAttemptSprite()
+    public void SetAttemptSprite(Sprite resulting_sprite)
     {
-        
+        fastenerHolder.GetChild(0).GetComponentInChildren<SpriteRenderer>().sprite = resulting_sprite;
     }
 }
