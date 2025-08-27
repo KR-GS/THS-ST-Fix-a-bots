@@ -405,23 +405,7 @@ public class LoToolMinigame : MonoBehaviour
                 bool useCountManager = false;
                 numberToDisplay[currentInt]++;
 
-                if (currentInt == patternLength-1)
-                {
-                    gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
-                }
-                else
-                {
-                    if(currentInt > 0)
-                    {
-                        gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
-                        gapToDisplay[currentInt] = numberToDisplay[currentInt+1] - numberToDisplay[currentInt];
-                    }
-                    else
-                    {
-                        gapToDisplay[currentInt] = numberToDisplay[currentInt + 1] - numberToDisplay[currentInt];
-                    }
-                        
-                }
+                UpdateGapCounters();
 
                 if (numberToDisplay[currentInt]<24)
                 {
@@ -476,6 +460,27 @@ public class LoToolMinigame : MonoBehaviour
 
                 addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
             }
+        }
+    }
+
+    private void UpdateGapCounters()
+    {
+        if (currentInt == patternLength - 1)
+        {
+            gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
+        }
+        else
+        {
+            if (currentInt > 0)
+            {
+                gapToDisplay[currentInt - 1] = numberToDisplay[currentInt] - numberToDisplay[currentInt - 1];
+                gapToDisplay[currentInt] = numberToDisplay[currentInt + 1] - numberToDisplay[currentInt];
+            }
+            else
+            {
+                gapToDisplay[currentInt] = numberToDisplay[currentInt + 1] - numberToDisplay[currentInt];
+            }
+
         }
     }
 
@@ -654,7 +659,7 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
 
-
+        UpdateGapCounters();
     }
 
     private IEnumerator ResetHitCoroutine()
@@ -915,6 +920,8 @@ public class LoToolMinigame : MonoBehaviour
             textCounter.gameObject.SetActive(true);
             useCountManager = false;
         }
+
+        UpdateGapCounters();
 
         StartCoroutine(AddMoreCoroutine());
     }
