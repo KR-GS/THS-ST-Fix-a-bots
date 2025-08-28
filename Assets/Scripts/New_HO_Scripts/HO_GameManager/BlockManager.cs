@@ -17,14 +17,67 @@ public class BlockManager : MonoBehaviour
     public int maxCoefficientValue = 5;
     public int maxConstantValue = 5;
     
+    [Header("Random Spawning Settings")]
+    public bool useRandomSpawning = true;
+    public int randomCoefficientCount = 5;
+    public int randomConstantCount = 5;
+    public int randomSignCount = 3;
+    public Vector2 containerSize = new Vector2(800f, 200f);
+    public float blockSpacing = 10f; // Minimum distance between blocks
+    
     private List<FormulaBlock> availableBlocks = new List<FormulaBlock>();
+    private List<Vector2> usedPositions = new List<Vector2>();
     
     public List<FormulaBlock> AvailableBlocks => availableBlocks;
     
     public void CreateAllBlocks()
     {
         ClearExistingBlocks();
+        usedPositions.Clear();
+
+        CreateRandomBlock(BlockType.Coefficient, StaticData.coefficient, "", coefficientColor);
+        CreateRandomBlock(BlockType.Constant, StaticData.constant, "", constantColor);
+        CreateRandomBlock(BlockType.Sign, 0, "+", signColor);
+        CreateRandomBlock(BlockType.Sign, 0, "-", signColor);
         
+
+
+        if (useRandomSpawning)
+        {
+            CreateRandomBlocks();
+        }
+        else
+        {
+            CreateOrderedBlocks();
+        }
+    }
+    
+    private void CreateRandomBlocks()
+    {
+        // Create random coefficient blocks
+        for (int i = 0; i < randomCoefficientCount; i++)
+        {
+            int randomValue = Random.Range(1, maxCoefficientValue + 1);
+            CreateRandomBlock(BlockType.Coefficient, randomValue, "", coefficientColor);
+        }
+        
+        // Create random constant blocks
+        for (int i = 0; i < randomConstantCount; i++)
+        {
+            int randomValue = Random.Range(0, maxConstantValue + 1);
+            CreateRandomBlock(BlockType.Constant, randomValue, "", constantColor);
+        }
+        
+        // Create the variable block (always "n") - place it in a special position
+        FormulaBlock nBlock = CreateRandomBlock(BlockType.Variable, 0, "n", variableColor);
+        if (nBlock != null)
+        {
+            PositionVariableBlock(nBlock);
+        }
+    }
+    
+    private void CreateOrderedBlocks()
+    {
         // Create coefficient blocks (1 to maxCoefficientValue)
         for (int i = 1; i <= maxCoefficientValue; i++)
         {
@@ -47,6 +100,49 @@ public class BlockManager : MonoBehaviour
         {
             PositionVariableBlock(nBlock);
         }
+    }
+    
+    private FormulaBlock CreateRandomBlock(BlockType type, int value, string symbol, Color color)
+    {
+        FormulaBlock block = CreateBlock(type, value, symbol, color);
+        if (block != null && type != BlockType.Variable) // Don't randomize variable block position
+        {
+            SetRandomPosition(block);
+        }
+        return block;
+    }
+    
+    private void SetRandomPosition(FormulaBlock block)
+    {
+        RectTransform rectTransform = block.GetComponent<RectTransform>();
+        Vector2 newPosition;
+        int attempts = 0;
+        int maxAttempts = 50; // Prevent infinite loop
+        
+        do
+        {
+            // Generate random position within container bounds
+            float x = Random.Range(-containerSize.x / 2f, containerSize.x / 2f);
+            float y = Random.Range(-containerSize.y / 2f, containerSize.y / 2f);
+            newPosition = new Vector2(x, y);
+            attempts++;
+        }
+        while (IsPositionTooClose(newPosition) && attempts < maxAttempts);
+        
+        rectTransform.anchoredPosition = newPosition;
+        usedPositions.Add(newPosition);
+    }
+    
+    private bool IsPositionTooClose(Vector2 position)
+    {
+        foreach (Vector2 usedPos in usedPositions)
+        {
+            if (Vector2.Distance(position, usedPos) < blockSpacing)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     private void PositionVariableBlock(FormulaBlock nBlock)
@@ -78,6 +174,7 @@ public class BlockManager : MonoBehaviour
                 DestroyImmediate(block.gameObject);
         }
         availableBlocks.Clear();
+        usedPositions.Clear();
     }
     
     private FormulaBlock CreateBlock(BlockType type, int value, string symbol, Color color)
@@ -105,6 +202,7 @@ public class BlockManager : MonoBehaviour
         }
     }
     
+    
     public FormulaBlock FindBlock(BlockType type, int value, string symbol = "")
     {
         return availableBlocks.Find(b => 
@@ -128,29 +226,6 @@ public class BlockManager : MonoBehaviour
         }
     }
     
-    public void SetBlocksInteractable(bool interactable)
-    {
-        foreach (FormulaBlock block in availableBlocks)
-        {
-            if (block != null && !block.IsLocked)
-            {
-                block.GetComponent<CanvasGroup>().interactable = interactable;
-            }
-        }
-    }
-    
-    public int GetAvailableBlockCount(BlockType type)
-    {
-        int count = 0;
-        foreach (FormulaBlock block in availableBlocks)
-        {
-            if (block != null && block.blockType == type && !block.IsSnapped())
-            {
-                count++;
-            }
-        }
-        return count;
-    }
     
     public void OrganizeBlocks()
     {

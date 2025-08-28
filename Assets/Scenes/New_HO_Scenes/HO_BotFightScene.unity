@@ -1579,14 +1579,14 @@ PrefabInstance:
       insertIndex: 2
       addedObject: {fileID: 437882176}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 1176463448}
-    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 5
+      insertIndex: 4
       addedObject: {fileID: 1561650682}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 6
+      insertIndex: 5
       addedObject: {fileID: 1545641264}
+    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
+      insertIndex: 6
+      addedObject: {fileID: 1176463448}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2011427611}
@@ -1950,7 +1950,6 @@ GameObject:
   - component: {fileID: 437882176}
   - component: {fileID: 437882179}
   - component: {fileID: 437882178}
-  - component: {fileID: 437882177}
   m_Layer: 5
   m_Name: BlockContainer
   m_TagString: Untagged
@@ -1977,30 +1976,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &437882177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437882175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 10, y: 10}
-  m_Constraint: 0
-  m_ConstraintCount: 2
 --- !u!114 &437882178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2014,7 +1989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4229,6 +4204,12 @@ MonoBehaviour:
   variableColor: {r: 1, g: 0, b: 0, a: 1}
   maxCoefficientValue: 10
   maxConstantValue: 10
+  useRandomSpawning: 1
+  randomCoefficientCount: 2
+  randomConstantCount: 2
+  randomSignCount: 0
+  containerSize: {x: 800, y: 200}
+  blockSpacing: 10
 --- !u!1 &1603606088
 GameObject:
   m_ObjectHideFlags: 0

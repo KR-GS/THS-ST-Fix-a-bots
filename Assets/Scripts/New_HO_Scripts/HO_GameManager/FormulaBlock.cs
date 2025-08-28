@@ -139,8 +139,8 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         BlockSnapSlot snapSlot = slotObj.AddComponent<BlockSnapSlot>();
 
         // Position the snap slot
-        float xOffset = position == SnapPosition.Left ? -100f : 120f;
-        slotRect.anchoredPosition = new Vector2(xOffset, -30);
+        float xOffset = position == SnapPosition.Left ? -110f : 110f;
+        slotRect.anchoredPosition = new Vector2(xOffset, 0);
         slotRect.sizeDelta = new Vector2(60f, 60f);
 
         snapSlot.Initialize(acceptedType, this, position);
@@ -218,7 +218,6 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         transform.SetAsLastSibling();
     }
 
-    // Replace the OnDrag method in FormulaBlock with this improved version
     public void OnDrag(PointerEventData eventData)
     {
         if (isDragging && !isLocked)
@@ -229,14 +228,6 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             {
                 Vector2 currentPos = rectTransform.anchoredPosition;
                 rectTransform.anchoredPosition = currentPos + deltaPosition;
-                /*// Move entire chain - but move all blocks by the same delta
-                List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
-                foreach (FormulaBlock block in chainBlocks)
-                {
-                    // Move each block by the exact same delta to prevent drift
-                    Vector2 currentPos = block.rectTransform.anchoredPosition;
-                    block.rectTransform.anchoredPosition = currentPos + deltaPosition;
-                }*/
             }
             else
             {
@@ -291,28 +282,15 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
         else
         {
-            // Stay where dropped - don't return to original position
-            // Just ensure it stays in a reasonable container
             EnsureBlockInReasonableContainer();
-            
         }
     }
 
     private void EnsureBlockInReasonableContainer()
     {
-        // If the block was dropped outside any reasonable container,
-        // move it to the block container or keep it on the canvas
-        
-        // Option 1: Keep it on the canvas (current behavior)
-        // Do nothing - block stays where it was dropped
-        
-        // Option 2: Move it to a default container if it's not in a reasonable place
-        // You can implement this if you have a specific "unused blocks" area
-        
-        // For now, just ensure it's a child of the canvas for proper layering
         if (transform.parent == canvas.transform)
         {
-            // It's already on the canvas, which is fine
+           
             return;
         }
     }

@@ -42,23 +42,6 @@ public class BlockSnapSlot : MonoBehaviour
     }
 
     
-    private string GetSlotSymbol()
-    {
-        switch (acceptedBlockType)
-        {
-            case BlockType.Coefficient:
-                return "C";
-            case BlockType.Sign:
-                return "±";
-            case BlockType.Constant:
-                return "N";
-            case BlockType.Variable:
-                return "V";
-            default:
-                return "?";
-        }
-    }
-    
     public bool CanAcceptBlock(FormulaBlock block)
     {
         if (HasBlock) return false;
@@ -71,12 +54,6 @@ public class BlockSnapSlot : MonoBehaviour
     public void SetConnectedBlock(FormulaBlock block)
     {
         connectedBlock = block;
-        UpdateVisualState();
-    }
-    
-    public void RemoveConnectedBlock()
-    {
-        connectedBlock = null;
         UpdateVisualState();
     }
     
