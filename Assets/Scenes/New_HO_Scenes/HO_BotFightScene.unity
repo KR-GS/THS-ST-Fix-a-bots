@@ -1574,19 +1574,19 @@ PrefabInstance:
       addedObject: {fileID: 1898241261}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 1571065600}
+      addedObject: {fileID: 1176463448}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: 2
+      addedObject: {fileID: 1571065600}
+    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
+      insertIndex: 3
       addedObject: {fileID: 437882176}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 4
+      insertIndex: 5
       addedObject: {fileID: 1561650682}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1545641264}
-    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: 6
-      addedObject: {fileID: 1176463448}
+      addedObject: {fileID: 1545641264}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2011427611}
