@@ -180,8 +180,18 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             Debug.Log("[LOOK HERE] Pending orders count: " + OrderManager.Instance.pendingOrders.Count);
 
-            
-
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("It is the start of day indeed!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("No it ain't the start of the day!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            }
 
             StartCoroutine(UpdateStationsNextFrame());
 
@@ -193,6 +203,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
             if (moneyImage != null) moneyImage.gameObject.SetActive(false);
+            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+            RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
             ShowTV(false);
             if (TimerScript.instance != null && TimerScript.instance.timer != null)
             {
@@ -205,6 +217,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     }
 
+   
     public void HandleSceneInitialization()
     {
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
@@ -226,6 +239,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             Debug.Log($"Correct pattern: {string.Join(", ", StaticData.toolPattern ?? new List<int>())}");
             Debug.Log($"Incorrect pattern: {string.Join(", ", StaticData.incorrectToolPattern ?? new List<int>())}");
+
         }
     }
 
@@ -261,6 +275,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         this.toolScore = data.toolScore;
         this.paintScore = data.paintScore;
         this.wireScore = data.wireScore;
+
+        StaticData.startOfDay = data.startOfDay;
 
         StaticData.medValue = data.medValue;
         StaticData.dayNo = this.level;
@@ -329,7 +345,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         Debug.Log("Money: " + money);
 
 
-
         StaticData.patternLength = data.patternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
         StaticData.selectedStickerIndex = data.selectedStickerIndex;
@@ -380,6 +395,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.selectedStickerIndex = StaticData.selectedStickerIndex;
         data.selectedStickerIndexTwo = StaticData.selectedStickerIndexTwo;
         data.patternLength = StaticData.patternLength;
+        data.startOfDay = StaticData.startOfDay;
     }
 
     public void UpdateMoneyText()
@@ -861,6 +877,14 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         OrderManager.Instance.orderReceived = false; // Reset order received status
         level++;
         StaticData.dayNo = level;
+
+        if (StaticData.startOfDay == false)
+        {
+            Debug.Log("Good job, let's start the day again!");
+            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
+            RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            StaticData.startOfDay = true;
+        }
 
         StaticData.incorrectIndices.Clear();
         StaticData.incorrectValues.Clear();

@@ -75,6 +75,8 @@ public class GameData
 
     public int medValue;
 
+    public bool startOfDay;
+
     public GameData()
     {
         this.level = 1;
@@ -107,6 +109,7 @@ public class GameData
         this.paintScore = 0;
         this.wireScore = 0;
         this.medValue = 0;
+        this.startOfDay = true;
     }
 
 

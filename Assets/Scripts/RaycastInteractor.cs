@@ -19,11 +19,13 @@ public class RaycastInteractor : MonoBehaviour
     [SerializeField] private GameLoopManager gameLoopManager;
     public GameObject orderSheetPanel;
     public bool isOrderChecked = false;
-    
 
     //public TextMeshProUGUI toolStatus;
     //public TextMeshProUGUI wireStatus;
     //public TextMeshProUGUI paintStatus;
+
+    public Image readyIndicator;
+    public TextMeshProUGUI readyText;
 
     public Button okButton;
     public Order currentOrder;
@@ -96,6 +98,21 @@ public class RaycastInteractor : MonoBehaviour
             if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
             if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
             if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
+
+            
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("It is the start of day indeed!");
+                readyIndicator.gameObject.SetActive(true);
+                readyText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("No it ain't the start of the day!");
+                readyIndicator.gameObject.SetActive(false);
+                readyText.gameObject.SetActive(false);
+            }
+           
         }
     }
 
@@ -111,6 +128,7 @@ public class RaycastInteractor : MonoBehaviour
             status.dash.text = "-";
             status.statusImage.sprite = isDone ? completeSprite : notDoneSprite;
         }
+
     }
 
     private IEnumerator DelayedOrderUISetup()
@@ -218,6 +236,14 @@ public class RaycastInteractor : MonoBehaviour
                 Debug.Log($"Indicators not set. isOrderChecked={isOrderChecked}, currentOrder={savedOrder}");
             }
 
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("It is the start of day indeed!");
+            }
+            else
+            {
+                Debug.Log("No it ain't the start of the day!");
+            }
 
         }
         else
@@ -263,6 +289,18 @@ public class RaycastInteractor : MonoBehaviour
                         OrderManager.Instance.StartOrderBatch();
                         TimerScript.instance.timer.gameObject.SetActive(true);
                         GameLoopManager.Instance.UpdateRemainingOrders();
+
+                        if (readyIndicator != null && readyText != null)
+                        {
+                            if (StaticData.startOfDay == true)
+                            {
+                                Debug.Log("Ready indicator status before TV: " + StaticData.startOfDay);
+                                readyIndicator.gameObject.SetActive(false);
+                                readyText.gameObject.SetActive(false);
+                                StaticData.startOfDay = false;
+                                Debug.Log("Ready indicator status after TV: " + StaticData.startOfDay);
+                            }
+                        }
                     }
                     else
                     {
@@ -312,6 +350,7 @@ public class RaycastInteractor : MonoBehaviour
 
         Order order = OrderManager.Instance.GetActiveOrder(); // Get the first active order (activeOrders[0])
 
+
         orderSheetPanel.gameObject.SetActive(true);
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
@@ -331,6 +370,8 @@ public class RaycastInteractor : MonoBehaviour
         UpdateUIStation(toolStatus, order.needsTool, StaticData.isToolDone);
         UpdateUIStation(wireStatus, order.needsWire, StaticData.isWireDone);
         UpdateUIStation(paintStatus, order.needsPaint, StaticData.isPaintDone);
+
+
 
         okButton.gameObject.SetActive(true);
         okButton.onClick.RemoveAllListeners();

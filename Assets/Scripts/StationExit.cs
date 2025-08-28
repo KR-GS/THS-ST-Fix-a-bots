@@ -77,6 +77,20 @@ public class StationExit : MonoBehaviour
 
             Debug.Log($"Successfully returned from {type} station!");
             //OrderManager.Instance.TryCompleteOrder();
+
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("It is the start of day indeed!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("No it ain't the start of the day!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            }
+
             GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
