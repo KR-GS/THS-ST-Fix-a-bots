@@ -47,6 +47,15 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private Sprite wrong_sprite;
 
+    [SerializeField]
+    private Sprite correct_face;
+
+    [SerializeField]
+    private Sprite wrong_face;
+
+    [SerializeField]
+    private GameObject loading_obj;
+
     /*
     [SerializeField]
     private DifficultyManager difficulty;
@@ -61,6 +70,8 @@ public class LoPaintMinigame : MonoBehaviour
     private List<int[]> numberPattern = new List<int[]>();
 
     private List<int> packUsed = new List<int>();
+
+    private List<GameObject> loading_list = new List<GameObject>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -350,6 +361,14 @@ public class LoPaintMinigame : MonoBehaviour
 
     public void CheckSideValues()
     {
+        PaintMinimapManager mapSelect = FindAnyObjectByType<PaintMinimapManager>();
+        
+        for(int i = 0; i < 6; i++)
+        {
+            loading_list.Add(Instantiate(loading_obj, checkUI.transform));
+            loading_list[i].transform.position = mapSelect.GetMinimapPosition(i);
+        }
+
         checkUI.transform.Find("Result Image").gameObject.SetActive(false);
         checkUI.transform.Find("Button").gameObject.SetActive(false);
         checkUI.enabled = true;
@@ -368,11 +387,13 @@ public class LoPaintMinigame : MonoBehaviour
         bool countCorrect = false;
         bool typeCorrect = false;
 
+        yield return new WaitForSeconds(1f);
+
         for (int i = 0; i < numOfSides; i++)
         {
             ChangeSide(i);
             mapSelect.ChangeSelectedSide(i);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
 
             for (int j =0; j < numberPattern.Count; j++)
             {
@@ -405,8 +426,25 @@ public class LoPaintMinigame : MonoBehaviour
                 Debug.Log("Some type is wrong");
             }
 
-            yield return new WaitForSeconds(0.75f);
+            if(typeCorrect && countCorrect)
+            {
+                loading_list[i].GetComponentInChildren<Image>().sprite = correct_face;
+            }
+            else
+            {
+                loading_list[i].GetComponentInChildren<Image>().sprite = wrong_face;
+            }
+
+            yield return new WaitForSeconds(0.25f);
         }
+
+        for (int i = 0; i < 6; i++)
+        {
+            Destroy(loading_list[i]);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        loading_list.Clear();
 
         checkUI.transform.Find("Result Image").gameObject.SetActive(true);
 
