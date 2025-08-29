@@ -407,17 +407,14 @@ public class LoToolMinigame : MonoBehaviour
 
                 UpdateGapCounters();
 
+                CheckCounterToDisplay();
+
                 if (numberToDisplay[currentInt]<24)
                 {
-                    fastenerObj[currentInt].SetActive(true);
-                    textCounter.gameObject.SetActive(false);
-                    //hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
                     useCountManager = true;
                 }
                 else
                 {
-                    fastenerObj[currentInt].SetActive(false);
-                    textCounter.gameObject.SetActive(true);
                     useCountManager = false;
                 }
 
@@ -447,16 +444,7 @@ public class LoToolMinigame : MonoBehaviour
 
                 SetZoomedInTextCounter(currentInt);
 
-                if (numberToDisplay[currentInt] > 24)
-                {
-                    fastenerObj[currentInt].SetActive(false);
-                    textCounter.gameObject.SetActive(true);
-                }
-                else
-                {
-                    textCounter.gameObject.SetActive(false);
-                    fastenerObj[currentInt].SetActive(true);
-                }
+                CheckCounterToDisplay();
 
                 addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
             }
@@ -529,16 +517,7 @@ public class LoToolMinigame : MonoBehaviour
                 Destroy(currentTool);
             }
 
-            if (numberToDisplay[currentInt] > 24)
-            {
-                fastenerObj[currentInt].SetActive(false);
-                textCounter.gameObject.SetActive(true);
-            }
-            else
-            {
-                textCounter.gameObject.SetActive(false);
-                fastenerObj[currentInt].SetActive(true);
-            }
+            CheckCounterToDisplay();
 
             addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
         }
@@ -555,16 +534,7 @@ public class LoToolMinigame : MonoBehaviour
 
             StartCoroutine(TriggerFastenerChange(button));
 
-            if (numberToDisplay[currentInt] > 24)
-            {
-                fastenerObj[currentInt].SetActive(false);
-                textCounter.gameObject.SetActive(true);
-            }
-            else
-            {
-                textCounter.gameObject.SetActive(false);
-                fastenerObj[currentInt].SetActive(true);
-            }
+            CheckCounterToDisplay();
 
             if (currentTool != null)
             {
@@ -572,6 +542,20 @@ public class LoToolMinigame : MonoBehaviour
             }
 
             addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+        }
+    }
+
+    private void CheckCounterToDisplay()
+    {
+        if (numberToDisplay[currentInt] > 24)
+        {
+            fastenerObj[currentInt].SetActive(false);
+            textCounter.gameObject.SetActive(true);
+        }
+        else
+        {
+            textCounter.gameObject.SetActive(false);
+            fastenerObj[currentInt].SetActive(true);
         }
     }
 
