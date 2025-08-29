@@ -289,8 +289,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private void EnsureBlockInReasonableContainer()
     {
         if (transform.parent == canvas.transform)
-        {
-           
+        {           
             return;
         }
     }
@@ -322,7 +321,6 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         FormulaInputPanel.Instance?.OnBlockDisconnected(this, previousParent);
     }
 
-    // Add this method to update the original position when blocks are initially placed
     public void UpdateOriginalPosition()
     {
         originalPosition = rectTransform.anchoredPosition;

@@ -14,16 +14,15 @@ public class BlockManager : MonoBehaviour
     public Color variableColor = Color.red;
     
     [Header("Block Ranges")]
-    public int maxCoefficientValue = 5;
-    public int maxConstantValue = 5;
+    private int maxCoefficientValue = 5;
+    private int maxConstantValue = 5;
     
     [Header("Random Spawning Settings")]
     public bool useRandomSpawning = true;
-    public int randomCoefficientCount = 5;
-    public int randomConstantCount = 5;
-    public int randomSignCount = 3;
-    public Vector2 containerSize = new Vector2(800f, 200f);
-    public float blockSpacing = 10f; // Minimum distance between blocks
+    private int randomCoefficientCount = 2;
+    private int randomConstantCount = 2;
+    private Vector2 containerSize = new Vector2(1800f, 400f);
+    private float blockSpacing = 100f; // Minimum distance between blocks
     
     private List<FormulaBlock> availableBlocks = new List<FormulaBlock>();
     private List<Vector2> usedPositions = new List<Vector2>();
@@ -35,8 +34,18 @@ public class BlockManager : MonoBehaviour
         ClearExistingBlocks();
         usedPositions.Clear();
 
+        //spawns correct blocks
         CreateRandomBlock(BlockType.Coefficient, StaticData.coefficient, "", coefficientColor);
-        CreateRandomBlock(BlockType.Constant, StaticData.constant, "", constantColor);
+        if (StaticData.constant < 0)
+        {
+            CreateRandomBlock(BlockType.Constant, -StaticData.constant, "", constantColor);
+        }
+        else
+        {
+            CreateRandomBlock(BlockType.Constant, StaticData.constant, "", constantColor);
+        }
+        
+        //spawns signs
         CreateRandomBlock(BlockType.Sign, 0, "+", signColor);
         CreateRandomBlock(BlockType.Sign, 0, "-", signColor);
         

@@ -262,7 +262,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private void ApplyLockSettings()
     {
-        if (lockCoefficient && targetSequence != null)
+        if (lockCoefficient)
         {
             // Find the n block and the correct coefficient block
             FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
@@ -275,7 +275,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             }
         }
 
-        if (lockConstant && targetSequence != null)
+        if (lockConstant)
         {
             // Find the n block and create the sign->constant chain
             FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
@@ -440,6 +440,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 DataPersistenceManager.Instance.SaveGame();
 
                 continuePanel.SetActive(true);
+                continuePanel.transform.SetAsLastSibling();
             }
         }
     }

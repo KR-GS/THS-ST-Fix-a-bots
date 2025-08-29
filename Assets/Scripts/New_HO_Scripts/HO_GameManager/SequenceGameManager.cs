@@ -153,6 +153,7 @@ public class SequenceGameManager : MonoBehaviour
         gameTimer.StopTimer();
         canTap = false;
         pausePanel.SetActive(true);
+        pausePanel.transform.SetAsLastSibling();
         if (stageData.GetNumLives() <= 0)
         {
             panelText.text = "You Lost! Continue?";

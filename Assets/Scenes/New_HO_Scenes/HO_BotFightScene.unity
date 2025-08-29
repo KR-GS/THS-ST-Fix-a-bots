@@ -1574,19 +1574,19 @@ PrefabInstance:
       addedObject: {fileID: 1898241261}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 1176463448}
-    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 2
       addedObject: {fileID: 1571065600}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: 3
-      addedObject: {fileID: 437882176}
-    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 5
       addedObject: {fileID: 1561650682}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
-      insertIndex: 6
+      insertIndex: 4
       addedObject: {fileID: 1545641264}
+    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1176463448}
+    - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 437882176}
     - targetCorrespondingSourceObject: {fileID: 8260954153161223259, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2011427611}
@@ -1604,6 +1604,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 830478800}
   m_SourcePrefab: {fileID: 100100000, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
+--- !u!114 &286284062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8272695826365912532, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
+  m_PrefabInstance: {fileID: 286284061}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &325372707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,7 +1975,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437882175}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1989,8 +2000,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_Color: {r: 0.5849056, g: 0.3167319, b: 0.3167319, a: 0}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2168,7 +2179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2745,7 +2756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ffb102a7b65509449990143fe230403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  feedbackText: {fileID: 129588472}
+  feedbackText: {fileID: 286284062}
   linePrefab: {fileID: 5233731835314053740, guid: 158a716e245535a47b2d4e8e5a1dcf72, type: 3}
   horizontalLinePrefab: {fileID: 5233731835314053740, guid: 28ad0e917d1639549afc88808ea9676f, type: 3}
   yellowLinePrefab: {fileID: 5233731835314053740, guid: 9d34a0a7a5a05ac449ddeb8f57ba38eb, type: 3}
@@ -2969,7 +2980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3474,15 +3485,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7540091577716341969, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7540091577716341969, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7540091577716341969, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7540091577716341969, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4202,14 +4213,7 @@ MonoBehaviour:
   signColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   constantColor: {r: 0, g: 1, b: 0, a: 1}
   variableColor: {r: 1, g: 0, b: 0, a: 1}
-  maxCoefficientValue: 10
-  maxConstantValue: 10
   useRandomSpawning: 1
-  randomCoefficientCount: 2
-  randomConstantCount: 2
-  randomSignCount: 0
-  containerSize: {x: 800, y: 200}
-  blockSpacing: 10
 --- !u!1 &1603606088
 GameObject:
   m_ObjectHideFlags: 0
