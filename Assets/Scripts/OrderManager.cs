@@ -347,6 +347,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
+
         orderCompletePanel.SetActive(false);
         Debug.Log("[OrderManager] Hiding panel: " + orderCompletePanel.name);
         Debug.Log("[LOOK HERE] Pending orders count: " + pendingOrders.Count);
@@ -357,6 +358,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+
+        
     }
 
 

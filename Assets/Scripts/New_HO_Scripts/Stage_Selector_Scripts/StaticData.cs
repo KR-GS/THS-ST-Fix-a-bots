@@ -46,6 +46,7 @@ public class StaticData
     public static int missingVals;
     public static int noOfTypes;
 
+    public static bool startOfDay = false;
     public static int toolWrong = 0;
     public static int paintWrong = 0;
     public static int wireWrong = 0;   
