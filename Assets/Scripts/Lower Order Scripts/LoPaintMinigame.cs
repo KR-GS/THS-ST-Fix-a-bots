@@ -476,6 +476,7 @@ public class LoPaintMinigame : MonoBehaviour
 
             yield return new WaitForSeconds(2f);
 
+            notesUI.enabled = true;
             checkUI.enabled = false;
         }
 
