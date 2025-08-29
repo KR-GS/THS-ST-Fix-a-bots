@@ -529,6 +529,17 @@ public class LoToolMinigame : MonoBehaviour
                 Destroy(currentTool);
             }
 
+            if (numberToDisplay[currentInt] > 24)
+            {
+                fastenerObj[currentInt].SetActive(false);
+                textCounter.gameObject.SetActive(true);
+            }
+            else
+            {
+                textCounter.gameObject.SetActive(false);
+                fastenerObj[currentInt].SetActive(true);
+            }
+
             addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
         }
     }
@@ -544,7 +555,18 @@ public class LoToolMinigame : MonoBehaviour
 
             StartCoroutine(TriggerFastenerChange(button));
 
-            if(currentTool != null)
+            if (numberToDisplay[currentInt] > 24)
+            {
+                fastenerObj[currentInt].SetActive(false);
+                textCounter.gameObject.SetActive(true);
+            }
+            else
+            {
+                textCounter.gameObject.SetActive(false);
+                fastenerObj[currentInt].SetActive(true);
+            }
+
+            if (currentTool != null)
             {
                 Destroy(currentTool);
             }
