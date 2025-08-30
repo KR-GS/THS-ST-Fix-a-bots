@@ -30,6 +30,10 @@ public class SequenceGameManager : MonoBehaviour
     [Header("Central Animator")]
     public Animator statusAnimator;
 
+    [Header("Swipe Direction Panel")]
+    public GameObject swipeDirectionPanel; 
+    public GameObject directionArrow;
+
     [Header("Settings")]
     private int maxNumber = 25;
     private float cycleInterval = 1, cycleLeniency = 0.4f;
@@ -209,6 +213,29 @@ public class SequenceGameManager : MonoBehaviour
         SceneManager.LoadScene("Stage_Select");
     }
 
+    void SetArrowDirection(string direction)
+    {
+        Vector3 rotation = Vector3.zero;
+        
+        switch (direction)
+        {
+            case "Up":
+                rotation = new Vector3(0, 0, 0); 
+                break;
+            case "Down":
+                rotation = new Vector3(0, 0, 180); 
+                break;
+            case "Left":
+                rotation = new Vector3(0, 0, 90);
+                break;
+            case "Right":
+                rotation = new Vector3(0, 0, -90); 
+                break;
+        }
+        
+        directionArrow.transform.rotation = Quaternion.Euler(rotation);
+    }
+
     void Awake()
     {
         GetData();
@@ -381,6 +408,18 @@ public class SequenceGameManager : MonoBehaviour
             int btnNumber = currentCycleIndex + 1;
             bool inSequence = currentSequence.Numbers.Contains(btnNumber);
 
+            // Show/hide swipe direction panel based on inSequence
+            if (inSequence && currentSwipeIndex < expectedSwipeSequence.Count && !(buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()))
+            {
+                swipeDirectionPanel.SetActive(true);
+                string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                SetArrowDirection(expectedDirection);
+            }
+            else
+            {
+                swipeDirectionPanel.SetActive(false);
+            }
+
             // Show feedback for cycle step
             feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
 
@@ -407,6 +446,8 @@ public class SequenceGameManager : MonoBehaviour
                     if (swipeDir != null && canTap && !IsPointerOverInteractableUi())
                     {
                         Debug.Log("Swipe detected: " + swipeDir);
+                        // Hide the swipe direction panel when user swipes
+                        swipeDirectionPanel.SetActive(false);
                         HandleUserSwipe(swipeDir, btnNumber, inSequence, timer);
                         hasNotClicked = false;
                     }
@@ -425,6 +466,8 @@ public class SequenceGameManager : MonoBehaviour
                             statusAnimator.SetBool("AnticipateTrigger", false);
                             statusAnimator.SetBool("HitTrigger", true);
                             soundEffectsManager.playHitSound();
+                            // Hide panel when auto-completing pre-selected
+                            swipeDirectionPanel.SetActive(false);
                             hasNotClicked = false;
                         }
                         // if the player misses, plays miss animation
@@ -436,6 +479,8 @@ public class SequenceGameManager : MonoBehaviour
                             soundEffectsManager.playMissSound();
                             isCorrect = false;
                             currentSwipeIndex++;
+                            // Hide panel on miss
+                            swipeDirectionPanel.SetActive(false);
                             if (!isStageFinished)
                             {
                                 stageData.SetNumLives(stageData.GetNumLives() - 1);
@@ -463,6 +508,9 @@ public class SequenceGameManager : MonoBehaviour
                 }
                 yield return null;
             }
+
+            // Hide panel when cycle time is up
+            swipeDirectionPanel.SetActive(false);
 
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
@@ -492,7 +540,6 @@ public class SequenceGameManager : MonoBehaviour
             currentCycleIndex = (currentCycleIndex + 1) % maxNumber;
         }
     }
-
     void HighlightButton(int index)
     {
         foreach (var btn in buttons)
