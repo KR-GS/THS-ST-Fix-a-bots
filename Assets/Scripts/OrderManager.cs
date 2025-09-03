@@ -99,7 +99,25 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         int level = GameLoopManager.Instance.level; // adjust if you track level differently
         Order newOrder = new Order();
 
-      
+        string[] customerList = new string[]
+        {
+            "Mr. Burr", "JMC", "Juanton", "Vens", "Bev",
+            "Gabe", "KC", "Manny", "Jan", "MacDonald"
+        };
+
+        string[] robotList = new string[]
+        {
+            "Theo", "MerryBot", "Toyo", "EthicAI", "TutorBot",
+            "M.O.N.O", "PHPper", "FightBot", "TennisPro", "The Planter"
+        };
+
+        int namePicker = Random.Range(0, customerList.Length);
+
+        newOrder.customername = customerList[namePicker];
+        newOrder.robotname = robotList[namePicker];
+
+
+
         if (level >= 1 && level < 6)
         {
             newOrder.needsTool = true;
@@ -121,13 +139,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             float rand = Random.value;
             newOrder.needsTool = Random.value < 0.5f;
             newOrder.needsPaint = Random.value < 0.5f;
-            newOrder.needsWire = false; //Set to true if wire is finalized
+            newOrder.needsWire = false; //Set to 0.5 if wire is finalized
         }
         
-        
         // Ensure at least one requirement
-        if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)
-            newOrder.needsTool = true;
+        
+
 
         orderList.Add(newOrder);
         currentOrderIndex = 0;
@@ -256,7 +273,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Debug.Log("All Orders Complete!");
             TimerScript.instance.StopTimer();
             ShowOrderCompletePanel();
-            //raycastInteractor.enabled = false;
+            raycastInteractor.enabled = false;
 
         }
 

@@ -75,6 +75,12 @@ public class GameData
 
     public int medValue;
 
+    public int toolWrong;
+
+    public int paintWrong;
+
+    public int wireWrong;
+
     public bool startOfDay;
 
     public GameData()
@@ -110,6 +116,9 @@ public class GameData
         this.wireScore = 0;
         this.medValue = 0;
         this.startOfDay = true;
+        this.toolWrong = 0;
+        this.paintWrong = 0;
+        this.wireWrong = 0;
     }
 
 

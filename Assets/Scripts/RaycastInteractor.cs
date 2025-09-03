@@ -20,6 +20,9 @@ public class RaycastInteractor : MonoBehaviour
     public GameObject orderSheetPanel;
     public bool isOrderChecked = false;
 
+    public TextMeshProUGUI botName;
+    public TextMeshProUGUI customerName;
+
     //public TextMeshProUGUI toolStatus;
     //public TextMeshProUGUI wireStatus;
     //public TextMeshProUGUI paintStatus;
@@ -75,6 +78,7 @@ public class RaycastInteractor : MonoBehaviour
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
         if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
 
+
         StartCoroutine(DelayedOrderUISetup());
 
     }
@@ -99,7 +103,7 @@ public class RaycastInteractor : MonoBehaviour
             if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
             if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
 
-            
+
             if (StaticData.startOfDay == true)
             {
                 Debug.Log("It is the start of day indeed!");
@@ -299,6 +303,7 @@ public class RaycastInteractor : MonoBehaviour
                                 readyText.gameObject.SetActive(false);
                                 StaticData.startOfDay = false;
                                 Debug.Log("Ready indicator status after TV: " + StaticData.startOfDay);
+                               
                             }
                         }
                     }
@@ -340,7 +345,6 @@ public class RaycastInteractor : MonoBehaviour
     void ShowOrderUI()
     {
         //Get all the data from StaticData
-        
 
         if (OrderManager.Instance.activeOrders.Count == 0)
         {
@@ -348,8 +352,12 @@ public class RaycastInteractor : MonoBehaviour
             return;
         }
 
+        
+
         Order order = OrderManager.Instance.GetActiveOrder(); // Get the first active order (activeOrders[0])
 
+        customerName.text = order.customername;
+        botName.text = order.robotname;
 
         orderSheetPanel.gameObject.SetActive(true);
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
@@ -361,6 +369,7 @@ public class RaycastInteractor : MonoBehaviour
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
         if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
+        
 
         if (timeText != null)
         {

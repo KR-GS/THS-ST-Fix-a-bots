@@ -213,6 +213,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
             if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
             if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);
+
         }
 
     }
@@ -344,6 +345,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         Debug.Log("Money: " + money);
 
+        StaticData.toolWrong = data.toolWrong;
+        StaticData.paintWrong = data.paintWrong;
+        StaticData.wireWrong = data.wireWrong;
+
+        Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
+
 
         StaticData.patternLength = data.patternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
@@ -396,6 +403,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.selectedStickerIndexTwo = StaticData.selectedStickerIndexTwo;
         data.patternLength = StaticData.patternLength;
         data.startOfDay = StaticData.startOfDay;
+        data.toolWrong = StaticData.toolWrong;
+        data.paintWrong = StaticData.paintWrong;
+        data.wireWrong = StaticData.wireWrong;
     }
 
     public void UpdateMoneyText()

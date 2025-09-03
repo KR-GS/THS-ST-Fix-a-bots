@@ -35,6 +35,9 @@ public class StationExit : MonoBehaviour
                             GameLoopManager.Instance.toolScore += 1;
                         }
 
+                        StaticData.toolWrong = 0;
+                        Debug.LogWarning("Tool wrongs set to 0!");
+
                     }
                     else
                     {
@@ -62,6 +65,9 @@ public class StationExit : MonoBehaviour
                             Debug.Log("You performed poorly! Earn 1 points!");
                             GameLoopManager.Instance.paintScore += 1;
                         }
+
+                        StaticData.paintWrong = 0;
+                        Debug.LogWarning("Paint wrongs set to 0!");
 
                     }
                     else
