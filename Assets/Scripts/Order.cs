@@ -1,6 +1,9 @@
 [System.Serializable]
 public class Order
 {
+    public string customername;
+    public string robotname;
+
     public bool needsTool;
     public bool needsPaint;
     public bool needsWire;
