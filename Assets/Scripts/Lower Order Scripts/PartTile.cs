@@ -9,7 +9,7 @@ public class PartTile : MonoBehaviour
 
     public Vector2 GetSpriteSize()
     {
-        return transform.lossyScale;
+        return GetComponentInChildren<SpriteRenderer>().size;
     }
 
     public Transform GetFastenerPosition()
