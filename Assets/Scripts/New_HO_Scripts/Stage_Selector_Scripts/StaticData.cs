@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StaticData
 {
-    
+    //HO SETTINGS
     private const int STAGE_COUNT = 10; 
 
     public static List<int> stageLives, stageRestarts, stageStars;
@@ -16,6 +16,14 @@ public class StaticData
     public static float cycleLeniency;
     public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
 
+    //USED FOR RANDOM BLOCK SPAWNING
+
+    public static List<int> stageRandomCoefficientCount;
+    public static List<int> stageMaxCoefficientValue;
+    public static List<int> stageRandomConstantCount;
+    public static List<int> stageMaxConstantValue;
+
+    //How swipes are managed per stage in HO
     public static Dictionary<int, List<string>> stageSwipes = new Dictionary<int, List<string>>()
     {
         { 1, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
@@ -30,6 +38,8 @@ public class StaticData
         { 10, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
     };
 
+    //
+
     /* static StaticData()
      {
          ResetStageData();
@@ -42,7 +52,62 @@ public class StaticData
         stageStars = new List<int>(new int[STAGE_COUNT]);
         stageTime = new List<float>(new float[STAGE_COUNT]);
         formulaAttempts = new List<string>(new string[STAGE_COUNT]);
-        //numStageDone = 0;
+
+         stageRandomCoefficientCount = new List<int>()
+        {
+            2, 
+            3, 
+            2, 
+            1, 
+            2, 
+            1, 
+            2,
+            3, 
+            3, 
+            2 
+        };
+
+        stageMaxCoefficientValue = new List<int>()
+        {
+            1,  
+            2,  
+            3,  
+            4,  
+            3,  
+            5,  
+            3,  
+            4, 
+            3, 
+            4  
+        };
+
+        stageRandomConstantCount = new List<int>()
+        {
+            1, 
+            2, 
+            2, 
+            3, 
+            1, 
+            2, 
+            2, 
+            2, 
+            2, 
+            3  
+        };
+
+        stageMaxConstantValue = new List<int>()
+        {
+            3,  
+            3,   
+            4,   
+            4,  
+            5,  
+            5,  
+            4, 
+            3,  
+            4,  
+            4   
+        };
     }
 
     public static void EnsureStageListSizes()
@@ -51,6 +116,11 @@ public class StaticData
         EnsureListSize(stageRestarts, STAGE_COUNT);
         EnsureListSize(stageTime, STAGE_COUNT);
         EnsureListSize(formulaAttempts, STAGE_COUNT);
+
+        EnsureListSize(stageRandomCoefficientCount, STAGE_COUNT);
+        EnsureListSize(stageMaxCoefficientValue, STAGE_COUNT);
+        EnsureListSize(stageRandomConstantCount, STAGE_COUNT);
+        EnsureListSize(stageMaxConstantValue, STAGE_COUNT);
     }
 
     private static void EnsureListSize<T>(List<T> list, int size)

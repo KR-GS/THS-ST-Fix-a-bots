@@ -16,8 +16,9 @@ public class TitleScreen : MonoBehaviour
 
     private void Start()
     {
+        
         continuePanel.SetActive(true);
-        settingsPanel.SetActive(false);
+        settingsPanel.SetActive(true);
 
         HOButton.gameObject.SetActive(false);
         LOButton.gameObject.SetActive(false);

@@ -1,23 +1,49 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundEffectsManager : MonoBehaviour
 {
-    public AudioSource src;
+    [Header("Audio Mixer")]
+    public AudioMixer audioMixer;
+    [Header("Music Source")]
+    public AudioSource music;
+    public AudioSource sfx;
 
-    public AudioClip idle, miss, hit;
+    [Header("AudioClips")]
+    public AudioClip idle;
+    public AudioClip miss;
+    public AudioClip hit;
+    public AudioClip bgmMusic;
+
+    private void Start()
+    {
+        audioMixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("MasterVolume"));
+
+        audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
+
+        audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
+        
+        music.clip = bgmMusic;
+        music.Play();
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        sfx.PlayOneShot(clip);
+    }
     public void playHitSound()
     {
-        src.clip = hit;
-        src.Play();
+        sfx.clip = hit;
+        sfx.Play();
     }
     public void playMissSound()
     {
-        src.clip = miss;
-        src.Play();
+        sfx.clip = miss;
+        sfx.Play();
     }
     public void playIdleSound()
     {
-        src.clip = idle;
-        src.Play();
+        sfx.clip = idle;
+        sfx.Play();
     }
 }

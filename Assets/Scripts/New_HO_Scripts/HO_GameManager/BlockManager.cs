@@ -63,21 +63,28 @@ public class BlockManager : MonoBehaviour
     
     private void CreateRandomBlocks()
     {
+         int stage = StaticData.stageNum; 
+
+        int randomCoefficientCount = StaticData.stageRandomCoefficientCount[stage];
+        int maxCoefficientValue = StaticData.stageMaxCoefficientValue[stage];
+        int randomConstantCount = StaticData.stageRandomConstantCount[stage];
+        int maxConstantValue = StaticData.stageMaxConstantValue[stage];
+
         // Create random coefficient blocks
         for (int i = 0; i < randomCoefficientCount; i++)
         {
             int randomValue = Random.Range(1, maxCoefficientValue + 1);
             CreateRandomBlock(BlockType.Coefficient, randomValue, "", coefficientColor);
         }
-        
+
         // Create random constant blocks
         for (int i = 0; i < randomConstantCount; i++)
         {
             int randomValue = Random.Range(0, maxConstantValue + 1);
             CreateRandomBlock(BlockType.Constant, randomValue, "", constantColor);
         }
-        
-        // Create the variable block (always "n") - place it in a special position
+
+        // Create variable block
         FormulaBlock nBlock = CreateRandomBlock(BlockType.Variable, 0, "n", variableColor);
         if (nBlock != null)
         {

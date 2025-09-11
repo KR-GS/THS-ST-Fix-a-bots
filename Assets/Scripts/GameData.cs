@@ -46,7 +46,8 @@ public class GameData
         this.finished = false;
         this.prize = 0;
         this.time = 0f;
-        int stageCount = 5;
+        //Higher Order
+        int stageCount = 10;
         this.lives = new List<int>(new int[stageCount]);
         this.restarts = new List<int>(new int[stageCount]);
         this.stageTimes = new List<float>(new float[stageCount]);
