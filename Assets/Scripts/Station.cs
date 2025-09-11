@@ -58,7 +58,7 @@ public class Station : MonoBehaviour
 
         if(RaycastInteractor.Instance.isOrderChecked == true)
         {
-
+            
             if (GameLoopManager.Instance.dayNumber != null) GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
             if (GameLoopManager.Instance.moneyText != null) GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
             if (GameLoopManager.Instance.remainingOrders != null) GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
@@ -74,6 +74,8 @@ public class Station : MonoBehaviour
             if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
             if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
             if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);
+            
+
 
             switch (type)
             {
