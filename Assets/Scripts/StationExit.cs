@@ -11,6 +11,7 @@ public class StationExit : MonoBehaviour
         Order currentOrder = OrderManager.Instance?.GetCurrentOrder();
         if (currentOrder != null)
         {
+
             switch (type)
             {
                 case StationType.Tool:
@@ -80,6 +81,7 @@ public class StationExit : MonoBehaviour
                     currentOrder.wireDone = true;
                     break;
             }
+        
 
             Debug.Log($"Successfully returned from {type} station!");
             //OrderManager.Instance.TryCompleteOrder();
@@ -125,6 +127,7 @@ public class StationExit : MonoBehaviour
 
         }
 
+        //LoadingScreenManager.Instance.SwitchtoScene(0);
         SceneManager.LoadScene("LO_WS2D");
     }
 }

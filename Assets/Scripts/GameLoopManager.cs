@@ -89,6 +89,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             cam.gameObject.SetActive(scene.name == "LO_WS2D"); //LO_Workshop
         }
 
+
+
         if (scene.name == "LO_WS2D")
         {
             // Re-find and assign the new instance of the text
