@@ -3735,6 +3735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740e4bca50aa9d94d907ed0d57d8bba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 81c4be12d39c75b4b80d5895fc88c005, type: 2}
   music: {fileID: 1774179596}
   sfx: {fileID: 48725413}
   idle: {fileID: 8300000, guid: 1bd41c85b36fc6142ac59cdc4fd7a9f4, type: 3}
