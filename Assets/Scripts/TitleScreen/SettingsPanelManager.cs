@@ -161,7 +161,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
                 break;
         }
         
-
+        ShowGeneralSettings();
         DataPersistenceManager.Instance.SaveGame();
         mainPanel.SetActive(false);
     }
