@@ -25,7 +25,7 @@ public class ToolTilingManager : MonoBehaviour
 
     private GameObject tile_complete;
 
-    private List<Vector3> tilesPoints = new List<Vector3>();
+    //private List<Vector3> tilesPoints = new List<Vector3>();
 
     private List<GameObject> fastener = new List<GameObject>();
 
@@ -46,6 +46,8 @@ public class ToolTilingManager : MonoBehaviour
     {
         tiles = new GameObject[numberOfTiles];
 
+        List<Vector3> tilesPoints = new List<Vector3>();
+
         Debug.Log("Hello World");
 
         for (int i = 0; i < numberOfTiles; i++)
@@ -58,7 +60,11 @@ public class ToolTilingManager : MonoBehaviour
         for(int i = 0; i < numberOfTiles; i++)
         {
             tilesPoints.Add(new Vector3(tiles[i].transform.position.x, tiles[i].GetComponent<PartTile>().GetFastenerPosition().position.y, tiles[i].transform.position.z));
-            tilesPoints.Add(new Vector3(tiles[i].transform.position.x + (tileSize.x / 2), tiles[i].GetComponent<PartTile>().GetFastenerPosition().position.y, tiles[i].transform.position.z));
+
+            if(i < numberOfTiles - 1)
+            {
+                tilesPoints.Add(new Vector3(tiles[i].transform.position.x + (tileSize.x / 2), tiles[i].GetComponent<PartTile>().GetFastenerPosition().position.y, tiles[i].transform.position.z));
+            }
         }
 
         Debug.Log("Total points for fasteners: " + tilesPoints.Count);
@@ -72,7 +78,7 @@ public class ToolTilingManager : MonoBehaviour
             fastener[i].transform.SetParent(tile_complete.transform);
         }
 
-        ruler_base.transform.localScale = new Vector2(tileSize.x * tiles.Length, ruler_base.transform.localScale.y);
+        ruler_base.transform.localScale = new Vector2((tileSize.x * tiles.Length)*2, ruler_base.transform.localScale.y);
 
         ruler_lines[0].transform.SetParent(ruler_base.transform);
 
@@ -114,13 +120,34 @@ public class ToolTilingManager : MonoBehaviour
         return tiles;
     }
 
-    public Vector3[] GetFastenerPoints()
-    {
-        return tilesPoints.ToArray();
-    }
-
     public Transform SetFastener(int position)
     {
         return fastener[position-1].transform;
     }
+
+    public void IsDragged()
+    {
+        ruler_base.transform.SetParent(tile_complete.transform);
+    }
+
+    public void IsNotDragged()
+    {
+        ruler_base.transform.SetParent(null);
+    }
+
+    public void SetCenterFocus(int index)
+    {
+        IsDragged();
+        tile_complete.transform.position = new Vector3(tile_complete.transform.position.x - fastener[index].transform.position.x, tile_complete.transform.position.y, tile_complete.transform.position.z);
+        IsNotDragged();
+    }
+
+    public Vector3 CheckPointPosition(int index)
+    {
+        Debug.Log("Fastener " + index + " position: " + fastener[index].transform.position);
+
+        return fastener[index].transform.position;
+    }
+
+
 }

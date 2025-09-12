@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -51,7 +50,16 @@ public class LoToolRevised : MonoBehaviour
     private int[] gapToDisplay;
     private int[] originalGaps;
 
-    private Vector3[] spawn_points;
+    private Vector3 offset;
+    private Vector3 distance;
+    private bool isDragging = false;
+    private Transform draggingObj;
+
+    //private Vector3[] spawn_points;
+
+    private int focusPoint;
+
+    private float prevPos;
 
     [SerializeField]
     private List<ToolBtn> toolButtons;
@@ -192,7 +200,7 @@ public class LoToolRevised : MonoBehaviour
 
         toolTilingManager.SpawnPartTiled(tilesToSpawn);
 
-        spawn_points = toolTilingManager.GetFastenerPoints();
+        //spawn_points = toolTilingManager.GetFastenerPoints();
 
         tiledParts = toolTilingManager.GetTileList();
         switch (isFix)
@@ -311,7 +319,7 @@ public class LoToolRevised : MonoBehaviour
             fastenerCheckVal[i] = randFastenerVal+1;
         }
 
-
+        toolTilingManager.SetCenterFocus(numberToDisplay[0]-1);
     }
 
     // Update is called once per frame
@@ -324,6 +332,57 @@ public class LoToolRevised : MonoBehaviour
                 if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
                 {
                     HandleClickEvent();
+                }
+            } 
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                if (isDragging)
+                {
+                        isDragging = false;
+                        draggingObj = null;
+                        Debug.Log("Not scrolling");
+                        toolTilingManager.IsNotDragged();
+                }
+            }
+            else
+            {
+                if (isDragging)
+                {
+                    Vector3 newPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                    bool atEdge = false;
+                    /*
+                    if (newPos.x - prevPos < 0f)
+                    {
+                        Debug.Log("Moving to left");
+
+                        if (toolTilingManager.CheckPointPosition(numberToDisplay[0] - 1))
+                        {
+                            atEdge = true;
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Moving to right");
+                    }
+                    
+
+                    if (toolTilingManager.CheckPointPosition(numberToDisplay[0] - 1).x<=0f && toolTilingManager.CheckPointPosition(numberToDisplay[numberToDisplay.Length - 1] - 1).x >=0f)
+                    {
+                        draggingObj.position = new Vector3(newPos.x + offset.x, draggingObj.position.y, draggingObj.position.z);
+                        Debug.Log("Scrolling is Working");
+                        prevPos = newPos.x;
+                    }
+                    else
+                    {
+                        draggingObj.position = new Vector3(0 + offset.x, draggingObj.position.y, draggingObj.position.z);
+                    }
+                    */
+                    /**/
+                    draggingObj.position = new Vector3(newPos.x + offset.x, draggingObj.position.y, draggingObj.position.z);
+                    Debug.Log("Scrolling is Working");
+                    prevPos = newPos.x;
+                    
+
                 }
             }
         }
@@ -357,7 +416,52 @@ public class LoToolRevised : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
         if (rayHit.collider != null)
         {
-            Debug.Log("Hello Collider Hit! " + rayHit.transform.name);
+            if(rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
+            {
+                draggingObj = rayHit.transform.parent;
+                isDragging = true;
+                offset = draggingObj.position - Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                toolTilingManager.IsDragged();
+                prevPos = rayHit.transform.position.x;
+            }else if (rayHit.transform.gameObject.TryGetComponent(out RulerLines ruler))
+            {
+                Transform fastenerButtons = fastenerList[0].transform.parent;
+
+                Debug.Log(int.Parse(ruler.GetComponentInChildren<TextMeshProUGUI>().text));
+
+                focusPoint = int.Parse(ruler.GetComponentInChildren<TextMeshProUGUI>().text);
+
+                toolTilingManager.SetCenterFocus(int.Parse(ruler.GetComponentInChildren<TextMeshProUGUI>().text) -1);
+
+                fastenerButtons.parent.GetComponent<Canvas>().enabled = true;
+
+                foreach(GameObject part in tiledParts)
+                {
+                    part.GetComponent<BoxCollider2D>().enabled = false;
+                }
+            }
+        }
+    }
+
+    public void SetFastenerInPlace(Button fastenerBtn)
+    {
+        Transform buttonParent = fastenerBtn.transform.parent;
+        Transform currentPoint = toolTilingManager.SetFastener(focusPoint);
+        if (currentPoint.childCount>0)
+        {
+            foreach(Transform child in currentPoint)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), currentPoint);
+
+        buttonParent.parent.GetComponent<Canvas>().enabled = false;
+
+        foreach (GameObject part in tiledParts)
+        {
+            part.GetComponent<BoxCollider2D>().enabled = true;
         }
     }
 }
