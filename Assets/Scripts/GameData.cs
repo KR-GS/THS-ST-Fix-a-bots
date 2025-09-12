@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class GameData
 {
+    [Header("Save Settings")]
+    public string language = "English";
+
+    public float stageSpeed = 1f;
+
+
+    [Header("Lower Order Data")]
     public int level;
 
     public int money;
@@ -34,8 +41,6 @@ public class GameData
 
     public int stageDone;
 
-    public float stageSpeed;
-
 
     public GameData()
     {
@@ -47,6 +52,7 @@ public class GameData
         this.prize = 0;
         this.time = 0f;
         //Higher Order
+
         int stageCount = 10;
         this.lives = new List<int>(new int[stageCount]);
         this.restarts = new List<int>(new int[stageCount]);

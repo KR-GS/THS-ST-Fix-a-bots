@@ -5,6 +5,7 @@ public class SoundEffectsManager : MonoBehaviour
 {
     [Header("Audio Mixer")]
     public AudioMixer audioMixer;
+
     [Header("Music Source")]
     public AudioSource music;
     public AudioSource sfx;
@@ -27,10 +28,12 @@ public class SoundEffectsManager : MonoBehaviour
         music.Play();
     }
 
+    // USE THIS FOR FUTURE SFX USAGE
     public void PlaySFX(AudioClip clip)
     {
         sfx.PlayOneShot(clip);
     }
+
     public void playHitSound()
     {
         sfx.clip = hit;

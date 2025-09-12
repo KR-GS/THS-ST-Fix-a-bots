@@ -16,7 +16,9 @@ public class TitleScreen : MonoBehaviour
 
     private void Start()
     {
-        
+        StaticData.isOnHigherOrder = false;
+        StaticData.isOnLowerOrder = false;
+
         continuePanel.SetActive(true);
         settingsPanel.SetActive(true);
 
@@ -28,9 +30,10 @@ public class TitleScreen : MonoBehaviour
         continueButton.onClick.AddListener(OnContinue);
         settingsButton.onClick.AddListener(OnSettings);
 
+        settingsPanel.SetActive(false);
+
         HOButton.onClick.AddListener(() => LoadScene("Stage_Select")); 
-        //TODO: Enter LO landing page here
-        LOButton.onClick.AddListener(() => LoadScene("LOScene")); 
+        LOButton.onClick.AddListener(() => LoadScene("LO_WS2D")); 
     }
 
     private void OnContinue()

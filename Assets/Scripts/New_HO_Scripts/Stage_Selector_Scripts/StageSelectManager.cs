@@ -24,6 +24,9 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
     IEnumerator Start()
     {
+        StaticData.isOnHigherOrder = true;
+        StaticData.isOnLowerOrder = false;
+
         Debug.Log("Num Stage Done: " + StaticData.numStageDone);
         yield return null;
 

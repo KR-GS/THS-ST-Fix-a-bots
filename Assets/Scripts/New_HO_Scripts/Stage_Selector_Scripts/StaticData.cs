@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class StaticData
 {
+    // USED TO SEE WHICH SCENE IT IS
+    public static bool isOnLowerOrder;
+    public static bool isOnHigherOrder;
+
     //HO SETTINGS
     private const int STAGE_COUNT = 10; 
 

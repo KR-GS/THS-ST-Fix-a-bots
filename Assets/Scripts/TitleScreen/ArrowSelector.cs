@@ -9,6 +9,7 @@ public class ArrowSelector : MonoBehaviour
     public TMP_Text valueText;
     public Button leftButton;
     public Button rightButton;
+    public string valueString;
 
     [SerializeField] private List<string> options = new List<string>();
     private int currentIndex = 0;
@@ -28,12 +29,14 @@ public class ArrowSelector : MonoBehaviour
     {
         currentIndex = (currentIndex - 1 + options.Count) % options.Count;
         UpdateValueText();
+        valueString = GetCurrentValue();
     }
 
     private void NextOption()
     {
         currentIndex = (currentIndex + 1) % options.Count;
         UpdateValueText();
+        valueString = GetCurrentValue();
     }
 
     private void UpdateValueText()
