@@ -1,10 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
-using System.Drawing;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class LoWireMinigame : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject generator;
+
+    [SerializeField]
+    private GameObject robot_part;
+
     private GameObject WireSlots;
 
     private bool isDragging;
@@ -14,6 +19,8 @@ public class LoWireMinigame : MonoBehaviour
     private GameObject wireToAdd;
 
     private Transform wireGeneratedPlace;
+
+    private bool isOpen = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -117,5 +124,11 @@ public class LoWireMinigame : MonoBehaviour
         return generatedChildren;
     }
 
-    
+    public void ToggleGenerator()
+    {
+        isOpen = !isOpen;
+        generator.SetActive(isOpen);
+
+        robot_part.SetActive(!isOpen);
+    }
 }

@@ -98,6 +98,11 @@ public class Wire : MonoBehaviour
         return newWirePos;
     }
 
+    public void ResetColor()
+    {
+        GetComponent<SpriteRenderer>().color = origColor;
+    }
+
     public List<float> GetDivisionPoints(int numDiv)
     {
         if (divisionPoints.Count > 0)
@@ -126,14 +131,5 @@ public class Wire : MonoBehaviour
         }
 
         return divisionPoints;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out WireColor clrChange))
-        {
-            Debug.Log(clrChange.GetBtnColor());
-            GetComponent<SpriteRenderer>().color = clrChange.GetBtnColor();
-        }
     }
 }

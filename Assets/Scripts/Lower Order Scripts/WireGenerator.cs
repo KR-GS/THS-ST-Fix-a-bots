@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class WireGenerator : MonoBehaviour
@@ -16,13 +15,16 @@ public class WireGenerator : MonoBehaviour
     [SerializeField]
     private LoWireMinigame generalWireScript;
 
+    [SerializeField]
+    private GameObject select_icon;
+
     private List<GameObject> createdWireChild = new List<GameObject>();
 
     private GameObject wireParent;
 
     private bool isDragging;
 
-    private GameObject color;
+    private Color color;
 
     private int wireNoTotal;
 
@@ -40,6 +42,8 @@ public class WireGenerator : MonoBehaviour
         createdWireChild[0].name = "0";
 
         wireParent.transform.position = originalWire.transform.position;
+
+        select_icon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -51,12 +55,14 @@ public class WireGenerator : MonoBehaviour
             {
                 HandleClickEvent(Input.GetTouch(0).position);
             }
+            /*
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 if (isDragging)
                 {
-                    Destroy(color);
+                    color = null;
                     isDragging = false;
+                    //Destroy(color);
                 }
             }
             else
@@ -67,6 +73,7 @@ public class WireGenerator : MonoBehaviour
                     color.transform.position = new Vector2(touchPos.x, touchPos.y);
                 }
             }
+            */
         }
     }
 
@@ -78,8 +85,17 @@ public class WireGenerator : MonoBehaviour
             if (rayHit.transform.gameObject.TryGetComponent(out WireColor selectedColor))
             {
                 Debug.Log(selectedColor.transform.name);
-                color = Instantiate(selectedColor.transform.gameObject);
-                isDragging = true;
+                color = selectedColor.GetBtnColor();
+                select_icon.SetActive(true);
+                select_icon.transform.position = selectedColor.transform.position;
+                //isDragging = true;
+            }
+            else if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
+            {
+                if(color != null)
+                {
+                    wire.GetComponent<SpriteRenderer>().color = color;
+                }
             }
         }
     }
@@ -140,5 +156,9 @@ public class WireGenerator : MonoBehaviour
         wireParent.GetComponent<Wire>().SetWireNumber(wireNoTotal);
 
         wireParent.GetComponent<Wire>().SetComplete();
+
+        generalWireScript.ToggleGenerator();
+
+        wireParent.transform.SetParent(null);
     }
 }
