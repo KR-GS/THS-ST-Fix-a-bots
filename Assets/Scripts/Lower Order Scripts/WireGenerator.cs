@@ -143,7 +143,7 @@ public class WireGenerator : MonoBehaviour
         for(int i = 0; i<wireParent.transform.childCount; i++)
         {
             wireParent.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = false;
-            wireParent.transform.GetChild(i).GetComponent<Wire>().enabled = false;
+            Destroy(wireParent.transform.GetChild(i).GetComponent<Wire>());
         }
 
         wireParent.transform.position = generateLocation.position;
@@ -157,6 +157,15 @@ public class WireGenerator : MonoBehaviour
         wireParent.GetComponent<Wire>().SetWireNumber(wireNoTotal);
 
         wireParent.GetComponent<Wire>().SetComplete();
+
+        Vector2 size = new Vector2(0, wireParent.transform.GetChild(0).lossyScale.y);
+
+        foreach(Transform child in wireParent.transform)
+        {
+            size += new Vector2(child.lossyScale.x, 0);
+        }
+
+        wireParent.GetComponent<BoxCollider2D>().size = size;
 
         generalWireScript.ToggleGenerator();
 
