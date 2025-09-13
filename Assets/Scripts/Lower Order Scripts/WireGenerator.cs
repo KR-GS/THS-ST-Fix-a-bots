@@ -106,6 +106,7 @@ public class WireGenerator : MonoBehaviour
         {
             Destroy(child);
         }
+        
         createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(value, originalWire, wireParent));
     }
 

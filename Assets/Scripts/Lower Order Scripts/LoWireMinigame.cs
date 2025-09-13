@@ -28,6 +28,10 @@ public class LoWireMinigame : MonoBehaviour
         wireNoTotal = 0;
 
         isDragging = false;
+
+        generator.SetActive(isOpen);
+
+        robot_part.SetActive(!isOpen);
     }
 
     // Update is called once per frame
@@ -85,6 +89,7 @@ public class LoWireMinigame : MonoBehaviour
 
     public List<GameObject> ChangeWireValue(float value, Wire wireToChange, GameObject parent)
     {
+        wireToChange.gameObject.SetActive(true);
         List<GameObject> generatedChildren = new List<GameObject>();
         List<float> generatePoints = new List<float>();
 
@@ -116,10 +121,14 @@ public class LoWireMinigame : MonoBehaviour
                 generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.grey;
             }
 
+            generatedChildren[i].GetComponent<SpriteRenderer>().sortingOrder = 4;
+
             generatedChildren[i].transform.position = new Vector2(generatePoints[i], parent.transform.position.y);
         }
 
         Debug.Log("Current Value");
+
+        wireToChange.gameObject.SetActive(false);
 
         return generatedChildren;
     }
