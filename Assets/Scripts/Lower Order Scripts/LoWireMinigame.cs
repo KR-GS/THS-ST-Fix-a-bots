@@ -121,7 +121,7 @@ public class LoWireMinigame : MonoBehaviour
                 generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.grey;
             }
 
-            generatedChildren[i].GetComponent<SpriteRenderer>().sortingOrder = 4;
+            //generatedChildren[i].GetComponent<SpriteRenderer>().sortingOrder = 4;
 
             generatedChildren[i].transform.position = new Vector2(generatePoints[i], parent.transform.position.y);
         }
