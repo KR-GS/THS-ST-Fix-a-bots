@@ -52,7 +52,7 @@ public class DifficultyManager : MonoBehaviour
         }
         */
 
-        
+        /*
         if (StaticData.diffInt == 0)
         {
             Debug.Log("Static Data for difficulty is easy!" );
@@ -68,8 +68,7 @@ public class DifficultyManager : MonoBehaviour
             Debug.Log("Static Data for difficulty is hard!");
             level = Difficulty.hard;
         }
-
-
+        */
 
         if (level == Difficulty.easy)
         {

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -33,6 +34,9 @@ public class LoToolRevised : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [SerializeField]
+    private GameObject power_meter;
+
     private GameObject[] counterHolder;
     private GameObject[] gapHolder;
     private List<int> generatedList = new List<int>();
@@ -63,6 +67,8 @@ public class LoToolRevised : MonoBehaviour
 
     [SerializeField]
     private List<ToolBtn> toolButtons;
+
+    private int total_value = 0;
 
     void Awake()
     {
@@ -149,7 +155,8 @@ public class LoToolRevised : MonoBehaviour
         switch (toolDifficulty.GetDifficulty())
         {
             case "easy":
-                slotToFix = StaticData.incorrectVals;
+                //slotToFix = StaticData.incorrectVals;
+                slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
                 isFix = true;
                 Debug.Log("Fixing in easy!");
                 break;
@@ -160,32 +167,34 @@ public class LoToolRevised : MonoBehaviour
                 if (medValue <= 5)
                 {
                     slotToFill = 0;
-                    slotToFix = StaticData.incorrectVals;
+                    slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
                     isFix = true;
                     Debug.Log("Method to follow: fix");
                 }
                 else
                 {
-                    //slotToFix = 0;
-                    slotToFix = StaticData.missingVals;
-                    isFix = true;
+                    slotToFix = 0;
+                    slotToFill = toolDifficulty.GetNumberOfMissingVal();
+                    isFix = false;
                     Debug.Log("Method to follow: fill");
                 }
                 break;
             case "hard":
-                /*
+                
                 Debug.Log("Fixing in hard!");
                 slotToFix = 0;
-                slotToFill = StaticData.missingVals;
-                isFix = true;
+                slotToFill = toolDifficulty.GetNumberOfMissingVal();
+                isFix = false;
                 Debug.Log("Filling");
-                */
+                
                 //slotToFix = 0;
 
+                /*
                 slotToFix = StaticData.missingVals;
                 isFix = true;
                 Debug.Log("Filling");
 
+                */
                 break;
             default:
                 Debug.Log("Playing tutorial code");
@@ -320,6 +329,8 @@ public class LoToolRevised : MonoBehaviour
         }
 
         toolTilingManager.SetCenterFocus(numberToDisplay[0]-1);
+
+        power_meter.SetActive(false);
     }
 
     // Update is called once per frame
@@ -423,7 +434,8 @@ public class LoToolRevised : MonoBehaviour
                 offset = draggingObj.position - Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
                 toolTilingManager.IsDragged();
                 prevPos = rayHit.transform.position.x;
-            }else if (rayHit.transform.gameObject.TryGetComponent(out RulerLines ruler))
+            }
+            else if (rayHit.transform.gameObject.TryGetComponent(out RulerLines ruler))
             {
                 Transform fastenerButtons = fastenerList[0].transform.parent;
 
@@ -440,6 +452,14 @@ public class LoToolRevised : MonoBehaviour
                     part.GetComponent<BoxCollider2D>().enabled = false;
                 }
             }
+            else if (rayHit.transform.gameObject.TryGetComponent(out Tool tool))
+            {
+                power_meter.GetComponentInChildren<PowerManager>().ToggleStop();
+
+                total_value += power_meter.GetComponentInChildren<PowerManager>().GetPowerValue();
+
+                StartCoroutine(HitAnimation(tool));
+            }
         }
     }
 
@@ -455,13 +475,59 @@ public class LoToolRevised : MonoBehaviour
             }
         }
 
+        toolHolder.position = new Vector3(currentPoint.position.x, toolHolder.position.y);
+
         Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), currentPoint);
 
         buttonParent.parent.GetComponent<Canvas>().enabled = false;
 
+        SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType() - 1, currentInt);
+
+        /*
         foreach (GameObject part in tiledParts)
         {
             part.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        */
+
+        power_meter.SetActive(true);
+    }
+
+    private void SelectTool(int value, int i)
+    {
+        int currentFastenerVal = fastenerValues[i];
+        Debug.Log("Fastener in place: " + currentFastenerVal);
+        //toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
+
+        if (currentTool != null)
+        {
+            Destroy(currentTool);
+        }
+
+        //addTenBtn.GetComponent<Image>().sprite = fastenerList[value].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+
+        currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
+        currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
+
+        Debug.Log("What is happening???");
+    }
+
+    private IEnumerator HitAnimation(Tool tool)
+    {
+        yield return StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
+
+        yield return new WaitForSeconds(1);
+
+        if (total_value >= 20)
+        {
+            yield return new WaitForSeconds(1);
+            power_meter.SetActive(false);
+
+            Destroy(currentTool);
+        }
+        else
+        {
+            power_meter.GetComponentInChildren<PowerManager>().ToggleStop();
         }
     }
 }
