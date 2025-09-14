@@ -104,19 +104,19 @@ public class RaycastInteractor : MonoBehaviour
             if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
 
 
-            if (StaticData.startOfDay == true)
-            {
-                Debug.Log("It is the start of day indeed!");
-                readyIndicator.gameObject.SetActive(true);
-                readyText.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("No it ain't the start of the day!");
-                readyIndicator.gameObject.SetActive(false);
-                readyText.gameObject.SetActive(false);
-            }
-           
+        }
+
+        if (StaticData.startOfDay == true)
+        {
+            Debug.Log("Aiya, debugging is sad!");
+            readyIndicator.gameObject.SetActive(true);
+            readyText.gameObject.SetActive(true);
+        }
+        else if (StaticData.startOfDay == false)
+        {
+            Debug.Log("Ayo, will this work?");
+            readyIndicator.gameObject.SetActive(false);
+            readyText.gameObject.SetActive(false);
         }
     }
 
