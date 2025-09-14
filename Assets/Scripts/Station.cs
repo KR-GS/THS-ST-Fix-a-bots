@@ -61,7 +61,12 @@ public class Station : MonoBehaviour
                 case StationType.Tool:
                     if (currentOrder.needsTool && !currentOrder.toolDone)
                     {
+<<<<<<< Updated upstream
                         SceneManager.LoadScene("LO_Tool_GUI");
+=======
+                        LoadingScreenManager.Instance.SwitchtoScene(1);
+                        //SceneManager.LoadScene("LO_Tool_GUI");
+>>>>>>> Stashed changes
                         //currentOrder.toolDone = true;
                         Debug.Log("Tool station activated!");
                     }
