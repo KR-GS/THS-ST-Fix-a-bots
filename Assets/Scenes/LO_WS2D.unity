@@ -1419,6 +1419,7 @@ GameObject:
   - component: {fileID: 350439050}
   - component: {fileID: 350439049}
   m_Layer: 5
+  m_Name: Canvas
   m_Name: DayCompleteCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1819,6 +1820,8 @@ Transform:
   m_GameObject: {fileID: 415360417}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1279.752, y: -716.6511, z: -2.3701706}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalPosition: {x: -3071.4045, y: -1719.9626, z: -5.68841}
   m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_ConstrainProportionsScale: 0
@@ -1836,6 +1839,7 @@ Transform:
   - {fileID: 730346819}
   - {fileID: 1698651077}
   - {fileID: 1456106548}
+  m_Father: {fileID: 350439048}
   m_Father: {fileID: 1632664013}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &445164910
