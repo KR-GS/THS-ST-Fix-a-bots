@@ -49,9 +49,8 @@ public class StaticData
     public static bool startOfDay = false;
     public static int toolWrong = 0;
     public static int paintWrong = 0;
-    public static int wireWrong = 0;
+    public static int wireWrong = 0;   
 
-    public static bool cutscenePlay = false;
 
     public static Sprite lastTVSprite;
 

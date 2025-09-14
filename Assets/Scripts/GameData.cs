@@ -67,8 +67,6 @@ public class GameData
 
     public bool sendNewOrder;
 
-    public bool cutscenePlay;
-
     public int toolScore;
 
     public int paintScore;
@@ -121,7 +119,6 @@ public class GameData
         this.toolWrong = 0;
         this.paintWrong = 0;
         this.wireWrong = 0;
-        this.cutscenePlay = false;
     }
 
 

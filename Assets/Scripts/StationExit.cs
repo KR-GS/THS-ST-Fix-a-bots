@@ -7,14 +7,10 @@ public class StationExit : MonoBehaviour
     public enum StationType { Tool, Paint, Wire }
     public StationType type;
 
-
     public void ExitStation(){
         Order currentOrder = OrderManager.Instance?.GetCurrentOrder();
         if (currentOrder != null)
         {
-            StaticData.cutscenePlay = false;
-            LoadingScreenManager.Instance.SwitchtoScene(0);
-
             switch (type)
             {
                 case StationType.Tool:
@@ -84,14 +80,10 @@ public class StationExit : MonoBehaviour
                     currentOrder.wireDone = true;
                     break;
             }
-        
 
             Debug.Log($"Successfully returned from {type} station!");
             //OrderManager.Instance.TryCompleteOrder();
 
-            StaticData.cutscenePlay = true;
-
-            /*
             if (StaticData.startOfDay == true)
             {
                 Debug.Log("It is the start of day indeed!");
@@ -104,7 +96,6 @@ public class StationExit : MonoBehaviour
                 RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
                 RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
             }
-            */
 
             GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
@@ -134,7 +125,6 @@ public class StationExit : MonoBehaviour
 
         }
 
-        
-        //SceneManager.LoadScene("LO_WS2D");
+        SceneManager.LoadScene("LO_WS2D");
     }
 }

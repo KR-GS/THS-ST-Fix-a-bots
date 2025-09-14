@@ -11,8 +11,8 @@ public class LoToolRevised : MonoBehaviour
 {
     [Header("Minigame Managers")]
 
-    [SerializeField]
-    private PatternGameManager patternGameManager;
+    //[SerializeField]
+    //private PatternGameManager patternGameManager;
 
     [SerializeField]
     private HitCountManager hitCountManager;
@@ -20,10 +20,13 @@ public class LoToolRevised : MonoBehaviour
     [SerializeField]
     private ToolTilingManager toolTilingManager;
 
-    [SerializeField]
-    private DifficultyManager toolDifficulty;
+    //[SerializeField]
+    //private DifficultyManager toolDifficulty;
 
     [Header("Tool Objects")]
+
+    [SerializeField]
+    private Transform textCounter;
 
     [SerializeField]
     private GameObject[] fastenerObj;
@@ -51,10 +54,11 @@ public class LoToolRevised : MonoBehaviour
     private int[] gapToDisplay;
     private int[] originalGaps;
 
-    private Vector3[] spawn_points;
-
     [SerializeField]
     private List<ToolBtn> toolButtons;
+
+    [SerializeField]
+    private Button addTenBtn;
 
     void Awake()
     {
@@ -93,14 +97,14 @@ public class LoToolRevised : MonoBehaviour
         int randFastenerVal;
         bool isFix=false;
         int[] tempArr;
-        //GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
+        GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
 
-        //GameObject originalGap = FindFirstObjectByType<GapHolder>().gameObject;
+        GameObject originalGap = FindFirstObjectByType<GapHolder>().gameObject;
 
-        //int difference = StaticData.sequenceDiff;
-        int difference = patternGameManager.ReturnDifference();
-        //patternLength = StaticData.patternLength;
-        patternLength = toolDifficulty.GetLengthOfPattern();
+        int difference = StaticData.sequenceDiff;
+        //int difference = patternGameManager.ReturnDifference();
+        patternLength = StaticData.patternLength;
+        //patternLength = toolDifficulty.GetLengthOfPattern();
         fastenerObj = new GameObject[patternLength];
         fastenerValues = new int[patternLength];
         originalHitValues = new int[patternLength];
@@ -120,32 +124,32 @@ public class LoToolRevised : MonoBehaviour
 
         gapHolder = new GameObject[patternLength - 1];
 
-        //generatedList = StaticData.toolPattern;
-        generatedList = patternGameManager.ReturnPatternArray(patternLength);
+        generatedList = StaticData.toolPattern;
+        //generatedList = patternGameManager.ReturnPatternArray(patternLength);
 
-        if (toolDifficulty.GetDifficulty() == "easy")
+        if (StaticData.toolDifficulty == 0)
         {
             Debug.Log("easy");
         }
-        else if (toolDifficulty.GetDifficulty() == "medium")
+        else if (StaticData.toolDifficulty == 1)
         {
             Debug.Log("medium");
         }
-        else if (toolDifficulty.GetDifficulty() == "hard")
+        else if (StaticData.toolDifficulty == 2)
         {
             Debug.Log("hard");
         }
 
 
         //Checks for minigame's difficulty
-        switch (toolDifficulty.GetDifficulty())
+        switch (StaticData.toolDifficulty)
         {
-            case "easy":
+            case 0:
                 slotToFix = StaticData.incorrectVals;
                 isFix = true;
                 Debug.Log("Fixing in easy!");
                 break;
-            case "medium":
+            case 1:
                 Debug.Log("Fixing in medium!");
 
                 medValue = StaticData.medValue;
@@ -164,7 +168,7 @@ public class LoToolRevised : MonoBehaviour
                     Debug.Log("Method to follow: fill");
                 }
                 break;
-            case "hard":
+            case 2:
                 /*
                 Debug.Log("Fixing in hard!");
                 slotToFix = 0;
@@ -186,13 +190,7 @@ public class LoToolRevised : MonoBehaviour
         
         currentInt = 0;
 
-        Debug.Log("Highest No. Count: " + generatedList[generatedList.Count - 1]);
-
-        int tilesToSpawn = (generatedList[generatedList.Count - 1] / 2) + 1;
-
-        toolTilingManager.SpawnPartTiled(tilesToSpawn);
-
-        spawn_points = toolTilingManager.GetFastenerPoints();
+        toolTilingManager.SpawnPartTiled(patternLength);
 
         tiledParts = toolTilingManager.GetTileList();
         switch (isFix)
@@ -204,9 +202,8 @@ public class LoToolRevised : MonoBehaviour
                 difference = numberToDisplay[1] - numberToDisplay[0];
                 Debug.Log("Diff val: " + difference);
 
-                if (toolDifficulty.GetNumberOfIncorrectVal() == 0)
+                if (StaticData.incorrectIndices.Count == 0)
                 {
-                    /*
                     HashSet<int> usedIndices = new HashSet<int>();
                     while (StaticData.incorrectIndices.Count < slotToFix)
                     {
@@ -218,21 +215,20 @@ public class LoToolRevised : MonoBehaviour
                             StaticData.incorrectValues.Add(generatedList[randIndex] - difference);
                         }
                     }
-                    */
                 }
 
                 numberToDisplay = generatedList.ToArray();
 
-                for (int i = 0; i < toolDifficulty.GetNumberOfIncorrectVal(); i++)
+                for (int i = 0; i < StaticData.incorrectIndices.Count; i++)
                 {
-                    //int index = StaticData.incorrectIndices[i];
-                    //numberToDisplay[index] = StaticData.incorrectValues[i];
+                    int index = StaticData.incorrectIndices[i];
+                    numberToDisplay[index] = StaticData.incorrectValues[i];
                 }
                 break;
             case false:
-                if(toolDifficulty.GetDifficulty() == "hard")
-                //Debug.Log("Filling!");
-                //if(StaticData.toolDifficulty == 1 || StaticData.toolDifficulty == 2)
+                //if(toolDifficulty.GetDifficulty() == "hard")
+                Debug.Log("Filling!");
+                if(StaticData.toolDifficulty == 1 || StaticData.toolDifficulty == 2)
                 {
                     for (int i = 0; i < patternLength - slotToFill; i++)
                     {
@@ -273,14 +269,29 @@ public class LoToolRevised : MonoBehaviour
             originalHitValues[i] = numberToDisplay[i];
         }
 
-        randFastenerVal = Random.Range(0,3);
+        for(int i=0; i<patternLength-1; i++)
+        {
+            gapToDisplay[i] = numberToDisplay[i + 1] - numberToDisplay[i];
+            originalGaps[i] = generatedList[i + 1] - generatedList[i];
+        }
 
+        //randFastenerVal = Random.Range(0, fastenerList.Length-1);
+        randFastenerVal = StaticData.selectedFastenerIndex;
         /*
+        if (!StaticData.selectedFastenerIndex.HasValue)
+        {
+            StaticData.selectedFastenerIndex = Random.Range(0, fastenerList.Length);
+
+        }*/
+
+        //randFastenerVal = StaticData.selectedFastenerIndex.Value;
+        //randFastenerVal = 0;
+
         for (int i = 0; i < patternLength; i++)
         {
             Debug.Log("Creating Object number " + i);
             fastenerObj[i] = new GameObject("Fastener " + (i + 1).ToString());
-            fastenerObj[i].transform.position = new Vector2(spawn_points[numberToDisplay[i]].x, hitCountManager.transform.position.y);
+            fastenerObj[i].transform.position = new Vector2(tiledParts[i].transform.position.x, hitCountManager.transform.position.y);
             
             Debug.Log(i+ " value: " + numberToDisplay[i]);
             if (numberToDisplay[i] > 0)
@@ -294,14 +305,13 @@ public class LoToolRevised : MonoBehaviour
                 fastenerObj[i].SetActive(false);
             }
         }
-        */
 
         for (int i = 0; i< patternLength; i++)
         {
             if (numberToDisplay[i] > 0)
             {
-                Instantiate(fastenerList[randFastenerVal].GetFastenerSprite(), toolTilingManager.SetFastener(numberToDisplay[i]));
-                //tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+                Instantiate(fastenerList[randFastenerVal].GetFastenerSprite(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+                tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
 
 
                 Debug.Log("Adding Fastener");
@@ -311,6 +321,37 @@ public class LoToolRevised : MonoBehaviour
             fastenerCheckVal[i] = randFastenerVal+1;
         }
 
+        counterHolder[0] = originalCounter;
+
+        for (int i = 0; i<patternLength; i++)
+        {
+            Vector3 position = new Vector3(tiledParts[i].transform.position.x, originalCounter.transform.position.y, originalCounter.transform.position.z);
+
+            if (i > 0)
+            {
+                counterHolder[i] = Instantiate(originalCounter);
+
+                counterHolder[i].transform.position = position;
+            }
+                
+
+            counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerCheckVal[i] - 1].GetHitIcon());
+        }
+
+        gapHolder[0] = originalGap;
+
+        for (int i = 0;i<patternLength-1; i++)
+        {
+            Vector3 position = new Vector3((tiledParts[i].transform.position.x + tiledParts[i+1].transform.position.x)/2, originalGap.transform.position.y, originalGap.transform.position.z);
+            if (i > 0)
+            {
+                gapHolder[i] = Instantiate(originalGap);
+            }
+
+            gapHolder[i].transform.position = position;
+
+            gapHolder[i].GetComponent<GapHolder>().SetGapVal(gapToDisplay[i], originalGaps[i]);
+        }
 
     }
 
@@ -357,7 +398,7 @@ public class LoToolRevised : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
         if (rayHit.collider != null)
         {
-            Debug.Log("Hello Collider Hit! " + rayHit.transform.name);
+            
         }
     }
 }

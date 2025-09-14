@@ -91,112 +91,109 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (scene.name == "LO_WS2D")
         {
-            if(StaticData.cutscenePlay == true)
+            // Re-find and assign the new instance of the text
+
+            GameObject dayTextObject = GameObject.Find("DayNumber");
+            if (dayTextObject != null)
             {
-                GameObject dayTextObject = GameObject.Find("DayNumber");
-                if (dayTextObject != null)
+                dayNumber = dayTextObject.GetComponent<TextMeshProUGUI>();
+                if (dayNumber != null)
                 {
-                    dayNumber = dayTextObject.GetComponent<TextMeshProUGUI>();
-                    if (dayNumber != null)
-                    {
-                        dayNumber.text = "Day: " + level;
-                    }
-                    else
-                    {
-                        Debug.LogWarning("TextMeshProUGUI component not found on DayText object.");
-                    }
+                    dayNumber.text = "Day: " + level;
                 }
                 else
                 {
-                    Debug.LogWarning("DayText object not found in LO_Workshop.");
+                    Debug.LogWarning("TextMeshProUGUI component not found on DayText object.");
                 }
-
-                GameObject moneyTextObject = GameObject.Find("Money_Text");
-                if (moneyTextObject != null)
-                {
-                    moneyText = moneyTextObject.GetComponent<TextMeshProUGUI>();
-                    if (moneyText != null)
-                    {
-                        moneyText.text = money.ToString();
-                    }
-                    else
-                    {
-                        Debug.LogWarning("TextMeshPro component not found on MoneyText object.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("MoneyText object not found in LO_Workshop.");
-                }
-
-                GameObject remainingOrderObj = GameObject.Find("RemainingOrders");
-                if (remainingOrderObj != null)
-                {
-                    remainingOrders = remainingOrderObj.GetComponent<TextMeshProUGUI>();
-                    if (remainingOrders != null)
-                    {
-                        UpdateRemainingOrders();
-                    }
-                    else
-                    {
-                        Debug.LogWarning("TextMeshPro component not found on RemainingOrders object.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
-                }
-
-                GameObject ordersOnboardObj = GameObject.Find("OrdersOnboard");
-                if (ordersOnboardObj != null)
-                {
-                    ordersOnboard = ordersOnboardObj.GetComponent<TextMeshProUGUI>();
-                    if (ordersOnboard != null)
-                    {
-                        UpdateOrdersOnboard();
-                        StartCoroutine(UpdateOrdersOnboardPeriodically());
-                    }
-                    else
-                    {
-                        Debug.LogWarning("TextMeshPro component not found on OrdersOnboard object.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
-                }
-
-                if (TimerScript.instance != null)
-                {
-                    if (OrderManager.Instance != null && OrderManager.Instance.GetCurrentOrder() != null)
-                    {
-                        TimerScript.instance.StartTimer();
-                    }
-                    else
-                    {
-                        Debug.Log("No active order. Timer not restarted.");
-                    }
-                }
-
-                Debug.Log("[LOOK HERE] Pending orders count: " + OrderManager.Instance.pendingOrders.Count);
-
-                if (StaticData.startOfDay == true)
-                {
-                    Debug.Log("I went to true cuz it is...!");
-                    Debug.Log("It is the start of day indeed!");
-                    RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
-                    RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
-                }
-                else if (StaticData.startOfDay == false)
-                {
-                    Debug.Log("I just went here cuz it ain't! Ain't what?");
-                    Debug.Log("No it ain't the start of the day!");
-                    RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-                    RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
-                }
-
-                StartCoroutine(UpdateStationsNextFrame());
             }
+            else
+            {
+                Debug.LogWarning("DayText object not found in LO_Workshop.");
+            }
+
+            GameObject moneyTextObject = GameObject.Find("Money_Text");
+            if (moneyTextObject != null)
+            {
+                moneyText = moneyTextObject.GetComponent<TextMeshProUGUI>();
+                if (moneyText != null)
+                {
+                    moneyText.text = money.ToString();
+                }
+                else
+                {
+                    Debug.LogWarning("TextMeshPro component not found on MoneyText object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("MoneyText object not found in LO_Workshop.");
+            }
+
+            GameObject remainingOrderObj = GameObject.Find("RemainingOrders");
+            if (remainingOrderObj != null)
+            {
+                remainingOrders = remainingOrderObj.GetComponent<TextMeshProUGUI>();
+                if (remainingOrders != null)
+                {
+                    UpdateRemainingOrders(); 
+                }
+                else
+                {
+                    Debug.LogWarning("TextMeshPro component not found on RemainingOrders object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
+            }
+
+            GameObject ordersOnboardObj = GameObject.Find("OrdersOnboard");
+            if (ordersOnboardObj != null)
+            {
+                ordersOnboard = ordersOnboardObj.GetComponent<TextMeshProUGUI>();
+                if (ordersOnboard != null)
+                {
+                    UpdateOrdersOnboard();
+                    StartCoroutine(UpdateOrdersOnboardPeriodically());
+                }
+                else
+                {
+                    Debug.LogWarning("TextMeshPro component not found on OrdersOnboard object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
+            }
+
+            if (TimerScript.instance != null)
+            {
+                if (OrderManager.Instance != null && OrderManager.Instance.GetCurrentOrder() != null)
+                {
+                    TimerScript.instance.StartTimer();
+                }
+                else
+                {
+                    Debug.Log("No active order. Timer not restarted.");
+                }
+            }
+
+            Debug.Log("[LOOK HERE] Pending orders count: " + OrderManager.Instance.pendingOrders.Count);
+
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("It is the start of day indeed!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("No it ain't the start of the day!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            }
+
+            StartCoroutine(UpdateStationsNextFrame());
 
         }
         else
@@ -279,8 +276,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         this.toolScore = data.toolScore;
         this.paintScore = data.paintScore;
         this.wireScore = data.wireScore;
-
-        StaticData.cutscenePlay = data.cutscenePlay;
 
         StaticData.startOfDay = data.startOfDay;
 
@@ -411,7 +406,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.toolWrong = StaticData.toolWrong;
         data.paintWrong = StaticData.paintWrong;
         data.wireWrong = StaticData.wireWrong;
-        data.cutscenePlay = StaticData.cutscenePlay;
     }
 
     public void UpdateMoneyText()
