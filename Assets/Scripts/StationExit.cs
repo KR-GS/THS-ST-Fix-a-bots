@@ -91,24 +91,11 @@ public class StationExit : MonoBehaviour
 
             StaticData.cutscenePlay = true;
 
-            /*
-            if (StaticData.startOfDay == true)
-            {
-                Debug.Log("It is the start of day indeed!");
-                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
-                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("No it ain't the start of the day!");
-                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
-            }
-            */
 
             GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+            GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
             GameLoopManager.Instance.ShowTV(true);

@@ -45,6 +45,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public TextMeshProUGUI moneyText;
 
+    public Button tutorialButton;
+
     public TextMeshProUGUI remainingOrders;
 
     public TextMeshProUGUI ordersOnboard;
@@ -71,6 +73,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         OrderManager.Instance.TryCompleteOrder();
@@ -91,8 +94,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (scene.name == "LO_WS2D")
         {
-            if(StaticData.cutscenePlay == true)
+            if (StaticData.cutscenePlay == true)
             {
+                Debug.Log("This appears when opening the game right???");
+
                 GameObject dayTextObject = GameObject.Find("DayNumber");
                 if (dayTextObject != null)
                 {
@@ -206,6 +211,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
             if (moneyImage != null) moneyImage.gameObject.SetActive(false);
+            if (tutorialButton != null) tutorialButton.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
             ShowTV(false);
@@ -286,7 +292,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         StaticData.medValue = data.medValue;
         StaticData.dayNo = this.level;
-        
+
+        StaticData.newGame = data.newGame;
+
 
         if (dayNumber != null)
         {
@@ -356,7 +364,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
 
-
+        StaticData.TVScreen = data.TVScreen;
         StaticData.patternLength = data.patternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
         StaticData.selectedStickerIndex = data.selectedStickerIndex;
@@ -383,8 +391,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             StaticData.incorrectValues = new List<int>(data.incorrectValues);
         }
-        
-        
 
         HandleSceneInitialization();
     }
@@ -412,6 +418,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.paintWrong = StaticData.paintWrong;
         data.wireWrong = StaticData.wireWrong;
         data.cutscenePlay = StaticData.cutscenePlay;
+        data.newGame = StaticData.newGame;
+        data.TVScreen = StaticData.TVScreen;
     }
 
     public void UpdateMoneyText()

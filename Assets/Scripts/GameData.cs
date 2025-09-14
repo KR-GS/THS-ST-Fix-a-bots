@@ -55,6 +55,8 @@ public class GameData
 
     public int stageDone;
 
+    public int TVScreen;
+
     public int patternLength;
 
     public bool isToolDone;
@@ -68,6 +70,8 @@ public class GameData
     public bool sendNewOrder;
 
     public bool cutscenePlay;
+
+    public bool newGame;
 
     public int toolScore;
 
@@ -122,6 +126,8 @@ public class GameData
         this.paintWrong = 0;
         this.wireWrong = 0;
         this.cutscenePlay = false;
+        this.newGame = true;
+        this.TVScreen = 0;
     }
 
 

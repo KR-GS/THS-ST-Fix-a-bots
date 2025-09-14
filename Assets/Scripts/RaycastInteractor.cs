@@ -30,6 +30,9 @@ public class RaycastInteractor : MonoBehaviour
     public Image readyIndicator;
     public TextMeshProUGUI readyText;
 
+    public Image tutorialIndicator;
+    public TextMeshProUGUI pointTutorial;
+
     public Button okButton;
     public Order currentOrder;
     private Queue<Order> pendingOrders = new Queue<Order>();
@@ -41,6 +44,8 @@ public class RaycastInteractor : MonoBehaviour
     public Image ToolIndicator;
     public Image WireIndicator;
     public Image PaintIndicator;
+
+    private bool wasRaycastingEnabled = true;
 
     [Header("Station Statuses")]
     public UIStationStatus toolStatus;
@@ -85,39 +90,57 @@ public class RaycastInteractor : MonoBehaviour
 
     private void Start()
     {
-        if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() != null)
+        if (StaticData.newGame == true)
         {
-            if (TVSprite != null)
-            {
-                TVSprite.sprite = TVSpriteIP;
-            }
-        }
-        else if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() == null)
-        {
-            if (TVSprite != null)
-            {
-                TVSprite.sprite = TVSpriteNoOrder;
-            }
 
-            if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
-            if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
-            if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
+            DisableRaycasting();
+            tutorialIndicator.gameObject.SetActive(true);
+            pointTutorial.gameObject.SetActive(true);
 
 
-        }
-
-        if (StaticData.startOfDay == true)
-        {
-            Debug.Log("Aiya, debugging is sad!");
-            readyIndicator.gameObject.SetActive(true);
-            readyText.gameObject.SetActive(true);
-        }
-        else if (StaticData.startOfDay == false)
-        {
-            Debug.Log("Ayo, will this work?");
             readyIndicator.gameObject.SetActive(false);
             readyText.gameObject.SetActive(false);
         }
+
+        else
+        {
+            if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() != null)
+            {
+                if (TVSprite != null)
+                {
+                    TVSprite.sprite = TVSpriteIP;
+                    StaticData.TVScreen = 2;
+                }
+            }
+            else if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() == null)
+            {
+                if (TVSprite != null)
+                {
+                    TVSprite.sprite = TVSpriteNoOrder;
+                    StaticData.TVScreen = 0;
+                }
+
+                if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
+                if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
+                if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
+
+
+            }
+
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("Aiya, debugging is sad!");
+                readyIndicator.gameObject.SetActive(true);
+                readyText.gameObject.SetActive(true);
+            }
+            else if (StaticData.startOfDay == false)
+            {
+                Debug.Log("Ayo, will this work?");
+                readyIndicator.gameObject.SetActive(false);
+                readyText.gameObject.SetActive(false);
+            }
+        }
+
     }
 
     private void UpdateUIStation(UIStationStatus status, bool needed, bool isDone)
@@ -170,11 +193,14 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("Hiding order sheet panel.");
             orderSheetPanel.SetActive(false);
 
+            EnableRaycasting();
+
             Order savedOrder = OrderManager.Instance.GetActiveOrder();
 
             if (TVSprite != null && TVSprite.sprite == TVSpriteNO)
             {
                 TVSprite.sprite = TVSpriteIP;
+                StaticData.TVScreen = 2;
             }
 
             Debug.Log("Internal tool score: " + GameLoopManager.Instance.toolScore);
@@ -186,6 +212,7 @@ public class RaycastInteractor : MonoBehaviour
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
             if (timeText != null)
             {
                 timeText.gameObject.SetActive(true); // Hide the time text
@@ -342,6 +369,26 @@ public class RaycastInteractor : MonoBehaviour
         }
     }
 
+    private void DisableRaycasting()
+    {
+        if (Instance != null)
+        {
+            // Store current state before disabling
+            wasRaycastingEnabled = true;
+            Instance.enabled = false;
+            Debug.Log("Raycasting disabled for tutorial");
+        }
+    }
+
+    private void EnableRaycasting()
+    {
+        if (Instance != null)
+        {
+            Instance.enabled = true;
+            Debug.Log("Raycasting re-enabled after tutorial");
+        }
+    }
+
     void ShowOrderUI()
     {
         //Get all the data from StaticData
@@ -352,7 +399,7 @@ public class RaycastInteractor : MonoBehaviour
             return;
         }
 
-        
+        DisableRaycasting();
 
         Order order = OrderManager.Instance.GetActiveOrder(); // Get the first active order (activeOrders[0])
 
@@ -363,6 +410,7 @@ public class RaycastInteractor : MonoBehaviour
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
 

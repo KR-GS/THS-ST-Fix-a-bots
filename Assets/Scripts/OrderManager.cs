@@ -32,7 +32,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     private Coroutine scheduleRoutine;
 
     public int currentOrderIndex = -1;
-
+    private bool wasRaycastingEnabled = true;
 
     private void Awake()
     {
@@ -184,9 +184,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                     currentOrder = firstOrder;
                     Debug.Log("First order delivered!");
                     TVSprite.sprite = TVSpriteNO;
+                    StaticData.TVScreen = 1;
 
-                    // lock sending more until this order is completed
-                    sendNewOrder = false;
+                // lock sending more until this order is completed
+                sendNewOrder = false;
                     StaticData.sendNewOrder = false;
                 }
 
@@ -210,6 +211,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Debug.Log("Delivered order!");
             Debug.Log("isChecked status: " + StaticData.isOrderChecked);
             TVSprite.sprite = TVSpriteNO;
+            StaticData.TVScreen = 1;
 
             sendNewOrder = false;
             StaticData.sendNewOrder = false;
@@ -227,6 +229,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             Debug.Log("Order Complete!");
             RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
+            StaticData.TVScreen = 0;
             orderList.RemoveAt(0);
             activeOrders.RemoveAt(0); 
             StaticData.isToolDone = false;
@@ -334,6 +337,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
+        DisableRaycasting();
+
         orderCompletePanel.SetActive(true);
         Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
 
@@ -341,6 +346,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
 
@@ -364,6 +370,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
+        EnableRaycasting();
 
         orderCompletePanel.SetActive(false);
         Debug.Log("[OrderManager] Hiding panel: " + orderCompletePanel.name);
@@ -373,12 +380,32 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
 
         
     }
 
+    private void DisableRaycasting()
+    {
+        if (RaycastInteractor.Instance != null)
+        {
+            // Store current state before disabling
+            wasRaycastingEnabled = RaycastInteractor.Instance.enabled;
+            RaycastInteractor.Instance.enabled = false;
+            Debug.Log("Raycasting disabled for tutorial");
+        }
+    }
+
+    private void EnableRaycasting()
+    {
+        if (RaycastInteractor.Instance != null)
+        {
+            RaycastInteractor.Instance.enabled = wasRaycastingEnabled;
+            Debug.Log("Raycasting re-enabled after tutorial");
+        }
+    }
 
 
     public void LoadData(GameData data)
