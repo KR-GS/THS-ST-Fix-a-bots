@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 using Unity.VisualScripting;
 
 [System.Serializable]
@@ -21,6 +22,11 @@ public class FormulaAttempt
 public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 {
     public static FormulaInputPanel Instance;
+
+    [Header("DynamicReevaler")]
+    public Button revealDynamic;
+    public GameObject buttonsParent;
+    public GameObject buttonsParent2;
 
     [Header("UI References")]
     public TMP_Text feedbackText;
@@ -56,6 +62,31 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         Instance = this;
     }
 
+    private void Start()
+    {
+        /*
+        if (formulaInputTutorial != null)
+        {
+            formulaInputTutorial.ShowTutorial(StaticData.tutorialType);
+        }
+        */
+        revealDynamic.onClick.AddListener(() => StartRevealProccess());
+        buttonsParent2.SetActive(false);
+
+        if (continueButton != null)
+        {
+            continueButton.onClick.AddListener(() =>
+            {
+                LoadStageSelectScene();
+            });
+        }
+
+        if (submitButton != null)
+        {
+            submitButton.onClick.AddListener(ValidateFormula);
+        }
+    }
+
     public void SetLockConstant(bool constant)
     {
         lockConstant = constant;
@@ -64,6 +95,29 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     public void SetLockCoefficient(bool coef)
     {
         lockCoefficient = coef;
+    }
+
+    private void StartRevealProccess()
+    {
+        revealDynamic.interactable = false;
+        StartCoroutine(ShowAndCooldown());
+    }
+
+    IEnumerator ShowAndCooldown()
+    {
+        
+        // Show for 5 seconds
+        buttonsParent.SetActive(false);
+        buttonsParent2.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        buttonsParent2.SetActive(false);
+        buttonsParent.SetActive(true);
+
+        // Extra 5 seconds cooldown
+        yield return new WaitForSeconds(5f);
+
+        revealDynamic.interactable = true;
+        yield return null;
     }
 
     public void StoreStageData()
@@ -361,29 +415,6 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     private void LoadStageSelectScene()
     {
         SceneManager.LoadScene("Stage_Select");
-    }
-
-    private void Start()
-    {
-        /*
-        if (formulaInputTutorial != null)
-        {
-            formulaInputTutorial.ShowTutorial(StaticData.tutorialType);
-        }
-        */
-
-        if (continueButton != null)
-        {
-            continueButton.onClick.AddListener(() =>
-            {
-                LoadStageSelectScene();
-            });
-        }
-
-        if (submitButton != null)
-        {
-            submitButton.onClick.AddListener(ValidateFormula);
-        }
     }
 
     private void ValidateFormula()

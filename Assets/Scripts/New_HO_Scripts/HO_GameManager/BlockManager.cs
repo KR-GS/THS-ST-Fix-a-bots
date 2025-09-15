@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 public class BlockManager : MonoBehaviour
 {
+    [Header("Block Containers")]
+    public RectTransform coeffArea;
+    public RectTransform constArea;
+    public RectTransform signArea;
+
+    public RectTransform formulaArea;
+
     [Header("Block Creation Settings")]
     public GameObject blockPrefab;
     public Transform blockContainer;
@@ -118,6 +125,7 @@ public class BlockManager : MonoBehaviour
         }
     }
     
+    /*
     private FormulaBlock CreateRandomBlock(BlockType type, int value, string symbol, Color color)
     {
         FormulaBlock block = CreateBlock(type, value, symbol, color);
@@ -127,14 +135,70 @@ public class BlockManager : MonoBehaviour
         }
         return block;
     }
+    */
     
+    private FormulaBlock CreateRandomBlock(BlockType type, int value, string symbol, Color color)
+    {
+        FormulaBlock block = CreateBlock(type, value, symbol, color);
+
+        if (block == null) return null;
+
+        // Assign parent container based on block type
+        switch (type)
+        {
+            case BlockType.Coefficient:
+                block.transform.SetParent(coeffArea, false);
+                SetRandomPosition(block, coeffArea);
+                break;
+
+            case BlockType.Constant:
+                block.transform.SetParent(constArea, false);
+                SetRandomPosition(block, constArea);
+                break;
+
+            case BlockType.Sign:
+                block.transform.SetParent(signArea, false);
+                SetRandomPosition(block, signArea);
+                break;
+
+            case BlockType.Variable:
+                block.transform.SetParent(formulaArea, false);
+                block.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; // fixed center
+                break;
+        }
+
+        return block;
+    }
+
+    private void SetRandomPosition(FormulaBlock block, RectTransform parentContainer)
+    {
+        RectTransform rectTransform = block.GetComponent<RectTransform>();
+
+        Vector2 newPosition;
+        int attempts = 0;
+        int maxAttempts = 50;
+
+        do
+        {
+            float x = Random.Range(-parentContainer.rect.width / 2f, parentContainer.rect.width / 2f);
+            float y = Random.Range(-parentContainer.rect.height / 2f, parentContainer.rect.height / 2f);
+            newPosition = new Vector2(x, y);
+            attempts++;
+        }
+        while (IsPositionTooClose(newPosition) && attempts < maxAttempts);
+
+        rectTransform.anchoredPosition = newPosition;
+        usedPositions.Add(newPosition);
+    }
+        
+    /*
     private void SetRandomPosition(FormulaBlock block)
     {
         RectTransform rectTransform = block.GetComponent<RectTransform>();
         Vector2 newPosition;
         int attempts = 0;
         int maxAttempts = 50; // Prevent infinite loop
-        
+
         do
         {
             // Generate random position within container bounds
@@ -144,10 +208,11 @@ public class BlockManager : MonoBehaviour
             attempts++;
         }
         while (IsPositionTooClose(newPosition) && attempts < maxAttempts);
-        
+
         rectTransform.anchoredPosition = newPosition;
         usedPositions.Add(newPosition);
     }
+    */
     
     private bool IsPositionTooClose(Vector2 position)
     {
@@ -179,7 +244,60 @@ public class BlockManager : MonoBehaviour
         }
         
         nBlock.transform.SetParent(formulaArea.transform);
-        nRect.anchoredPosition = Vector2.zero;
+    }
+
+    private void PositionConstBlock(FormulaBlock nBlock)
+    {
+        // Find or create a formula building area
+        GameObject constArea = GameObject.Find("ConstArea");
+        if (constArea == null)
+        {
+            constArea = new GameObject("FormulaArea");
+            constArea.transform.SetParent(blockContainer.parent);
+            
+            RectTransform areaRect = constArea.AddComponent<RectTransform>();
+            areaRect.anchoredPosition = new Vector2(0, 100f); // Above the block container
+            areaRect.sizeDelta = new Vector2(400f, 100f);
+        }
+        
+        nBlock.transform.SetParent(constArea.transform);
+    }
+
+    private void PositionCoeffBlock(FormulaBlock nBlock)
+    {
+        // Position the "n" block in the center of the formula building area
+        RectTransform nRect = nBlock.GetComponent<RectTransform>();
+        
+        // Find or create a formula building area
+        GameObject coeffArea = GameObject.Find("CoeffArea");
+        if (coeffArea == null)
+        {
+            coeffArea = new GameObject("CoeffArea");
+            coeffArea.transform.SetParent(blockContainer.parent);
+            
+            RectTransform areaRect = coeffArea.AddComponent<RectTransform>();
+            areaRect.anchoredPosition = new Vector2(0, 100f); // Above the block container
+            areaRect.sizeDelta = new Vector2(400f, 100f);
+        }
+        
+        nBlock.transform.SetParent(coeffArea.transform);
+    }
+
+    private void PositionSignBlock(FormulaBlock nBlock)
+    {
+        // Find or create a formula building area
+        GameObject signArea = GameObject.Find("SignArea");
+        if (signArea == null)
+        {
+            signArea = new GameObject("SignArea");
+            signArea.transform.SetParent(blockContainer.parent);
+            
+            RectTransform areaRect = signArea.AddComponent<RectTransform>();
+            areaRect.anchoredPosition = new Vector2(0, 100f); // Above the block container
+            areaRect.sizeDelta = new Vector2(400f, 100f);
+        }
+        
+        nBlock.transform.SetParent(signArea.transform);
     }
     
     public void ClearExistingBlocks()

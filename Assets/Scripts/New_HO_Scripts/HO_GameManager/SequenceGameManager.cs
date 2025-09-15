@@ -834,17 +834,19 @@ public class SequenceGameManager : MonoBehaviour
             btn2.SetHighlighted(false);
             buttons2.Add(btn2);
         }
+        
+        /*
 
         if (!StaticData.refSeen)
         {
             matchText.SetActive(false);
             buttonsParent2.transform.localScale = new Vector3(0, 0, 0);
-            correctText.transform.localPosition = new Vector3(0,100,0);
+            correctText.transform.localPosition = new Vector3(0, 100, 0);
         }
         else
         {
             buttonsParent.localPosition = new Vector3(0, -500, 0);
-        }
+        }*/
 
         // Show formula panel with current sequence
         statusAnimator.enabled = false;
