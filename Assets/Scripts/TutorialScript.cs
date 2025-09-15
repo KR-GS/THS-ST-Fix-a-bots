@@ -14,11 +14,24 @@ public class TutorialScript : MonoBehaviour
     public Button backButton;
     public Button closeButton;
     private int currentPage = 0;
-    private int maxPages = 3;
-    private Image tutorialScene;
+    private int maxPages = 12;
+    public Image tutorialScene;
     public Sprite TVSpriteNoOrder;
     public Sprite TVSpriteIP;
     public Sprite TVSpriteNO;
+
+    public Sprite WT1;
+    public Sprite WT2;
+    public Sprite WT3;
+    public Sprite WT4;
+    public Sprite WT5;
+    public Sprite WT6;
+    public Sprite WT7;
+    public Sprite WT8;
+    public Sprite WT9;
+    public Sprite WT10;
+    public Sprite WT11;
+    public Sprite WT12;
 
     private bool wasRaycastingEnabled = true;
 
@@ -60,32 +73,120 @@ public class TutorialScript : MonoBehaviour
         backButton.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(false);
 
-        switch (index)
+        if(SceneManager.GetActiveScene().name == "LO_WS2D")
         {
-            case 0:
-                tutorialText.text = "Hello";
-                pageText.text = "Page 1/" + maxPages;
-                backButton.gameObject.SetActive(false);
-                closeButton.gameObject.SetActive(false);
+            switch (index)
+            {
+                case 0:
+                    tutorialText.text = "You are interacting with the workshop at the moment!";
+                    tutorialScene.sprite = WT1;
+                    pageText.text = "Page 1/" + maxPages;
+                    backButton.gameObject.SetActive(false);
+                    closeButton.gameObject.SetActive(false);
 
-                break;
-            case 1:
-                tutorialText.text = "This is the next page. Feel free to look at me!";
-                pageText.text = "Page 2/" + maxPages;
-                nextButton.gameObject.SetActive(true);
-                backButton.gameObject.SetActive(true);
-                closeButton.gameObject.SetActive(false);
-         
-                break;
-            case 2:
-                tutorialText.text = "This is the end of the tutorial. Press the question mark button if you feel lost again!";
-                pageText.text = "Page 3/" + maxPages;
-                nextButton.gameObject.SetActive(false);
-                backButton.gameObject.SetActive(true);
-                closeButton.gameObject.SetActive(true);
-       
-                break;
+                    break;
+                case 1:
+                    tutorialText.text = "The coin icon shows how much money you have earned by completing tasks!";
+                    tutorialScene.sprite = WT2;
+                    pageText.text = "Page 2/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 2:
+                    tutorialText.text = "Remaining orders show how many orders you have left before ending the level.";
+                    tutorialScene.sprite = WT3;
+                    pageText.text = "Page 3/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 3:
+                    tutorialText.text = "Active orders show how many orders you have that are in progress.";
+                    tutorialScene.sprite = WT4;
+                    pageText.text = "Page 4/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 4:
+                    tutorialText.text = "This shows which level / day you are currently at right now.";
+                    tutorialScene.sprite = WT5;
+                    pageText.text = "Page 5/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 5:
+                    tutorialText.text = "This shows how many time you have left to complete orders to receive full payment. Completing orders when the timer strikes 0 means you will receive half the amount!";
+                    tutorialScene.sprite = WT6;
+                    pageText.text = "Page 6/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 6:
+                    tutorialText.text = "This is the TV. You get orders here and check its contents.";
+                    tutorialScene.sprite = WT7;
+                    pageText.text = "Page 7/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 7:
+                    tutorialText.text = "The TV screen can change depending on the status of your orders. The screen you see shows a detailed explanation of each TV screen.";
+                    tutorialScene.sprite = WT8;
+                    pageText.text = "Page 8/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 8:
+                    tutorialText.text = "When clicking the TV, you will be directed to the order sheet to check its contents.";
+                    tutorialScene.sprite = WT9;
+                    pageText.text = "Page 9/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 9:
+                    tutorialText.text = "The To-Do List shows what tasks you will be doing to complete the order. As the day progresses, you will encounter new tasks too!";
+                    tutorialScene.sprite = WT10;
+                    pageText.text = "Page 10/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;
+                case 10:
+                    tutorialText.text = "After checking out the order sheet, a floating indicator will appear showing which task you will have to do to complete the order.";
+                    tutorialScene.sprite = WT11;
+                    pageText.text = "Page 11/" + maxPages;
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+
+                    break;;
+                case 11:
+                    tutorialText.text = "This is the end of the tutorial. Feel free to click on me if you feel lost again!";
+                    tutorialScene.sprite = WT12;
+                    pageText.text = "Page 12/" + maxPages;
+                    nextButton.gameObject.SetActive(false);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(true);
+
+                    break;
+            }
         }
+
     }
 
     private void DisableRaycasting()
@@ -171,6 +272,7 @@ public class TutorialScript : MonoBehaviour
         GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+        GameLoopManager.Instance.ShowTV(false);
         RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
 
         if (StaticData.TVScreen == 0)

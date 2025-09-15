@@ -94,6 +94,9 @@ public class RaycastInteractor : MonoBehaviour
         {
 
             DisableRaycasting();
+
+            GameLoopManager.Instance.ShowTV(false);
+
             tutorialIndicator.gameObject.SetActive(true);
             pointTutorial.gameObject.SetActive(true);
 
@@ -104,6 +107,9 @@ public class RaycastInteractor : MonoBehaviour
 
         else
         {
+            tutorialIndicator.gameObject.SetActive(false);
+            pointTutorial.gameObject.SetActive(false);
+
             if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() != null)
             {
                 if (TVSprite != null)
