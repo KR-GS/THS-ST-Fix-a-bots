@@ -248,6 +248,8 @@ public class TutorialScript : MonoBehaviour
             RaycastInteractor.Instance.timeText.gameObject.SetActive(false); // Hide the time text
         }
 
+        TimerScript.instance.StopTimer();
+
         tutorialObject.SetActive(true);
 
         Debug.Log("Tutorial restarted from the beginning.");
@@ -308,6 +310,8 @@ public class TutorialScript : MonoBehaviour
         {
             RaycastInteractor.Instance.timeText.gameObject.SetActive(true); // Hide the time text
         }
+
+        TimerScript.instance.StartTimer();
 
         RaycastInteractor.Instance.isOrderChecked = StaticData.isOrderChecked;
         Debug.Log("isOrderChecked status: " + RaycastInteractor.Instance.isOrderChecked);
