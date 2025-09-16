@@ -113,10 +113,10 @@ TextureImporter:
       name: LO_WireGenerator_Button_Red
       rect:
         serializedVersion: 2
-        x: 162
-        y: 564
-        width: 188
-        height: 187
+        x: 75
+        y: 862
+        width: 183
+        height: 183
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,7 +125,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40c6dcc7e899882449408f617a57fee1
+      spriteID: 979f22ce9d4e3ad4ca59b3731abc11b1
       internalID: 297260553
       vertices: []
       indices: 
@@ -135,10 +135,10 @@ TextureImporter:
       name: LO_WireGenerator_Button_Slider-Knob
       rect:
         serializedVersion: 2
-        x: 540
-        y: 474
-        width: 275
-        height: 276
+        x: 448
+        y: 768
+        width: 279
+        height: 279
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,7 +147,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2bb73bca9fec9314fb7cb20334724a0f
+      spriteID: 6d04b03d79a90fe4f887953ba87f2743
       internalID: 1172895755
       vertices: []
       indices: 
@@ -157,10 +157,10 @@ TextureImporter:
       name: LO_WireGenerator_Button_Blue
       rect:
         serializedVersion: 2
-        x: 168
-        y: 324
-        width: 186
-        height: 187
+        x: 78
+        y: 621
+        width: 183
+        height: 183
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,7 +169,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3482ffcb7634204883912b08f8fcd4a
+      spriteID: 550c4f100a1e71444b4594e74ac78051
       internalID: -1780163406
       vertices: []
       indices: 
@@ -179,10 +179,10 @@ TextureImporter:
       name: LO_WireGenerator_Button_Yellow
       rect:
         serializedVersion: 2
-        x: 168
-        y: 76
-        width: 188
-        height: 188
+        x: 80
+        y: 372
+        width: 183
+        height: 183
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,8 +191,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70ae14ea37ce73547ae9458a100f0d43
+      spriteID: 10c40c5cdbd8d554da2e5119292ae392
       internalID: -1726944542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LO_WireGenerator_Button_WireSlot
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 379
+        width: 2658
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0b49371a87198b479e754d3a1972110
+      internalID: -1841115232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LO_WireGenerator_WireSlider
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 108
+        width: 2966
+        height: 213
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67c082929b2e0b448ba76ffdc15307ed
+      internalID: 570877403
       vertices: []
       indices: 
       edges: []
@@ -214,7 +258,9 @@ TextureImporter:
       LO_WireGenerator_Button_Blue: -1780163406
       LO_WireGenerator_Button_Red: 297260553
       LO_WireGenerator_Button_Slider-Knob: 1172895755
+      LO_WireGenerator_Button_WireSlot: -1841115232
       LO_WireGenerator_Button_Yellow: -1726944542
+      LO_WireGenerator_WireSlider: 570877403
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f5777781043e1744d851d8db48e5559c
+guid: efdad7f87f489d245aa02e25a18bc64c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,56 +108,12 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: LO_WireStationBoard_0
-      rect:
-        serializedVersion: 2
-        x: 1537
-        y: 1038
-        width: 3664
-        height: 2524
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 410b5fac215ef0e4a9547db22c9625f7
-      internalID: -232853386
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LO_WireStationBoard_SpawnPoint
-      rect:
-        serializedVersion: 2
-        x: 1542
-        y: 0
-        width: 3659
-        height: 984
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c28de9061c2c34b4289f8f02d12e53a3
-      internalID: 817732738
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dc2af525af6205f4b84faf02a2ba9fa2
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -166,9 +122,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      LO_WireStationBoard_0: -232853386
-      LO_WireStationBoard_SpawnPoint: 817732738
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
