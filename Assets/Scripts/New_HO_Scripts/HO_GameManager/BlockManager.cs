@@ -7,7 +7,6 @@ public class BlockManager : MonoBehaviour
     public RectTransform coeffArea;
     public RectTransform constArea;
     public RectTransform signArea;
-
     public RectTransform formulaArea;
 
     [Header("Block Creation Settings")]

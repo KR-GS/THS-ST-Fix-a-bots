@@ -10,9 +10,11 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     public Button randButton;
 
     [Header("Stage Info UI")]
-    public GameObject stageInfoPanel, speedPanel;
+    public GameObject stageInfoPanel, speedPanel, settingsPanel;
     public TMP_Text livesText, restartsText, timeText, speedText;
     public Button yesButton, noButton, decreaseButton, increaseButton, confirmSpeedButton, confirmSpeedPanelButton;
+
+    public SettingsPanelManager settingsManager;
 
     private string[] speedLabels = { "Slowest", "Slow", "Average", "Fast", "Fastest" };
     private float[] speedValues = { 2f, 1.5f, 1f, 0.75f, 0.5f };
@@ -25,6 +27,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     IEnumerator Start()
     {
         StaticData.isOnHigherOrder = true;
+        StaticData.isOnHigherOrderGame = false;
         StaticData.isOnLowerOrder = false;
 
         Debug.Log("Num Stage Done: " + StaticData.numStageDone);
@@ -39,7 +42,10 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             Debug.LogError("The DataPersistence.Instance is NULL!!!");
         }
 
-        UpdateSpeedDisplay();
+        //UpdateSpeedDisplay();
+
+        //settingsPanel.SetActive(true);
+        //settingsPanel.SetActive(false);
 
         for (int i = 0; i < stageButtons.Length; i++)
         {
@@ -49,10 +55,10 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             if (i < StaticData.numStageDone)
             {
                 var color = stageButtons[i].targetGraphic.color;
-                color.a = 125; 
+                color.a = 125;
                 stageButtons[i].targetGraphic.color = color;
             }
-            
+
 
             stageButtons[i].onClick.AddListener(() =>
             {
@@ -67,10 +73,10 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
         yesButton.onClick.AddListener(ConfirmStageSelection);
         noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
-        confirmSpeedPanelButton.onClick.AddListener(() => speedPanel.SetActive(true));
-        increaseButton.onClick.AddListener(IncreaseSpeed);
-        decreaseButton.onClick.AddListener(DecreaseSpeed);
-        confirmSpeedButton.onClick.AddListener(ConfirmSpeed);
+        confirmSpeedPanelButton.onClick.AddListener(() => settingsPanel.SetActive(true));
+        //increaseButton.onClick.AddListener(IncreaseSpeed);
+        //decreaseButton.onClick.AddListener(DecreaseSpeed);
+        //confirmSpeedButton.onClick.AddListener(ConfirmSpeed);
     }
 
     private (int, float, float, int, bool, bool, bool, bool, int, int, int)[] GetStageConfigs()
@@ -183,8 +189,9 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        data.stageSpeed = confirmedSpeed;
-        Debug.Log("[StageDataLoader] Data saved from StaticData");
+        data.stageSpeed = settingsManager.getSelectedStageSpeed();
+        data.language = settingsManager.getSelectedLanguage();
+        Debug.Log("Speed" + settingsManager.getSelectedStageSpeed());
     }
 }
 

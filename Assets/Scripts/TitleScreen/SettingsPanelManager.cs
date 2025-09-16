@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 {
@@ -23,6 +24,9 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
     [Header("Buttons")]
     public Button confirmButton;
     public Button exitButton;
+    public Button mainMenuButton;
+
+    [Header("Settings Tabs")]
 
     public Button generalButton;
     public Button lowerOrderButton;
@@ -39,7 +43,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
     private VolumeSlider musicVolume;
 
     [Header("Backing Values")]
-    private string selectedLanguage = "English";
+    private string selectedLanguage = "English" ;
     private float masterVolumeValue = 0;
     private float sfxVolumeValue = 0;
     private float musicVolumeValue = 0;
@@ -52,6 +56,15 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
     private float oldSFXVolumeValue = 0;
     private float oldMusicVolumeValue = 0;
 
+    public string getSelectedLanguage()
+    {
+        return selectedLanguage;
+    }
+
+    public float getSelectedStageSpeed()
+    {
+        return hoSpeed;
+    }
     
 
     private void Awake()
@@ -76,12 +89,13 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
+        generalButton.gameObject.SetActive(true);
+        lowerOrderButton.gameObject.SetActive(true);
+        higherOrderButton.gameObject.SetActive(true);
         //If on title screen
         if (!StaticData.isOnHigherOrder && !StaticData.isOnLowerOrder)
         {
-            generalButton.gameObject.SetActive(true);
-            lowerOrderButton.gameObject.SetActive(true);
-            higherOrderButton.gameObject.SetActive(true);
+            mainMenuButton.gameObject.SetActive(false);
         }
         //if on Lower order part
         else if (StaticData.isOnLowerOrder)
@@ -111,9 +125,22 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
             ChangeSettingsState();
             ShowLOSettings();
         });
+        mainMenuButton.onClick.AddListener(() =>
+        {
+            BackToMainMenu();
+            Time.timeScale = 1;
+        });
 
-        confirmButton.onClick.AddListener(SaveSettings);
-        exitButton.onClick.AddListener(OnExitSettings);
+        confirmButton.onClick.AddListener(() =>
+        {
+            SaveSettings();
+            Time.timeScale = 1;
+        });
+        exitButton.onClick.AddListener(() =>
+        {
+            OnExitSettings();
+            Time.timeScale = 1;
+        });
     }
 
     public void SaveSettings()
@@ -166,6 +193,18 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         mainPanel.SetActive(false);
     }
 
+    public void BackToMainMenu()
+    {
+        if (StaticData.isOnHigherOrderGame)
+            SceneManager.LoadScene("Stage_Select");
+        else if (StaticData.isOnLowerOrderGame)
+            SceneManager.LoadScene("LO_WS2D");
+        else if (!StaticData.isOnHigherOrderGame && !StaticData.isOnLowerOrderGame)
+        {
+            SceneManager.LoadScene("Title_Screen");
+        }
+    }
+
     public void ChangeSettingsState()
     {
         switch (settingsState)
@@ -193,12 +232,12 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
                 }
 
                 hoSpeed = speedValues[speedIndex];
-                
+
                 break;
 
             // LO Settings
             case 2:
-                
+
                 break;
         }
     }
@@ -244,6 +283,8 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         oldHoSpeed = hoSpeed;
 
         //LO SETTINGS
+
+        Debug.Log("Speed is: " + hoSpeed);
 
 
         data.stageSpeed = hoSpeed;

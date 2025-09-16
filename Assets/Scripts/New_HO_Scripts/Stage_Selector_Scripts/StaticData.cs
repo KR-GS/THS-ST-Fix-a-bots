@@ -5,7 +5,9 @@ public class StaticData
 {
     // USED TO SEE WHICH SCENE IT IS
     public static bool isOnLowerOrder;
+    public static bool isOnLowerOrderGame;
     public static bool isOnHigherOrder;
+    public static bool isOnHigherOrderGame;
 
     //HO SETTINGS
     private const int STAGE_COUNT = 10; 

@@ -65,6 +65,12 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public BlockSnapSlot leftSnapSlot;
     public BlockSnapSlot rightSnapSlot;
 
+    [Header("Block Sprites")]
+    public Sprite coefficientSprite;
+    public Sprite signSprite;
+    public Sprite constantSprite;
+    public Sprite variableSprite;
+
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -163,12 +169,28 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if (blockText != null)
         {
             blockText.text = blockType == BlockType.Variable ? symbol :
-                           blockType == BlockType.Sign ? symbol : value.ToString();
+                            blockType == BlockType.Sign ? symbol : value.ToString();
         }
 
         if (blockImage != null)
         {
             blockImage.color = blockColor;
+
+            switch (blockType)
+            {
+                case BlockType.Coefficient:
+                    if (coefficientSprite != null) blockImage.sprite = coefficientSprite;
+                    break;
+                case BlockType.Sign:
+                    if (signSprite != null) blockImage.sprite = signSprite;
+                    break;
+                case BlockType.Constant:
+                    if (constantSprite != null) blockImage.sprite = constantSprite;
+                    break;
+                case BlockType.Variable:
+                    if (variableSprite != null) blockImage.sprite = variableSprite;
+                    break;
+            }
         }
     }
 

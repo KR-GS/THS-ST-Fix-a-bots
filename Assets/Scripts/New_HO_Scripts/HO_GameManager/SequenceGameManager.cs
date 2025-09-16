@@ -22,10 +22,15 @@ public class SequenceGameManager : MonoBehaviour
     public HealthBar healthBar;
     public Sprite unpressedSprite;
 
-    [Header("Pause Panel")]
+    [Header("Restart Panel")]
     public GameObject pausePanel;
-    public Button resumeButton, exitButton;
+    public Button restartGameButton, exitButton;
     public TextMeshProUGUI panelText;
+
+    [Header("Settings Panel")]
+    public GameObject settingsPanel;
+    public Button settingsExitButton;
+    public Button settingsConfirmButton;
 
     [Header("Central Animator")]
     public Animator statusAnimator;
@@ -141,7 +146,8 @@ public class SequenceGameManager : MonoBehaviour
 
         //pauseButton.enabled = false;
         pauseButton.onClick.AddListener(() => PauseGame());
-        resumeButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
+        settingsConfirmButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
+        settingsExitButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
         exitButton.onClick.AddListener(() => ExitGame());
 
         feedbackText.text = "Please tap screen to start game";
@@ -156,33 +162,36 @@ public class SequenceGameManager : MonoBehaviour
         Time.timeScale = 0;
         gameTimer.StopTimer();
         canTap = false;
+        settingsPanel.SetActive(true);
+        settingsPanel.transform.SetAsLastSibling();
+    }
+
+    void LostGame()
+    {
+        Time.timeScale = 0;
+        gameTimer.StopTimer();
+        canTap = false;
         pausePanel.SetActive(true);
         pausePanel.transform.SetAsLastSibling();
-        if (stageData.GetNumLives() <= 0)
-        {
-            panelText.text = "You Lost! Continue?";
-        }
-        else
-        {
-            panelText.text = "Game Paused";
-        }
+        panelText.text = "You Lost! Continue?";
+    }
+
+    private void RestartGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneName);
     }
 
     IEnumerator ResumeGame()
     {
-        Time.timeScale = 1;
-        if (stageData.GetNumLives() <= 0)
-        {
-            SceneManager.LoadScene(sceneName);
-        }
         if (nextStage)
         {
-            pausePanel.SetActive(false);
+            settingsPanel.SetActive(false);
             gameTimer.ResumeTimer();
         }
         if (!nextStage && !isCycling)
         {
-            pausePanel.SetActive(false);
+            settingsPanel.SetActive(false);
             if (!gameTimer.GetIsRunning())
             {
                 gameTimer.ResumeTimer();
@@ -192,7 +201,7 @@ public class SequenceGameManager : MonoBehaviour
         if (!nextStage && isCycling)
         {
             isCycling = false;
-            pausePanel.SetActive(false);
+            settingsPanel.SetActive(false);
             restartStageButton.enabled = false;
             feedbackText.text = "3";
             yield return new WaitForSeconds(1);
@@ -248,7 +257,7 @@ public class SequenceGameManager : MonoBehaviour
 
     void Start()
     {
-        
+        StaticData.isOnHigherOrderGame = true;
     }
 
     void Update()
@@ -263,7 +272,7 @@ public class SequenceGameManager : MonoBehaviour
         if (stageData.GetNumLives() <= 0)
         {
             isCycling = false;
-            PauseGame();
+            LostGame();
         }
     }
 

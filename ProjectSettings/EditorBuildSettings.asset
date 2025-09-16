@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DataTransferTest.unity
     guid: 4323dd1c5e2779f4aa2f608f37626060
   - enabled: 1
-    path: Assets/Scenes/TitleScreen/Title Screen.unity
+    path: Assets/Scenes/TitleScreen/Title_Screen.unity
     guid: bff322bbc2568f240b32297ee315b8c1
   - enabled: 1
     path: Assets/Scenes/New_HO_Scenes/Stage_Select.unity

@@ -18,6 +18,8 @@ public class TitleScreen : MonoBehaviour
     {
         StaticData.isOnHigherOrder = false;
         StaticData.isOnLowerOrder = false;
+        StaticData.isOnHigherOrderGame = false;
+        StaticData.isOnLowerOrderGame = false;
 
         continuePanel.SetActive(true);
         settingsPanel.SetActive(true);
