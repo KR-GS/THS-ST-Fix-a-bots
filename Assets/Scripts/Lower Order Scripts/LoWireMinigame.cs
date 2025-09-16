@@ -25,6 +25,8 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private WireSlot[] wireSlots;
 
+    [SerializeField]
+    private Canvas OverallUI;
 
     private int[] num_patterns;
 
@@ -33,6 +35,8 @@ public class LoWireMinigame : MonoBehaviour
     private GameObject wireToAdd;
 
     private bool isOpen = false;
+
+    private bool isDeleting = false; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -186,13 +190,23 @@ public class LoWireMinigame : MonoBehaviour
             Debug.Log(rayHit.transform.name);
             if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
             {
-                if (wire.GetComplete() && wire.GetMovableStatus())
+                if (!isDeleting)
                 {
-                    Debug.Log(wire.transform.name);
-                    wireToAdd = wire.transform.gameObject;
-                    isDragging = true;
-                    //wireGeneratedPlace = wire.transform;
-                }  
+                    if (wire.GetComplete() && wire.GetMovableStatus())
+                    {
+                        Debug.Log(wire.transform.name);
+                        wireToAdd = wire.transform.gameObject;
+                        isDragging = true;
+                        //wireGeneratedPlace = wire.transform;
+                    }
+                }
+                else
+                {
+                    if (wire.GetMovableStatus())
+                    {
+                        Destroy(wire.transform.gameObject);
+                    }
+                }
             }
         }
     }
@@ -246,12 +260,20 @@ public class LoWireMinigame : MonoBehaviour
     public void ToggleGenerator()
     {
         isOpen = !isOpen;
+
+        isDeleting = false;
+
         generator.SetActive(isOpen);
 
         robot_part.SetActive(!isOpen);
 
         ValueUI.enabled = !isOpen;
+
+        OverallUI.enabled = !isOpen;
     }
 
-    
+    public void ToggleDelete()
+    {
+        isDeleting = !isDeleting;
+    }
 }
