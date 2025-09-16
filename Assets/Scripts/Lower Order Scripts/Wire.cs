@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class Wire : MonoBehaviour
 {
-    private SpriteRenderer wireSprite;
 
     private float wireStartPoint;
 
@@ -28,13 +27,12 @@ public class Wire : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        wireSprite = GetComponent<SpriteRenderer>();
-        Debug.Log(wireSprite.bounds.size.x);
+        Debug.Log("Object Size: " + transform.lossyScale.x);
 
-        wireStartPoint = transform.position.x - ((wireSprite.bounds.size.x) / 2);
+        wireStartPoint = transform.position.x - ((transform.lossyScale.x) / 2);
         Debug.Log(wireStartPoint);
 
-        wireEndPoint = transform.position.x + ((wireSprite.bounds.size.x) / 2);
+        wireEndPoint = transform.position.x + ((transform.lossyScale.x) / 2);
         Debug.Log(wireEndPoint);
 
         origColor = GetComponent<SpriteRenderer>().color;
@@ -58,7 +56,7 @@ public class Wire : MonoBehaviour
 
     public float GetWireHeight()
     {
-        return wireSprite.bounds.size.y;
+        return transform.lossyScale.y;
     }
 
     public int GetWireNumber()
@@ -141,18 +139,12 @@ public class Wire : MonoBehaviour
             divisionPoints.Clear();
         }
 
-        Debug.Log(wireSprite);
-        float wireLen = wireSprite.bounds.size.x / numDiv;
-        Debug.Log("Hello2");
+        float wireLen = transform.lossyScale.x / numDiv;
         float currentLen = wireStartPoint;
-        Debug.Log("Hello3");
         float prevPoint;
-        Debug.Log("Hello4");
         float midPoint;
-        Debug.Log("Hello5");
         for (int i = 0; i<numDiv; i++)
         {
-            Debug.Log("Hello!");
             if (currentLen < wireEndPoint)
             {
                 prevPoint = currentLen;

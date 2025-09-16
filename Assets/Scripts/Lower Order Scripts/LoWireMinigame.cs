@@ -42,17 +42,29 @@ public class LoWireMinigame : MonoBehaviour
 
         isDragging = false;
 
-        for(int i = 0; i<6; i++)
+        int valueToChange = Random.Range(2, 6);
+
+        for (int i = 0; i < 6; i++)
         {
             GameObject newWire = new GameObject("Default Wire " + i);
             List<GameObject> wireSegments = new List<GameObject>();
             Debug.Log("Current Int: " + num_patterns[i]);
             int red_segments = num_patterns[i];
+            int total_val = red_segments;
+
+            if (valueToChange == i)
+            {
+                Debug.Log("Changing Value of Index " + valueToChange);
+                int diff = Random.Range(2, 3);
+                red_segments = red_segments - diff;
+                total_val = red_segments;
+                Debug.Log("New Value: " + red_segments);
+            }
 
             int yellow_segments = red_segments / 10;
-            red_segments = red_segments - (yellow_segments*10);
+            red_segments = red_segments - (yellow_segments * 10);
             int blue_segments = red_segments / 5;
-            red_segments = red_segments - (blue_segments*5);
+            red_segments = red_segments - (blue_segments * 5);
             int totalSegments = yellow_segments + blue_segments + red_segments;
 
             Debug.Log("total segments for " + num_patterns[i] + ": " + totalSegments);
@@ -97,12 +109,17 @@ public class LoWireMinigame : MonoBehaviour
             newWire.AddComponent<BoxCollider2D>();
             newWire.AddComponent<SpriteRenderer>();
             newWire.AddComponent<Wire>();
-            newWire.GetComponent<Wire>().SetWireNumber(num_patterns[i]);
+            newWire.GetComponent<Wire>().SetWireNumber(total_val);
             newWire.GetComponent<Wire>().SetComplete();
+            if (valueToChange == i)
+            {
+                newWire.GetComponent<Wire>().SetMovableStatus();
+            }
             newWire.transform.SetParent(null);
             newWire.GetComponent<BoxCollider2D>().size = size;
             newWire.transform.position = wireSlots[i].transform.position;
             newWire.transform.SetParent(wireSlots[i].transform.parent);
+
         }
 
 
