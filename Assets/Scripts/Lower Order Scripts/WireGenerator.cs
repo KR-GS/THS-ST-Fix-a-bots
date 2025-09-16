@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WireGenerator : MonoBehaviour
 {
@@ -22,18 +23,14 @@ public class WireGenerator : MonoBehaviour
 
     private GameObject wireParent;
 
-    private bool isDragging;
+    private Color color = Color.white;
 
-    private Color color;
-
-    private int wireNoTotal;
+    private int wire_count = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isDragging = false;
-
-        wireParent = new GameObject("Wire Parent");
+        wireParent = new GameObject("New Wire " + wire_count);
 
         wireParent.transform.SetParent(transform);
 
@@ -92,7 +89,7 @@ public class WireGenerator : MonoBehaviour
             }
             else if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
             {
-                if(color != null)
+                if(color != Color.white)
                 {
                     wire.GetComponent<SpriteRenderer>().color = color;
                 }
@@ -115,6 +112,8 @@ public class WireGenerator : MonoBehaviour
         int redTotal = 0;
         int blueTotal = 0;
         int yellowTotal = 0;
+
+        int wireTotal = 0;
         foreach (GameObject childClr in createdWireChild)
         {
             if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.red)
@@ -131,16 +130,18 @@ public class WireGenerator : MonoBehaviour
             }
         }
 
-        wireNoTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
+        wireTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
 
-        Debug.Log(wireNoTotal);
+        Debug.Log(wireTotal);
 
-        GenerateWire();
+        GenerateWire(wireTotal);
     }
     
-    private void GenerateWire()
+    private void GenerateWire(int wireTotal)
     {
-        for(int i = 0; i<wireParent.transform.childCount; i++)
+        Vector3 originalPos = wireParent.transform.position;
+
+        for (int i = 0; i<wireParent.transform.childCount; i++)
         {
             wireParent.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = false;
             Destroy(wireParent.transform.GetChild(i).GetComponent<Wire>());
@@ -154,9 +155,11 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.AddComponent<Wire>();
 
-        wireParent.GetComponent<Wire>().SetWireNumber(wireNoTotal);
+        wireParent.GetComponent<Wire>().SetWireNumber(wireTotal);
 
         wireParent.GetComponent<Wire>().SetComplete();
+
+        wireParent.GetComponent<Wire>().SetMovableStatus();
 
         Vector2 size = new Vector2(0, wireParent.transform.GetChild(0).lossyScale.y);
 
@@ -170,5 +173,28 @@ public class WireGenerator : MonoBehaviour
         generalWireScript.ToggleGenerator();
 
         wireParent.transform.SetParent(null);
+
+        wireParent = new GameObject("New Wire " + wire_count);
+
+        wireParent.transform.position = originalPos;
+
+        wireParent.transform.SetParent(transform);
+
+        createdWireChild.Clear();
+
+        originalWire.gameObject.SetActive(true);
+
+        createdWireChild.Add(Instantiate(originalWire.transform.gameObject, wireParent.transform));
+
+        originalWire.gameObject.SetActive(false);
+
+        color = Color.white;
+
+        select_icon.SetActive(false);
+    }
+
+    public void ResetValue(Slider slider)
+    {
+        slider.value = slider.minValue;
     }
 }

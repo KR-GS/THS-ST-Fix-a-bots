@@ -18,12 +18,15 @@ public class Wire : MonoBehaviour
     [SerializeField]
     private bool isCompleteWire = false;
 
+    [SerializeField]
     private bool isOnSlot = false;
+
+    private bool canBeMoved = false;
 
     private Transform newWirePos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         wireSprite = GetComponent<SpriteRenderer>();
         Debug.Log(wireSprite.bounds.size.x);
@@ -73,24 +76,51 @@ public class Wire : MonoBehaviour
          return isCompleteWire;
     }
 
+    public bool GetMovableStatus()
+    {
+        return canBeMoved;
+    }
+
+    public void SetMovableStatus()
+    {
+        canBeMoved = !canBeMoved;
+    }
+
     public void SetComplete()
     {
         isCompleteWire = true;
     }
 
-    public bool GetSlotStatus()
+    public bool CheckOnSlot()
     {
         return isOnSlot;
     }
 
+    public void ToggleOnSlot(bool value)
+    {
+        isOnSlot = value;
+    }
+
+    public bool GetSlotStatus()
+    {
+        return newWirePos.GetComponent<WireSlot>().CheckSlotStatus();
+    }
+
     public void SetSlotStatus()
     {
-        isOnSlot = true;
+        newWirePos.gameObject.GetComponent<WireSlot>().ToggleSlotStatus();
     }
 
     public void SetNewWirePos(Transform newPos)
     {
-        newWirePos = newPos;
+        if(newPos != null)
+        {
+            newWirePos = newPos;
+        }
+        else
+        {
+            isOnSlot = false;
+        }
     }
 
     public Transform GetNewNearbyPos()
@@ -105,21 +135,25 @@ public class Wire : MonoBehaviour
 
     public List<float> GetDivisionPoints(int numDiv)
     {
+        
         if (divisionPoints.Count > 0)
         {
             divisionPoints.Clear();
         }
 
+        Debug.Log(wireSprite);
         float wireLen = wireSprite.bounds.size.x / numDiv;
+        Debug.Log("Hello2");
         float currentLen = wireStartPoint;
-
+        Debug.Log("Hello3");
         float prevPoint;
-
+        Debug.Log("Hello4");
         float midPoint;
-
-        for(int i = 0; i<numDiv; i++)
+        Debug.Log("Hello5");
+        for (int i = 0; i<numDiv; i++)
         {
-            if(currentLen < wireEndPoint)
+            Debug.Log("Hello!");
+            if (currentLen < wireEndPoint)
             {
                 prevPoint = currentLen;
                 currentLen += wireLen;

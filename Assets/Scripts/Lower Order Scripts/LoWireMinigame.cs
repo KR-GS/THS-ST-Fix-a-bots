@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
+
 
 public class LoWireMinigame : MonoBehaviour
 {
@@ -10,24 +10,102 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private GameObject robot_part;
 
-    private GameObject WireSlots;
+    [SerializeField]
+    private Transform wireGeneratedPlace;
+
+    [SerializeField]
+    private PatternGameManager patternManager;
+
+    [SerializeField]
+    private Canvas ValueUI;
+
+    [SerializeField]
+    private Wire origWire;
+
+    [SerializeField]
+    private WireSlot[] wireSlots;
+
+
+    private int[] num_patterns;
 
     private bool isDragging;
 
-    private int wireNoTotal;
-
     private GameObject wireToAdd;
-
-    private Transform wireGeneratedPlace;
 
     private bool isOpen = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        wireNoTotal = 0;
+        Vector2 size = new Vector2(origWire.transform.lossyScale.x, origWire.transform.lossyScale.y);
+        num_patterns = patternManager.ReturnPatternArray(6).ToArray();
 
         isDragging = false;
+
+        for(int i = 0; i<6; i++)
+        {
+            GameObject newWire = new GameObject("Default Wire " + i);
+            List<GameObject> wireSegments = new List<GameObject>();
+            Debug.Log("Current Int: " + num_patterns[i]);
+            int red_segments = num_patterns[i];
+
+            int yellow_segments = red_segments / 10;
+            red_segments = red_segments - (yellow_segments*10);
+            int blue_segments = red_segments / 5;
+            red_segments = red_segments - (blue_segments*5);
+            int totalSegments = yellow_segments + blue_segments + red_segments;
+
+            Debug.Log("total segments for " + num_patterns[i] + ": " + totalSegments);
+
+            wireSegments = ChangeWireValue(totalSegments, origWire, newWire);
+
+            int currentSegment = 0;
+
+            if (yellow_segments > 0)
+            {
+                for (int j = 0; j < yellow_segments; j++)
+                {
+                    wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.yellow;
+                    currentSegment++;
+                }
+            }
+
+            if (blue_segments > 0)
+            {
+                for (int j = 0; j < blue_segments; j++)
+                {
+                    wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.blue;
+                    currentSegment++;
+                }
+            }
+
+            if (red_segments > 0)
+            {
+                for (int j = 0; j < red_segments; j++)
+                {
+                    wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.red;
+                    currentSegment++;
+                }
+            }
+
+            for (int j = 0; j < newWire.transform.childCount; j++)
+            {
+                newWire.transform.GetChild(j).GetComponent<BoxCollider2D>().enabled = false;
+                Destroy(newWire.transform.GetChild(j).GetComponent<Wire>());
+            }
+
+            newWire.AddComponent<BoxCollider2D>();
+            newWire.AddComponent<SpriteRenderer>();
+            newWire.AddComponent<Wire>();
+            newWire.GetComponent<Wire>().SetWireNumber(num_patterns[i]);
+            newWire.GetComponent<Wire>().SetComplete();
+            newWire.transform.SetParent(null);
+            newWire.GetComponent<BoxCollider2D>().size = size;
+            newWire.transform.position = wireSlots[i].transform.position;
+            newWire.transform.SetParent(wireSlots[i].transform.parent);
+        }
+
+
 
         generator.SetActive(isOpen);
 
@@ -50,10 +128,26 @@ public class LoWireMinigame : MonoBehaviour
                 {
                     isDragging = false;
 
-                    if (wireToAdd.GetComponent<Wire>().GetSlotStatus())
+                    //Debug.Log(wireToAdd.GetComponent<Wire>().GetNewNearbyPos());
+                    if (wireToAdd.GetComponent<Wire>().CheckOnSlot())
                     {
+                        
+                        wireToAdd.transform.SetParent(wireToAdd.GetComponent<Wire>().GetNewNearbyPos().parent);
+
                         wireToAdd.transform.position = wireToAdd.GetComponent<Wire>().GetNewNearbyPos().position;
+
+                        //wireToAdd.GetComponent<Wire>().SetSlotStatus();
                     }
+                    else
+                    {
+                        wireToAdd.transform.SetParent(null);
+
+                        wireToAdd.GetComponent<Wire>().SetNewWirePos(wireGeneratedPlace);
+
+                        wireToAdd.transform.position = wireGeneratedPlace.position;
+                    }
+
+                    wireToAdd = null;
                 }
             }
             else
@@ -75,14 +169,13 @@ public class LoWireMinigame : MonoBehaviour
             Debug.Log(rayHit.transform.name);
             if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
             {
-                if (wire.GetComplete())
+                if (wire.GetComplete() && wire.GetMovableStatus())
                 {
                     Debug.Log(wire.transform.name);
                     wireToAdd = wire.transform.gameObject;
                     isDragging = true;
-                    wireGeneratedPlace = wire.transform;
-                }
-                    
+                    //wireGeneratedPlace = wire.transform;
+                }  
             }
         }
     }
@@ -139,5 +232,9 @@ public class LoWireMinigame : MonoBehaviour
         generator.SetActive(isOpen);
 
         robot_part.SetActive(!isOpen);
+
+        ValueUI.enabled = !isOpen;
     }
+
+    
 }

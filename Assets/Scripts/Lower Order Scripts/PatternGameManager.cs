@@ -49,7 +49,7 @@ public class PatternGameManager : MonoBehaviour
         }
         else
         {
-            if (difficulty.GetDifficulty() == "easy")
+            if (difficulty.GetDifficulty() == "easy" || difficulty.GetDifficulty() == "medium")
             {
                 for (int i = 1; i <= patternLen; i++)
                 {
