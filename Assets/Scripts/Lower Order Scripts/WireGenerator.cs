@@ -32,13 +32,15 @@ public class WireGenerator : MonoBehaviour
     {
         wireParent = new GameObject("New Wire " + wire_count);
 
+        wireParent.transform.position = originalWire.transform.position;
+
         wireParent.transform.SetParent(transform);
 
         createdWireChild.Add(Instantiate(originalWire.transform.gameObject, wireParent.transform));
 
-        createdWireChild[0].name = "0";
+        createdWireChild[0].transform.localPosition = new Vector3(0, 0, 0);
 
-        wireParent.transform.position = originalWire.transform.position;
+        createdWireChild[0].name = "0";
 
         select_icon.SetActive(false);
     }
@@ -139,7 +141,7 @@ public class WireGenerator : MonoBehaviour
     
     private void GenerateWire(int wireTotal)
     {
-        Vector3 originalPos = wireParent.transform.position;
+        Vector3 originalPos = originalWire.transform.position;
 
         for (int i = 0; i<wireParent.transform.childCount; i++)
         {

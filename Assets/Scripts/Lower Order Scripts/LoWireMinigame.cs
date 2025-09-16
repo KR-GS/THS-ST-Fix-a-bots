@@ -51,6 +51,7 @@ public class LoWireMinigame : MonoBehaviour
         for (int i = 0; i < 6; i++)
         {
             GameObject newWire = new GameObject("Default Wire " + i);
+            newWire.transform.position = origWire.transform.position;
             List<GameObject> wireSegments = new List<GameObject>();
             Debug.Log("Current Int: " + num_patterns[i]);
             int red_segments = num_patterns[i];
