@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class WireGenerator : MonoBehaviour
 {
@@ -36,11 +37,11 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.transform.SetParent(transform);
 
-        createdWireChild.Add(Instantiate(originalWire.transform.gameObject, wireParent.transform));
+        createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(1, originalWire, wireParent)); ;
 
-        createdWireChild[0].transform.localPosition = new Vector3(0, 0, 0);
+        //createdWireChild[0].transform.localPosition = new Vector3(0, 0, 0);
 
-        createdWireChild[0].name = "0";
+        //createdWireChild[0].name = "0";
 
         select_icon.SetActive(false);
     }
@@ -126,17 +127,23 @@ public class WireGenerator : MonoBehaviour
             {
                 blueTotal++;
             }
-            else
+            else if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.yellow)
             {
                 yellowTotal++;
             }
         }
 
-        wireTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
+        int totalColored = redTotal + blueTotal + yellowTotal;
 
-        Debug.Log(wireTotal);
+        if (totalColored == createdWireChild.Count)
+        {
+            wireTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
 
-        GenerateWire(wireTotal);
+            Debug.Log(wireTotal);
+
+            GenerateWire(wireTotal);
+        }
+            
     }
     
     private void GenerateWire(int wireTotal)

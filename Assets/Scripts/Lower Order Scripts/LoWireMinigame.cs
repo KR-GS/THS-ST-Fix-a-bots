@@ -41,6 +41,8 @@ public class LoWireMinigame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        generator.SetActive(true);
+
         Vector2 size = new Vector2(origWire.transform.lossyScale.x, origWire.transform.lossyScale.y);
         num_patterns = patternManager.ReturnPatternArray(6).ToArray();
 
