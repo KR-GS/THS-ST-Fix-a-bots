@@ -208,6 +208,8 @@ public class LoWireMinigame : MonoBehaviour
                     if (wire.GetMovableStatus())
                     {
                         Destroy(wire.transform.gameObject);
+
+                        ToggleDelete();
                     }
                 }
             }
