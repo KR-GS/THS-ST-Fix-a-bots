@@ -451,7 +451,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         if (ordersOnboard != null && OrderManager.Instance != null)
         {
-            ordersOnboard.text = "Pending Orders: " + OrderManager.Instance.activeOrders.Count;
+            ordersOnboard.text = "Active Orders: " + OrderManager.Instance.activeOrders.Count;
         }
     }
     private List<int> GeneratePatternArray(int patternLen) //This is for tool

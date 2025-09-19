@@ -24,6 +24,7 @@ public class TutorialScript : MonoBehaviour
     public Image toDolistDemo;
     public Image demoStation;
     public Image demoIndicator;
+    public Image tutorialLights;
 
     private bool wasRaycastingEnabled = true;
 
@@ -342,6 +343,8 @@ public class TutorialScript : MonoBehaviour
         currentPage = 0;
         updateContents(currentPage);
 
+        tutorialLights.gameObject.SetActive(true);
+
         GameLoopManager.Instance.ShowTV(false);
 
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
@@ -378,6 +381,8 @@ public class TutorialScript : MonoBehaviour
         tutorialObject.SetActive(false);
         Debug.Log("Tutorial has been finished, hiding: " + tutorialObject.name);
 
+        tutorialLights.gameObject.SetActive(false);
+
         EnableRaycasting();
 
         if (StaticData.newGame)
@@ -385,100 +390,106 @@ public class TutorialScript : MonoBehaviour
             StaticData.newGame = false;
         }
 
-        //completeText.gameObject.SetActive(false);
-        GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-        GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
-        GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
-        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
-        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
-        GameLoopManager.Instance.ShowTV(true);
-        RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
-
-        if (StaticData.TVScreen == 0)
-        {
-            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
-        }
-        else if(StaticData.TVScreen == 1)
-        {
-            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNO;
-        }
-        else if (StaticData.TVScreen == 2)
-        {
-            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteIP;
-        }
-
-        Order savedOrder = OrderManager.Instance.GetActiveOrder();
-
-        if (StaticData.startOfDay == true)
-        {
-            Debug.Log("Aiya, debugging is sad!");
-            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
-            RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
-        }
-        else if (StaticData.startOfDay == false)
-        {
-            Debug.Log("Ayo, will this work?");
-            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-            RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
-        }
-
-
-        if (RaycastInteractor.Instance.timeText != null)
-        {
-            RaycastInteractor.Instance.timeText.gameObject.SetActive(true); // Hide the time text
-        }
-
         TimerScript.instance.StartTimer();
 
-        RaycastInteractor.Instance.isOrderChecked = StaticData.isOrderChecked;
-        Debug.Log("isOrderChecked status: " + RaycastInteractor.Instance.isOrderChecked);
 
-        if (!RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
+        if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
+            //completeText.gameObject.SetActive(false);
+            GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
+            GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+            GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+            GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
+            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            GameLoopManager.Instance.ShowTV(true);
+            RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
 
-            Debug.Log("Setting indicators active...");
-
-            if (savedOrder.needsTool)
+            if (StaticData.TVScreen == 0)
             {
-                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
-                Debug.Log("ToolIndicator enabled");
+                RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
             }
-            if (savedOrder.needsWire)
+            else if (StaticData.TVScreen == 1)
             {
-                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
-                Debug.Log("WireIndicator enabled");
+                RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNO;
             }
-            if (savedOrder.needsPaint)
+            else if (StaticData.TVScreen == 2)
             {
-                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
-                Debug.Log("PaintIndicator enabled");
+                RaycastInteractor.Instance.TVSprite.sprite = TVSpriteIP;
             }
 
-            RaycastInteractor.Instance.isOrderChecked = true;
-            StaticData.isOrderChecked = true;
+            Order savedOrder = OrderManager.Instance.GetActiveOrder();
+
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("Aiya, debugging is sad!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            }
+            else if (StaticData.startOfDay == false)
+            {
+                Debug.Log("Ayo, will this work?");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            }
+
+
+            if (RaycastInteractor.Instance.timeText != null)
+            {
+                RaycastInteractor.Instance.timeText.gameObject.SetActive(true); // Hide the time text
+            }
+
+
+            RaycastInteractor.Instance.isOrderChecked = StaticData.isOrderChecked;
+            Debug.Log("isOrderChecked status: " + RaycastInteractor.Instance.isOrderChecked);
+
+            if (!RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
+            {
+
+                Debug.Log("Setting indicators active...");
+
+                if (savedOrder.needsTool)
+                {
+                    RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+                    Debug.Log("ToolIndicator enabled");
+                }
+                if (savedOrder.needsWire)
+                {
+                    RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+                    Debug.Log("WireIndicator enabled");
+                }
+                if (savedOrder.needsPaint)
+                {
+                    RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+                    Debug.Log("PaintIndicator enabled");
+                }
+
+                RaycastInteractor.Instance.isOrderChecked = true;
+                StaticData.isOrderChecked = true;
+            }
+            else if (RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
+            {
+                Debug.Log("Order is checked, returning old indicators...");
+
+                if (savedOrder.needsTool && !StaticData.isToolDone)
+                {
+                    RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+                }
+                if (savedOrder.needsPaint && !StaticData.isPaintDone)
+                {
+                    RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+                }
+                if (savedOrder.needsWire && !StaticData.isWireDone)
+                {
+                    RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                Debug.Log($"Indicators not set. isOrderChecked={RaycastInteractor.Instance.isOrderChecked}, currentOrder={savedOrder}");
+            }
         }
-        else if (RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
-        {
-            Debug.Log("Order is checked, returning old indicators...");
-
-            if (savedOrder.needsTool && !StaticData.isToolDone)
-            {
-                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
-            }
-            if (savedOrder.needsPaint && !StaticData.isPaintDone)
-            {
-                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
-            }
-            if (savedOrder.needsWire && !StaticData.isWireDone)
-            {
-                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            Debug.Log($"Indicators not set. isOrderChecked={RaycastInteractor.Instance.isOrderChecked}, currentOrder={savedOrder}");
-        }
+        
 
     }
 

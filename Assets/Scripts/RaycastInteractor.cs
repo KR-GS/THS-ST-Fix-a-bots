@@ -145,6 +145,8 @@ public class RaycastInteractor : MonoBehaviour
                 readyIndicator.gameObject.SetActive(false);
                 readyText.gameObject.SetActive(false);
             }
+
+            GameLoopManager.Instance.ordersOnboard.text = "Active Orders: " + OrderManager.Instance.activeOrders.Count.ToString();
         }
 
     }
