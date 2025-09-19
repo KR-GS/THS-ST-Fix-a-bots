@@ -28,6 +28,9 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private Canvas OverallUI;
 
+    [SerializeField]
+    private Transform sparks_vfx;
+
     private int[] num_patterns;
 
     private bool isDragging;
@@ -129,7 +132,7 @@ public class LoWireMinigame : MonoBehaviour
 
         }
 
-
+        sparks_vfx.position = wireSlots[valueToChange].transform.position;
 
         generator.SetActive(isOpen);
 
