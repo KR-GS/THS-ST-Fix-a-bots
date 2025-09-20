@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
+using System.Collections;
 
 
 public class LoWireMinigame : MonoBehaviour
@@ -37,9 +39,19 @@ public class LoWireMinigame : MonoBehaviour
 
     private GameObject wireToAdd;
 
+    private GameObject pliers;
+
     private bool isOpen = false;
 
-    private bool isDeleting = false; 
+    private bool isDeleting = false;
+
+    private int item_dragged = 0;
+
+    private Vector2 origPos_Pliers;
+
+    private Transform vfx_obj;
+
+    private bool onWireToCut;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -153,36 +165,64 @@ public class LoWireMinigame : MonoBehaviour
             {
                 if (isDragging)
                 {
-                    isDragging = false;
-
                     //Debug.Log(wireToAdd.GetComponent<Wire>().GetNewNearbyPos());
-                    if (wireToAdd.GetComponent<Wire>().CheckOnSlot())
+                    if (item_dragged == 1)
                     {
-                        
-                        wireToAdd.transform.SetParent(wireToAdd.GetComponent<Wire>().GetNewNearbyPos().parent);
+                        if (wireToAdd.GetComponent<Wire>().CheckOnSlot())
+                        {
 
-                        wireToAdd.transform.position = wireToAdd.GetComponent<Wire>().GetNewNearbyPos().position;
+                            wireToAdd.transform.SetParent(wireToAdd.GetComponent<Wire>().GetNewNearbyPos().parent);
 
-                        //wireToAdd.GetComponent<Wire>().SetSlotStatus();
+                            wireToAdd.transform.position = wireToAdd.GetComponent<Wire>().GetNewNearbyPos().position;
+
+                            //wireToAdd.GetComponent<Wire>().SetSlotStatus();
+                        }
+                        else
+                        {
+                            wireToAdd.transform.SetParent(null);
+
+                            wireToAdd.GetComponent<Wire>().SetNewWirePos(wireGeneratedPlace);
+
+                            wireToAdd.transform.position = wireGeneratedPlace.position;
+                        }
+
+                        wireToAdd = null;
                     }
-                    else
+                    else if (item_dragged == 2)
                     {
-                        wireToAdd.transform.SetParent(null);
+                        Debug.Log(origPos_Pliers);
+                        Debug.Log(pliers.transform.position);
 
-                        wireToAdd.GetComponent<Wire>().SetNewWirePos(wireGeneratedPlace);
-
-                        wireToAdd.transform.position = wireGeneratedPlace.position;
+                        if (pliers.GetComponent<WirePliers>().GetIsOnPart())
+                        {
+                            Debug.Log("Cutting part now");
+                            StartCoroutine(StartWireCutting());
+                        }
+                        else
+                        {
+                            pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
+                        }
                     }
 
-                    wireToAdd = null;
+                    item_dragged = 0;
+
+                    isDragging = false;
                 }
             }
             else
             {
                 if (isDragging)
                 {
-                    Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                    wireToAdd.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    if(item_dragged == 1)
+                    {
+                        Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                        wireToAdd.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    }
+                    else if (item_dragged == 2)
+                    {
+                        Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                        pliers.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    }
                 }
             }
         }
@@ -196,7 +236,7 @@ public class LoWireMinigame : MonoBehaviour
             Debug.Log(rayHit.transform.name);
             if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
             {
-                if (!isDeleting)
+                if (!isDragging)
                 {
                     if (wire.GetComplete() && wire.GetMovableStatus())
                     {
@@ -204,16 +244,19 @@ public class LoWireMinigame : MonoBehaviour
                         wireToAdd = wire.transform.gameObject;
                         isDragging = true;
                         //wireGeneratedPlace = wire.transform;
+                        item_dragged = 1;
                     }
                 }
-                else
+            }
+            else if (rayHit.transform.gameObject.TryGetComponent(out WirePliers plier))
+            {
+                if (!isDragging)
                 {
-                    if (wire.GetMovableStatus())
-                    {
-                        Destroy(wire.transform.gameObject);
-
-                        ToggleDelete();
-                    }
+                    Debug.Log("Using the pliers");
+                    pliers = plier.transform.gameObject;
+                    isDragging = true;
+                    item_dragged = 2;
+                    origPos_Pliers = plier.transform.position;
                 }
             }
         }
@@ -283,5 +326,22 @@ public class LoWireMinigame : MonoBehaviour
     public void ToggleDelete()
     {
         isDeleting = !isDeleting;
+    }
+
+    private IEnumerator StartWireCutting()
+    {
+        pliers.GetComponent<WirePliers>().SetPositionToPart();
+
+        pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
+
+        yield return new WaitForSeconds(1f);
+
+        pliers.GetComponent<WirePliers>().StopParticleEmission();
+
+        yield return new WaitForSeconds(1f);
+
+        pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
+
+        pliers = null;
     }
 }
