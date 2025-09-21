@@ -162,6 +162,8 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.AddComponent<SpriteRenderer>();
 
+        wireParent.AddComponent<Rigidbody2D>();
+
         wireParent.AddComponent<Wire>();
 
         wireParent.GetComponent<Wire>().SetWireNumber(wireTotal);
@@ -169,6 +171,8 @@ public class WireGenerator : MonoBehaviour
         wireParent.GetComponent<Wire>().SetComplete();
 
         wireParent.GetComponent<Wire>().SetMovableStatus();
+
+        wireParent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
         Vector2 size = new Vector2(0, wireParent.transform.GetChild(0).lossyScale.y);
 
@@ -178,6 +182,8 @@ public class WireGenerator : MonoBehaviour
         }
 
         wireParent.GetComponent<BoxCollider2D>().size = size;
+
+        wireParent.GetComponent<BoxCollider2D>().isTrigger = true;
 
         generalWireScript.ToggleGenerator();
 

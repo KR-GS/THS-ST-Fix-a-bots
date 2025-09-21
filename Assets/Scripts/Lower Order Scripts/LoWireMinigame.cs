@@ -53,6 +53,8 @@ public class LoWireMinigame : MonoBehaviour
 
     private bool onWireToCut;
 
+    private int wireToEdit;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -131,20 +133,27 @@ public class LoWireMinigame : MonoBehaviour
             newWire.AddComponent<BoxCollider2D>();
             newWire.AddComponent<SpriteRenderer>();
             newWire.AddComponent<Wire>();
+            newWire.AddComponent<Rigidbody2D>();
+
+            newWire.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             newWire.GetComponent<Wire>().SetWireNumber(total_val);
             newWire.GetComponent<Wire>().SetComplete();
             if (valueToChange == i)
             {
                 newWire.GetComponent<Wire>().SetMovableStatus();
             }
+                
             newWire.transform.SetParent(null);
             newWire.GetComponent<BoxCollider2D>().size = size;
+            newWire.GetComponent<BoxCollider2D>().isTrigger = true;
             newWire.transform.position = wireSlots[i].transform.position;
             newWire.transform.SetParent(wireSlots[i].transform.parent);
 
         }
 
         sparks_vfx.position = wireSlots[valueToChange].transform.position;
+
+        wireToEdit = valueToChange;
 
         generator.SetActive(isOpen);
 
@@ -338,7 +347,30 @@ public class LoWireMinigame : MonoBehaviour
 
         pliers.GetComponent<WirePliers>().StopParticleEmission();
 
-        yield return new WaitForSeconds(0.1f);
+        int sidecount = 0;
+
+        foreach(Transform child in sparks_vfx)
+        {
+            if (!child.GetComponent<BoxCollider2D>().enabled)
+            {
+                sidecount++;
+            }
+        }
+
+        if (sidecount >= 2)
+        {
+            Transform wireObj = wireSlots[wireToEdit].transform.parent.GetComponentInChildren<Wire>().transform;
+            wireObj.transform.position = new Vector3(wireObj.position.x, wireObj.position.y, -0.1f);
+            wireObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+            yield return new WaitForSeconds(1f);
+
+            Destroy(wireObj.gameObject);
+        }
+        else
+        {
+            yield return new WaitForSeconds(-0.1f);
+        }
 
         StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(origPos_Pliers, 5));
 
