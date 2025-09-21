@@ -20,6 +20,7 @@ public class Wire : MonoBehaviour
     [SerializeField]
     private bool isOnSlot = false;
 
+    [SerializeField]
     private bool canBeMoved = false;
 
     private Transform newWirePos;

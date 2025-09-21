@@ -77,4 +77,9 @@ public class WireSlot : MonoBehaviour
     {
         isMissing = false;
     }
+
+    public Wire GetWireInSlot()
+    {
+        return wireToAdd.GetComponent<Wire>();
+    }
 }

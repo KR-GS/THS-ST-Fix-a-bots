@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 
 public class LoWireMinigame : MonoBehaviour
@@ -48,8 +49,6 @@ public class LoWireMinigame : MonoBehaviour
     private int item_dragged = 0;
 
     private Vector2 origPos_Pliers;
-
-    private Transform vfx_obj;
 
     private bool onWireToCut;
 
@@ -138,10 +137,6 @@ public class LoWireMinigame : MonoBehaviour
             newWire.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             newWire.GetComponent<Wire>().SetWireNumber(total_val);
             newWire.GetComponent<Wire>().SetComplete();
-            if (valueToChange == i)
-            {
-                newWire.GetComponent<Wire>().SetMovableStatus();
-            }
                 
             newWire.transform.SetParent(null);
             newWire.GetComponent<BoxCollider2D>().size = size;
@@ -167,8 +162,11 @@ public class LoWireMinigame : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                Debug.Log("Hello World");
-                HandleClickEvent(Input.GetTouch(0).position);
+                if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
+                {
+                    Debug.Log("Hello World");
+                    HandleClickEvent(Input.GetTouch(0).position);
+                }
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
@@ -235,6 +233,28 @@ public class LoWireMinigame : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool HandleUIClickEvent()
+    {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = Input.GetTouch(0).position;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, raycastResults);
+
+        if (raycastResults.Count > 0)
+        {
+            foreach (var go in raycastResults)
+            {
+                if (go.gameObject.transform.root.TryGetComponent(out OverviewCounter overviewCounter))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void HandleClickEvent(Vector2 position)
@@ -330,6 +350,8 @@ public class LoWireMinigame : MonoBehaviour
         ValueUI.enabled = !isOpen;
 
         OverallUI.enabled = !isOpen;
+
+
     }
 
     public void ToggleDelete()
@@ -377,5 +399,23 @@ public class LoWireMinigame : MonoBehaviour
         //pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
 
         pliers = null;
+    }
+
+    public void CheckWire()
+    {
+        wireSlots[wireToEdit].GetWireInSlot().SetMovableStatus();
+        if (wireSlots[wireToEdit].GetWireSlotVal() == num_patterns[wireToEdit])
+        {
+            Debug.Log("Value is Correct!");
+        }
+        else
+        {
+            //Debug.Log(sparks_vfx.name);
+            foreach(Transform child in sparks_vfx)
+            {
+                child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
+            }
+            Debug.Log("Value is Wrong!");
+        }
     }
 }

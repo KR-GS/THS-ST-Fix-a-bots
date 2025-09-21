@@ -48,6 +48,7 @@ public class WirePliers : MonoBehaviour
     public void StopParticleEmission()
     {
         partToCut.ToggleVFXAnimOff();
+        //StartCoroutine(StopVFXInOrder());
     }
 
     public IEnumerator TriggerPlierMovement(Vector3 objPos, float speed_Inc)

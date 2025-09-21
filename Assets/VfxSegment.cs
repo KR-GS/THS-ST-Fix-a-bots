@@ -13,16 +13,14 @@ public class VfxSegment : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     // Update is called once per frame
-    
+
     public void ToggleVFXAnimOff()
     {
+        var static_emission = static_Vfx.emission;
         var sparks_emission = sparks_Vfx.emission;
 
-        var static_emission = static_Vfx.emission;
-
-        sparks_emission.enabled = false;
-
         static_emission.enabled = false;
+        sparks_emission.enabled = false;
 
         GetComponent<BoxCollider2D>().enabled = false;
     }
@@ -30,11 +28,9 @@ public class VfxSegment : MonoBehaviour
     public void ToggleVFXAnimOn()
     {
         var sparks_emission = sparks_Vfx.emission;
-
         var static_emission = static_Vfx.emission;
 
         sparks_emission.enabled = true;
-
         static_emission.enabled = true;
 
         GetComponent<BoxCollider2D>().enabled = true;

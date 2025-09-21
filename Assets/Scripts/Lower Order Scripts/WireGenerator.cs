@@ -37,7 +37,7 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.transform.SetParent(transform);
 
-        createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(1, originalWire, wireParent)); ;
+        createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(1, originalWire, wireParent));
 
         //createdWireChild[0].transform.localPosition = new Vector3(0, 0, 0);
 
@@ -148,6 +148,8 @@ public class WireGenerator : MonoBehaviour
     
     private void GenerateWire(int wireTotal)
     {
+        originalWire.gameObject.SetActive(true);
+
         Vector3 originalPos = originalWire.transform.position;
 
         for (int i = 0; i<wireParent.transform.childCount; i++)
@@ -156,13 +158,11 @@ public class WireGenerator : MonoBehaviour
             Destroy(wireParent.transform.GetChild(i).GetComponent<Wire>());
         }
 
-        wireParent.transform.position = generateLocation.position;
-
         wireParent.AddComponent<BoxCollider2D>();
 
         wireParent.AddComponent<SpriteRenderer>();
 
-        wireParent.AddComponent<Rigidbody2D>();
+        wireParent.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
         wireParent.AddComponent<Wire>();
 
@@ -172,7 +172,7 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.GetComponent<Wire>().SetMovableStatus();
 
-        wireParent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        //wireParent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
         Vector2 size = new Vector2(0, wireParent.transform.GetChild(0).lossyScale.y);
 
@@ -183,11 +183,17 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.GetComponent<BoxCollider2D>().size = size;
 
+        //wireParent.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0);
+
         wireParent.GetComponent<BoxCollider2D>().isTrigger = true;
 
         generalWireScript.ToggleGenerator();
 
-        wireParent.transform.SetParent(null);
+        wireParent.transform.position = generateLocation.position;
+
+        wireParent.transform.SetParent(generateLocation);
+
+        wire_count++;
 
         wireParent = new GameObject("New Wire " + wire_count);
 
@@ -195,11 +201,7 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.transform.SetParent(transform);
 
-        createdWireChild.Clear();
-
-        originalWire.gameObject.SetActive(true);
-
-        createdWireChild.Add(Instantiate(originalWire.transform.gameObject, wireParent.transform));
+        createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(1, originalWire, wireParent));
 
         originalWire.gameObject.SetActive(false);
 
