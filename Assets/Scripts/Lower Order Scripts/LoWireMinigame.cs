@@ -34,6 +34,9 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private Transform sparks_vfx;
 
+    [SerializeField]
+    private Canvas ResultUI;
+
     private int[] num_patterns;
 
     private bool isDragging;
@@ -58,6 +61,8 @@ public class LoWireMinigame : MonoBehaviour
     void Start()
     {
         generator.SetActive(true);
+
+        ResultUI.enabled = false;
 
         Vector2 size = new Vector2(origWire.transform.lossyScale.x, origWire.transform.lossyScale.y);
         num_patterns = patternManager.ReturnPatternArray(6).ToArray();
@@ -407,6 +412,10 @@ public class LoWireMinigame : MonoBehaviour
         if (wireSlots[wireToEdit].GetWireSlotVal() == num_patterns[wireToEdit])
         {
             Debug.Log("Value is Correct!");
+
+            OverallUI.enabled = false;
+
+            ResultUI.enabled = true;
         }
         else
         {
