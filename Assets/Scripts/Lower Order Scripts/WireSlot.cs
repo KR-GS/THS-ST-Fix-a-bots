@@ -13,6 +13,9 @@ public class WireSlot : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI wireVal_Text;
 
+    [SerializeField]
+    private SpriteRenderer[] slot_Holders;
+
     private GameObject wireToAdd;
 
 

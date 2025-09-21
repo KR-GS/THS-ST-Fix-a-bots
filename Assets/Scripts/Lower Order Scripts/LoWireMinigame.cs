@@ -330,17 +330,19 @@ public class LoWireMinigame : MonoBehaviour
 
     private IEnumerator StartWireCutting()
     {
-        pliers.GetComponent<WirePliers>().SetPositionToPart();
+        yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(new Vector3(0,0,0), 1));
 
         pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         pliers.GetComponent<WirePliers>().StopParticleEmission();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
 
-        pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
+        StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(origPos_Pliers, 5));
+
+        //pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
 
         pliers = null;
     }

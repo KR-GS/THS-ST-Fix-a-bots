@@ -5364,6 +5364,9 @@ MonoBehaviour:
   slotValue: 0
   isMissing: 0
   wireVal_Text: {fileID: 519993261}
+  slot_Holders:
+  - {fileID: 610566004}
+  - {fileID: 447389011}
 --- !u!50 &173190210
 Rigidbody2D:
   serializedVersion: 5
@@ -5623,7 +5626,7 @@ GameObject:
   - component: {fileID: 266152703}
   - component: {fileID: 266152704}
   m_Layer: 0
-  m_Name: Square (6)
+  m_Name: Right Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6334,7 +6337,7 @@ GameObject:
   - component: {fileID: 447389010}
   - component: {fileID: 447389011}
   m_Layer: 0
-  m_Name: Square (6)
+  m_Name: Right Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6442,6 +6445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plier_animator: {fileID: 400150942}
   partToCut: {fileID: 0}
+  speed: 5
 --- !u!4 &450120202
 Transform:
   m_ObjectHideFlags: 0
@@ -6651,7 +6655,7 @@ GameObject:
   - component: {fileID: 464594262}
   - component: {fileID: 464594263}
   m_Layer: 0
-  m_Name: Square (5)
+  m_Name: Left Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7144,7 +7148,7 @@ GameObject:
   - component: {fileID: 610566003}
   - component: {fileID: 610566004}
   m_Layer: 0
-  m_Name: Square (5)
+  m_Name: Left Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7265,7 +7269,7 @@ GameObject:
   - component: {fileID: 629808739}
   - component: {fileID: 629808740}
   m_Layer: 0
-  m_Name: Square (5)
+  m_Name: Left Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7630,6 +7634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aaf25cb00c4ebc49b3249fd8849d6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  side: 1
   sparks_Vfx: {fileID: 1374449180}
   static_Vfx: {fileID: 21419712}
 --- !u!50 &961701917
@@ -8309,6 +8314,9 @@ MonoBehaviour:
   slotValue: 0
   isMissing: 0
   wireVal_Text: {fileID: 228584966}
+  slot_Holders:
+  - {fileID: 1128245737}
+  - {fileID: 2032095355}
 --- !u!50 &1092623901
 Rigidbody2D:
   serializedVersion: 5
@@ -8393,7 +8401,7 @@ GameObject:
   - component: {fileID: 1128245736}
   - component: {fileID: 1128245737}
   m_Layer: 0
-  m_Name: Square (5)
+  m_Name: Left Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18328,7 +18336,7 @@ GameObject:
   - component: {fileID: 1243172191}
   - component: {fileID: 1243172192}
   m_Layer: 0
-  m_Name: Square (4)
+  m_Name: Right Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24061,7 +24069,7 @@ Transform:
   m_GameObject: {fileID: 1411051786}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.03, y: 1.96, z: 0}
+  m_LocalPosition: {x: 6.03, y: 1.69, z: 0}
   m_LocalScale: {x: 0.3017986, y: 0.3017986, z: 0.3017986}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24238,6 +24246,9 @@ MonoBehaviour:
   slotValue: 0
   isMissing: 0
   wireVal_Text: {fileID: 966821667}
+  slot_Holders:
+  - {fileID: 1594556302}
+  - {fileID: 1243172192}
 --- !u!50 &1451063261
 Rigidbody2D:
   serializedVersion: 5
@@ -24716,7 +24727,7 @@ GameObject:
   - component: {fileID: 1594556301}
   - component: {fileID: 1594556302}
   m_Layer: 0
-  m_Name: Square (3)
+  m_Name: Left Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25053,6 +25064,9 @@ MonoBehaviour:
   slotValue: 0
   isMissing: 0
   wireVal_Text: {fileID: 383015911}
+  slot_Holders:
+  - {fileID: 629808740}
+  - {fileID: 266152704}
 --- !u!50 &1657997887
 Rigidbody2D:
   serializedVersion: 5
@@ -25176,6 +25190,9 @@ MonoBehaviour:
   slotValue: 0
   isMissing: 0
   wireVal_Text: {fileID: 1622253208}
+  slot_Holders:
+  - {fileID: 1873136264}
+  - {fileID: 2033738835}
 --- !u!50 &1707767296
 Rigidbody2D:
   serializedVersion: 5
@@ -26016,7 +26033,7 @@ GameObject:
   - component: {fileID: 1873136263}
   - component: {fileID: 1873136264}
   m_Layer: 0
-  m_Name: Square (5)
+  m_Name: Left Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26142,6 +26159,9 @@ MonoBehaviour:
   slotValue: 0
   isMissing: 0
   wireVal_Text: {fileID: 353177504}
+  slot_Holders:
+  - {fileID: 464594263}
+  - {fileID: 2111662796}
 --- !u!50 &1938714980
 Rigidbody2D:
   serializedVersion: 5
@@ -26395,7 +26415,7 @@ GameObject:
   - component: {fileID: 2032095354}
   - component: {fileID: 2032095355}
   m_Layer: 0
-  m_Name: Square (6)
+  m_Name: Right Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26482,7 +26502,7 @@ GameObject:
   - component: {fileID: 2033738834}
   - component: {fileID: 2033738835}
   m_Layer: 0
-  m_Name: Square (6)
+  m_Name: Right Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26809,7 +26829,7 @@ GameObject:
   - component: {fileID: 2111662795}
   - component: {fileID: 2111662796}
   m_Layer: 0
-  m_Name: Square (6)
+  m_Name: Right Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27010,6 +27030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aaf25cb00c4ebc49b3249fd8849d6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  side: 0
   sparks_Vfx: {fileID: 1217537803}
   static_Vfx: {fileID: 1217575297}
 --- !u!50 &2116323542

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,7 +10,11 @@ public class WirePliers : MonoBehaviour
     [SerializeField]
     private VfxSegment partToCut;
 
+    [SerializeField]
+    private float speed;
+
     private bool onPart = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -40,13 +45,44 @@ public class WirePliers : MonoBehaviour
         plier_animator.SetTrigger("IsCutting");
     }
 
-    public void SetPositionToPart()
-    {
-        transform.position = partToCut.transform.position;
-    }
-
     public void StopParticleEmission()
     {
-        partToCut.ToggleVFXAnim();
+        partToCut.ToggleVFXAnimOff();
+    }
+
+    public IEnumerator TriggerPlierMovement(Vector3 objPos, float speed_Inc)
+    {
+        Quaternion target_rot = Quaternion.Euler(0,0,0);
+        Vector3 target = new Vector3(0, 0, 0);
+        if (objPos == target)
+        {
+            target = partToCut.transform.position;
+
+            if (partToCut.GetSide() == 1)
+            {
+                target_rot = Quaternion.Euler(0, 0, -90);
+            }
+        }
+        else
+        {
+            target = objPos;
+        }
+
+        while(Vector3.Distance(transform.position, target) > 0.01f || Quaternion.Angle(transform.rotation, target_rot) > 0.01f)
+        {
+            if(Vector3.Distance(transform.position, target) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target, (speed * speed_Inc) * Time.deltaTime);
+            }
+
+            if (Quaternion.Angle(transform.rotation, target_rot) > 0.01f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, speed * Time.deltaTime);
+            }
+            
+            yield return null;
+        }
+
+        Debug.Log("Movement Done!");
     }
 }

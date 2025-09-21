@@ -3,6 +3,9 @@ using UnityEngine;
 public class VfxSegment : MonoBehaviour
 {
     [SerializeField]
+    private int side;
+
+    [SerializeField]
     private ParticleSystem sparks_Vfx;
 
     [SerializeField]
@@ -11,7 +14,7 @@ public class VfxSegment : MonoBehaviour
 
     // Update is called once per frame
     
-    public void ToggleVFXAnimOn()
+    public void ToggleVFXAnimOff()
     {
         var sparks_emission = sparks_Vfx.emission;
 
@@ -20,9 +23,11 @@ public class VfxSegment : MonoBehaviour
         sparks_emission.enabled = false;
 
         static_emission.enabled = false;
+
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 
-    public void ToggleVFXAnimOff()
+    public void ToggleVFXAnimOn()
     {
         var sparks_emission = sparks_Vfx.emission;
 
@@ -31,5 +36,12 @@ public class VfxSegment : MonoBehaviour
         sparks_emission.enabled = true;
 
         static_emission.enabled = true;
+
+        GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    public int GetSide()
+    {
+        return side;
     }
 }
