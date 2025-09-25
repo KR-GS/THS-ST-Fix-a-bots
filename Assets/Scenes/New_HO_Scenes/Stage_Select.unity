@@ -821,7 +821,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ADJUST SPEED
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
   m_sharedMaterial: {fileID: -262727986562645402, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
@@ -4815,7 +4815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &969396685
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6364,7 +6364,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -150, y: -149}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1120748286
 MonoBehaviour:
@@ -6430,8 +6430,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d292178843eba7b4fbd2f526ff1cac80, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: -2146341760, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6966,7 +6966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1226815886
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7051,8 +7051,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -1111062559, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -10190,7 +10190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1517136852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12066,8 +12066,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 1958832365, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -12608,12 +12608,12 @@ MonoBehaviour:
   - {fileID: 280487021}
   - {fileID: 1725631799}
   - {fileID: 1410660040}
-  - {fileID: 1410660040}
   - {fileID: 2047316185}
   - {fileID: 1896125305}
   - {fileID: 1990190307}
   - {fileID: 843019177}
   - {fileID: 1053116486}
+  - {fileID: 1236597496}
   - {fileID: 1077751613}
   - {fileID: 909800539}
   - {fileID: 1108244720}
@@ -12674,9 +12674,25 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d21d16924728fc241bb862b78067c2e9, type: 3}
   - {fileID: 21300000, guid: 196859400189f0c458af36d9f7691055, type: 3}
   levelMap3: {fileID: 625823115}
-  levelMapSprites3: []
-  leftButton: {fileID: 0}
-  rightButton: {fileID: 0}
+  levelMapSprites3:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  leftButton: {fileID: 1226815887}
+  rightButton: {fileID: 1822028086}
   settingsManager: {fileID: 431814633}
 --- !u!1 &1894773579
 GameObject:
