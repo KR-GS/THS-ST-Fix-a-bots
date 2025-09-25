@@ -10,7 +10,7 @@ public class StaticData
     public static bool isOnHigherOrderGame;
 
     //HO SETTINGS
-    private const int STAGE_COUNT = 10; 
+    private const int STAGE_COUNT = 45; 
 
     public static List<int> stageLives, stageRestarts, stageStars;
     public static List<float> stageTime;
@@ -32,16 +32,56 @@ public class StaticData
     //How swipes are managed per stage in HO
     public static Dictionary<int, List<string>> stageSwipes = new Dictionary<int, List<string>>()
     {
+        //SCENARIO 1
         { 1, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 2, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 3, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 4, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 5, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 6, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 7, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 8, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 9, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
-        { 10, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right"} },
+        { 2, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 3, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 4, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 5, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 6, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 7, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 8, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 9, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 10, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 11, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 12, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 13, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 14, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 15, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+
+        //SCENARIO 2
+        { 16, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 17, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 18, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 19, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 20, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 21, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 22, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 23, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 24, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 25, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 26, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 27, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 28, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 29, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 30, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 31, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+
+        //SCENARIO 3
+        { 32, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 33, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 34, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 35, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 36, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 37, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 38, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 39, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 40, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 41, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 42, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 43, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 44, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 45, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } }
     };
 
     //
@@ -61,11 +101,51 @@ public class StaticData
 
          stageRandomCoefficientCount = new List<int>()
         {
-            2, 
-            3, 
-            2, 
-            1, 
-            2, 
+            // SCENARIO 1
+            2,
+            3,
+            2,
+            1,
+            2,
+            1,
+            2,
+            3,
+            3,
+            2,
+            1,
+            2,
+            3,
+            3,
+            2,
+            
+            // SCENARIO 2
+            2,
+            3,
+            2,
+            1,
+            2,
+            1,
+            2,
+            3,
+            3,
+            2,
+            1,
+            2,
+            3,
+            3,
+            2,
+            
+            //SCENARIO 3
+            2,
+            3,
+            2,
+            1,
+            2,
+            1,
+            2,
+            3,
+            3,
+            2,
             1, 
             2,
             3, 
@@ -75,44 +155,164 @@ public class StaticData
 
         stageMaxCoefficientValue = new List<int>()
         {
-            1,  
-            2,  
-            3,  
-            4,  
-            3,  
+            //SCENARIO 1
+            1,
+            2,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            3,
+            4,
+
+            //SCENARIO 2
+            1,
+            2,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            3,
+            4,
+
+            //SCENARIO 3
+            1,
+            2,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            3,
+            4,
             5,  
             3,  
             4, 
             3, 
-            4  
+            4,  
         };
 
         stageRandomConstantCount = new List<int>()
         {
-            1, 
+            //SCENARIO 1
+            1,
+            2,
+            2,
+            3,
+            1,
+            2,
+            2,
+            2,
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            3,
+
+            //SCENARIO 2
+            1,
+            2,
+            2,
+            3,
+            1,
+            2,
+            2,
+            2,
+            2,
+            3,
+            2,
+            2,
+            2,
+            2,
+            3,
+
+            //SCENARIO 3
+            1,
+            2,
+            2,
+            3,
+            1,
+            2,
+            2,
+            2,
+            2,
+            3,
             2, 
             2, 
-            3, 
-            1, 
             2, 
             2, 
-            2, 
-            2, 
-            3  
+            3,  
         };
 
         stageMaxConstantValue = new List<int>()
         {
-            3,  
-            3,   
-            4,   
-            4,  
-            5,  
+            //SCENARIO 1
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+
+            //SCENARIO 2
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+
+            //SCENARIO 3
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
             5,  
             4, 
             3,  
             4,  
-            4   
+            4,   
         };
     }
 
@@ -121,6 +321,7 @@ public class StaticData
         EnsureListSize(stageLives, STAGE_COUNT);
         EnsureListSize(stageRestarts, STAGE_COUNT);
         EnsureListSize(stageTime, STAGE_COUNT);
+        EnsureListSize(stageStars, STAGE_COUNT);
         EnsureListSize(formulaAttempts, STAGE_COUNT);
 
         EnsureListSize(stageRandomCoefficientCount, STAGE_COUNT);
@@ -143,28 +344,6 @@ public class StaticData
         if (list.Count > size)
             list.RemoveRange(size, list.Count - size);
     }
-    
 
-   /*
-    //EVERYTHING HERE IS THE ONLY ONE TO BE SAVED
-    public static List<int> stageLives, stageRestarts;
-    public static List<float> stageTime;
-    public static int numStageDone = 0;
-    //ONLY THING SAVED ARE THE THINGS ABOVE
-
-    public static int maxNumber, coefficient, constant, prePressedCount, stageNum;
-    public static float cycleInterval;
-    public static float cycleLeniency;
-    public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence;
-
-    
-    static StaticData()
-    {
-        int stageCount = 5; 
-        stageLives = new List<int>(new int[stageCount]);
-        stageRestarts = new List<int>(new int[stageCount]);
-        stageTime = new List<float>(new float[stageCount]);
-    }
-   */
 
 }

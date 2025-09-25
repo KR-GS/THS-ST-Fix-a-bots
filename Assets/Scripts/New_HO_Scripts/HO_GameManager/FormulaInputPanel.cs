@@ -146,6 +146,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             StaticData.stageStars[stageData.GetStageNum()] = numStars;
             StaticData.numStageDone = stageData.GetStageNum() + 1;
         }
+        
         //else, check if it is better before storing
         else
         {
@@ -434,6 +435,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         int absConst = Mathf.Abs(currentConst);
         string attempt = $"{currentCoef}n {sign} {absConst}";
 
+        // Logs attempts to gamedata
         if (!string.IsNullOrEmpty(stageStringAttempt))
             stageStringAttempt += ", ";
 

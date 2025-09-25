@@ -14,6 +14,23 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     public TMP_Text livesText, restartsText, timeText, speedText;
     public Button yesButton, noButton, decreaseButton, increaseButton, confirmSpeedButton, confirmSpeedPanelButton;
 
+    [Header("Level Map 1")]
+    public Image levelMap1;
+    public Sprite[] levelMapSprites;
+
+    [Header("Level Map 2")]
+    public Image levelMap2;
+    public Sprite[] levelMapSprites2;
+
+    [Header("Level Map 3")]
+    public Image levelMap3;
+    public Sprite[] levelMapSprites3;
+
+    [Header("Level Map Button")]
+    public Button leftButton;
+    public Button  rightButton;
+
+    [Header("Settings Manager")]
     public SettingsPanelManager settingsManager;
 
     private string[] speedLabels = { "Slowest", "Slow", "Average", "Fast", "Fastest" };
@@ -21,8 +38,24 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     private int currentSpeedIndex = 2;
     private float confirmedSpeed = 1f;
 
+    private int currentLevelMap = 0;
+
     private int selectedStageNum;
     private (int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef, bool lockConst, bool refSeen, int coef, int constant, int tutorial) selectedConfig;
+
+    private void Awake()
+    {
+        if (currentLevelMap > 0)
+        {
+            leftButton.interactable = true;
+            leftButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            leftButton.interactable = false;
+            leftButton.gameObject.SetActive(false);
+        }
+    } 
 
     IEnumerator Start()
     {
@@ -47,17 +80,13 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         //settingsPanel.SetActive(true);
         //settingsPanel.SetActive(false);
 
+        //Updates the background based on the number of stages completed
+        UpdateLevelMapBackground();
+
         for (int i = 0; i < stageButtons.Length; i++)
         {
             int stageNum = i;
             stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
-
-            if (i < StaticData.numStageDone)
-            {
-                var color = stageButtons[i].targetGraphic.color;
-                color.a = 125;
-                stageButtons[i].targetGraphic.color = color;
-            }
 
 
             stageButtons[i].onClick.AddListener(() =>
@@ -74,21 +103,155 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         yesButton.onClick.AddListener(ConfirmStageSelection);
         noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
         confirmSpeedPanelButton.onClick.AddListener(() => settingsPanel.SetActive(true));
+
+        leftButton.onClick.AddListener(() =>
+        {
+            currentLevelMap--;
+            changeLevelMap(currentLevelMap);
+        });
+
+        rightButton.onClick.AddListener(() =>
+        {
+            currentLevelMap++;
+            changeLevelMap(currentLevelMap);
+        });
+
         //increaseButton.onClick.AddListener(IncreaseSpeed);
         //decreaseButton.onClick.AddListener(DecreaseSpeed);
         //confirmSpeedButton.onClick.AddListener(ConfirmSpeed);
     }
 
+    private void changeLevelMap(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                leftButton.interactable = false;
+                leftButton.gameObject.SetActive(false);
+                levelMap1.gameObject.SetActive(true);
+                levelMap2.gameObject.SetActive(false);
+                levelMap3.gameObject.SetActive(false);
+                break;
+            case 1:
+                leftButton.interactable = true;
+                leftButton.gameObject.SetActive(true);
+                levelMap1.gameObject.SetActive(false);
+                levelMap2.gameObject.SetActive(true);
+                levelMap3.gameObject.SetActive(false);
+                break;
+            case 2:
+                leftButton.interactable = true;
+                leftButton.gameObject.SetActive(true);
+                levelMap1.gameObject.SetActive(false);
+                levelMap2.gameObject.SetActive(false);
+                levelMap3.gameObject.SetActive(true);
+                break;
+        }
+    }
+    
+
+    private void UpdateLevelMapBackground()
+    {
+        if (StaticData.numStageDone <= 15)
+        {
+            int index = Mathf.Clamp(StaticData.numStageDone, 0, levelMapSprites.Length - 1);
+
+            levelMap1.sprite = levelMapSprites[index];
+            levelMap2.sprite = levelMapSprites2[0];
+            levelMap3.sprite = levelMapSprites3[0];
+        }
+        
+        else if (StaticData.numStageDone <= 30)
+        {
+            int index = Mathf.Clamp(StaticData.numStageDone - 16, 0, levelMapSprites2.Length - 1);
+
+            levelMap1.sprite = levelMapSprites[15];
+            levelMap2.sprite = levelMapSprites2[index];
+            levelMap3.sprite = levelMapSprites3[0];
+        }
+        else
+        {
+            int index = Mathf.Clamp(StaticData.numStageDone - 31, 0, levelMapSprites3.Length - 1);
+
+            levelMap1.sprite = levelMapSprites[15];
+            levelMap2.sprite = levelMapSprites2[15];
+            levelMap3.sprite = levelMapSprites3[index];
+        }
+
+
+        // For button labels
+        for (int i = 0; i < stageButtons.Length; i++)
+        {
+            int stageNum = i;
+            // Set the button text to the stage number (1-based index)
+            TMP_Text buttonLabel = stageButtons[i].GetComponentInChildren<TMP_Text>();
+            if (buttonLabel != null)
+            {
+                buttonLabel.text = (stageNum + 1).ToString();
+            }
+
+            if (stageNum <= StaticData.numStageDone)
+            {
+                buttonLabel.color = Color.white; // normal white text for unlocked
+            }
+            else
+            {
+                buttonLabel.color = new Color(0.2f, 0.2f, 0.2f);  // greyed out text for locked
+            }
+        }
+    }
+
+    // IF YOU WANT TO ADD MORE STAGES, DO IT HERE, JUST COPY THE FORMAT
     private (int, float, float, int, bool, bool, bool, bool, int, int, int)[] GetStageConfigs()
-    //num of buttons, speed, leniency, prepressed, is the formula seen, is coef locked, is const locked, isrefseen, coef, constant, tutorial
+    //num of buttons, speed, leniency, prepressed, is the formula seen, is coef locked, is const locked, isrefseen, coef, constant, tutorial(NOT USED),
     {
         return new (int, float, float, int, bool, bool, bool, bool, int, int, int)[]
         {
+            // SCENARIO 1
             (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3, 0),
             (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1, 1),
             (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1, 1),
             (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1, 2),
             (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
+
+            // SCENARIO 2
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3, 0),
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1, 1),
+            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1, 1),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
+
+            // SCENARIO 3
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3, 0),
+            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1, 1),
+            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1, 1),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3, 2),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
+            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
+            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
             (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
             (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
             (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
