@@ -342,7 +342,14 @@ public class LoToolMinigame : MonoBehaviour
             }
             else
             {
-                Instantiate(fastenerList[randFastenerVal].GetMissingPrefab(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+                if (StaticData.toolDifficulty == 0 || StaticData.toolDifficulty == 1)
+                {
+                    Instantiate(fastenerList[randFastenerVal].GetMissingPrefab(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+                }else if (StaticData.toolDifficulty == 2)
+                {
+                    Instantiate(randMissing_Prefab, tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+                }
+                    
 
                 Debug.Log("Adding Missing Fastener");
             }
@@ -475,7 +482,15 @@ public class LoToolMinigame : MonoBehaviour
 
                 CheckCounterToDisplay();
 
-                addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+                if (fastenerValues[currentInt] > 0)
+                {
+                    addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+                }
+                else
+                {
+                    addTenBtn.gameObject.SetActive(false);
+                }
+                    
             }
         }
     }
@@ -536,6 +551,7 @@ public class LoToolMinigame : MonoBehaviour
         {
             
             fastenerObj[currentInt].SetActive(false);
+            addTenBtn.gameObject.SetActive(false);
             currentInt--;
             SetZoomedInTextCounter(currentInt);
 
@@ -548,7 +564,11 @@ public class LoToolMinigame : MonoBehaviour
 
             CheckCounterToDisplay();
 
-            addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            if (fastenerValues[currentInt] > 0)
+            {
+                addTenBtn.gameObject.SetActive(true);
+                addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            }
         }
     }
 
@@ -558,6 +578,7 @@ public class LoToolMinigame : MonoBehaviour
         {
             fastenerObj[currentInt].SetActive(false);
             currentInt++;
+            addTenBtn.gameObject.SetActive(false);
 
             SetZoomedInTextCounter(currentInt);
 
@@ -570,7 +591,11 @@ public class LoToolMinigame : MonoBehaviour
                 Destroy(currentTool);
             }
 
-            addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            if (fastenerValues[currentInt] > 0)
+            {
+                addTenBtn.gameObject.SetActive(true);
+                addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            }
         }
     }
 
@@ -623,6 +648,8 @@ public class LoToolMinigame : MonoBehaviour
             Destroy(currentTool);
         }
 
+        addTenBtn.gameObject.SetActive(true);
+
         addTenBtn.GetComponent<Image>().sprite = fastenerList[value].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 
         currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
@@ -661,7 +688,7 @@ public class LoToolMinigame : MonoBehaviour
             Destroy(currentTool);
         }
 
-        if (currentInt < patternLength - slotToFill)
+        if (currentInt < patternLength - slotToFix)
         {
             numberToDisplay[currentInt] = originalHitValues[currentInt];
 
@@ -687,6 +714,17 @@ public class LoToolMinigame : MonoBehaviour
             {
                 GameObject.Destroy(child.gameObject);
             }
+
+            if (StaticData.toolDifficulty == 0 || StaticData.toolDifficulty == 1)
+            {
+                Instantiate(fastenerList[fastenerCheckVal[currentInt] - 1].GetMissingPrefab(), tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
+            }
+            else if (StaticData.toolDifficulty == 2)
+            {
+                Instantiate(randMissing_Prefab, tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
+            }
+
+            //Instantiate(fastenerList[fastenerCheckVal[currentInt] - 1].GetMissingPrefab(), tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
 
             if (holder.childCount > 0)
             {
