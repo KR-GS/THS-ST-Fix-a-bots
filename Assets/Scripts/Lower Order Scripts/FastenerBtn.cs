@@ -25,6 +25,9 @@ public class FastenerBtn : MonoBehaviour
 
     [SerializeField]
     private GameObject tool;
+
+    [SerializeField]
+    private GameObject missingPrefab;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public GameObject GetFastenerSprite()
@@ -40,6 +43,11 @@ public class FastenerBtn : MonoBehaviour
     public int GetFastenerType()
     {
         return fastenerValue;
+    }
+
+    public GameObject GetMissingPrefab()
+    {
+        return missingPrefab;
     }
 
     public GameObject GetToolToUse()

@@ -60,6 +60,9 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private Button addTenBtn;
 
+    [SerializeField]
+    private GameObject randMissing_Prefab;
+
     void Awake()
     {
         fastenerList = FindObjectsByType<FastenerBtn>(FindObjectsSortMode.None);
@@ -145,13 +148,15 @@ public class LoToolMinigame : MonoBehaviour
         switch (StaticData.toolDifficulty)
         {
             case 0:
-                slotToFix = StaticData.incorrectVals;
-                isFix = true;
+                //slotToFix = StaticData.incorrectVals;
+                slotToFix = 1;
+                //isFix = true;
                 Debug.Log("Fixing in easy!");
                 break;
             case 1:
                 Debug.Log("Fixing in medium!");
 
+                /*
                 medValue = StaticData.medValue;
                 if (medValue <= 5)
                 {
@@ -167,6 +172,10 @@ public class LoToolMinigame : MonoBehaviour
                     isFix = true;
                     Debug.Log("Method to follow: fill");
                 }
+                */
+
+                slotToFix = 2;
+
                 break;
             case 2:
                 /*
@@ -176,9 +185,9 @@ public class LoToolMinigame : MonoBehaviour
                 isFix = true;
                 Debug.Log("Filling");
                 */
-                //slotToFix = 0;
+                slotToFix = 3;
 
-                slotToFix = StaticData.missingVals;
+                //slotToFix = StaticData.missingVals;
                 isFix = true;
                 Debug.Log("Filling");
 
@@ -193,6 +202,8 @@ public class LoToolMinigame : MonoBehaviour
         toolTilingManager.SpawnPartTiled(patternLength);
 
         tiledParts = toolTilingManager.GetTileList();
+
+        /*
         switch (isFix)
         {
             case true:
@@ -263,8 +274,20 @@ public class LoToolMinigame : MonoBehaviour
                 }
                 break;
         }
+        */
 
-        for(int i=0; i<patternLength; i++)
+        for (int i = 0; i < patternLength - slotToFix; i++)
+        {
+            numberToDisplay[i] = generatedList[i];
+            Debug.Log(i + " Value: " + numberToDisplay[i]);
+        }
+
+        for (int i = patternLength - slotToFix; i < patternLength; i++)
+        {
+            numberToDisplay[i] = 0;
+        }
+
+        for (int i=0; i<patternLength; i++)
         {
             originalHitValues[i] = numberToDisplay[i];
         }
@@ -314,8 +337,14 @@ public class LoToolMinigame : MonoBehaviour
                 tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
 
 
-                Debug.Log("Adding Fastener");
+                Debug.Log("Adding Fastener " + i);
                 fastenerValues[i] = randFastenerVal+1;
+            }
+            else
+            {
+                Instantiate(fastenerList[randFastenerVal].GetMissingPrefab(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
+
+                Debug.Log("Adding Missing Fastener");
             }
 
             fastenerCheckVal[i] = randFastenerVal+1;
