@@ -743,7 +743,7 @@ public class LoToolMinigame : MonoBehaviour
 
         Debug.Log(fastenerObj[currentInt].transform.position);
 
-        if (numberToDisplay[currentInt] < 24)
+        if (numberToDisplay[currentInt] < max_HitCount)
         {
             textCounter.gameObject.SetActive(false);
             fastenerObj[currentInt].SetActive(true);
@@ -972,7 +972,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         bool useCountManager = false;
         numberToDisplay[currentInt] = numberToDisplay[currentInt]+10;
-        if (numberToDisplay[currentInt] < 24)
+        if (numberToDisplay[currentInt] < max_HitCount)
         {
             fastenerObj[currentInt].SetActive(true);
             textCounter.gameObject.SetActive(false);
@@ -1000,7 +1000,7 @@ public class LoToolMinigame : MonoBehaviour
 
         yield return null;
 
-        if (numberToDisplay[currentInt] <= 24)
+        if (numberToDisplay[currentInt] <= max_HitCount)
         {
             hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt] - 1].GetHitIcon());
         }
