@@ -471,27 +471,28 @@ public class LoToolMinigame : MonoBehaviour
                     ToggleGapHolder(false);
                 }
 
-                if (fastenerValues[currentInt] > 0)
-                {
-                    SelectTool(fastenerValues[currentInt]-1, currentInt);
-                }
+                CheckIfEditable();
 
                 fastenerObj[currentInt].SetActive(true);
 
                 SetZoomedInTextCounter(currentInt);
 
                 CheckCounterToDisplay();
-
-                if (fastenerValues[currentInt] > 0)
-                {
-                    addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
-                }
-                else
-                {
-                    addTenBtn.gameObject.SetActive(false);
-                }
-                    
             }
+        }
+    }
+
+    private void CheckIfEditable()
+    {
+        if (fastenerValues[currentInt] > 0 && currentInt >= patternLength - slotToFix)
+        {
+            SelectTool(fastenerValues[currentInt] - 1, currentInt);
+            addTenBtn.gameObject.SetActive(true);
+            addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+        }
+        else
+        {
+            addTenBtn.gameObject.SetActive(false);
         }
     }
 
@@ -549,7 +550,6 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (currentInt>0)
         {
-            
             fastenerObj[currentInt].SetActive(false);
             addTenBtn.gameObject.SetActive(false);
             currentInt--;
@@ -563,12 +563,6 @@ public class LoToolMinigame : MonoBehaviour
             }
 
             CheckCounterToDisplay();
-
-            if (fastenerValues[currentInt] > 0)
-            {
-                addTenBtn.gameObject.SetActive(true);
-                addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
-            }
         }
     }
 
@@ -589,12 +583,6 @@ public class LoToolMinigame : MonoBehaviour
             if (currentTool != null)
             {
                 Destroy(currentTool);
-            }
-
-            if (fastenerValues[currentInt] > 0)
-            {
-                addTenBtn.gameObject.SetActive(true);
-                addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
             }
         }
     }
@@ -913,10 +901,7 @@ public class LoToolMinigame : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         button.interactable = true;
 
-        if (fastenerValues[currentInt] > 0)
-        {
-            SelectTool(fastenerValues[currentInt] - 1, currentInt);
-        }
+        CheckIfEditable();
     }
 
     //toggles the view of the overview counter
