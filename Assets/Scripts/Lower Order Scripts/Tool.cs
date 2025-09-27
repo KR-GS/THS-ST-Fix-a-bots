@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Tool : MonoBehaviour
 {
+    [SerializeField]
+    private Transform addTenPos;
+
     private Animator statusAnimator;
     private AnimationClip[] clips;
     private AnimationEvent[] events;
@@ -31,5 +34,8 @@ public class Tool : MonoBehaviour
         GetComponentInChildren<ToolEvent>().SetHeightToSet(value);
     }
 
-
+    public Vector3 GetAddTenPos()
+    {
+        return Camera.main.WorldToScreenPoint(addTenPos.position);
+    }
 }

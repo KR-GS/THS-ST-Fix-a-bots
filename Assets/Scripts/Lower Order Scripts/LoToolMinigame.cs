@@ -63,6 +63,9 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private GameObject randMissing_Prefab;
 
+    [SerializeField]
+    private int max_HitCount;
+
     void Awake()
     {
         fastenerList = FindObjectsByType<FastenerBtn>(FindObjectsSortMode.None);
@@ -438,14 +441,14 @@ public class LoToolMinigame : MonoBehaviour
         {
             if(rayHit.transform.gameObject.TryGetComponent(out Tool tool))
             {
-                bool useCountManager = false;
+                bool useCountManager;
                 numberToDisplay[currentInt]++;
 
                 UpdateGapCounters();
 
                 CheckCounterToDisplay();
 
-                if (numberToDisplay[currentInt]<24)
+                if (numberToDisplay[currentInt] <= max_HitCount)
                 {
                     useCountManager = true;
                 }
@@ -589,7 +592,7 @@ public class LoToolMinigame : MonoBehaviour
 
     private void CheckCounterToDisplay()
     {
-        if (numberToDisplay[currentInt] > 24)
+        if (numberToDisplay[currentInt] > max_HitCount)
         {
             fastenerObj[currentInt].SetActive(false);
             textCounter.gameObject.SetActive(true);
@@ -638,10 +641,14 @@ public class LoToolMinigame : MonoBehaviour
 
         addTenBtn.gameObject.SetActive(true);
 
+        
+
         addTenBtn.GetComponent<Image>().sprite = fastenerList[value].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 
         currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
         currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
+
+        addTenBtn.transform.position = currentTool.GetComponent<Tool>().GetAddTenPos();
 
         Debug.Log("What is happening???");
     }
@@ -993,7 +1000,7 @@ public class LoToolMinigame : MonoBehaviour
 
         yield return null;
 
-        if (numberToDisplay[currentInt] < 24)
+        if (numberToDisplay[currentInt] <= 24)
         {
             hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt] - 1].GetHitIcon());
         }
