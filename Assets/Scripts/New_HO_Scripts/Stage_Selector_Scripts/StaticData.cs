@@ -29,6 +29,9 @@ public class StaticData
     public static List<int> stageRandomConstantCount;
     public static List<int> stageMaxConstantValue;
 
+    // FOR IF THE HO SWIPE HINT IS SEEN
+    public static List<bool> hintSeen;
+
     //How swipes are managed per stage in HO
     public static Dictionary<int, List<string>> stageSwipes = new Dictionary<int, List<string>>()
     {
@@ -99,220 +102,64 @@ public class StaticData
         stageTime = new List<float>(new float[STAGE_COUNT]);
         formulaAttempts = new List<string>(new string[STAGE_COUNT]);
 
-         stageRandomCoefficientCount = new List<int>()
+        stageRandomCoefficientCount = new List<int>()
         {
             // SCENARIO 1
-            2,
-            3,
-            2,
-            1,
-            2,
-            1,
-            2,
-            3,
-            3,
-            2,
-            1,
-            2,
-            3,
-            3,
-            2,
+            2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
             
             // SCENARIO 2
-            2,
-            3,
-            2,
-            1,
-            2,
-            1,
-            2,
-            3,
-            3,
-            2,
-            1,
-            2,
-            3,
-            3,
-            2,
+            2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
             
             //SCENARIO 3
-            2,
-            3,
-            2,
-            1,
-            2,
-            1,
-            2,
-            3,
-            3,
-            2,
-            1, 
-            2,
-            3, 
-            3, 
-            2 
+            2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
         };
 
         stageMaxCoefficientValue = new List<int>()
         {
             //SCENARIO 1
-            1,
-            2,
-            3,
-            4,
-            3,
-            5,
-            3,
-            4,
-            3,
-            4,
-            5,
-            3,
-            4,
-            3,
-            4,
+            1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
 
             //SCENARIO 2
-            1,
-            2,
-            3,
-            4,
-            3,
-            5,
-            3,
-            4,
-            3,
-            4,
-            5,
-            3,
-            4,
-            3,
-            4,
+            1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
 
             //SCENARIO 3
-            1,
-            2,
-            3,
-            4,
-            3,
-            5,
-            3,
-            4,
-            3,
-            4,
-            5,  
-            3,  
-            4, 
-            3, 
-            4,  
+            1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
         };
 
         stageRandomConstantCount = new List<int>()
         {
             //SCENARIO 1
-            1,
-            2,
-            2,
-            3,
-            1,
-            2,
-            2,
-            2,
-            2,
-            3,
-            2,
-            2,
-            2,
-            2,
-            3,
+            1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
 
             //SCENARIO 2
-            1,
-            2,
-            2,
-            3,
-            1,
-            2,
-            2,
-            2,
-            2,
-            3,
-            2,
-            2,
-            2,
-            2,
-            3,
+            1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
 
             //SCENARIO 3
-            1,
-            2,
-            2,
-            3,
-            1,
-            2,
-            2,
-            2,
-            2,
-            3,
-            2, 
-            2, 
-            2, 
-            2, 
-            3,  
+            1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
         };
 
         stageMaxConstantValue = new List<int>()
         {
             //SCENARIO 1
-            3,
-            3,
-            4,
-            4,
-            5,
-            5,
-            4,
-            3,
-            4,
-            4,
-            5,
-            4,
-            3,
-            4,
-            4,
+            3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
 
             //SCENARIO 2
-            3,
-            3,
-            4,
-            4,
-            5,
-            5,
-            4,
-            3,
-            4,
-            4,
-            5,
-            4,
-            3,
-            4,
-            4,
+            3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
 
             //SCENARIO 3
-            3,
-            3,
-            4,
-            4,
-            5,
-            5,
-            4,
-            3,
-            4,
-            4,
-            5,  
-            4, 
-            3,  
-            4,  
-            4,   
+            3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
+        };
+
+        hintSeen = new List<bool>()
+        {
+            //SCENARIO 1
+            true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
+
+            //SCENARIO 2
+            true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
+
+            //SCENARIO 3
+            true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
         };
     }
 

@@ -703,7 +703,7 @@ MonoBehaviour:
   settingsPanel: {fileID: 1133992956}
   settingsExitButton: {fileID: 1133992955}
   settingsConfirmButton: {fileID: 1133992953}
-  statusAnimator: {fileID: 1253231071}
+  statusAnimator: {fileID: 1253231074}
   swipeDirectionPanel: {fileID: 562736250}
   directionArrow: {fileID: 326400674}
   soundEffectsManager: {fileID: 1183926327}
@@ -1530,15 +1530,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6389036616628916489, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       propertyPath: m_Color.b
-      value: 0.7132075
+      value: 0.8792453
       objectReference: {fileID: 0}
     - target: {fileID: 6389036616628916489, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       propertyPath: m_Color.g
-      value: 0.35360292
+      value: 0.69945973
       objectReference: {fileID: 0}
     - target: {fileID: 6389036616628916489, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       propertyPath: m_Color.r
-      value: 0.25164112
+      value: 0.6486507
       objectReference: {fileID: 0}
     - target: {fileID: 7563204687918455774, guid: 69eaa1c891520f442afc474a479f5c3c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4394,7 +4394,7 @@ GameObject:
   - component: {fileID: 1253231070}
   - component: {fileID: 1253231073}
   - component: {fileID: 1253231072}
-  - component: {fileID: 1253231071}
+  - component: {fileID: 1253231074}
   m_Layer: 5
   m_Name: statusAnimator
   m_TagString: Untagged
@@ -4421,28 +4421,6 @@ RectTransform:
   m_AnchoredPosition: {x: 96.162025, y: 282.91998}
   m_SizeDelta: {x: 909.4371, y: 660.9636}
   m_Pivot: {x: 0.5967794, y: 0.87285244}
---- !u!95 &1253231071
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253231069}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 53b0be10818beb546a55b5912cc2b1cf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1253231072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4463,7 +4441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1554959072, guid: 7c011a8d99463554c90d7c4687578906, type: 3}
+  m_Sprite: {fileID: -552244306, guid: 532b9ff246e8b7e4ca036e930158b925, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4481,6 +4459,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253231069}
   m_CullTransparentMesh: 1
+--- !u!95 &1253231074
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253231069}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 43256a89d10e0b142be1f7ffc9d14a23, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1299390815
 GameObject:
   m_ObjectHideFlags: 0
@@ -5471,14 +5471,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.71594393, g: 0.70524025, b: 0.90943396, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 67b41ac1829cc8f4dad110a504d56113, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6124,14 +6124,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7132075, g: 0.7132075, b: 0.7132075, a: 0.95686275}
+  m_Color: {r: 0.35429683, g: 0.5647745, b: 0.645283, a: 0.95686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 67b41ac1829cc8f4dad110a504d56113, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

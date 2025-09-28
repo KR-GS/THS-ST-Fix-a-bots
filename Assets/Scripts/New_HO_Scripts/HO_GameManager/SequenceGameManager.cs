@@ -262,7 +262,6 @@ public class SequenceGameManager : MonoBehaviour
 
     void Update()
     {
-
         if ((Input.GetMouseButtonDown(0) ||IsScreenTapped()) && !IsPointerOverInteractableUi() && isStart)
         {
             isStart = false;
@@ -420,9 +419,14 @@ public class SequenceGameManager : MonoBehaviour
             // Show/hide swipe direction panel based on inSequence
             if (inSequence && currentSwipeIndex < expectedSwipeSequence.Count && !(buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()))
             {
-                swipeDirectionPanel.SetActive(true);
-                string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
-                SetArrowDirection(expectedDirection);
+                // Hint only shows if hintSeen is true
+                if (StaticData.hintSeen[stageNum])
+                {
+                    swipeDirectionPanel.SetActive(true);
+                    string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                    SetArrowDirection(expectedDirection);
+                }
+                
             }
             else
             {
@@ -468,11 +472,39 @@ public class SequenceGameManager : MonoBehaviour
                     else if (inSequence && hasNotClicked)
                     {
                         statusAnimator.SetBool("IdleTrigger", false);
+                        
+                        // Anticipation animation based on expected swipe direction
+                        /*
+                        string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                        if (expectedDirection == "Up" || expectedDirection == "Down")
+                        {
+                            statusAnimator.SetBool("VerticalTrigger", true);
+                        }
+                        else
+                        {
+                            statusAnimator.SetBool("HorizontalTrigger", true);
+                        }
+                        */
+
                         statusAnimator.SetBool("AnticipateTrigger", true);
                         // If the Sequence was pre pressed, automatically plays hit animation
                         if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.10f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
+
+                            // Hit animation based on expected swipe direction
+                            /*
+                            string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                            if (expectedDirection == "Up" || expectedDirection == "Down")
+                            {
+                                statusAnimator.SetBool("VerticalTrigger", true);
+                            }
+                            else
+                            {
+                                statusAnimator.SetBool("HorizontalTrigger", true);
+                            }
+                            */  
+
                             statusAnimator.SetBool("HitTrigger", true);
                             soundEffectsManager.playHitSound();
                             // Hide panel when auto-completing pre-selected
@@ -484,6 +516,20 @@ public class SequenceGameManager : MonoBehaviour
                         {
                             feedbackText.text = "You missed!";
                             statusAnimator.SetBool("AnticipateTrigger", false);
+
+                            // Miss animation based on expected swipe direction
+                            /*
+                            string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                            if (expectedDirection == "Up" || expectedDirection == "Down")
+                            {
+                                statusAnimator.SetBool("VerticalTrigger", true);
+                            }
+                            else
+                            {
+                                statusAnimator.SetBool("HorizontalTrigger", true);
+                            }
+                            */
+
                             statusAnimator.SetBool("MissTrigger", true);
                             soundEffectsManager.playMissSound();
                             isCorrect = false;
@@ -549,6 +595,7 @@ public class SequenceGameManager : MonoBehaviour
             currentCycleIndex = (currentCycleIndex + 1) % maxNumber;
         }
     }
+
     void HighlightButton(int index)
     {
         foreach (var btn in buttons)
@@ -624,21 +671,41 @@ public class SequenceGameManager : MonoBehaviour
                         return y > 0 ? "Up" : "Down";
                     }
                 }
-        }
-#endif
+            }
+        #endif
+        
         return null;
     }
 
     void HandleUserSwipe(string direction, int btnNumber, bool inSequence, float timer)
     {
+        string expected = expectedSwipeSequence[currentSwipeIndex];
+        bool gotSwipeCorrect = false;
+
+        // Makes sure that Up and Down are interchangeable, same for Left and Right
+        if (expected == "Up" || expected == "Down")
+        {
+            if (direction == "Up" || direction == "Down")
+            {
+                gotSwipeCorrect = true;
+            }
+        }
+        else if (expected == "Left" || expected == "Right")
+        {
+            if (direction == "Left" || direction == "Right")
+            {
+                gotSwipeCorrect = true;
+            }
+        }
+
         if (pressedNumbers.Contains(btnNumber))
         {
             feedbackText.text = $"You already swiped for {btnNumber}.";
             return;
         }
-    
+
         //Early swipes
-        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency / 2)
+        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency / 2 && gotSwipeCorrect)
         {
             buttons[btnNumber].SetGreen();
             buttons[btnNumber].SetWasSelected(true);
@@ -657,24 +724,25 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
             statusAnimator.SetBool("WrongTrigger", true);
-            isCorrect = false;
             soundEffectsManager.playMissSound();
+            isCorrect = false;
+
+            //Only decrease health if stage not finished
             if (!isStageFinished)
             {
                 stageData.SetNumLives(stageData.GetNumLives() - 1);
                 livesText.text = $"{stageData.GetNumLives()}";
                 healthBar.SetHealth(stageData.GetNumLives());
-                isCorrect = false;
             }
         }
+
         //Correct Swipes
         else if (inSequence)
         {
             if (currentSwipeIndex < expectedSwipeSequence.Count)
             {
-                string expected = expectedSwipeSequence[currentSwipeIndex];
 
-                if (direction == expected)
+                if (gotSwipeCorrect)
                 {
                     buttons[btnNumber - 1].SetGreen();
                     buttons[btnNumber - 1].SetWasSelected(true);
@@ -683,23 +751,51 @@ public class SequenceGameManager : MonoBehaviour
 
                     feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
                     statusAnimator.SetBool("IdleTrigger", false);
+                    
+                    // Add different animations based on swipe direction
+                    /*
+                    if (expected == "Up" || expected == "Down")
+                    {
+
+                    }
+                    else if (expected == "Left" || expected == "Right")
+                    {
+
+                    }
+                    */
+
                     statusAnimator.SetBool("HitTrigger", true);
                     soundEffectsManager.playHitSound();
                     gotRight = true;
 
                     currentSwipeIndex++;
                 }
+
                 //Wrong Swipes But in Sequence
                 else
                 {
                     buttons[btnNumber - 1].SetHighlighted(true);
                     feedbackText.text = $"Wrong swipe!";
                     statusAnimator.SetBool("IdleTrigger", false);
+
+                    // Add different miss animations based on swipe direction
+                    /*
+                    if (expected == "Up" || expected == "Down")
+                    {
+
+                    }
+                    else if (expected == "Left" || expected == "Right")
+                    {
+
+                    }
+                    */
+
                     statusAnimator.SetBool("MissTrigger", true);
                     soundEffectsManager.playMissSound();
                     isCorrect = false;
                     currentSwipeIndex++;
 
+                    //Only decrease health if stage not finished
                     if (!isStageFinished)
                     {
                         stageData.SetNumLives(stageData.GetNumLives() - 1);

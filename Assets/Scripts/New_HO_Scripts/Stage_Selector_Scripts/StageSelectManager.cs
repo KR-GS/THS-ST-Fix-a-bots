@@ -341,7 +341,16 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         StaticData.tutorialType = tutorial;
         StaticData.isRandomSequence = randSeq;
 
-        SceneManager.LoadScene("HO_BotFightScene");
+        if (stageNum <= 15)
+        {
+            SceneManager.LoadScene("HO_BotFightScene");
+        }
+        else if (stageNum <= 31)
+        {
+            SceneManager.LoadScene("HO_BotTennisScene");
+        }
+        
+        
     }
 
     public void LoadData(GameData data)
