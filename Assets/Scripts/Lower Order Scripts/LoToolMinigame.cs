@@ -177,7 +177,7 @@ public class LoToolMinigame : MonoBehaviour
                 }
                 */
 
-                slotToFix = 2;
+                slotToFix = Random.Range(1,2);
 
                 break;
             case 2:
@@ -345,10 +345,10 @@ public class LoToolMinigame : MonoBehaviour
             }
             else
             {
-                if (StaticData.toolDifficulty == 0 || StaticData.toolDifficulty == 1)
+                if (StaticData.toolDifficulty == 0)
                 {
                     Instantiate(fastenerList[randFastenerVal].GetMissingPrefab(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
-                }else if (StaticData.toolDifficulty == 2)
+                }else if (StaticData.toolDifficulty == 2 || StaticData.toolDifficulty == 1)
                 {
                     Instantiate(randMissing_Prefab, tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
                 }
@@ -710,11 +710,11 @@ public class LoToolMinigame : MonoBehaviour
                 GameObject.Destroy(child.gameObject);
             }
 
-            if (StaticData.toolDifficulty == 0 || StaticData.toolDifficulty == 1)
+            if (StaticData.toolDifficulty == 0)
             {
                 Instantiate(fastenerList[fastenerCheckVal[currentInt] - 1].GetMissingPrefab(), tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
             }
-            else if (StaticData.toolDifficulty == 2)
+            else if (StaticData.toolDifficulty == 2 || StaticData.toolDifficulty == 1)
             {
                 Instantiate(randMissing_Prefab, tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
             }

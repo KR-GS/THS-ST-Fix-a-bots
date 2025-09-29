@@ -15,6 +15,8 @@ public class WirePliers : MonoBehaviour
 
     private bool onPart = false;
 
+    private int slotNo = -1;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -38,6 +40,11 @@ public class WirePliers : MonoBehaviour
     public bool GetIsOnPart()
     {
         return onPart;
+    }
+
+    public VfxSegment GetSegment()
+    {
+        return partToCut;
     }
 
     public void TriggerCuttingAnim()

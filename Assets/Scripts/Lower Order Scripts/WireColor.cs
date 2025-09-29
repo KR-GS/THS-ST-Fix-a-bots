@@ -2,12 +2,34 @@ using UnityEngine;
 
 public class WireColor : MonoBehaviour
 {
+    private enum ButtonColor
+    {
+        red,
+        blue,
+        yellow
+    }
+
+    [SerializeField]
+    private ButtonColor colorAssigned;
+
     [SerializeField]
     private Color btnColor;
 
-    private Transform wire;
-
-    private bool on_wire;
+    void Awake()
+    {
+        if(colorAssigned == ButtonColor.red)
+        {
+            btnColor = Color.red;
+        }
+        else if(colorAssigned == ButtonColor.blue)
+        {
+            btnColor = Color.blue;
+        }
+        else
+        {
+            btnColor = Color.yellow;
+        }
+    }
 
     public Color GetBtnColor()
     {

@@ -89,6 +89,10 @@ public class WireGenerator : MonoBehaviour
                 select_icon.SetActive(true);
                 select_icon.transform.position = selectedColor.transform.position;
                 //isDragging = true;
+                if(Color.yellow == color)
+                {
+                    Debug.Log("Color chosen is yellow!");
+                }
             }
             else if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
             {
@@ -133,6 +137,10 @@ public class WireGenerator : MonoBehaviour
             }
         }
 
+        Debug.Log("Red Segments: " + redTotal);
+        Debug.Log("Blue Segments: " + blueTotal);
+        Debug.Log("Yellow Segments: " + yellowTotal);
+
         int totalColored = redTotal + blueTotal + yellowTotal;
 
         if (totalColored == createdWireChild.Count)
@@ -142,6 +150,10 @@ public class WireGenerator : MonoBehaviour
             Debug.Log(wireTotal);
 
             GenerateWire(wireTotal);
+        }
+        else
+        {
+            Debug.Log("Segments color incomplete!");
         }
             
     }

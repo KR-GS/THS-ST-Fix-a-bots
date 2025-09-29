@@ -20,6 +20,9 @@ public class LoWireMinigame : MonoBehaviour
     private PatternGameManager patternManager;
 
     [SerializeField]
+    private DifficultyManager difficultyManager;
+
+    [SerializeField]
     private Canvas ValueUI;
 
     [SerializeField]
@@ -55,7 +58,9 @@ public class LoWireMinigame : MonoBehaviour
 
     private bool onWireToCut;
 
-    private int wireToEdit;
+    private List<int> wireToEdit = new List<int>();
+
+    private List<Transform> vfxList = new List<Transform>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -80,84 +85,124 @@ public class LoWireMinigame : MonoBehaviour
             int red_segments = num_patterns[i];
             int total_val = red_segments;
 
-            if (valueToChange == i)
+            if (difficultyManager.GetDifficulty() == "easy")
             {
-                Debug.Log("Changing Value of Index " + valueToChange);
-                int diff = Random.Range(2, 3);
-                red_segments = red_segments - diff;
-                total_val = red_segments;
-                Debug.Log("New Value: " + red_segments);
-            }
-
-            int yellow_segments = red_segments / 10;
-            red_segments = red_segments - (yellow_segments * 10);
-            int blue_segments = red_segments / 5;
-            red_segments = red_segments - (blue_segments * 5);
-            int totalSegments = yellow_segments + blue_segments + red_segments;
-
-            Debug.Log("total segments for " + num_patterns[i] + ": " + totalSegments);
-
-            wireSegments = ChangeWireValue(totalSegments, origWire, newWire);
-
-            int currentSegment = 0;
-
-            if (yellow_segments > 0)
-            {
-                for (int j = 0; j < yellow_segments; j++)
+                if (valueToChange == i)
                 {
-                    wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.yellow;
-                    currentSegment++;
+                    Debug.Log("Changing Value of Index " + valueToChange);
+                    int diff = Random.Range(2, 3);
+                    red_segments = red_segments - diff;
+                    total_val = red_segments;
+                    Debug.Log("New Value: " + red_segments);
+                }
+            }
+            else if (difficultyManager.GetDifficulty() == "medium")
+            {
+                if(i == 5)
+                {
+                    red_segments = 0;
+                    total_val = 0;
+                }
+            }
+            else if (difficultyManager.GetDifficulty() == "hard")
+            {
+                if (i >= 4)
+                {
+                    red_segments = 0;
+                    total_val = 0;
                 }
             }
 
-            if (blue_segments > 0)
+            if (red_segments > 0 || red_segments == num_patterns[i])
             {
-                for (int j = 0; j < blue_segments; j++)
+                int yellow_segments = red_segments / 10;
+                red_segments = red_segments - (yellow_segments * 10);
+                int blue_segments = red_segments / 5;
+                red_segments = red_segments - (blue_segments * 5);
+                int totalSegments = yellow_segments + blue_segments + red_segments;
+
+                Debug.Log("total segments for " + num_patterns[i] + ": " + totalSegments);
+
+                wireSegments = ChangeWireValue(totalSegments, origWire, newWire);
+
+                int currentSegment = 0;
+
+                if (yellow_segments > 0)
                 {
-                    wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.blue;
-                    currentSegment++;
+                    for (int j = 0; j < yellow_segments; j++)
+                    {
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.yellow;
+                        currentSegment++;
+                    }
                 }
-            }
 
-            if (red_segments > 0)
-            {
-                for (int j = 0; j < red_segments; j++)
+                if (blue_segments > 0)
                 {
-                    wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.red;
-                    currentSegment++;
+                    for (int j = 0; j < blue_segments; j++)
+                    {
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.blue;
+                        currentSegment++;
+                    }
                 }
-            }
 
-            for (int j = 0; j < newWire.transform.childCount; j++)
-            {
-                newWire.transform.GetChild(j).GetComponent<BoxCollider2D>().enabled = false;
-                Destroy(newWire.transform.GetChild(j).GetComponent<Wire>());
-            }
+                if (red_segments > 0)
+                {
+                    for (int j = 0; j < red_segments; j++)
+                    {
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.red;
+                        currentSegment++;
+                    }
+                }
 
-            newWire.AddComponent<BoxCollider2D>();
-            newWire.AddComponent<SpriteRenderer>();
-            newWire.AddComponent<Wire>();
-            newWire.AddComponent<Rigidbody2D>();
+                for (int j = 0; j < newWire.transform.childCount; j++)
+                {
+                    newWire.transform.GetChild(j).GetComponent<BoxCollider2D>().enabled = false;
+                    Destroy(newWire.transform.GetChild(j).GetComponent<Wire>());
+                }
 
-            newWire.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            newWire.GetComponent<Wire>().SetWireNumber(total_val);
-            newWire.GetComponent<Wire>().SetComplete();
+                newWire.AddComponent<BoxCollider2D>();
+                newWire.AddComponent<SpriteRenderer>();
+                newWire.AddComponent<Wire>();
+                newWire.AddComponent<Rigidbody2D>();
+
+                newWire.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                newWire.GetComponent<Wire>().SetWireNumber(total_val);
+                newWire.GetComponent<Wire>().SetComplete();
+
+                newWire.transform.SetParent(null);
+                newWire.GetComponent<BoxCollider2D>().size = size;
+                newWire.GetComponent<BoxCollider2D>().isTrigger = true;
+                newWire.transform.position = wireSlots[i].transform.position;
+                newWire.transform.SetParent(wireSlots[i].transform.parent);
+
                 
-            newWire.transform.SetParent(null);
-            newWire.GetComponent<BoxCollider2D>().size = size;
-            newWire.GetComponent<BoxCollider2D>().isTrigger = true;
-            newWire.transform.position = wireSlots[i].transform.position;
-            newWire.transform.SetParent(wireSlots[i].transform.parent);
+            }
+            else
+            {
+                GameObject extraVFX = new GameObject();
 
+                extraVFX = Instantiate(sparks_vfx.gameObject);
+
+                extraVFX.transform.position = wireSlots[i].transform.position;
+
+                extraVFX.GetComponent<VFXManager>().SetSlotNumber(i);
+
+                foreach(Transform child in extraVFX.transform)
+                {
+                    child.GetComponent<VfxSegment>().ToggleVFXAnimOff();
+                }
+
+                vfxList.Add(extraVFX.transform);
+
+                wireToEdit.Add(i);
+            }
         }
-
-        sparks_vfx.position = wireSlots[valueToChange].transform.position;
-
-        wireToEdit = valueToChange;
 
         generator.SetActive(isOpen);
 
         robot_part.SetActive(!isOpen);
+
+        sparks_vfx.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -366,6 +411,7 @@ public class LoWireMinigame : MonoBehaviour
 
     private IEnumerator StartWireCutting()
     {
+        Transform currentSegment = pliers.GetComponent<WirePliers>().GetSegment().transform.parent;
         yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(new Vector3(0,0,0), 1));
 
         pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
@@ -376,7 +422,7 @@ public class LoWireMinigame : MonoBehaviour
 
         int sidecount = 0;
 
-        foreach(Transform child in sparks_vfx)
+        foreach(Transform child in currentSegment)
         {
             if (!child.GetComponent<BoxCollider2D>().enabled)
             {
@@ -386,7 +432,7 @@ public class LoWireMinigame : MonoBehaviour
 
         if (sidecount >= 2)
         {
-            Transform wireObj = wireSlots[wireToEdit].transform.parent.GetComponentInChildren<Wire>().transform;
+            Transform wireObj = wireSlots[currentSegment.GetComponent<VFXManager>().GetSlotNumber()].transform.parent.GetComponentInChildren<Wire>().transform;
             wireObj.transform.position = new Vector3(wireObj.position.x, wireObj.position.y, -0.1f);
             wireObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
@@ -408,23 +454,29 @@ public class LoWireMinigame : MonoBehaviour
 
     public void CheckWire()
     {
-        wireSlots[wireToEdit].GetWireInSlot().SetMovableStatus();
-        if (wireSlots[wireToEdit].GetWireSlotVal() == num_patterns[wireToEdit])
+        int j = 0;
+        foreach(int i in wireToEdit)
         {
-            Debug.Log("Value is Correct!");
-
-            OverallUI.enabled = false;
-
-            ResultUI.enabled = true;
-        }
-        else
-        {
-            //Debug.Log(sparks_vfx.name);
-            foreach(Transform child in sparks_vfx)
+            wireSlots[i].GetWireInSlot().SetMovableStatus();
+            if (wireSlots[i].GetWireSlotVal() == num_patterns[i])
             {
-                child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
+                Debug.Log("Value is Correct!");
+
+                OverallUI.enabled = false;
+
+                ResultUI.enabled = true;
             }
-            Debug.Log("Value is Wrong!");
+            else
+            {
+                //Debug.Log(sparks_vfx.name);
+                foreach (Transform child in vfxList[j])
+                {
+                    child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
+                }
+                Debug.Log("Value is Wrong!");
+
+                j++;
+            }
         }
     }
 }
