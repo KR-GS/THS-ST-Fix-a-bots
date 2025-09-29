@@ -18778,6 +18778,7 @@ MonoBehaviour:
   robot_part: {fileID: 217103536}
   wireGeneratedPlace: {fileID: 128016261}
   patternManager: {fileID: 1048178151}
+  difficultyManager: {fileID: 1485289376}
   ValueUI: {fileID: 123622118}
   origWire: {fileID: 1340522263}
   wireSlots:
@@ -24122,6 +24123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd616395921201745aa2f257df31f9b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorAssigned: 0
   btnColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!4 &1393433277
 Transform:
@@ -24330,6 +24332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd616395921201745aa2f257df31f9b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorAssigned: 2
   btnColor: {r: 1, g: 1, b: 0, a: 1}
 --- !u!4 &1431638366
 Transform:
@@ -24766,7 +24769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 207f4a864fa59694298426d6a6bed3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
+  level: 3
   gameType: 1
 --- !u!4 &1485289377
 Transform:
@@ -26658,6 +26661,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1959441221}
+  - component: {fileID: 1959441222}
   m_Layer: 0
   m_Name: VFX
   m_TagString: Untagged
@@ -26682,6 +26686,22 @@ Transform:
   - {fileID: 961701914}
   m_Father: {fileID: 217103537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1959441222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959441220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b6362cca9d14e4ea3544f1cff0b0e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  segments:
+  - {fileID: 2116323541}
+  - {fileID: 961701916}
+  assignedSlot: 0
 --- !u!1 &2017618774
 GameObject:
   m_ObjectHideFlags: 0
@@ -26953,6 +26973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd616395921201745aa2f257df31f9b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colorAssigned: 1
   btnColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!4 &2076962596
 Transform:
