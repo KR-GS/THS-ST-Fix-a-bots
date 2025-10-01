@@ -87,6 +87,14 @@ public class LoWireMinigame : MonoBehaviour
 
             if (difficultyManager.GetDifficulty() == "easy")
             {
+                if (i == 5)
+                {
+                    red_segments = 0;
+                    total_val = 0;
+                }
+            }
+            else if (difficultyManager.GetDifficulty() == "medium" || difficultyManager.GetDifficulty() == "hard")
+            {
                 if (valueToChange == i)
                 {
                     Debug.Log("Changing Value of Index " + valueToChange);
@@ -96,24 +104,8 @@ public class LoWireMinigame : MonoBehaviour
                     Debug.Log("New Value: " + red_segments);
                 }
             }
-            else if (difficultyManager.GetDifficulty() == "medium")
-            {
-                if(i == 5)
-                {
-                    red_segments = 0;
-                    total_val = 0;
-                }
-            }
-            else if (difficultyManager.GetDifficulty() == "hard")
-            {
-                if (i >= 4)
-                {
-                    red_segments = 0;
-                    total_val = 0;
-                }
-            }
 
-            if (red_segments > 0 || red_segments == num_patterns[i])
+            if (red_segments > 0)
             {
                 int yellow_segments = red_segments / 10;
                 red_segments = red_segments - (yellow_segments * 10);
@@ -175,13 +167,31 @@ public class LoWireMinigame : MonoBehaviour
                 newWire.transform.position = wireSlots[i].transform.position;
                 newWire.transform.SetParent(wireSlots[i].transform.parent);
 
-                
+                if (total_val != num_patterns[i])
+                {
+                    GameObject extraVFX = new GameObject();
+
+                    extraVFX = Instantiate(sparks_vfx.gameObject, robot_part.transform);
+
+                    extraVFX.transform.position = wireSlots[i].transform.position;
+
+                    extraVFX.GetComponent<VFXManager>().SetSlotNumber(i);
+
+                    foreach (Transform child in extraVFX.transform)
+                    {
+                        child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
+                    }
+
+                    vfxList.Add(extraVFX.transform);
+
+                    wireToEdit.Add(i);
+                }
             }
             else
             {
                 GameObject extraVFX = new GameObject();
 
-                extraVFX = Instantiate(sparks_vfx.gameObject);
+                extraVFX = Instantiate(sparks_vfx.gameObject, robot_part.transform);
 
                 extraVFX.transform.position = wireSlots[i].transform.position;
 
@@ -412,7 +422,8 @@ public class LoWireMinigame : MonoBehaviour
     private IEnumerator StartWireCutting()
     {
         Transform currentSegment = pliers.GetComponent<WirePliers>().GetSegment().transform.parent;
-        yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(new Vector3(0,0,0), 1));
+        yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
+
 
         pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
 
@@ -445,7 +456,7 @@ public class LoWireMinigame : MonoBehaviour
             yield return new WaitForSeconds(-0.1f);
         }
 
-        StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(origPos_Pliers, 5));
+        StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5));
 
         //pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
 
@@ -457,25 +468,28 @@ public class LoWireMinigame : MonoBehaviour
         int j = 0;
         foreach(int i in wireToEdit)
         {
-            wireSlots[i].GetWireInSlot().SetMovableStatus();
-            if (wireSlots[i].GetWireSlotVal() == num_patterns[i])
+            if (wireSlots[i].CheckSlotStatus())
             {
-                Debug.Log("Value is Correct!");
-
-                OverallUI.enabled = false;
-
-                ResultUI.enabled = true;
-            }
-            else
-            {
-                //Debug.Log(sparks_vfx.name);
-                foreach (Transform child in vfxList[j])
+                wireSlots[i].GetWireInSlot().SetMovableStatus();
+                if (wireSlots[i].GetWireSlotVal() == num_patterns[i])
                 {
-                    child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
-                }
-                Debug.Log("Value is Wrong!");
+                    Debug.Log("Value is Correct!");
 
-                j++;
+                    OverallUI.enabled = false;
+
+                    ResultUI.enabled = true;
+                }
+                else
+                {
+                    //Debug.Log(sparks_vfx.name);
+                    foreach (Transform child in vfxList[j])
+                    {
+                        child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
+                    }
+                    Debug.Log("Value is Wrong!");
+
+                    j++;
+                }
             }
         }
     }

@@ -8,7 +8,7 @@ public class WireSlot : MonoBehaviour
     private int slotValue;
 
     [SerializeField]
-    private bool isMissing;
+    private bool isOccupied;
 
     [SerializeField]
     private TextMeshProUGUI wireVal_Text;
@@ -23,21 +23,21 @@ public class WireSlot : MonoBehaviour
     {
         wireVal_Text.text = slotValue.ToString();
 
-        isMissing = true;
+        isOccupied = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Wire wire))
         {
-            if (isMissing)
+            if (!isOccupied)
             {
                 wire.SetNewWirePos(transform);
                 slotValue = wire.GetWireNumber();
                 wireToAdd = wire.gameObject;
                 SetWireText();
                 wire.ToggleOnSlot(true);
-                isMissing = false;
+                isOccupied = true;
             }
         }
     }
@@ -46,13 +46,13 @@ public class WireSlot : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Wire wire))
         {
-            if (!isMissing && wire.gameObject == wireToAdd)
+            if (isOccupied && wire.gameObject == wireToAdd)
             {
                 wire.SetNewWirePos(null);
                 wireToAdd = null;
                 slotValue = 0;
                 SetWireText();
-                isMissing = true;
+                isOccupied = false;
                 wire.ToggleOnSlot(false);
             }
         }
@@ -70,12 +70,12 @@ public class WireSlot : MonoBehaviour
     
     public bool CheckSlotStatus()
     {
-        return isMissing;
+        return isOccupied;
     }
 
     public void ToggleSlotStatus()
     {
-        isMissing = false;
+        isOccupied = true;
     }
 
     public Wire GetWireInSlot()

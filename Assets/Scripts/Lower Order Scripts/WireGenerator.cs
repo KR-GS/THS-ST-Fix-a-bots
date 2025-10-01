@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
@@ -19,6 +20,9 @@ public class WireGenerator : MonoBehaviour
 
     [SerializeField]
     private GameObject select_icon;
+
+    [SerializeField]
+    private TextMeshProUGUI slider_Number;
 
     private List<GameObject> createdWireChild = new List<GameObject>();
 
@@ -44,6 +48,8 @@ public class WireGenerator : MonoBehaviour
         //createdWireChild[0].name = "0";
 
         select_icon.SetActive(false);
+
+        slider_Number.text = "1";
     }
 
     // Update is called once per frame
@@ -112,6 +118,8 @@ public class WireGenerator : MonoBehaviour
         }
         
         createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(value, originalWire, wireParent));
+
+        slider_Number.text = ((int)value).ToString();
     }
 
     public void CheckColorNumber()

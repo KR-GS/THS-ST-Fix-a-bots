@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -16,6 +17,13 @@ public class WirePliers : MonoBehaviour
     private bool onPart = false;
 
     private int slotNo = -1;
+
+    private Vector3 origPos;
+
+    void Awake()
+    {
+        origPos = transform.position;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,11 +66,12 @@ public class WirePliers : MonoBehaviour
         //StartCoroutine(StopVFXInOrder());
     }
 
-    public IEnumerator TriggerPlierMovement(Vector3 objPos, float speed_Inc)
+    public IEnumerator TriggerPlierMovement(bool cuttingPart, float speed_Inc)
     {
         Quaternion target_rot = Quaternion.Euler(0,0,0);
         Vector3 target = new Vector3(0, 0, 0);
-        if (objPos == target)
+
+        if (cuttingPart)
         {
             target = partToCut.transform.position;
 
@@ -73,15 +82,22 @@ public class WirePliers : MonoBehaviour
         }
         else
         {
-            target = objPos;
+            target = origPos;
         }
 
-        while(Vector3.Distance(transform.position, target) > 0.01f || Quaternion.Angle(transform.rotation, target_rot) > 0.01f)
+        while (Vector3.Distance(transform.position, target) > 0.01f)
         {
-            if(Vector3.Distance(transform.position, target) > 0.01f)
+            if (Vector3.Distance(transform.position, target) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, target, (speed * speed_Inc) * Time.deltaTime);
             }
+
+            yield return null;
+        }
+
+        while(Quaternion.Angle(transform.rotation, target_rot) > 0.01f)
+        {
+            
 
             if (Quaternion.Angle(transform.rotation, target_rot) > 0.01f)
             {
@@ -92,5 +108,10 @@ public class WirePliers : MonoBehaviour
         }
 
         Debug.Log("Movement Done!");
+    }
+
+    public void ChangePosRot()
+    {
+
     }
 }
