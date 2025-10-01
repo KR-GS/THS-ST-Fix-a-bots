@@ -202,6 +202,8 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     }
 
     // IF YOU WANT TO ADD MORE STAGES, DO IT HERE, JUST COPY THE FORMAT
+    // TODO: Refactor this to StaticData
+    // IE maxNum = StaticData.maxNumButton[numStage] stageSpeed = StaticData.stageSpeed[numStage] in getData
     private (int, float, float, int, bool, bool, bool, bool, int, int, int)[] GetStageConfigs()
     //num of buttons, speed, leniency, prepressed, is the formula seen, is coef locked, is const locked, isrefseen, coef, constant, tutorial(NOT USED),
     {
@@ -291,6 +293,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         Debug.Log("Speed confirmed: " + confirmedSpeed);
     }
 
+    // TODO: Add stars
     void ShowStageInfo(int stageNum, (int, float, float, int, bool, bool, bool, bool, int, int, int) config)
     {
         selectedStageNum = stageNum;
@@ -343,7 +346,8 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
         if (stageNum <= 15)
         {
-            SceneManager.LoadScene("HO_BotFightScene");
+            SceneManager.LoadScene("HO_BotTennisScene");
+           // SceneManager.LoadScene("HO_BotFightScene");
         }
         else if (stageNum <= 31)
         {
