@@ -487,15 +487,24 @@ public class LoToolMinigame : MonoBehaviour
 
     private void CheckIfEditable()
     {
-        if (fastenerValues[currentInt] > 0 && currentInt >= patternLength - slotToFix)
+        if (currentInt >= patternLength - slotToFix)
         {
-            SelectTool(fastenerValues[currentInt] - 1, currentInt);
-            addTenBtn.gameObject.SetActive(true);
-            addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            Camera.main.GetComponent<ToolCamera>().ToggleToolCanvas(true);
+            if (fastenerValues[currentInt] > 0)
+            {
+                SelectTool(fastenerValues[currentInt] - 1, currentInt);
+                addTenBtn.gameObject.SetActive(true);
+
+                addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            }
+            else
+            {
+                addTenBtn.gameObject.SetActive(false);
+            }
         }
         else
         {
-            addTenBtn.gameObject.SetActive(false);
+            Camera.main.GetComponent<ToolCamera>().ToggleToolCanvas(false);
         }
     }
 
@@ -599,32 +608,35 @@ public class LoToolMinigame : MonoBehaviour
         }
         else
         {
-            textCounter.gameObject.SetActive(false);
             fastenerObj[currentInt].SetActive(true);
+            textCounter.gameObject.SetActive(false);
         }
     }
 
     public void SelectFastener(Button fastenerBtn)
     {
-        Transform holder = null;
-        Debug.Log(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType());
-        fastenerValues[currentInt] = fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType();
-
-        holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
-
-        if (holder.childCount > 0)
+        if (currentInt >= patternLength - slotToFix)
         {
-            Destroy(holder.transform.GetChild(0).gameObject);
-        }
+            Transform holder = null;
+            Debug.Log(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType());
+            fastenerValues[currentInt] = fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType();
 
-        Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
+            holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
 
-        SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType()-1, currentInt);
+            if (holder.childCount > 0)
+            {
+                Destroy(holder.transform.GetChild(0).gameObject);
+            }
 
-        numberToDisplay[currentInt] = 0;
-        foreach(Transform child in fastenerObj[currentInt].transform) 
-        {
-            Destroy(child.gameObject);    
+            Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
+
+            SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType() - 1, currentInt);
+
+            numberToDisplay[currentInt] = 0;
+            foreach (Transform child in fastenerObj[currentInt].transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
@@ -683,6 +695,7 @@ public class LoToolMinigame : MonoBehaviour
             Destroy(currentTool);
         }
 
+        /*
         if (currentInt < patternLength - slotToFix)
         {
             numberToDisplay[currentInt] = originalHitValues[currentInt];
@@ -704,6 +717,9 @@ public class LoToolMinigame : MonoBehaviour
             StartCoroutine(ResetHitCoroutine());
         }
         else
+        */
+
+        if (currentInt >= patternLength - slotToFix)
         {
             foreach (Transform child in fastenerObj[currentInt].transform)
             {
@@ -725,6 +741,12 @@ public class LoToolMinigame : MonoBehaviour
             {
                 Destroy(holder.transform.GetChild(0).gameObject);
             }
+
+            numberToDisplay[currentInt] = 0;
+
+            addTenBtn.gameObject.SetActive(false);
+
+            StartCoroutine(ResetHitCoroutine());
         }
 
         UpdateGapCounters();
@@ -743,23 +765,29 @@ public class LoToolMinigame : MonoBehaviour
 
         Debug.Log(fastenerObj[currentInt].transform.position);
 
-        if (numberToDisplay[currentInt] < max_HitCount)
+        if (numberToDisplay[currentInt] <= max_HitCount)
         {
             textCounter.gameObject.SetActive(false);
             fastenerObj[currentInt].SetActive(true);
             hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt]-1].GetHitIcon());
         }
-        else
+        else if(numberToDisplay[currentInt] > max_HitCount)
         {
             SetZoomedInTextCounter(currentInt);
             fastenerObj[currentInt].SetActive(false);
             textCounter.gameObject.SetActive(true);
         }
+        else
+        {
+            fastenerObj[currentInt].SetActive(false);
+            textCounter.gameObject.SetActive(false);
+
+        }
     }
 
     private void SetZoomedInTextCounter(int value)
     {
-        if (fastenerValues[value] >0)
+        if (fastenerValues[value] > 0)
         {
             textCounter.GetComponentInChildren<TextMeshProUGUI>().text = numberToDisplay[value].ToString();
             textCounter.GetComponentInChildren<Image>().sprite = fastenerList[fastenerValues[value] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
@@ -897,6 +925,7 @@ public class LoToolMinigame : MonoBehaviour
         Camera.main.GetComponent<ToolCamera>().ClearLoadingIcons();
     }
 
+    //Changes to the next fastener
     private IEnumerator TriggerFastenerChange(Button button)
     {
         Vector3 newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
@@ -972,7 +1001,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         bool useCountManager = false;
         numberToDisplay[currentInt] = numberToDisplay[currentInt]+10;
-        if (numberToDisplay[currentInt] < max_HitCount)
+        if (numberToDisplay[currentInt] <= max_HitCount)
         {
             fastenerObj[currentInt].SetActive(true);
             textCounter.gameObject.SetActive(false);
