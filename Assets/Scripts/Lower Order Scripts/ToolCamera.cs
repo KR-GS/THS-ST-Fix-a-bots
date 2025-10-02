@@ -145,11 +145,6 @@ public class ToolCamera : MonoBehaviour
         checkingCanvas.enabled = !checkingCanvas.enabled;
     }
 
-    public void ToggleToolCanvas(bool value)
-    {
-        toolCanvas.enabled = value;
-    }
-
     public void CreateLoadingIcons(Vector3 spawn_pos)
     {
         loading_icons.Add(Instantiate(loading_Prefab, checkingCanvas.transform));

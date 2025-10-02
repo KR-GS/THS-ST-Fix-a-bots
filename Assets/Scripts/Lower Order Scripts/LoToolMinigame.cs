@@ -489,7 +489,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (currentInt >= patternLength - slotToFix)
         {
-            Camera.main.GetComponent<ToolCamera>().ToggleToolCanvas(true);
+            fastenerList[0].transform.parent.gameObject.SetActive(true);
             if (fastenerValues[currentInt] > 0)
             {
                 SelectTool(fastenerValues[currentInt] - 1, currentInt);
@@ -504,7 +504,7 @@ public class LoToolMinigame : MonoBehaviour
         }
         else
         {
-            Camera.main.GetComponent<ToolCamera>().ToggleToolCanvas(false);
+            fastenerList[0].transform.parent.gameObject.SetActive(false);
         }
     }
 
@@ -562,19 +562,18 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (currentInt>0)
         {
-            fastenerObj[currentInt].SetActive(false);
-            addTenBtn.gameObject.SetActive(false);
+            int prevInt = 1;
+                
             currentInt--;
-            SetZoomedInTextCounter(currentInt);
 
-            StartCoroutine(TriggerFastenerChange(button));
+            addTenBtn.gameObject.SetActive(false);
+
+            StartCoroutine(TriggerFastenerChange(button, prevInt));
 
             if (currentTool != null)
             {
                 Destroy(currentTool);
             }
-
-            CheckCounterToDisplay();
         }
     }
 
@@ -582,15 +581,17 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (currentInt < numberToDisplay.Length-1)
         {
-            fastenerObj[currentInt].SetActive(false);
+            int prevInt = -1;
+
             currentInt++;
+
             addTenBtn.gameObject.SetActive(false);
 
-            SetZoomedInTextCounter(currentInt);
+            //CheckCounterToDisplay();
 
-            StartCoroutine(TriggerFastenerChange(button));
+            //SetZoomedInTextCounter(currentInt);
 
-            CheckCounterToDisplay();
+            StartCoroutine(TriggerFastenerChange(button, prevInt));
 
             if (currentTool != null)
             {
@@ -601,15 +602,18 @@ public class LoToolMinigame : MonoBehaviour
 
     private void CheckCounterToDisplay()
     {
-        if (numberToDisplay[currentInt] > max_HitCount)
+        if (numberToDisplay[currentInt] <= max_HitCount)
         {
-            fastenerObj[currentInt].SetActive(false);
-            textCounter.gameObject.SetActive(true);
+            Debug.Log("Displaying hit counts in objects of " + currentInt);
+            fastenerObj[currentInt].SetActive(true);
+            textCounter.gameObject.SetActive(false);
         }
         else
         {
-            fastenerObj[currentInt].SetActive(true);
-            textCounter.gameObject.SetActive(false);
+            Debug.Log("Displaying hit counts in text " + currentInt);
+            fastenerObj[currentInt].SetActive(false);
+            textCounter.gameObject.SetActive(true);
+            SetZoomedInTextCounter(currentInt);
         }
     }
 
@@ -926,18 +930,33 @@ public class LoToolMinigame : MonoBehaviour
     }
 
     //Changes to the next fastener
-    private IEnumerator TriggerFastenerChange(Button button)
+    private IEnumerator TriggerFastenerChange(Button button, int prevInt)
     {
         Vector3 newCameraPos = new Vector3(fastenerObj[currentInt].transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
         button.interactable = false;
+
+        fastenerList[0].transform.parent.gameObject.SetActive(false);
+        if (numberToDisplay[currentInt + prevInt] <= max_HitCount)
+        {
+            fastenerObj[currentInt + prevInt].SetActive(false);
+        }
+        else
+        {
+            textCounter.gameObject.SetActive(false);
+        }
+
         yield return null;
-        StartCoroutine(Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed));
-        yield return null;
-        fastenerObj[currentInt].SetActive(true);
+
+        yield return StartCoroutine(Camera.main.GetComponent<ToolCamera>().SubmitCameraMovement(newCameraPos, speed));
+
+        //fastenerObj[currentInt].SetActive(true);
+        CheckCounterToDisplay();
+        CheckIfEditable();
+
         yield return new WaitForSeconds(0.5f);
         button.interactable = true;
 
-        CheckIfEditable();
+        
     }
 
     //toggles the view of the overview counter

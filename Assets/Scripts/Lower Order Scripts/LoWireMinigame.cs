@@ -87,7 +87,7 @@ public class LoWireMinigame : MonoBehaviour
 
             if (difficultyManager.GetDifficulty() == "easy")
             {
-                if (i == 5)
+                if (i >= 4)
                 {
                     red_segments = 0;
                     total_val = 0;
