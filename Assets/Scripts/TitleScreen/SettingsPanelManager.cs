@@ -288,6 +288,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 
 
         data.stageSpeed = hoSpeed;
+        StaticData.cycleInterval = hoSpeed;
         data.language = selectedLanguage;
     }
 

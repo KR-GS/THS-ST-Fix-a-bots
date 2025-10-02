@@ -104,15 +104,15 @@ public class SequenceGameManager : MonoBehaviour
 
     void GetData()
     {
-        maxNumber = StaticData.maxNumber;
+        maxNumber = StaticData.maxNumber[stageNum + 1];
         cycleInterval = StaticData.cycleInterval;
         cycleLeniency = StaticData.cycleLeniency;
-        prePressedCount = StaticData.prePressedCount;
-        isFormulaSeen = StaticData.isFormulaSeen;
-        isRandomSequence = StaticData.isRandomSequence;
+        prePressedCount = StaticData.prePressedCount[stageNum + 1];
+        isFormulaSeen = StaticData.isFormulaSeen[stageNum + 1];
+        isRandomSequence = StaticData.isRandomSequence[stageNum + 1];
         stageNum = StaticData.stageNum;
-        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient);
-        formulaInputPanel.SetLockConstant(StaticData.lockConstant);
+        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum + 1]);
+        formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum + 1]);
         expectedSwipeSequence = StaticData.stageSwipes[stageNum + 1];
         
     }
@@ -304,7 +304,7 @@ public class SequenceGameManager : MonoBehaviour
         }
         else
         {
-            currentSequence = new Sequence(maxNumber, StaticData.coefficient, StaticData.constant);
+            currentSequence = new Sequence(maxNumber, StaticData.coefficient[stageNum + 1], StaticData.constant[stageNum + 1]);
         }
         formulaText.text = $"Rule: {currentSequence.FormulaString}";
 

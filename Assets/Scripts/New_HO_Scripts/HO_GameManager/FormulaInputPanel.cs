@@ -461,7 +461,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
             Debug.Log("Stage Formula Attempts = " + stageStringAttempt);
 
-            if (StaticData.isRandomSequence)
+            if (StaticData.isRandomSequence[StaticData.stageNum + 1])
             {
                 SceneManager.LoadScene("Ho_BotFight");
             }

@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using Unity.Android.Gradle.Manifest;
 
 public class StageSelectManager : MonoBehaviour, IDataPersistence
 {
@@ -91,8 +92,8 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
             stageButtons[i].onClick.AddListener(() =>
             {
-                var configs = GetStageConfigs(); // Use the latest confirmed speed
-                ShowStageInfo(stageNum, configs[stageNum]);
+                 // Use the latest confirmed speed
+                ShowStageInfo(stageNum);
             });
         }
 
@@ -201,103 +202,10 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    // IF YOU WANT TO ADD MORE STAGES, DO IT HERE, JUST COPY THE FORMAT
-    // TODO: Refactor this to StaticData
-    // IE maxNum = StaticData.maxNumButton[numStage] stageSpeed = StaticData.stageSpeed[numStage] in getData
-    private (int, float, float, int, bool, bool, bool, bool, int, int, int)[] GetStageConfigs()
-    //num of buttons, speed, leniency, prepressed, is the formula seen, is coef locked, is const locked, isrefseen, coef, constant, tutorial(NOT USED),
-    {
-        return new (int, float, float, int, bool, bool, bool, bool, int, int, int)[]
-        {
-            // SCENARIO 1
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3, 0),
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1, 1),
-            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1, 1),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
-
-            // SCENARIO 2
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3, 0),
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1, 1),
-            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1, 1),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
-
-            // SCENARIO 3
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, true,  true,  true, true, 2, 3, 0),
-            (15, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, true, true, 3, 1, 1),
-            (18, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 0, false, false, true, true, 4, 1, 1),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 3, false, true, false, false, 3, -1, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, true, 4, -3, 2),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, true, false, false, 3, 2, 0),
-            (20, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, true, true, 3, -2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 2, false, false, false, false, 3, -1, 3),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, true, 4, 2, 0),
-            (25, confirmedSpeed, confirmedSpeed - confirmedSpeed / 4, 1, false, false, false, false, 5, -3, 3)
-        };
-    }
-
-    void IncreaseSpeed()
-    {
-        if (currentSpeedIndex < speedLabels.Length - 1)
-        {
-            currentSpeedIndex++;
-            UpdateSpeedDisplay();
-        }
-    }
-
-    void DecreaseSpeed()
-    {
-        if (currentSpeedIndex > 0)
-        {
-            currentSpeedIndex--;
-            UpdateSpeedDisplay();
-        }
-    }
-
-    void UpdateSpeedDisplay()
-    {
-        speedText.text = speedLabels[currentSpeedIndex];
-    }
-
-    void ConfirmSpeed()
-    {
-        confirmedSpeed = speedValues[currentSpeedIndex];
-        speedPanel.SetActive(false);
-        DataPersistenceManager.Instance.SaveGame();
-        Debug.Log("Speed confirmed: " + confirmedSpeed);
-    }
-
     // TODO: Add stars
-    void ShowStageInfo(int stageNum, (int, float, float, int, bool, bool, bool, bool, int, int, int) config)
+    void ShowStageInfo(int stageNum)
     {
         selectedStageNum = stageNum;
-        selectedConfig = config;
 
         if (stageNum == StaticData.stageLives.Count)
         {
@@ -317,44 +225,34 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
     void ConfirmStageSelection()
     {
-        var cfg = selectedConfig;
-
         stageInfoPanel.SetActive(false);
         speedPanel.SetActive(false);
 
-        LoadStage(selectedStageNum, cfg.max, cfg.cycInt, cfg.cycLen,
-            cfg.prePressed, cfg.formSeen, cfg.lockCoef, cfg.lockConst,
-            cfg.refSeen, cfg.coef, cfg.constant, cfg.tutorial, false);
+        LoadStage(selectedStageNum);
     }
 
-    public void LoadStage(int stageNum, int max, float cycInt, float cycLen, int prePressed, bool formSeen, bool lockCoef,
-        bool lockConst, bool isRefSeen, int coef, int constant, int tutorial, bool randSeq)
+    public void LoadStage(int stageNum)
     {
+        DataPersistenceManager.Instance.LoadGame();
         StaticData.stageNum = stageNum;
-        StaticData.maxNumber = max;
-        StaticData.cycleInterval = cycInt;
-        StaticData.cycleLeniency = cycLen;
-        StaticData.prePressedCount = prePressed;
-        StaticData.isFormulaSeen = formSeen;
-        StaticData.lockCoefficient = lockConst;
-        StaticData.lockConstant = lockCoef;
-        StaticData.coefficient = coef;
-        StaticData.refSeen = isRefSeen;
-        StaticData.constant = constant;
-        StaticData.tutorialType = tutorial;
-        StaticData.isRandomSequence = randSeq;
+        StaticData.cycleInterval = confirmedSpeed;
+        StaticData.cycleLeniency = confirmedSpeed - confirmedSpeed / 4;
 
         if (stageNum <= 15)
         {
-            SceneManager.LoadScene("HO_BotTennisScene");
-           // SceneManager.LoadScene("HO_BotFightScene");
+            // SceneManager.LoadScene("HO_BotTennisScene");
+            SceneManager.LoadScene("HO_BotFightScene");
         }
         else if (stageNum <= 31)
         {
             SceneManager.LoadScene("HO_BotTennisScene");
         }
-        
-        
+        /*
+        else if (stageNum <= 45)
+        {
+            SceneManager.LoadScene("HO_BotFightScene");
+        }
+        */
     }
 
     public void LoadData(GameData data)

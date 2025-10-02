@@ -41,14 +41,14 @@ public class BlockManager : MonoBehaviour
         usedPositions.Clear();
 
         //spawns correct blocks
-        CreateRandomBlock(BlockType.Coefficient, StaticData.coefficient, "", coefficientColor);
-        if (StaticData.constant < 0)
+        CreateRandomBlock(BlockType.Coefficient, StaticData.coefficient[StaticData.stageNum + 1], "", coefficientColor);
+        if (StaticData.constant[StaticData.stageNum + 1] < 0)
         {
-            CreateRandomBlock(BlockType.Constant, -StaticData.constant, "", constantColor);
+            CreateRandomBlock(BlockType.Constant, -StaticData.constant[StaticData.stageNum + 1], "", constantColor);
         }
         else
         {
-            CreateRandomBlock(BlockType.Constant, StaticData.constant, "", constantColor);
+            CreateRandomBlock(BlockType.Constant, StaticData.constant[StaticData.stageNum + 1], "", constantColor);
         }
         
         //spawns signs

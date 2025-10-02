@@ -15,7 +15,7 @@ public class FormulaInputTutorial : MonoBehaviour
     public void Start()
     {
         tutorialEndButton.onClick.AddListener(() => tutorialPanel.SetActive(false));
-        ShowTutorial(StaticData.tutorialType);
+        ShowTutorial(StaticData.tutorialType[StaticData.stageNum + 1]);
     }
 
     public void ShowTutorial(int tutorialNum)

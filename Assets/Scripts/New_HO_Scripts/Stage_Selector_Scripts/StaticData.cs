@@ -17,10 +17,18 @@ public class StaticData
     public static List<string> formulaAttempts;
     public static int numStageDone = 0;
 
+    /*
     public static int maxNumber, coefficient, constant, prePressedCount, stageNum, tutorialType;
     public static float cycleInterval;
     public static float cycleLeniency;
     public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
+    */
+
+    public static int stageNum;
+
+    public static List<int> maxNumber, coefficient, constant, prePressedCount, tutorialType;
+    public static float cycleInterval, cycleLeniency;
+    public static List<bool> isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
 
     //USED FOR RANDOM BLOCK SPAWNING
 
@@ -101,6 +109,106 @@ public class StaticData
         stageStars = new List<int>(new int[STAGE_COUNT]);
         stageTime = new List<float>(new float[STAGE_COUNT]);
         formulaAttempts = new List<string>(new string[STAGE_COUNT]);
+
+        maxNumber = new List<int>()
+        {
+            // SCENARIO 1
+            15, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25,
+            // SCENARIO 2
+            15, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25,
+            // SCENARIO 3
+            15, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25
+        };
+
+        coefficient = new List<int>()
+        {
+            // SCENARIO 1
+            2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5,
+            // SCENARIO 2
+            2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5,
+            // SCENARIO 3
+            2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5
+        };
+
+        constant = new List<int>()
+        {
+            // SCENARIO 1
+            3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3,
+            // SCENARIO 2
+            3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3,
+            // SCENARIO 3
+            3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3
+        };
+
+        prePressedCount = new List<int>()
+        {
+            // SCENARIO 1
+            3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1,
+            // SCENARIO 2
+            3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1,
+            // SCENARIO 3
+            3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1
+        };
+
+        tutorialType = new List<int>()
+        {
+            // SCENARIO 1
+            0, 1, 1, 2, 2, 0, 0, 3, 0, 3, 0, 0, 3, 0, 3,
+            // SCENARIO 2
+            0, 1, 1, 2, 2, 0, 0, 3, 0, 3, 0, 0, 3, 0, 3,
+            // SCENARIO 3
+            0, 1, 1, 2, 2, 0, 0, 3, 0, 3, 0, 0, 3, 0, 3
+        };
+
+        isFormulaSeen = new List<bool>()
+        {
+            // SCENARIO 1
+            true, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            // SCENARIO 2
+            true, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            // SCENARIO 3
+            true, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+        };
+
+        lockCoefficient = new List<bool>()
+        {
+            // SCENARIO 1
+            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
+            // SCENARIO 2
+            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
+            // SCENARIO 3
+            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false
+        };
+
+        lockConstant = new List<bool>()
+        {
+            // SCENARIO 1
+            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false,
+            // SCENARIO 2
+            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false,
+            // SCENARIO 3
+            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false
+        };
+
+        isRandomSequence = new List<bool>()
+        {
+            // SCENARIO 1
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            // SCENARIO 2
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            // SCENARIO 3
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+        };
+
+        refSeen = new List<bool>()
+        {
+            // SCENARIO 1
+            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false,
+            // SCENARIO 2
+            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false,
+            // SCENARIO 3
+            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false
+        };
 
         stageRandomCoefficientCount = new List<int>()
         {
