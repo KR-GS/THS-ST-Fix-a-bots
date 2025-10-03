@@ -34,6 +34,11 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     [Header("Settings Manager")]
     public SettingsPanelManager settingsManager;
 
+    [Header("Stars")]
+    public Image[] starObjects;
+    public Sprite fullStarSprite;
+    public Sprite emptyStarSprite;
+
     private string[] speedLabels = { "Slowest", "Slow", "Average", "Fast", "Fastest" };
     private float[] speedValues = { 2f, 1.5f, 1f, 0.75f, 0.5f };
     private int currentSpeedIndex = 2;
@@ -218,6 +223,15 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             livesText.text = $"{StaticData.stageLives[stageNum]}";
             restartsText.text = $"{StaticData.stageRestarts[stageNum]}";
             timeText.text = $"{Mathf.Round(StaticData.stageTime[stageNum] * 100) / 100.0}s";
+        }
+
+        int numStars = StaticData.stageStars[stageNum];
+        for (int i = 0; i < starObjects.Length; i++)
+        {
+            if (i < numStars)
+                starObjects[i].sprite = fullStarSprite;
+            else
+                starObjects[i].sprite = emptyStarSprite;
         }
 
         stageInfoPanel.SetActive(true);

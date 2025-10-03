@@ -16,16 +16,7 @@ public class StaticData
     public static List<float> stageTime;
     public static List<string> formulaAttempts;
     public static int numStageDone = 0;
-
-    /*
-    public static int maxNumber, coefficient, constant, prePressedCount, stageNum, tutorialType;
-    public static float cycleInterval;
-    public static float cycleLeniency;
-    public static bool isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
-    */
-
     public static int stageNum;
-
     public static List<int> maxNumber, coefficient, constant, prePressedCount, tutorialType;
     public static float cycleInterval, cycleLeniency;
     public static List<bool> isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
@@ -41,6 +32,7 @@ public class StaticData
     public static List<bool> hintSeen;
 
     //How swipes are managed per stage in HO
+    // UPDATE: As of now "Up" and "Down" and "Left" and "Right" are functionally the same, so they can be used interchangeably
     public static Dictionary<int, List<string>> stageSwipes = new Dictionary<int, List<string>>()
     {
         //SCENARIO 1
@@ -95,13 +87,6 @@ public class StaticData
         { 45, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } }
     };
 
-    //
-
-    /* static StaticData()
-     {
-         ResetStageData();
-     }
-    */
     static StaticData()
     {
         stageLives = new List<int>(new int[STAGE_COUNT]);
@@ -110,6 +95,11 @@ public class StaticData
         stageTime = new List<float>(new float[STAGE_COUNT]);
         formulaAttempts = new List<string>(new string[STAGE_COUNT]);
 
+        // HOW TO USE
+        // Each list below contains 45 entries, one for each stage
+        // Example, maxNumber[0] = 15 means that stage 1 has a max number of 15
+
+        // Max number of "periods" in the sequence
         maxNumber = new List<int>()
         {
             // SCENARIO 1
@@ -120,6 +110,7 @@ public class StaticData
             15, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25
         };
 
+        // Coefficient of the formula
         coefficient = new List<int>()
         {
             // SCENARIO 1
@@ -130,6 +121,7 @@ public class StaticData
             2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5
         };
 
+        // Constant of the formula
         constant = new List<int>()
         {
             // SCENARIO 1
@@ -140,6 +132,7 @@ public class StaticData
             3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3
         };
 
+        // Number of pre-pressed blocks at the start (From left to right)
         prePressedCount = new List<int>()
         {
             // SCENARIO 1
@@ -150,6 +143,7 @@ public class StaticData
             3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1
         };
 
+        // Type of tutorial (NOT USED ANYMORE)
         tutorialType = new List<int>()
         {
             // SCENARIO 1
@@ -160,6 +154,7 @@ public class StaticData
             0, 1, 1, 2, 2, 0, 0, 3, 0, 3, 0, 0, 3, 0, 3
         };
 
+        // Is the formula helper seen (NOT USED ANYMORE BECAUSE OF NEW UI)
         isFormulaSeen = new List<bool>()
         {
             // SCENARIO 1
@@ -170,6 +165,7 @@ public class StaticData
             true, false, false, false, false, false, false, false, false, false, false, false, false, false, false
         };
 
+        // Whether the coefficient is locked or not (locked meaning already given and cannot be changed by the player)
         lockCoefficient = new List<bool>()
         {
             // SCENARIO 1
@@ -180,6 +176,7 @@ public class StaticData
             true, false, false, true, true, true, false, false, false, false, true, false, false, false, false
         };
 
+        // Whether the constant is locked or not (locked meaning already given and cannot be changed by the player)
         lockConstant = new List<bool>()
         {
             // SCENARIO 1
@@ -190,6 +187,7 @@ public class StaticData
             true, true, true, false, false, false, true, false, false, false, false, true, false, false, false
         };
 
+        // Whether the sequence is random or not (TO BE USED FOR RANDOM STAGE GENERATION IN THE FUTURE)
         isRandomSequence = new List<bool>()
         {
             // SCENARIO 1
@@ -200,6 +198,7 @@ public class StaticData
             false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
         };
 
+        // Whether the reference is seen (NOT USED)
         refSeen = new List<bool>()
         {
             // SCENARIO 1
@@ -210,6 +209,7 @@ public class StaticData
             true, true, true, false, true, false, true, false, true, false, false, true, false, true, false
         };
 
+        // How may wrong coefficient blocks are spawned in the formula input screen
         stageRandomCoefficientCount = new List<int>()
         {
             // SCENARIO 1
@@ -222,6 +222,7 @@ public class StaticData
             2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
         };
 
+        // The maximum value that the distraction coefficient can take in the formula input screen
         stageMaxCoefficientValue = new List<int>()
         {
             //SCENARIO 1
@@ -234,6 +235,7 @@ public class StaticData
             1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
         };
 
+        // How may wrong constant blocks are spawned in the formula input screen
         stageRandomConstantCount = new List<int>()
         {
             //SCENARIO 1
@@ -246,6 +248,7 @@ public class StaticData
             1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
         };
 
+        // The maximum value that the distraction constant can take in the formula input screen
         stageMaxConstantValue = new List<int>()
         {
             //SCENARIO 1
@@ -258,6 +261,7 @@ public class StaticData
             3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
         };
 
+        // Whether the swipe hint has been seen for each stage
         hintSeen = new List<bool>()
         {
             //SCENARIO 1
