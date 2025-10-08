@@ -148,6 +148,8 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             case 2:
                 leftButton.interactable = true;
                 leftButton.gameObject.SetActive(true);
+                rightButton.interactable = false;
+                rightButton.gameObject.SetActive(false);
                 levelMap1.gameObject.SetActive(false);
                 levelMap2.gameObject.SetActive(false);
                 levelMap3.gameObject.SetActive(true);
