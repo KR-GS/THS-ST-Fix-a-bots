@@ -13,17 +13,31 @@ public class SequenceGameManager : MonoBehaviour
     public EventSystem eventSystem;
 
     [Header("UI & Prefabs")]
-    public GameObject timePeriodButtonPrefab;
-    public Transform buttonsParent;   
+    public GameObject timePeriodButtonPrefab, matchText, correctText;
+    public Transform buttonsParent, buttonsParent2;   
     public TextMeshProUGUI feedbackText, formulaText, timerText, livesText, restartText;
-    public Button nextStageButton, restartStageButton;
+    public Button nextStageButton, restartStageButton, pauseButton;
     public FormulaInputPanel formulaPanel;
     public GameTimer gameTimer;
     public HealthBar healthBar;
     public Sprite unpressedSprite;
 
+    [Header("Restart Panel")]
+    public GameObject pausePanel;
+    public Button restartGameButton, exitButton;
+    public TextMeshProUGUI panelText;
+
+    [Header("Settings Panel")]
+    public GameObject settingsPanel;
+    public Button settingsExitButton;
+    public Button settingsConfirmButton;
+
     [Header("Central Animator")]
     public Animator statusAnimator;
+
+    [Header("Swipe Direction Panel")]
+    public GameObject swipeDirectionPanel; 
+    public GameObject directionArrow;
 
     [Header("Settings")]
     private int maxNumber = 25;
@@ -36,15 +50,24 @@ public class SequenceGameManager : MonoBehaviour
 
     [Header("Audio Files")]
     public SoundEffectsManager soundEffectsManager;
+
+    [Header("Swipes")]
+    private Vector2 swipeStartPos;
+    private Vector2 swipeEndPos;
+    private List<string> expectedSwipeSequence;
+    private int currentSwipeIndex = 0;
+    private float minSwipeDistance = 10f; 
+
     private HOStageData stageData;
     private Sequence currentSequence;
     public FormulaInputPanel formulaInputPanel;
     private List<TimePeriodButton> buttons = new List<TimePeriodButton>();
+    private List<TimePeriodButton> buttons2 = new List<TimePeriodButton>();
     private int currentCycleIndex = 0;
     private List<int> pressedNumbers = new List<int>();
-    private bool isCycling = false, isCorrect = true, canTap = true, isStart = true, gotRight = false;
+    private bool isCycling = false, isCorrect = true, canTap = true, isStart = true,
+    gotRight = false, wasRestartButtonPressed = false, nextStage = false;
     private float timer;
-    //private int numLives = 3, numRestarts = 0;
 
     // Basically checks if the pointer/mouse is above an interactable UI
     private bool IsPointerOverInteractableUi()
@@ -59,7 +82,7 @@ public class SequenceGameManager : MonoBehaviour
 
         foreach (RaycastResult result in raycastResults)
         {
-            if (result.gameObject.GetComponent<Button>() != null || result.gameObject.GetComponent<Toggle>() != null)
+            if ((result.gameObject.GetComponent<Button>() != null || result.gameObject.GetComponent<Toggle>() != null) && !result.gameObject.GetComponent<TimePeriodButton>()) 
             {
                 return true;
             }
@@ -67,18 +90,31 @@ public class SequenceGameManager : MonoBehaviour
 
         return false;
     }
+    
+    bool IsScreenTapped()
+    {
+        #if UNITY_EDITOR
+            return Input.GetMouseButtonDown(0);
+        #elif UNITY_ANDROID || UNITY_IOS
+            return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
+        #else
+            return false;
+        #endif
+    }
 
     void GetData()
     {
-        maxNumber = StaticData.maxNumber;
+        maxNumber = StaticData.maxNumber[stageNum + 1];
         cycleInterval = StaticData.cycleInterval;
         cycleLeniency = StaticData.cycleLeniency;
-        prePressedCount = StaticData.prePressedCount;
-        isFormulaSeen = StaticData.isFormulaSeen;
-        isRandomSequence = StaticData.isRandomSequence;
+        prePressedCount = StaticData.prePressedCount[stageNum + 1];
+        isFormulaSeen = StaticData.isFormulaSeen[stageNum + 1];
+        isRandomSequence = StaticData.isRandomSequence[stageNum + 1];
         stageNum = StaticData.stageNum;
-        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient);
-        formulaInputPanel.SetLockConstant(StaticData.lockConstant);
+        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum + 1]);
+        formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum + 1]);
+        expectedSwipeSequence = StaticData.stageSwipes[stageNum + 1];
+        
     }
 
     void InitilizeStageData()
@@ -88,15 +124,32 @@ public class SequenceGameManager : MonoBehaviour
         stageData.SetNumRestarts(0);
         stageData.SetElapsedTime(0f);
         stageData.SetNumLives(5);
+        Time.timeScale = 1;
     }
 
     void InitializeStageUi()
     {
         formulaText.gameObject.SetActive(isFormulaSeen);
+        isCycling = false;
+
         formulaPanel.gameObject.SetActive(false);
+        pausePanel.SetActive(false);
         nextStageButton.gameObject.SetActive(false);
+
         restartStageButton.enabled = false;
-        restartStageButton.onClick.AddListener(() => { isCycling = false; ResetSequence();});
+        restartStageButton.onClick.AddListener(() =>
+        {
+            isCycling = false;
+            wasRestartButtonPressed = true;
+            ResetSequence();
+        });
+
+        //pauseButton.enabled = false;
+        pauseButton.onClick.AddListener(() => PauseGame());
+        settingsConfirmButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
+        settingsExitButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
+        exitButton.onClick.AddListener(() => ExitGame());
+
         feedbackText.text = "Please tap screen to start game";
         livesText.text = $"{stageData.GetNumLives()}";
         healthBar.SetMaxHealth(stageData.GetNumLives());
@@ -104,14 +157,97 @@ public class SequenceGameManager : MonoBehaviour
 
     }
 
-    IEnumerator wait(int x)
+    void PauseGame()
     {
-        yield return new WaitForSeconds(x);
+        Time.timeScale = 0;
+        gameTimer.StopTimer();
+        canTap = false;
+        settingsPanel.SetActive(true);
+        settingsPanel.transform.SetAsLastSibling();
     }
-  
-    void Start()
+
+    void LostGame()
     {
-         GetData();
+        Time.timeScale = 0;
+        gameTimer.StopTimer();
+        canTap = false;
+        pausePanel.SetActive(true);
+        pausePanel.transform.SetAsLastSibling();
+        panelText.text = "You Lost! Continue?";
+    }
+
+    private void RestartGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator ResumeGame()
+    {
+        if (nextStage)
+        {
+            settingsPanel.SetActive(false);
+            gameTimer.ResumeTimer();
+        }
+        if (!nextStage && !isCycling)
+        {
+            settingsPanel.SetActive(false);
+            if (!gameTimer.GetIsRunning())
+            {
+                gameTimer.ResumeTimer();
+            }
+            canTap = true;
+        }
+        if (!nextStage && isCycling)
+        {
+            isCycling = false;
+            settingsPanel.SetActive(false);
+            restartStageButton.enabled = false;
+            feedbackText.text = "3";
+            yield return new WaitForSeconds(1);
+            feedbackText.text = "2";
+            yield return new WaitForSeconds(1);
+            feedbackText.text = "1";
+            yield return new WaitForSeconds(1);
+            gameTimer.ResumeTimer();
+            isCycling = true;
+            restartStageButton.enabled = true;
+            canTap = true;
+        }
+        yield return null;
+    }
+
+    void ExitGame() {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Stage_Select");
+    }
+
+    void SetArrowDirection(string direction)
+    {
+        Vector3 rotation = Vector3.zero;
+        
+        switch (direction)
+        {
+            case "Up":
+                rotation = new Vector3(0, 0, 0); 
+                break;
+            case "Down":
+                rotation = new Vector3(0, 0, 180); 
+                break;
+            case "Left":
+                rotation = new Vector3(0, 0, 90);
+                break;
+            case "Right":
+                rotation = new Vector3(0, 0, -90); 
+                break;
+        }
+        
+        directionArrow.transform.rotation = Quaternion.Euler(rotation);
+    }
+
+    void Awake()
+    {
+        GetData();
         sceneName= SceneManager.GetActiveScene().name;
         Debug.Log("Current scene: "+ sceneName);
         InitilizeStageData();
@@ -119,29 +255,24 @@ public class SequenceGameManager : MonoBehaviour
         SetupButtons();
     }
 
+    void Start()
+    {
+        StaticData.isOnHigherOrderGame = true;
+    }
+
     void Update()
     {
-
-        if (Input.GetMouseButtonDown(0) && !IsPointerOverInteractableUi() && isStart)
+        if ((Input.GetMouseButtonDown(0) ||IsScreenTapped()) && !IsPointerOverInteractableUi() && isStart)
         {
             isStart = false;
             StartNewSequence();
             StartCoroutine(DelayedStartCycle());
         }
-        //livesText.text = $"{numLives}";
-        //restartText.text = $"{numRestarts}";
         if (stageData.GetNumLives() <= 0)
         {
             isCycling = false;
-            feedbackText.text = "You lost all your lives!";
-            StartCoroutine(LostStage());
+            LostGame();
         }
-    }
-
-    IEnumerator LostStage()
-    {
-        yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(sceneName); 
     }
 
     // Creates buttons, destroys previous buttons as well
@@ -155,7 +286,9 @@ public class SequenceGameManager : MonoBehaviour
         {
             GameObject go = Instantiate(timePeriodButtonPrefab, buttonsParent);
             TimePeriodButton btn = go.GetComponent<TimePeriodButton>();
+
             btn.ButtonNumber = i;
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = i.ToString();
             btn.SetHighlighted(false);
             buttons.Add(btn);
         }
@@ -171,7 +304,7 @@ public class SequenceGameManager : MonoBehaviour
         }
         else
         {
-            currentSequence = new Sequence(maxNumber, StaticData.coefficient, StaticData.constant);
+            currentSequence = new Sequence(maxNumber, StaticData.coefficient[stageNum + 1], StaticData.constant[stageNum + 1]);
         }
         formulaText.text = $"Rule: {currentSequence.FormulaString}";
 
@@ -188,16 +321,24 @@ public class SequenceGameManager : MonoBehaviour
         }
 
         currentCycleIndex = 0;
-        isCycling = true;
+        //isCycling = true;
 
         feedbackText.text = "Watch the sequence! Tap the screen when the highlighted number is in the sequence.";
-        //nextStageButton.gameObject.SetActive(false);
     }
 
     // Just to make time for the cycling
     IEnumerator DelayedStartCycle()
     {
-        yield return new WaitForSeconds(2f);
+        // More time to give the students time to read the tutorial
+        if (stageNum <= 3)
+        {
+            yield return new WaitForSeconds(5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+        }
+        
         feedbackText.text = "3";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "2";
@@ -207,12 +348,17 @@ public class SequenceGameManager : MonoBehaviour
         feedbackText.text = "Go!";
         StartCoroutine(CycleButtons());
         yield return new WaitForSeconds(1f);
+        isCycling = true;
         gameTimer.StartTimer();
         restartStageButton.enabled = true;
+        //pauseButton.enabled = true;
+        yield return null;
     }
 
     IEnumerator RestartCycle()
     {
+        canTap = false;
+        isCycling = false;
         feedbackText.text = "Restarting Stage...";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "3";
@@ -222,10 +368,21 @@ public class SequenceGameManager : MonoBehaviour
         feedbackText.text = "1";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "Go!";
+        //pauseButton.enabled = true;
+        restartStageButton.enabled = true;
         isCycling = true;
+        if (wasRestartButtonPressed)
+        {
+            currentCycleIndex = -1;
+        }
+        else
+        {
+            currentCycleIndex = 0;
+        }
+        wasRestartButtonPressed = false;
         canTap = true;
         isCorrect = true;
-        currentCycleIndex = 0;
+        yield return null;
     }
 
     // Main loop for the cycling
@@ -233,22 +390,48 @@ public class SequenceGameManager : MonoBehaviour
     {
         while (true)
         {
-            if (!isCycling)
+            while (!isCycling)
             {
                 yield return null;
                 continue;
             }
 
             // Makes sure player has time to start
+
             if (currentCycleIndex == 0)
             {
                 yield return new WaitForSeconds(1f);
+                statusAnimator.SetBool("MissTrigger", false);
+                statusAnimator.SetBool("AnticipateTrigger", false);
+                statusAnimator.SetBool("HitTrigger", false);
+                statusAnimator.SetBool("WrongTrigger", false);
+                statusAnimator.SetBool("IdleTrigger", true);
             }
-
+            
+        
             HighlightButton(currentCycleIndex);
+
+            Debug.Log("Cycle index: " + currentCycleIndex);
 
             int btnNumber = currentCycleIndex + 1;
             bool inSequence = currentSequence.Numbers.Contains(btnNumber);
+
+            // Show/hide swipe direction panel based on inSequence
+            if (inSequence && currentSwipeIndex < expectedSwipeSequence.Count && !(buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()))
+            {
+                // Hint only shows if hintSeen is true
+                if (StaticData.hintSeen[stageNum])
+                {
+                    swipeDirectionPanel.SetActive(true);
+                    string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                    SetArrowDirection(expectedDirection);
+                }
+                
+            }
+            else
+            {
+                swipeDirectionPanel.SetActive(false);
+            }
 
             // Show feedback for cycle step
             feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
@@ -264,28 +447,68 @@ public class SequenceGameManager : MonoBehaviour
             statusAnimator.SetBool("AnticipateTrigger", false);
             statusAnimator.SetBool("HitTrigger", false);
             statusAnimator.SetBool("WrongTrigger", false);
-            //statusAnimator.SetBool("IdleTrigger", true);
+            statusAnimator.SetBool("IdleTrigger", true);
             soundEffectsManager.playIdleSound();
 
             while (timer < cycleInterval && currentCycleIndex >= 0)
             {
                 if (hasNotClicked)
                 {
-                    if (!inSequence)
+                    string swipeDir = DetectSwipe();
+
+                    if (swipeDir != null && canTap && !IsPointerOverInteractableUi())
                     {
-                        //statusAnimator.SetBool("IdleTrigger", true);
+                        Debug.Log("Swipe detected: " + swipeDir);
+                        // Hide the swipe direction panel when user swipes
+                        swipeDirectionPanel.SetActive(false);
+                        HandleUserSwipe(swipeDir, btnNumber, inSequence, timer);
+                        hasNotClicked = false;
+                    }
+
+                    if (!inSequence && hasNotClicked)
+                    {
                         statusAnimator.SetBool("IdleTrigger", true);
                     }
-                    else if (inSequence)
+                    else if (inSequence && hasNotClicked)
                     {
                         statusAnimator.SetBool("IdleTrigger", false);
+                        
+                        // Anticipation animation based on expected swipe direction
+                        /*
+                        string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                        if (expectedDirection == "Up" || expectedDirection == "Down")
+                        {
+                            statusAnimator.SetBool("VerticalTrigger", true);
+                        }
+                        else
+                        {
+                            statusAnimator.SetBool("HorizontalTrigger", true);
+                        }
+                        */
+
                         statusAnimator.SetBool("AnticipateTrigger", true);
                         // If the Sequence was pre pressed, automatically plays hit animation
-                        if ((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.10f)
+                        if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.10f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
+
+                            // Hit animation based on expected swipe direction
+                            /*
+                            string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                            if (expectedDirection == "Up" || expectedDirection == "Down")
+                            {
+                                statusAnimator.SetBool("VerticalTrigger", true);
+                            }
+                            else
+                            {
+                                statusAnimator.SetBool("HorizontalTrigger", true);
+                            }
+                            */  
+
                             statusAnimator.SetBool("HitTrigger", true);
                             soundEffectsManager.playHitSound();
+                            // Hide panel when auto-completing pre-selected
+                            swipeDirectionPanel.SetActive(false);
                             hasNotClicked = false;
                         }
                         // if the player misses, plays miss animation
@@ -293,8 +516,26 @@ public class SequenceGameManager : MonoBehaviour
                         {
                             feedbackText.text = "You missed!";
                             statusAnimator.SetBool("AnticipateTrigger", false);
+
+                            // Miss animation based on expected swipe direction
+                            /*
+                            string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                            if (expectedDirection == "Up" || expectedDirection == "Down")
+                            {
+                                statusAnimator.SetBool("VerticalTrigger", true);
+                            }
+                            else
+                            {
+                                statusAnimator.SetBool("HorizontalTrigger", true);
+                            }
+                            */
+
                             statusAnimator.SetBool("MissTrigger", true);
                             soundEffectsManager.playMissSound();
+                            isCorrect = false;
+                            currentSwipeIndex++;
+                            // Hide panel on miss
+                            swipeDirectionPanel.SetActive(false);
                             if (!isStageFinished)
                             {
                                 stageData.SetNumLives(stageData.GetNumLives() - 1);
@@ -304,33 +545,48 @@ public class SequenceGameManager : MonoBehaviour
                             hasNotClicked = false;
                         }
                     }
+    
+
                     // Listens to player tapping the screen
-                    if (Input.GetMouseButtonDown(0) && canTap && !IsPointerOverInteractableUi())
+                    /*
+                    if ((Input.GetMouseButtonDown(0) || IsScreenTapped()) && canTap && !IsPointerOverInteractableUi())
                     {
                         Debug.Log("Clicked: " + gameObject.name);
-                        HandleUserTap(btnNumber, inSequence);
+                        HandleUserTap(btnNumber, inSequence, timer);
                         hasNotClicked = false;
                     }
+                    */
                 }
-                timer += Time.deltaTime;
+                if (isCycling)
+                {
+                    timer += Time.deltaTime;
+                }
                 yield return null;
             }
 
-            //statusAnimator.SetBool("IdleTrigger", true);
+            // Hide panel when cycle time is up
+            swipeDirectionPanel.SetActive(false);
 
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
             {
+                statusAnimator.SetBool("MissTrigger", false);
+                statusAnimator.SetBool("AnticipateTrigger", false);
+                statusAnimator.SetBool("HitTrigger", false);
+                statusAnimator.SetBool("WrongTrigger", false);
+                statusAnimator.SetBool("IdleTrigger", true);
+
                 if (CheckSequenceComplete() && isCorrect)
                 {
                     feedbackText.text = "Great job! Sequence completed!";
-                    nextStageButton.gameObject.SetActive(true);
                     isStageFinished = true;
+                    nextStageButton.gameObject.SetActive(true);
                     nextStageButton.onClick.AddListener(() => OnNextStageButtonClicked());
                     canTap = false;
                 }
                 else
                 {
+                    Debug.Log("Wrong Sequence");
                     feedbackText.text = "Sequence not complete or wrong taps. Restarting...";
                     ResetSequence();
                 }
@@ -342,27 +598,217 @@ public class SequenceGameManager : MonoBehaviour
 
     void HighlightButton(int index)
     {
-        
-        if (index > 0 && !buttons[index - 1].GetSelected())
+        foreach (var btn in buttons)
         {
-            buttons[index - 1].SetHighlighted(false);
+            btn.SetHighlighted(false);
+            btn.SetHeight(false);
         }
         if (index > 0 && buttons[index - 1].GetSelected())
         {
             buttons[index - 1].SetGreen();
         }
-        if (index == 0  && !buttons[maxNumber - 1].GetSelected())
-        {
-            buttons[maxNumber - 1].SetHighlighted(false);
-        }
-        if (index == 0  && buttons[maxNumber - 1].GetSelected())
+        if (index == 0 && buttons[maxNumber - 1].GetSelected())
         {
             buttons[maxNumber - 1].SetGreen();
         }
         buttons[index].SetHighlighted(true);
+        buttons[index].SetHeight(true);
     }
 
-    void HandleUserTap(int btnNumber, bool inSequence)
+    //Detects Swipe
+    private string DetectSwipe()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                swipeStartPos = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                swipeEndPos = touch.position;
+                Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+
+                if (swipeDelta.magnitude >= minSwipeDistance)
+                {
+                    float x = swipeDelta.x;
+                    float y = swipeDelta.y;
+
+                    if (Mathf.Abs(x) > Mathf.Abs(y))
+                    {
+                        return x > 0 ? "Right" : "Left";
+                    }
+                    else
+                    {
+                        return y > 0 ? "Up" : "Down";
+                    }
+                }
+            }
+        }
+        #if UNITY_EDITOR || UNITY_STANDALONE
+            if (Input.GetMouseButtonDown(0))
+            {
+                swipeStartPos = Input.mousePosition;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                swipeEndPos = (Vector2)Input.mousePosition;
+                Vector2 swipeDelta = swipeEndPos - swipeStartPos;
+
+                if (swipeDelta.magnitude >= minSwipeDistance)
+                {
+                    float x = swipeDelta.x;
+                    float y = swipeDelta.y;
+
+                    if (Mathf.Abs(x) > Mathf.Abs(y))
+                    {
+                        return x > 0 ? "Right" : "Left";
+                    }
+                    else
+                    {
+                        return y > 0 ? "Up" : "Down";
+                    }
+                }
+            }
+        #endif
+        
+        return null;
+    }
+
+    void HandleUserSwipe(string direction, int btnNumber, bool inSequence, float timer)
+    {
+        string expected = expectedSwipeSequence[currentSwipeIndex];
+        bool gotSwipeCorrect = false;
+
+        // Makes sure that Up and Down are interchangeable, same for Left and Right
+        if (expected == "Up" || expected == "Down")
+        {
+            if (direction == "Up" || direction == "Down")
+            {
+                gotSwipeCorrect = true;
+            }
+        }
+        else if (expected == "Left" || expected == "Right")
+        {
+            if (direction == "Left" || direction == "Right")
+            {
+                gotSwipeCorrect = true;
+            }
+        }
+
+        if (pressedNumbers.Contains(btnNumber))
+        {
+            feedbackText.text = $"You already swiped for {btnNumber}.";
+            return;
+        }
+
+        //Early swipes
+        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency / 2 && gotSwipeCorrect)
+        {
+            buttons[btnNumber].SetGreen();
+            buttons[btnNumber].SetWasSelected(true);
+            pressedNumbers.Add(btnNumber + 1);
+            buttons[btnNumber].SetSelected(true);
+            feedbackText.text = $"Correct swipe {direction} for: {btnNumber + 1}!";
+            currentSwipeIndex++;
+            gotRight = true;
+
+        }
+
+        //Swipe not in sequence
+        else if (!inSequence)
+        {
+            buttons[btnNumber - 1].SetHighlighted(true);
+            feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
+            statusAnimator.SetBool("IdleTrigger", false);
+            statusAnimator.SetBool("WrongTrigger", true);
+            soundEffectsManager.playMissSound();
+            isCorrect = false;
+
+            //Only decrease health if stage not finished
+            if (!isStageFinished)
+            {
+                stageData.SetNumLives(stageData.GetNumLives() - 1);
+                livesText.text = $"{stageData.GetNumLives()}";
+                healthBar.SetHealth(stageData.GetNumLives());
+            }
+        }
+
+        //Correct Swipes
+        else if (inSequence)
+        {
+            if (currentSwipeIndex < expectedSwipeSequence.Count)
+            {
+
+                if (gotSwipeCorrect)
+                {
+                    buttons[btnNumber - 1].SetGreen();
+                    buttons[btnNumber - 1].SetWasSelected(true);
+                    pressedNumbers.Add(btnNumber);
+                    buttons[btnNumber - 1].SetSelected(true);
+
+                    feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
+                    statusAnimator.SetBool("IdleTrigger", false);
+                    
+                    // Add different animations based on swipe direction
+                    /*
+                    if (expected == "Up" || expected == "Down")
+                    {
+
+                    }
+                    else if (expected == "Left" || expected == "Right")
+                    {
+
+                    }
+                    */
+
+                    statusAnimator.SetBool("HitTrigger", true);
+                    soundEffectsManager.playHitSound();
+                    gotRight = true;
+
+                    currentSwipeIndex++;
+                }
+
+                //Wrong Swipes But in Sequence
+                else
+                {
+                    buttons[btnNumber - 1].SetHighlighted(true);
+                    feedbackText.text = $"Wrong swipe!";
+                    statusAnimator.SetBool("IdleTrigger", false);
+
+                    // Add different miss animations based on swipe direction
+                    /*
+                    if (expected == "Up" || expected == "Down")
+                    {
+
+                    }
+                    else if (expected == "Left" || expected == "Right")
+                    {
+
+                    }
+                    */
+
+                    statusAnimator.SetBool("MissTrigger", true);
+                    soundEffectsManager.playMissSound();
+                    isCorrect = false;
+                    currentSwipeIndex++;
+
+                    //Only decrease health if stage not finished
+                    if (!isStageFinished)
+                    {
+                        stageData.SetNumLives(stageData.GetNumLives() - 1);
+                        livesText.text = $"{stageData.GetNumLives()}";
+                        healthBar.SetHealth(stageData.GetNumLives());
+                    }
+                }
+            }
+
+        }
+    }
+
+    void HandleUserTap(int btnNumber, bool inSequence, float timer)
     {
         
         if (pressedNumbers.Contains(btnNumber))
@@ -383,12 +829,22 @@ public class SequenceGameManager : MonoBehaviour
             soundEffectsManager.playHitSound();
             gotRight = true;
         }
+        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency/2)
+        {
+            buttons[btnNumber].SetGreen();
+            buttons[btnNumber].SetWasSelected(true);
+            pressedNumbers.Add(btnNumber + 1);
+            buttons[btnNumber].SetSelected(true);
+            feedbackText.text = $"You pressed the right number: {btnNumber + 1}!";
+            gotRight = true;
+        }
         else
         {
             buttons[btnNumber - 1].SetSelected(true);
             feedbackText.text = $"Wrong button! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
-            statusAnimator.SetBool("WrongTrigger", true);  
+            statusAnimator.SetBool("WrongTrigger", true);
+            isCorrect = false;
             soundEffectsManager.playMissSound();
             if (!isStageFinished)
             {
@@ -413,6 +869,9 @@ public class SequenceGameManager : MonoBehaviour
 
     void ResetSequence()
     {
+        currentSwipeIndex = 0;
+        restartStageButton.enabled = false;
+        //pauseButton.enabled = false;
         for (int i = 0; i < buttons.Count; i++)
         {
             buttons[i].SetHighlighted(false);
@@ -433,27 +892,70 @@ public class SequenceGameManager : MonoBehaviour
         if(!isStageFinished){
             stageData.SetNumRestarts(stageData.GetNumRestarts() + 1);
             restartText.text = $"{stageData.GetNumRestarts()}";
-        }
+        } 
+
+        statusAnimator.SetBool("MissTrigger", false);
+        statusAnimator.SetBool("AnticipateTrigger", false);
+        statusAnimator.SetBool("HitTrigger", false);
+        statusAnimator.SetBool("WrongTrigger", false);
+        statusAnimator.SetBool("IdleTrigger", true);
+        
         StartCoroutine(RestartCycle());
     }
 
     public void OnNextStageButtonClicked()
     {
         nextStageButton.gameObject.SetActive(false);
+        nextStage = true;
         isCycling = false;
         StopAllCoroutines(); // stops the button cycling
         feedbackText.text = "";
+
         
+
         foreach (var btn in buttons)
+        {
             btn.SetHighlighted(false);
+            btn.SetHeight(false);
+        }
+            
 
         foreach (int num in currentSequence.Numbers)
         {
             buttons[num - 1].SetGreen();
         }
 
+        foreach (Transform child in buttonsParent2)
+            Destroy(child.gameObject);
+        buttons2.Clear();
+
+        for (int i = 1; i <= maxNumber; i++)
+        {
+            GameObject go2 = Instantiate(timePeriodButtonPrefab, buttonsParent2);
+            TimePeriodButton btn2 = go2.GetComponent<TimePeriodButton>();
+
+            btn2.ButtonNumber = i;
+            btn2.GetComponentInChildren<TextMeshProUGUI>().text = i.ToString();
+            btn2.SetHighlighted(false);
+            buttons2.Add(btn2);
+        }
+        
+        /*
+
+        if (!StaticData.refSeen)
+        {
+            matchText.SetActive(false);
+            buttonsParent2.transform.localScale = new Vector3(0, 0, 0);
+            correctText.transform.localPosition = new Vector3(0, 100, 0);
+        }
+        else
+        {
+            buttonsParent.localPosition = new Vector3(0, -500, 0);
+        }*/
+
         // Show formula panel with current sequence
+        statusAnimator.enabled = false;
         formulaPanel.gameObject.SetActive(true);
-        formulaPanel.ShowPanel(currentSequence, gameTimer, stageData);
+        formulaPanel.ShowPanel(currentSequence, gameTimer, stageData, buttons2);
     }
 }

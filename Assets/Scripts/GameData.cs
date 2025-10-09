@@ -7,6 +7,13 @@ using UnityEngine;
 
 public class GameData
 {
+    [Header("Save Settings")]
+    public string language = "English";
+
+    public float stageSpeed = 1f;
+
+
+    [Header("Lower Order Data")]
     public int level;
 
     public int money;
@@ -24,12 +31,6 @@ public class GameData
     public bool orderReceived;
 
     public int currentOrderIndex;
-
-    public List<int> lives;
-
-    public List<int> restarts;
-
-    public List<float> stageTimes;
 
     public List<Order> savedActiveOrders;
 
@@ -89,6 +90,22 @@ public class GameData
 
     public bool startOfDay;
 
+    [Header("High Order Data")]
+
+    public List<int> lives;
+
+    public List<int> restarts;
+
+    public List<float> stageTimes;
+
+
+    public List<string> formulaAttempts;
+
+    public List<int> stageStars;
+
+    public int stageDone;
+    
+
     public GameData()
     {
         this.level = 1;
@@ -99,10 +116,6 @@ public class GameData
         this.orderReceived = false;
         this.prize = 0;
         this.time = 0f;
-        this.lives = new List<int>();
-        this.restarts = new List<int>();
-        this.stageDone = 0;
-        this.stageTimes = new List<float>();
         this.isPatternStarted = false;
         this.correctPattern = new List<int>();
         this.incorrectPattern = new List<int>();
@@ -128,6 +141,14 @@ public class GameData
         this.cutscenePlay = false;
         this.newGame = true;
         this.TVScreen = 0;
+        int stageCount = 45;
+        this.lives = new List<int>(new int[stageCount]);
+        this.restarts = new List<int>(new int[stageCount]);
+        this.stageTimes = new List<float>(new float[stageCount]);
+        this.formulaAttempts = new List<string>(new string[stageCount]);
+        this.stageStars = new List<int>(new int[stageCount]);
+        this.stageDone = 0;
+        this.stageSpeed = 1f;
     }
 
 

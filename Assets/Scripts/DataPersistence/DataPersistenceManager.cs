@@ -20,7 +20,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
             return;
         }
 
@@ -33,6 +33,8 @@ public class DataPersistenceManager : MonoBehaviour
         }
         Instance = this;
         */
+        dataPersistenceObjects = new List<IDataPersistence>();
+        Debug.Log("Awake has been called, instance set");
     }
 
     public void Start()
@@ -60,6 +62,14 @@ public class DataPersistenceManager : MonoBehaviour
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
+    public void RegisterDataPersistence(IDataPersistence dataPersistence)
+    {
+        if (!dataPersistenceObjects.Contains(dataPersistence))
+        {
+            dataPersistenceObjects.Add(dataPersistence);
+        }
+    }
+
     public void NewGame()
     {
         this.gameData = new GameData();
@@ -67,7 +77,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
-        if (hasLoadedFromFile) return;
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
 
         this.gameData = dataHandler.Load();
 
@@ -84,7 +94,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         hasLoadedFromFile = true;
         Debug.Log("Loaded day number: " + gameData.level);
-        
+
     }
 
     public int GetLevel()
@@ -117,7 +127,7 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObj.SaveData(ref gameData);
         }
 
-        Debug.Log("Saved day number: " + gameData.level);
+        Debug.Log("Saved day number: " + gameData.level + "at: " + Application.persistentDataPath);
 
         dataHandler.Save(gameData);
     }
