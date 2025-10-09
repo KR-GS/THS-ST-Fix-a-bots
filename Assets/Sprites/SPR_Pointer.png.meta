@@ -126,12 +126,12 @@ TextureImporter:
       name: SPR_Pointer_0
       rect:
         serializedVersion: 2
-        x: 93
-        y: 1414
-        width: 1095
-        height: 988
+        x: 0
+        y: 1367
+        width: 1236
+        height: 1367
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,12 +148,12 @@ TextureImporter:
       name: SPR_Pointer_1
       rect:
         serializedVersion: 2
-        x: 1323
-        y: 1454
-        width: 1012
-        height: 1042
+        x: 1236
+        y: 1367
+        width: 1236
+        height: 1367
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: SPR_Pointer_2
       rect:
         serializedVersion: 2
-        x: 2734
-        y: 1535
-        width: 877
-        height: 938
+        x: 2472
+        y: 1367
+        width: 1236
+        height: 1367
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,12 +192,12 @@ TextureImporter:
       name: SPR_Pointer_3
       rect:
         serializedVersion: 2
-        x: 312
-        y: 255
-        width: 833
-        height: 1004
+        x: 0
+        y: 0
+        width: 1236
+        height: 1367
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
