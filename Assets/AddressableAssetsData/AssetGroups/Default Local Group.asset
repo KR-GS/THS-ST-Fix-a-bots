@@ -14,12 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: d41946b2174eb2346aa1d75d100c4254
-  m_SerializeEntries:
-  - m_GUID: 5438d88348381c041af1f4559ea39607
-    m_Address: Assets/Localization/Table/New Table Shared Data.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 913b649eaf15dcb43afbe1ea69b09698, type: 2}
   m_SchemaSet:
