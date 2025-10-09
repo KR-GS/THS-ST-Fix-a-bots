@@ -14,8 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Filipino (fil)
   m_GUID: e1d3c5b8c5053734895134fc98a1daca
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 45f9c75b182755142897431308d79450
+    m_Address: StringTable_fil
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fil
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 913b649eaf15dcb43afbe1ea69b09698, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: c7ce2ec1a22c23c40b60cadbe47a0f5f, type: 2}
+    - {fileID: 11400000, guid: 68b97b55c77315e48a429890d5a8da00, type: 2}

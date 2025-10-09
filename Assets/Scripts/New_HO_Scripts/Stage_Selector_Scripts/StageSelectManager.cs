@@ -271,7 +271,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         else if (stageNum <= 45)
         {
             SceneManager.LoadScene("HO_BotFightScene");
-        }
+        }  
         */
     }
 

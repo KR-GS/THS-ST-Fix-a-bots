@@ -14,7 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: StringTable
   m_TableCollectionNameGuidString: 5438d88348381c041af1f4559ea39607
-  m_Entries: []
+  m_Entries:
+  - m_Id: 89987874816
+    m_Key: titleScreen.TapScreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5635281387520
+    m_Key: titleScreen.HigherOrder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5719242964992
+    m_Key: titleScreen.LowerOrder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5763388014592
+    m_Key: higherOrder.TimePeriodNotPart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6600239742976
+    m_Key: "higherOrder.TimePeriodPart\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7336868577280
+    m_Key: higherOrder.CorrectSwipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32497810407424
+    m_Key: 
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
