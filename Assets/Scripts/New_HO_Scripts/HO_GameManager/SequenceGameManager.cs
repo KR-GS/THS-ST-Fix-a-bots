@@ -911,8 +911,6 @@ public class SequenceGameManager : MonoBehaviour
         StopAllCoroutines(); // stops the button cycling
         feedbackText.text = "";
 
-        
-
         foreach (var btn in buttons)
         {
             btn.SetHighlighted(false);

@@ -42,5 +42,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LO_Tool 1.unity
     guid: 97f901e0485ee3d41ac64b240a2af4b2
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: a1e7f8120a36cba4e87252e009bc9906, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 9a86693e3c87dc74b8cc556ea049512b, type: 2}
   m_UseUCBPForAssetBundles: 0
