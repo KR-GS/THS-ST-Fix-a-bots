@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fastenerHolder: {fileID: 4442901060794503563}
+  part_Sprite: {fileID: 9201864402335786621}
 --- !u!61 &3942083281342371398
 BoxCollider2D:
   m_ObjectHideFlags: 0
