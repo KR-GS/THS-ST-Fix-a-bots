@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ToolCamera : MonoBehaviour
 {
@@ -51,7 +50,7 @@ public class ToolCamera : MonoBehaviour
         originalPosition = transform.position;
         originalSize = GetComponent<Camera>().orthographicSize;
 
-        transform.position = new Vector3(tilingManager.TileMidPoint(), 1.25f, transform.position.z);
+        transform.position = new Vector3(0, 1.25f, transform.position.z);
         GetComponent<Camera>().orthographicSize = 17;
         zoomInCanvas.enabled = false;
         toolCanvas.enabled = false;

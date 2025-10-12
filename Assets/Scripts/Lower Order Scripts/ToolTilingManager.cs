@@ -39,6 +39,15 @@ public class ToolTilingManager : MonoBehaviour
         }
     }
 
+    public Vector3 GetTileDistance()
+    {
+        Vector3 distance;
+
+        distance = tiles[1].transform.position;
+
+        return distance;
+    }
+
     public float TileMidPoint()
     {
         float midPoint;

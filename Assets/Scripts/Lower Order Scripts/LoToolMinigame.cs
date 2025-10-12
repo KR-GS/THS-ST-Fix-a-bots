@@ -56,6 +56,8 @@ public class LoToolMinigame : MonoBehaviour
     private bool isDragging = false;
     private bool isOnObject = false;
 
+    private Vector2[] endPoints = new Vector2[2];
+
     private GameObject robotPart;
 
     private Vector3 offset;
@@ -417,15 +419,32 @@ public class LoToolMinigame : MonoBehaviour
             gap.transform.parent = robotPart.transform;
         }
 
+        foreach (GameObject fastener in fastenerObj)
+        {
+            fastener.transform.parent = robotPart.transform;
+        }
+
         robotPart.AddComponent<BoxCollider2D>();
 
-       robotPart.GetComponent<BoxCollider2D>().size = toolTilingManager.TileLength();
+       // robotPart.AddComponent<Rigidbody2D>();
+
+        robotPart.GetComponent<BoxCollider2D>().size = toolTilingManager.TileLength();
 
         robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -5f);
 
+        //robotPart.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+
+        //Set for left dragging end point
+        endPoints[0] = robotPart.transform.position - toolTilingManager.GetTileDistance();
+
+        //Set for right dragging end point
+        endPoints[1] = toolTilingManager.GetTileDistance() - robotPart.transform.position;
+
+        robotPart.transform.position = new Vector2(endPoints[1].x, robotPart.transform.position.y);
+
         Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
         OverheadView();
-
     }
 
     // Update is called once per frame
@@ -466,6 +485,16 @@ public class LoToolMinigame : MonoBehaviour
                 }
                 else
                 {
+                    if (tiledParts[2].transform.position.x > 0)
+                    {
+                        Debug.Log("Limit reached");
+
+                        robotPart.transform.position = new Vector2(endPoints[0].x, robotPart.transform.position.y);
+                    }
+                    else if (tiledParts[tiledParts.Length-2].transform.position.x < 0)
+                    {
+                        robotPart.transform.position = new Vector2(endPoints[1].x, robotPart.transform.position.y);
+                    }
                     isDragging = false;
                     isOnObject = false;
                 }
