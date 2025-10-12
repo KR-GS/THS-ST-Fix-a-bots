@@ -51,7 +51,7 @@ public class ToolCamera : MonoBehaviour
         originalPosition = transform.position;
         originalSize = GetComponent<Camera>().orthographicSize;
 
-        transform.position = new Vector3(tilingManager.TileMidPoint(), (tilingManager.TileMidPoint() / 4), transform.position.z);
+        transform.position = new Vector3(tilingManager.TileMidPoint(), 1.25f, transform.position.z);
         GetComponent<Camera>().orthographicSize = 17;
         zoomInCanvas.enabled = false;
         toolCanvas.enabled = false;

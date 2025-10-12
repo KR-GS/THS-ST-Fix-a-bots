@@ -5,11 +5,14 @@ public class PartTile : MonoBehaviour
     [SerializeField]
     private Transform fastenerHolder;
 
+    [SerializeField]
+    private Transform part_Sprite;
+
     private bool isRight = false;
 
     public Vector2 GetSpriteSize()
     {
-        return transform.lossyScale;
+        return part_Sprite.GetComponent<SpriteRenderer>().bounds.size;
     }
 
     public Transform GetFastenerPosition()
@@ -35,5 +38,10 @@ public class PartTile : MonoBehaviour
     public void SetAttemptSprite(Sprite resulting_sprite)
     {
         fastenerHolder.GetChild(0).GetComponentInChildren<SpriteRenderer>().sprite = resulting_sprite;
+    }
+
+    public Vector2 GetSpritePosition()
+    {
+        return part_Sprite.position;
     }
 }

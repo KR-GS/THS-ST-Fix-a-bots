@@ -53,6 +53,12 @@ public class LoToolMinigame : MonoBehaviour
     private int[] fastenerCheckVal;
     private int[] gapToDisplay;
     private int[] originalGaps;
+    private bool isDragging = false;
+    private bool isOnObject = false;
+
+    private GameObject robotPart;
+
+    private Vector3 offset;
 
     [SerializeField]
     private List<ToolBtn> toolButtons;
@@ -93,6 +99,8 @@ public class LoToolMinigame : MonoBehaviour
         {
             Debug.Log("Fastener ID: " + fastener.GetFastenerType());
         }
+
+        robotPart = new GameObject("Complete Part");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -392,8 +400,32 @@ public class LoToolMinigame : MonoBehaviour
             gapHolder[i].GetComponent<GapHolder>().SetGapVal(gapToDisplay[i], originalGaps[i]);
         }
 
+        robotPart.transform.position = new Vector2(toolTilingManager.TileMidPoint(), tiledParts[0].transform.position.y);
+
+        foreach (GameObject part in tiledParts)
+        {
+            part.transform.parent = robotPart.transform;
+        }
+
+        foreach (GameObject counter in counterHolder)
+        {
+            counter.transform.parent = robotPart.transform;
+        }
+
+        foreach (GameObject gap in gapHolder)
+        {
+            gap.transform.parent = robotPart.transform;
+        }
+
+        robotPart.AddComponent<BoxCollider2D>();
+
+       robotPart.GetComponent<BoxCollider2D>().size = toolTilingManager.TileLength();
+
+        robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -5f);
+
         Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
         OverheadView();
+
     }
 
     // Update is called once per frame
@@ -401,12 +433,43 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            if(Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
                 {
-                    HandleClickEvent();
+                    HandleDragEvent();
                 }
+            }
+            else if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                if (isOnObject)
+                {
+                    Debug.Log("Dragging Object");
+
+                    isDragging = true;
+
+                    Vector2 newPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+
+                    //draggingObj.position = new Vector3(newPos.x + offset.x, draggingObj.position.y, draggingObj.position.z);
+
+                    robotPart.transform.position = new Vector2(newPos.x + offset.x, robotPart.transform.position.y);
+                }
+            }
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                if (!isDragging)
+                {
+                    if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
+                    {
+                        HandleClickEvent();
+                    }
+                }
+                else
+                {
+                    isDragging = false;
+                    isOnObject = false;
+                }
+                    
             }
         }
         
@@ -432,6 +495,20 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void HandleDragEvent()
+    {
+        RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
+        if (rayHit.collider != null)
+        {
+            if (rayHit.transform.name == "Complete Part")
+            {
+                offset = robotPart.transform.position - Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                isOnObject = true;
+                Debug.Log("Interacting with draggable object");
+            }
+        }
     }
 
     private void HandleClickEvent()
