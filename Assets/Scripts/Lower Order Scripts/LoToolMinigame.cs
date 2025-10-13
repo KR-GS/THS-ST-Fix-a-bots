@@ -1124,20 +1124,17 @@ public class LoToolMinigame : MonoBehaviour
 
     public void AddTenEvent()
     {
-        bool useCountManager = false;
         numberToDisplay[currentInt] = numberToDisplay[currentInt]+10;
         if (numberToDisplay[currentInt] <= max_HitCount)
         {
             fastenerObj[currentInt].SetActive(true);
             textCounter.gameObject.SetActive(false);
             //hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[0].GetHitIcon());
-            useCountManager = true;
         }
         else
         {
             fastenerObj[currentInt].SetActive(false);
             textCounter.gameObject.SetActive(true);
-            useCountManager = false;
         }
 
         UpdateGapCounters();
@@ -1147,9 +1144,12 @@ public class LoToolMinigame : MonoBehaviour
 
     private IEnumerator AddMoreCoroutine()
     {
-        foreach (Transform child in fastenerObj[currentInt].transform)
+        if (fastenerObj[currentInt].transform.childCount >0)
         {
-            GameObject.Destroy(child.gameObject);
+            foreach (Transform child in fastenerObj[currentInt].transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
         }
 
         yield return null;
