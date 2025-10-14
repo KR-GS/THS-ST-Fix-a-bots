@@ -120,7 +120,7 @@ public class LoToolMinigame : MonoBehaviour
 
         int difference = StaticData.sequenceDiff;
         //int difference = patternGameManager.ReturnDifference();
-        patternLength = StaticData.patternLength;
+        patternLength = StaticData.toolpatternLength;
         //patternLength = toolDifficulty.GetLengthOfPattern();
         fastenerObj = new GameObject[patternLength];
         fastenerValues = new int[patternLength];
@@ -129,7 +129,7 @@ public class LoToolMinigame : MonoBehaviour
         counterHolder = new GameObject[patternLength];
         fastenerCheckVal = new int[patternLength];
 
-        Debug.Log("patternLength: " + StaticData.patternLength);
+        Debug.Log("patternLength: " + StaticData.toolpatternLength);
         Debug.Log("numberToDisplay.Length: " + (numberToDisplay?.Length));
         Debug.Log("generatedList.Count: " + (generatedList?.Count));
 

@@ -351,8 +351,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
 
-
-        StaticData.patternLength = data.patternLength;
+        StaticData.paintpatternLength = data.paintpatternLength;
+        StaticData.toolpatternLength = data.toolpatternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
         StaticData.selectedStickerIndex = data.selectedStickerIndex;
         StaticData.selectedStickerIndexTwo = data.selectedStickerIndexTwo;
@@ -401,7 +401,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.selectedFastenerIndex = StaticData.selectedFastenerIndex;
         data.selectedStickerIndex = StaticData.selectedStickerIndex;
         data.selectedStickerIndexTwo = StaticData.selectedStickerIndexTwo;
-        data.patternLength = StaticData.patternLength;
+        data.paintpatternLength = StaticData.paintpatternLength;
+        data.toolpatternLength = StaticData.toolpatternLength;
         data.startOfDay = StaticData.startOfDay;
         data.toolWrong = StaticData.toolWrong;
         data.paintWrong = StaticData.paintWrong;
@@ -570,7 +571,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             if (gameType == Minigame.tool)
             {
-                patternLength = 7;
+                StaticData.toolpatternLength = 7;
                 incorrectVals = Random.Range(1, 2);
             }
             else
@@ -585,7 +586,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Medium with value: " + StaticData.medValue);
             if (gameType == Minigame.tool)
             {
-                patternLength = Random.Range(7, 9);
+                StaticData.toolpatternLength = Random.Range(7, 9);
                 incorrectVals = Random.Range(2, 3);
                 missingVals = Random.Range(1, 2);
                 Debug.Log("Hey look, I went here! Incorrect vals: " + incorrectVals + ", Missing Vals: " + missingVals);
@@ -602,7 +603,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Hardcore indeed!");
             if (gameType == Minigame.tool)
             {
-                patternLength = Random.Range(7, 10);
+                StaticData.toolpatternLength = Random.Range(7, 10);
                 incorrectVals = 0;
                 missingVals = 1;
             }
@@ -615,13 +616,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
 
 
-        if (gameType != Minigame.tool)
+        if (gameType == Minigame.paint)
         {
-            patternLength = 6;
+            StaticData.paintpatternLength = 6;
         }
 
-        StaticData.patternLength = patternLength;
-        Debug.Log("Checking Pattern Length: " + StaticData.patternLength);
+        //StaticData.patternLength = patternLength;
+        //Debug.Log("Checking Pattern Length: " + StaticData.patternLength);
         StaticData.incorrectVals = incorrectVals;
         StaticData.missingVals = missingVals;
         StaticData.noOfTypes = noOfTypes;
@@ -633,7 +634,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         Debug.Log("Tooly tooly");
         ConfigureDifficulty(out int incorrectVals, out int missingVals, out int noOfTypes, Minigame.tool);
-        currentPattern = GeneratePatternArray(StaticData.patternLength);
+        currentPattern = GeneratePatternArray(StaticData.toolpatternLength);
         StaticData.toolPattern = currentPattern;
 
        
@@ -856,7 +857,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         Debug.Log("Painty painty");
         ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
-        currentPaintPattern = GeneratePaintPatternArray(StaticData.patternLength);
+        currentPaintPattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
         StaticData.paintPattern = currentPaintPattern;
 
         StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4

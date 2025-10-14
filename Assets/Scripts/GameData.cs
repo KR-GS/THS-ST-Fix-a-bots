@@ -55,7 +55,9 @@ public class GameData
 
     public int stageDone;
 
-    public int patternLength;
+    public int toolpatternLength;
+
+    public int paintpatternLength;
 
     public bool isToolDone;
 
@@ -105,7 +107,8 @@ public class GameData
         this.selectedStickerIndexTwo = 0;
         this.incorrectIndices = new List<int>();
         this.incorrectValues = new List<int>();
-        this.patternLength = 5;
+        this.toolpatternLength = 5;
+        this.paintpatternLength = 5;
         this.isPaintDone = false;
         this.isWireDone = false;
         this.isToolDone = false;

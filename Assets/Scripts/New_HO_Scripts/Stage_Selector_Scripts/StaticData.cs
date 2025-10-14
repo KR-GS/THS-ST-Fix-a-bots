@@ -41,7 +41,8 @@ public class StaticData
 
     public static int paintDiff;
     public static int sequenceDiff;
-    public static int patternLength;
+    public static int paintpatternLength;
+    public static int toolpatternLength;
     public static int incorrectVals;
     public static int missingVals;
     public static int noOfTypes;
