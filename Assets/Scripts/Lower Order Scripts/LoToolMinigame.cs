@@ -42,6 +42,7 @@ public class LoToolMinigame : MonoBehaviour
     private List<int> generatedList = new List<int>();
     private int currentInt;
     private int[] numberToDisplay;
+    [SerializeField]
     private int patternLength;
     private int slotToFill = 0;
     private int slotToFix = 0;
@@ -128,20 +129,20 @@ public class LoToolMinigame : MonoBehaviour
         counterHolder = new GameObject[patternLength];
         fastenerCheckVal = new int[patternLength];
 
-        Debug.Log("patternLength: " + patternLength);
-        Debug.Log("numberToDisplay.Length: " + (numberToDisplay?.Length ?? -1));
-        Debug.Log("generatedList.Count: " + (generatedList?.Count ?? -1));
+        Debug.Log("patternLength: " + StaticData.patternLength);
+        Debug.Log("numberToDisplay.Length: " + (numberToDisplay?.Length));
+        Debug.Log("generatedList.Count: " + (generatedList?.Count));
 
-        patternLength = numberToDisplay.Length; // Ensure consistency
+        //patternLength = numberToDisplay.Length; // Ensure consistency
         gapToDisplay = new int[patternLength - 1];
         originalGaps = new int[patternLength - 1];
-
-        
 
         gapHolder = new GameObject[patternLength - 1];
 
         generatedList = StaticData.toolPattern;
         //generatedList = patternGameManager.ReturnPatternArray(patternLength);
+
+        Debug.Log("generatedList.Count: " + generatedList.Count);
 
         if (StaticData.toolDifficulty == 0)
         {
@@ -155,7 +156,6 @@ public class LoToolMinigame : MonoBehaviour
         {
             Debug.Log("hard");
         }
-
 
         //Checks for minigame's difficulty
         switch (StaticData.toolDifficulty)

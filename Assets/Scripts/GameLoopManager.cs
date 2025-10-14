@@ -521,8 +521,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         return GeneratePaintPatternArray(length);
     }
 
-    private void ConfigureDifficulty(out int patternLength, out int incorrectVals, out int missingVals, out int noOfTypes, Minigame gameType)
+    private void ConfigureDifficulty(out int incorrectVals, out int missingVals, out int noOfTypes, Minigame gameType)
     {
+        Debug.Log("hello from configure");
+        //out int patternLength
         DifficultyLevel level = DifficultyLevel.easy;
 
         switch (gameType)
@@ -555,7 +557,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 break;
         }
 
-        patternLength = 6;
+        int patternLength = 6;
         incorrectVals = 1;
         missingVals = 0;
         noOfTypes = 1;
@@ -568,7 +570,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             if (gameType == Minigame.tool)
             {
-                patternLength = 6;
+                patternLength = 7;
                 incorrectVals = Random.Range(1, 2);
             }
             else
@@ -583,7 +585,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Medium with value: " + StaticData.medValue);
             if (gameType == Minigame.tool)
             {
-                patternLength = 6;
+                patternLength = Random.Range(7, 9);
                 incorrectVals = Random.Range(2, 3);
                 missingVals = Random.Range(1, 2);
                 Debug.Log("Hey look, I went here! Incorrect vals: " + incorrectVals + ", Missing Vals: " + missingVals);
@@ -600,17 +602,18 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Hardcore indeed!");
             if (gameType == Minigame.tool)
             {
-                patternLength = 6;
+                patternLength = Random.Range(7, 10);
                 incorrectVals = 0;
                 missingVals = 1;
             }
             else
             {
-                patternLength = Random.Range(5, 6);
+                //patternLength = Random.Range(5, 6);
                 incorrectVals = 0;
                 missingVals = 2;
             }
         }
+
 
         if (gameType != Minigame.tool)
         {
@@ -618,6 +621,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
 
         StaticData.patternLength = patternLength;
+        Debug.Log("Checking Pattern Length: " + StaticData.patternLength);
         StaticData.incorrectVals = incorrectVals;
         StaticData.missingVals = missingVals;
         StaticData.noOfTypes = noOfTypes;
@@ -628,8 +632,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public void GenerateAndStorePattern()
     {
         Debug.Log("Tooly tooly");
-        ConfigureDifficulty(out int patternLength, out int incorrectVals, out int missingVals, out int noOfTypes, Minigame.tool);
-        currentPattern = GeneratePatternArray(patternLength);
+        ConfigureDifficulty(out int incorrectVals, out int missingVals, out int noOfTypes, Minigame.tool);
+        currentPattern = GeneratePatternArray(StaticData.patternLength);
         StaticData.toolPattern = currentPattern;
 
        
@@ -851,8 +855,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
 
         Debug.Log("Painty painty");
-        ConfigureDifficulty(out patternLength, out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
-        currentPaintPattern = GeneratePaintPatternArray(6);
+        ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
+        currentPaintPattern = GeneratePaintPatternArray(StaticData.patternLength);
         StaticData.paintPattern = currentPaintPattern;
 
         StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
