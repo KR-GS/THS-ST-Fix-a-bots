@@ -54,8 +54,6 @@ public class GameData
 
     public int selectedStickerIndexTwo;
 
-    public int stageDone;
-
     public int TVScreen;
 
     public int patternLength;

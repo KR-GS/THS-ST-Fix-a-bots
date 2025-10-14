@@ -377,7 +377,7 @@ public class RaycastInteractor : MonoBehaviour
         }
     }
 
-    private void DisableRaycasting()
+    public void DisableRaycasting()
     {
         if (Instance != null)
         {
@@ -388,7 +388,7 @@ public class RaycastInteractor : MonoBehaviour
         }
     }
 
-    private void EnableRaycasting()
+    public void EnableRaycasting()
     {
         if (Instance != null)
         {

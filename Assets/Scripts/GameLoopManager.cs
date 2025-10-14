@@ -47,6 +47,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public Button tutorialButton;
 
+    public Button shopButton;
+
     public TextMeshProUGUI remainingOrders;
 
     public TextMeshProUGUI ordersOnboard;
