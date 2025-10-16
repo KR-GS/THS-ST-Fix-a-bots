@@ -214,6 +214,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
             if (moneyImage != null) moneyImage.gameObject.SetActive(false);
             if (tutorialButton != null) tutorialButton.gameObject.SetActive(false);
+            if (shopButton != null) shopButton.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
             ShowTV(false);

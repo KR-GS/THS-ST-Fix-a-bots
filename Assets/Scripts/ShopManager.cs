@@ -24,6 +24,9 @@ public class ShopManager : MonoBehaviour
     public Transform contentParent; // The Content of ScrollView
     public Sprite heartIcon;
     public Button exitShopButton;
+    public Sprite TVSpriteNoOrder;
+    public Sprite TVSpriteIP;
+    public Sprite TVSpriteNO;
     private List<GameObject> currentButtons = new();
 
     void Start()
@@ -79,7 +82,16 @@ public class ShopManager : MonoBehaviour
     {
         if(item.itemName == "A")
         {
-            Debug.Log($"SUCCESSFULLY bought {item.itemName} for {item.price} gold!");
+            if(item.price > GameLoopManager.Instance.money)
+            {
+                Debug.Log("Not enough gold!");
+                return;
+            }
+            else{
+                Debug.Log($"SUCCESSFULLY Bought {item.itemName} for {item.price} gold!");
+                //GameLoopManager.Instance.money += 50; //Base value 50
+                //GameLoopManager.Instance.UpdateMoneyText();
+            }
         }
         else
         {
@@ -96,14 +108,15 @@ public class ShopManager : MonoBehaviour
 
         RaycastInteractor.Instance.DisableRaycasting();
 
- 
-        
-        GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
+        TimerScript.instance.StopTimer();
+
+        GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
-        GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+        GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
         GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+        GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
 
         if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
         if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
@@ -127,8 +140,104 @@ public class ShopManager : MonoBehaviour
     public void CloseShop()
     {
         if (shopPanel != null)
+        {
             shopPanel.SetActive(false);
+        }
+
+        GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
+        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+        GameLoopManager.Instance.ShowTV(true);
+        GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
+        RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
+
+        if (StaticData.TVScreen == 0)
+        {
+            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
+        }
+        else if (StaticData.TVScreen == 1)
+        {
+            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNO;
+        }
+        else if (StaticData.TVScreen == 2)
+        {
+            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteIP;
+        }
+
+        Order savedOrder = OrderManager.Instance.GetActiveOrder();
+
+        if (StaticData.startOfDay == true)
+        {
+            Debug.Log("Aiya, debugging is sad!");
+            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
+            RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+        }
+        else if (StaticData.startOfDay == false)
+        {
+            Debug.Log("Ayo, will this work?");
+            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+            RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+        }
+
+
+        if (RaycastInteractor.Instance.timeText != null)
+        {
+            RaycastInteractor.Instance.timeText.gameObject.SetActive(true); // Hide the time text
+        }
+
+        TimerScript.instance.StartTimer();
+
+        RaycastInteractor.Instance.isOrderChecked = StaticData.isOrderChecked;
+        Debug.Log("isOrderChecked status: " + RaycastInteractor.Instance.isOrderChecked);
+
+        if (!RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
+        {
+
+            Debug.Log("Setting indicators active...");
+
+            if (savedOrder.needsTool)
+            {
+                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+                Debug.Log("ToolIndicator enabled");
+            }
+            if (savedOrder.needsWire)
+            {
+                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+                Debug.Log("WireIndicator enabled");
+            }
+            if (savedOrder.needsPaint)
+            {
+                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+                Debug.Log("PaintIndicator enabled");
+            }
+
+            RaycastInteractor.Instance.isOrderChecked = true;
+            StaticData.isOrderChecked = true;
+        }
+        else if (RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
+        {
+            Debug.Log("Order is checked, returning old indicators...");
+
+            if (savedOrder.needsTool && !StaticData.isToolDone)
+            {
+                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+            }
+            if (savedOrder.needsPaint && !StaticData.isPaintDone)
+            {
+                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+            }
+            if (savedOrder.needsWire && !StaticData.isWireDone)
+            {
+                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.Log($"Indicators not set. isOrderChecked={RaycastInteractor.Instance.isOrderChecked}, currentOrder={savedOrder}");
+        }
     }
+}
 
    
-}
+

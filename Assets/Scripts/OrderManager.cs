@@ -349,6 +349,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+        GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
 
         if (nextdayButton != null)
         {
@@ -383,8 +384,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+        GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
 
-        
+
     }
 
     private void DisableRaycasting()

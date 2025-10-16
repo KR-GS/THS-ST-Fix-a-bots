@@ -65,6 +65,7 @@ public class Station : MonoBehaviour
             if (GameLoopManager.Instance.remainingOrders != null) GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
             if (GameLoopManager.Instance.ordersOnboard != null) GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
             if (GameLoopManager.Instance.moneyImage != null) GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
+            GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
             GameLoopManager.Instance.ShowTV(false);

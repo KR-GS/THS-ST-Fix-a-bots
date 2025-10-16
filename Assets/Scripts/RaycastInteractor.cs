@@ -221,6 +221,8 @@ public class RaycastInteractor : MonoBehaviour
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
             GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
+            GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
+
             if (timeText != null)
             {
                 timeText.gameObject.SetActive(true); // Hide the time text
@@ -421,6 +423,7 @@ public class RaycastInteractor : MonoBehaviour
         GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+        GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);

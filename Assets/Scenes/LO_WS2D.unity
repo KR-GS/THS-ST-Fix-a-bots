@@ -694,6 +694,9 @@ MonoBehaviour:
   contentParent: {fileID: 786469172}
   heartIcon: {fileID: -1855764303, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
   exitShopButton: {fileID: 1801356357}
+  TVSpriteNoOrder: {fileID: 21300000, guid: 1427ff9df7002124e90ece338189569d, type: 3}
+  TVSpriteIP: {fileID: 21300000, guid: 347ef81bff7d96b499fdef169ed537b6, type: 3}
+  TVSpriteNO: {fileID: 21300000, guid: 17831ffc59fa6384d9ae35458dd703d9, type: 3}
 --- !u!1 &184135434
 GameObject:
   m_ObjectHideFlags: 0

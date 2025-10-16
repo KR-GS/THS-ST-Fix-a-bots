@@ -353,6 +353,7 @@ public class TutorialScript : MonoBehaviour
         GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+        GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
 
         if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
         if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
@@ -402,6 +403,7 @@ public class TutorialScript : MonoBehaviour
             GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
             GameLoopManager.Instance.ShowTV(true);
             RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
 
