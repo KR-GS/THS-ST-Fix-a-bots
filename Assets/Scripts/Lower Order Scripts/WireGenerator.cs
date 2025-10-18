@@ -24,6 +24,9 @@ public class WireGenerator : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI slider_Number;
 
+    [SerializeField]
+    private Transform[] copper_Ends;
+
     private List<GameObject> createdWireChild = new List<GameObject>();
 
     private GameObject wireParent;
@@ -168,6 +171,7 @@ public class WireGenerator : MonoBehaviour
     
     private void GenerateWire(int wireTotal)
     {
+        //GameObject new_wire = new GameObject("Complete Wire " + wire_count);
         originalWire.gameObject.SetActive(true);
 
         Vector3 originalPos = originalWire.transform.position;
@@ -207,7 +211,21 @@ public class WireGenerator : MonoBehaviour
 
         wireParent.GetComponent<BoxCollider2D>().isTrigger = true;
 
+        Transform copper_L = Instantiate(copper_Ends[0]);
+
+        Transform copper_R = Instantiate(copper_Ends[1]);
+
+        copper_L.transform.SetParent(wireParent.transform);
+
+        copper_R.transform.SetParent(wireParent.transform);
+
+        //copper_L.transform.localPosition = new Vector2(-4.36f, 0);
+
+        //copper_R.transform.localPosition = new Vector2(4.36f, 0);
+
         generalWireScript.ToggleGenerator();
+
+        //wireParent.transform.SetParent(new_wire.transform);
 
         wireParent.transform.position = generateLocation.position;
 

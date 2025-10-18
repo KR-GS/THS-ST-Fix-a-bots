@@ -41,6 +41,9 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private Canvas ResultUI;
 
+    [SerializeField]
+    private Transform[] copper_Ends;
+
     private int[] num_patterns;
 
     private bool isDragging;
@@ -62,6 +65,7 @@ public class LoWireMinigame : MonoBehaviour
     private List<int> wireToEdit = new List<int>();
 
     private List<Transform> vfxList = new List<Transform>();
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -165,6 +169,12 @@ public class LoWireMinigame : MonoBehaviour
                 newWire.transform.SetParent(null);
                 newWire.GetComponent<BoxCollider2D>().size = size;
                 newWire.GetComponent<BoxCollider2D>().isTrigger = true;
+
+                Transform copper_L = Instantiate(copper_Ends[0]);
+                Transform copper_R = Instantiate(copper_Ends[1]);
+                copper_L.transform.SetParent(newWire.transform);
+                copper_R.transform.SetParent(newWire.transform);
+
                 newWire.transform.position = wireSlots[i].transform.position;
                 newWire.transform.SetParent(wireSlots[i].transform.parent);
 
