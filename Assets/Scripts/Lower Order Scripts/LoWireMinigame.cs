@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UIElements;
 using System.Collections;
 using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class LoWireMinigame : MonoBehaviour
@@ -422,15 +423,39 @@ public class LoWireMinigame : MonoBehaviour
     private IEnumerator StartWireCutting()
     {
         Transform currentSegment = pliers.GetComponent<WirePliers>().GetSegment().transform.parent;
-        yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
+        int current_Side = pliers.GetComponent<WirePliers>().GetSegment().GetSide();
+        //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
 
+        pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
 
         pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
         pliers.GetComponent<WirePliers>().StopParticleEmission();
 
+        VfxSegment next_Side = currentSegment.GetComponent<VFXManager>().GetOppositeSide(current_Side);
+
+        //pliers.transform.position = next_Side.transform.position;
+
+        //yield return new WaitForSeconds(0.05f);
+
+        pliers.GetComponent<WirePliers>().SetSegment(next_Side);
+
+        yield return new WaitForSeconds(0.5f);
+
+        pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
+
+        pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
+
+        yield return new WaitForSeconds(1f);
+
+        pliers.GetComponent<WirePliers>().StopParticleEmission();
+
+        //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
+
+
+        /*
         int sidecount = 0;
 
         foreach(Transform child in currentSegment)
@@ -440,23 +465,21 @@ public class LoWireMinigame : MonoBehaviour
                 sidecount++;
             }
         }
+        */
 
-        if (sidecount >= 2)
-        {
-            Transform wireObj = wireSlots[currentSegment.GetComponent<VFXManager>().GetSlotNumber()].transform.parent.GetComponentInChildren<Wire>().transform;
-            wireObj.transform.position = new Vector3(wireObj.position.x, wireObj.position.y, -0.1f);
-            wireObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        yield return new WaitForSeconds(0.5f);
 
-            yield return new WaitForSeconds(1f);
+        Transform wireObj = wireSlots[currentSegment.GetComponent<VFXManager>().GetSlotNumber()].transform.parent.GetComponentInChildren<Wire>().transform;
+        wireObj.transform.position = new Vector3(wireObj.position.x, wireObj.position.y, -0.1f);
+        wireObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
-            Destroy(wireObj.gameObject);
-        }
-        else
-        {
-            yield return new WaitForSeconds(-0.1f);
-        }
+        yield return new WaitForSeconds(1f);
 
-        StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5));
+        Destroy(wireObj.gameObject);
+
+        //StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5));
+
+        pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5);
 
         //pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
 

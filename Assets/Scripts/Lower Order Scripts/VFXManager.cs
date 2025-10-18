@@ -18,4 +18,20 @@ public class VFXManager : MonoBehaviour
     {
         return assignedSlot;
     }
+
+    public VfxSegment GetOppositeSide(int current_Side)
+    {
+        int side;
+
+        if (current_Side == 0)
+        {
+            side = 1;
+        }
+        else
+        {
+            side = 0;
+        }
+
+        return segments[side];
+    }
 }

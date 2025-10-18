@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class WirePliers : MonoBehaviour
 {
@@ -66,7 +67,12 @@ public class WirePliers : MonoBehaviour
         //StartCoroutine(StopVFXInOrder());
     }
 
-    public IEnumerator TriggerPlierMovement(bool cuttingPart, float speed_Inc)
+    public void SetSegment(VfxSegment next_Segment)
+    {
+        partToCut = next_Segment;
+    }
+
+    public void TriggerPlierMovement(bool cuttingPart, float speed_Inc)
     {
         Quaternion target_rot = Quaternion.Euler(0,0,0);
         Vector3 target = new Vector3(0, 0, 0);
@@ -79,12 +85,21 @@ public class WirePliers : MonoBehaviour
             {
                 target_rot = Quaternion.Euler(0, 0, -90);
             }
+            else
+            {
+                target_rot = Quaternion.Euler(0, 0, 0);
+            }
         }
         else
         {
             target = origPos;
         }
 
+        transform.position = target;
+
+        transform.rotation = target_rot;
+
+        /*
         while (Vector3.Distance(transform.position, target) > 0.01f)
         {
             if (Vector3.Distance(transform.position, target) > 0.01f)
@@ -106,12 +121,10 @@ public class WirePliers : MonoBehaviour
             
             yield return null;
         }
+        */
+
+
 
         Debug.Log("Movement Done!");
-    }
-
-    public void ChangePosRot()
-    {
-
     }
 }

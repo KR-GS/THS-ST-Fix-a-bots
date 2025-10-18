@@ -430,7 +430,9 @@ public class LoToolMinigame : MonoBehaviour
 
         robotPart.GetComponent<BoxCollider2D>().size = toolTilingManager.TileLength();
 
-        robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -5f);
+        robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -6f);
+
+        robotPart.GetComponent<BoxCollider2D>().layerOverridePriority = 1;
 
         //robotPart.GetComponent<Rigidbody2D>().gravityScale = 0;
 
