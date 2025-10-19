@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using System;
 
 public class ToolTilingManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class ToolTilingManager : MonoBehaviour
 
     private List<GameObject> fastener = new List<GameObject>();
 
+    private List<Transform> ruler_Numbers = new List<Transform>();
+
     void Awake()
     {
         tile_complete = new GameObject("Robot Part");
@@ -52,12 +55,19 @@ public class ToolTilingManager : MonoBehaviour
 
         for (int i = 0; i < numberOfTiles; i++)
         {
-            tiles[i] = Instantiate(tileObj.gameObject, tile_complete.transform);
+            tiles[i] = Instantiate(tileObj.gameObject);
             if(i>0)
                 tiles[i].transform.position = new Vector2(tiles[i-1].transform.position.x + tiles[i].GetComponentInChildren<SpriteRenderer>().bounds.size.x, tilePosition.y);
         }
 
-        for(int i = 0; i < numberOfTiles; i++)
+        tile_complete.transform.position = new Vector2(TileMidPoint(), tile_complete.transform.position.y);
+
+        foreach (GameObject part in tiles)
+        {
+            part.transform.SetParent(tile_complete.transform);
+        }
+
+        for (int i = 0; i < numberOfTiles; i++)
         {
             tilesPoints.Add(new Vector3(tiles[i].transform.position.x, tiles[i].GetComponent<PartTile>().GetFastenerPosition().position.y, tiles[i].transform.position.z));
 
@@ -100,6 +110,7 @@ public class ToolTilingManager : MonoBehaviour
                 GameObject newObj2 = Instantiate(ruler_lines[0], ruler_base.transform);
                 newObj2.transform.position = new Vector3((tilesPoints[i-1].x + tilesPoints[i].x) / 2, newObj2.transform.position.y, newObj2.transform.position.z);
             }
+            ruler_Numbers.Add(newObj.transform);
         }
 
         Destroy(ruler_lines[0]);
@@ -149,5 +160,22 @@ public class ToolTilingManager : MonoBehaviour
         return fastener[index].transform.position;
     }
 
+    public Vector2[] GetEndPoints()
+    {
+        Vector2[] ends = new Vector2[2];
 
+        ends[0] = new Vector2(tile_complete.transform.position.x - fastener[0].transform.position.x, tile_complete.transform.position.y);
+
+        ends[1] = new Vector2(fastener[fastener.Count - 1].transform.position.x - tile_complete.transform.position.x, tile_complete.transform.position.y);
+
+        return ends;
+    }
+
+    public void DisableCollider(int number_Limit)
+    {
+        for(int i = 0; i < number_Limit; i++)
+        {
+            ruler_Numbers[i].GetComponent<BoxCollider2D>().enabled = false;
+        }
+    }
 }

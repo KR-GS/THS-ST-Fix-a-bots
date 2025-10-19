@@ -15,6 +15,9 @@ public class FastenerBtn : MonoBehaviour
     private GameObject fastenerPrefab;
 
     [SerializeField]
+    private GameObject missingPrefab;
+
+    [SerializeField]
     private GameObject fastenerHitPrefab;
 
     [SerializeField]
@@ -45,5 +48,10 @@ public class FastenerBtn : MonoBehaviour
     public GameObject GetToolToUse()
     {
         return tool;
+    }
+
+    public GameObject GetMissingObj()
+    {
+        return missingPrefab;
     }
 }

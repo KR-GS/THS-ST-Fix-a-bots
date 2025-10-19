@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class LoToolRevised : MonoBehaviour
 {
@@ -53,6 +55,8 @@ public class LoToolRevised : MonoBehaviour
     private int[] fastenerCheckVal;
     private int[] gapToDisplay;
     private int[] originalGaps;
+
+    //private Vector2[] end_Points = new Vector2[2];
 
     private Vector3 offset;
     private Vector3 distance;
@@ -130,8 +134,6 @@ public class LoToolRevised : MonoBehaviour
         gapToDisplay = new int[patternLength - 1];
         originalGaps = new int[patternLength - 1];
 
-        
-
         gapHolder = new GameObject[patternLength - 1];
 
         //generatedList = StaticData.toolPattern;
@@ -156,34 +158,23 @@ public class LoToolRevised : MonoBehaviour
         {
             case "easy":
                 //slotToFix = StaticData.incorrectVals;
-                slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
-                isFix = true;
+                slotToFix = 1;
+                //isFix = true;
                 Debug.Log("Fixing in easy!");
                 break;
             case "medium":
                 Debug.Log("Fixing in medium!");
 
                 medValue = StaticData.medValue;
-                if (medValue <= 5)
-                {
-                    slotToFill = 0;
-                    slotToFix = toolDifficulty.GetNumberOfIncorrectVal();
-                    isFix = true;
-                    Debug.Log("Method to follow: fix");
-                }
-                else
-                {
-                    slotToFix = 0;
-                    slotToFill = toolDifficulty.GetNumberOfMissingVal();
-                    isFix = false;
-                    Debug.Log("Method to follow: fill");
-                }
+                //slotToFill = 0;
+                slotToFix = 2;
+                //isFix = true;
+                Debug.Log("Method to follow: fix");
                 break;
             case "hard":
                 
                 Debug.Log("Fixing in hard!");
-                slotToFix = 0;
-                slotToFill = toolDifficulty.GetNumberOfMissingVal();
+                slotToFix = 3;
                 isFix = false;
                 Debug.Log("Filling");
                 
@@ -212,6 +203,8 @@ public class LoToolRevised : MonoBehaviour
         //spawn_points = toolTilingManager.GetFastenerPoints();
 
         tiledParts = toolTilingManager.GetTileList();
+
+        /*
         switch (isFix)
         {
             case true:
@@ -223,7 +216,7 @@ public class LoToolRevised : MonoBehaviour
 
                 if (toolDifficulty.GetNumberOfIncorrectVal() == 0)
                 {
-                    /*
+                    
                     HashSet<int> usedIndices = new HashSet<int>();
                     while (StaticData.incorrectIndices.Count < slotToFix)
                     {
@@ -235,7 +228,6 @@ public class LoToolRevised : MonoBehaviour
                             StaticData.incorrectValues.Add(generatedList[randIndex] - difference);
                         }
                     }
-                    */
                 }
 
                 numberToDisplay = generatedList.ToArray();
@@ -284,8 +276,19 @@ public class LoToolRevised : MonoBehaviour
                 }
                 break;
         }
+        */
+        for (int i = 0; i < patternLength - slotToFix; i++)
+        {
+            numberToDisplay[i] = generatedList[i];
+            Debug.Log(i + " Value: " + numberToDisplay[i]);
+        }
 
-        for(int i=0; i<patternLength; i++)
+        for (int i = patternLength - slotToFix; i < patternLength; i++)
+        {
+            numberToDisplay[i] = 0;
+        }
+
+        for (int i=0; i<patternLength; i++)
         {
             originalHitValues[i] = numberToDisplay[i];
         }
@@ -324,11 +327,22 @@ public class LoToolRevised : MonoBehaviour
                 Debug.Log("Adding Fastener");
                 fastenerValues[i] = randFastenerVal+1;
             }
+            else
+            {
+                if(toolDifficulty.GetDifficulty() == "easy")
+                {
+                    Instantiate(fastenerList[randFastenerVal].GetMissingObj(), toolTilingManager.SetFastener(generatedList[i]));
+                }
+            }
 
             fastenerCheckVal[i] = randFastenerVal+1;
         }
 
-        toolTilingManager.SetCenterFocus(numberToDisplay[0]-1);
+        //end_Points = toolTilingManager.GetEndPoints();
+
+        toolTilingManager.DisableCollider(numberToDisplay[0] - 1);
+
+        toolTilingManager.SetCenterFocus(numberToDisplay[0] -1);
 
         power_meter.SetActive(false);
     }
@@ -349,10 +363,20 @@ public class LoToolRevised : MonoBehaviour
             {
                 if (isDragging)
                 {
-                        isDragging = false;
-                        draggingObj = null;
-                        Debug.Log("Not scrolling");
-                        toolTilingManager.IsNotDragged();
+                    if (toolTilingManager.CheckPointPosition(generatedList[0] - 1).x > 0)
+                    {
+                        Debug.Log("Passed the Limit 1");
+                        toolTilingManager.SetCenterFocus(generatedList[0] - 1);
+                    }
+                    else if (toolTilingManager.CheckPointPosition(generatedList[generatedList.Count-1] - 1).x < 0)
+                    {
+                        toolTilingManager.SetCenterFocus(generatedList[generatedList.Count - 1] - 1);
+                    }
+
+                    isDragging = false;
+                    draggingObj = null;
+                    Debug.Log("Not scrolling");
+                    toolTilingManager.IsNotDragged();
                 }
             }
             else

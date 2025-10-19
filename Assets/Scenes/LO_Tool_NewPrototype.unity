@@ -871,6 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fastenerPrefab: {fileID: 3200441463033314186, guid: a2ce3b996078aaa40a8f382a8dd61a02, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: 4ab335de8eb7ad5428ad2c0c4b061c4f, type: 3}
   fastenerHitPrefab: {fileID: 8997990762073031256, guid: a71d3498d25de5b4988ae1855751793c, type: 3}
   fastenerType: 3
   fastenerValue: 4
@@ -1709,6 +1710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fastenerPrefab: {fileID: 3200441463033314186, guid: 9ee3128596a2356458c3729789c4dbc3, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: 759726c52e2406d448691f7183a1af16, type: 3}
   fastenerHitPrefab: {fileID: 8997990762073031256, guid: 5dcb76c746c54e0468f3214297578cc9, type: 3}
   fastenerType: 0
   fastenerValue: 1
@@ -1859,6 +1861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fastenerPrefab: {fileID: 3200441463033314186, guid: 0db58bbf81e59d84a89f1f269b0c8b66, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: 4f2f169fab3370647b4d8ecec8e9a063, type: 3}
   fastenerHitPrefab: {fileID: 8997990762073031256, guid: f5a27e4fb199c2c4aa00f9a8ac6720cc, type: 3}
   fastenerType: 2
   fastenerValue: 3
@@ -2435,6 +2438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fastenerPrefab: {fileID: 3200441463033314186, guid: 832f21a5db8d1c1489103a57c1f83fe2, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: 296c6cd5a16a40d41a2f93360a47e846, type: 3}
   fastenerHitPrefab: {fileID: 8997990762073031256, guid: cd696f32cc503f34ea7845f34d2c570e, type: 3}
   fastenerType: 1
   fastenerValue: 2
