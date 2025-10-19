@@ -15,6 +15,8 @@ public class WireColor : MonoBehaviour
     [SerializeField]
     private Color btnColor;
 
+
+    /*
     void Awake()
     {
         if(colorAssigned == ButtonColor.red)
@@ -30,6 +32,7 @@ public class WireColor : MonoBehaviour
             btnColor = Color.yellow;
         }
     }
+    */
 
     public Color GetBtnColor()
     {

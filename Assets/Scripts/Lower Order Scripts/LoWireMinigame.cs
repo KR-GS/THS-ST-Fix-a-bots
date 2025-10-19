@@ -44,6 +44,11 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private Transform[] copper_Ends;
 
+    /*
+    [SerializeField]
+    private WireGenerator wireGenerator;
+    */
+
     private int[] num_patterns;
 
     private bool isDragging;
@@ -70,6 +75,14 @@ public class LoWireMinigame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        WireGenerator wireGenerator = FindAnyObjectByType<WireGenerator>();
+
+        Color btn_Red = wireGenerator.GetRed();
+
+        Color btn_Blue = wireGenerator.GetBlue();
+
+        Color btn_Yellow = wireGenerator.GetYellow();
+
         generator.SetActive(true);
 
         ResultUI.enabled = false;
@@ -128,7 +141,7 @@ public class LoWireMinigame : MonoBehaviour
                 {
                     for (int j = 0; j < yellow_segments; j++)
                     {
-                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.yellow;
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = btn_Yellow;
                         currentSegment++;
                     }
                 }
@@ -137,7 +150,7 @@ public class LoWireMinigame : MonoBehaviour
                 {
                     for (int j = 0; j < blue_segments; j++)
                     {
-                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.blue;
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = btn_Blue;
                         currentSegment++;
                     }
                 }
@@ -146,7 +159,7 @@ public class LoWireMinigame : MonoBehaviour
                 {
                     for (int j = 0; j < red_segments; j++)
                     {
-                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = Color.red;
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = btn_Red;
                         currentSegment++;
                     }
                 }
@@ -387,6 +400,7 @@ public class LoWireMinigame : MonoBehaviour
 
             generatedChildren[i].transform.SetParent(parent.transform);
 
+            /*
             if (i % 2 == 0)
             {
                 generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.white;
@@ -395,6 +409,7 @@ public class LoWireMinigame : MonoBehaviour
             {
                 generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.grey;
             }
+            */
 
             //generatedChildren[i].GetComponent<SpriteRenderer>().sortingOrder = 4;
 

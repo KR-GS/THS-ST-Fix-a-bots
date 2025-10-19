@@ -27,6 +27,9 @@ public class WireGenerator : MonoBehaviour
     [SerializeField]
     private Transform[] copper_Ends;
 
+    [SerializeField]
+    private WireColor[] btn_Colors;
+
     private List<GameObject> createdWireChild = new List<GameObject>();
 
     private GameObject wireParent;
@@ -134,15 +137,15 @@ public class WireGenerator : MonoBehaviour
         int wireTotal = 0;
         foreach (GameObject childClr in createdWireChild)
         {
-            if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.red)
+            if (childClr.GetComponent<SpriteRenderer>().color == btn_Colors[0].GetBtnColor())
             {
                 redTotal++;
             }
-            else if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.blue)
+            else if (childClr.GetComponent<SpriteRenderer>().color == btn_Colors[1].GetBtnColor())
             {
                 blueTotal++;
             }
-            else if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.yellow)
+            else if (childClr.GetComponent<SpriteRenderer>().color == btn_Colors[2].GetBtnColor())
             {
                 yellowTotal++;
             }
@@ -251,5 +254,19 @@ public class WireGenerator : MonoBehaviour
     public void ResetValue(Slider slider)
     {
         slider.value = slider.minValue;
+    }
+
+    public Color GetRed()
+    {
+        return btn_Colors[0].GetBtnColor();
+    }
+
+    public Color GetBlue()
+    {
+        return btn_Colors[1].GetBtnColor();
+    }
+    public Color GetYellow()
+    {
+        return btn_Colors[2].GetBtnColor();
     }
 }
