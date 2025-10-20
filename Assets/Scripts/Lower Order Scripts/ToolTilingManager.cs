@@ -136,6 +136,11 @@ public class ToolTilingManager : MonoBehaviour
         return fastener[position-1].transform;
     }
 
+    public void SetHighlighted(int index)
+    {
+        ruler_Numbers[index-1].GetComponent<RulerLines>().SetHighLight();
+    }
+
     public void IsDragged()
     {
         ruler_base.transform.SetParent(tile_complete.transform);

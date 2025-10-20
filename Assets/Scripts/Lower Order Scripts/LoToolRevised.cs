@@ -31,6 +31,9 @@ public class LoToolRevised : MonoBehaviour
     private GameObject[] fastenerObj;
 
     [SerializeField]
+    private GameObject missingObj;
+
+    [SerializeField]
     private Transform toolHolder;
 
     [SerializeField]
@@ -322,7 +325,7 @@ public class LoToolRevised : MonoBehaviour
             {
                 Instantiate(fastenerList[randFastenerVal].GetFastenerSprite(), toolTilingManager.SetFastener(numberToDisplay[i]));
                 //tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
-
+                toolTilingManager.SetHighlighted(numberToDisplay[i]);
 
                 Debug.Log("Adding Fastener");
                 fastenerValues[i] = randFastenerVal+1;
@@ -467,6 +470,8 @@ public class LoToolRevised : MonoBehaviour
 
                 focusPoint = int.Parse(ruler.GetComponentInChildren<TextMeshProUGUI>().text);
 
+                Transform currentPoint = toolTilingManager.SetFastener(focusPoint);
+
                 toolTilingManager.SetCenterFocus(int.Parse(ruler.GetComponentInChildren<TextMeshProUGUI>().text) -1);
 
                 fastenerButtons.parent.GetComponent<Canvas>().enabled = true;
@@ -474,6 +479,11 @@ public class LoToolRevised : MonoBehaviour
                 foreach(GameObject part in tiledParts)
                 {
                     part.GetComponent<BoxCollider2D>().enabled = false;
+                }
+
+                if (currentPoint.childCount == 0)
+                {
+                    Instantiate(missingObj, currentPoint);
                 }
             }
             else if (rayHit.transform.gameObject.TryGetComponent(out Tool tool))
