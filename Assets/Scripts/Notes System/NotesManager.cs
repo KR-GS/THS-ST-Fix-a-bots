@@ -89,6 +89,11 @@ public class NotesManager : MonoBehaviour
         default_color = notesObj.GetComponent<Image>().color;
     }
 
+    public void CloseNoteSystem()
+    {
+        notesMakerUI.gameObject.SetActive(false);
+    }
+
     public void OnDoneBtnClick()
     {
         GameObject noteObject;
@@ -108,6 +113,11 @@ public class NotesManager : MonoBehaviour
         notesObj.GetComponent<Image>().color = default_color;
 
         notesMakerUI.gameObject.SetActive(false);
+    }
+
+    public void ToggleNotes()
+    {
+        notesUI.enabled = !notesUI.enabled;
     }
 
     public void ChangeColor(Image btnColor)

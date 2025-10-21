@@ -44,6 +44,9 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private Transform[] copper_Ends;
 
+    [SerializeField]
+    private NotesManager notesManager;
+
     /*
     [SerializeField]
     private WireGenerator wireGenerator;
@@ -528,6 +531,8 @@ public class LoWireMinigame : MonoBehaviour
                     OverallUI.enabled = false;
 
                     ResultUI.enabled = true;
+
+                    notesManager.ToggleNotes();
 
                     StaticData.isWireDone = true;
 
