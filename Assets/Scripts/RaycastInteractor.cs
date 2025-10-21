@@ -23,10 +23,6 @@ public class RaycastInteractor : MonoBehaviour
     public TextMeshProUGUI botName;
     public TextMeshProUGUI customerName;
 
-    //public TextMeshProUGUI toolStatus;
-    //public TextMeshProUGUI wireStatus;
-    //public TextMeshProUGUI paintStatus;
-
     public Image readyIndicator;
     public TextMeshProUGUI readyText;
 
@@ -351,8 +347,6 @@ public class RaycastInteractor : MonoBehaviour
             Debug.LogWarning("No active orders to show!");
             return;
         }
-
-        
 
         Order order = OrderManager.Instance.GetActiveOrder(); // Get the first active order (activeOrders[0])
 

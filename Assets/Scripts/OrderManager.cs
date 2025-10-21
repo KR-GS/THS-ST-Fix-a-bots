@@ -159,7 +159,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         }
 
 
-
         orderList.Add(newOrder);
         currentOrderIndex = 0;
 

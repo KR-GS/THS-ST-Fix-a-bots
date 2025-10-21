@@ -1673,7 +1673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &415360418
 Transform:
   m_ObjectHideFlags: 0
@@ -1905,19 +1905,19 @@ MonoBehaviour:
     iconImage: {fileID: 445164913}
     dash: {fileID: 1647726600}
     statusImage: {fileID: 2098943719}
-    stationSprite: {fileID: -1903023897, guid: 921088705d2d6c14da42ef34870bf999, type: 3}
+    stationSprite: {fileID: 1575577801, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
   wireStatus:
     root: {fileID: 1080504432}
     iconImage: {fileID: 411846659}
     dash: {fileID: 372511594}
     statusImage: {fileID: 2028059659}
-    stationSprite: {fileID: 21300000, guid: d40296bb9163da14591d6bbc3254227a, type: 3}
+    stationSprite: {fileID: -1576043298, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
   paintStatus:
     root: {fileID: 1033997736}
     iconImage: {fileID: 1065845126}
     dash: {fileID: 328877771}
     statusImage: {fileID: 331245155}
-    stationSprite: {fileID: -1372374925, guid: 2869c89d427803440a436faa7c09dc96, type: 3}
+    stationSprite: {fileID: 700659251, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
   completeSprite: {fileID: -179910888, guid: eeba0fb958f12e74499b8e605cedab6e, type: 3}
   notDoneSprite: {fileID: -1175309499, guid: eeba0fb958f12e74499b8e605cedab6e, type: 3}
 --- !u!114 &458572021
