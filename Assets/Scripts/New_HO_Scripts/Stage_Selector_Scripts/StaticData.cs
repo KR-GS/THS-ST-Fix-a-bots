@@ -72,6 +72,8 @@ public class StaticData
 
     public static bool cutscenePlay = false;
 
+
+
     public static int TVTime = 0;
 
     public static Sprite lastTVSprite;

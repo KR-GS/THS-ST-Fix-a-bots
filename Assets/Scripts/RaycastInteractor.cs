@@ -97,6 +97,9 @@ public class RaycastInteractor : MonoBehaviour
 
             GameLoopManager.Instance.ShowTV(false);
 
+            TimerScript.instance.StopTimer();
+
+
             tutorialIndicator.gameObject.SetActive(true);
             pointTutorial.gameObject.SetActive(true);
 
@@ -184,7 +187,7 @@ public class RaycastInteractor : MonoBehaviour
             }
             else
             {
-                HideOrderSheetPanel(); 
+                HideOrderSheetPanel();
                 Debug.Log("[RaycastInteractor] No valid saved order to display.");
             }
         }

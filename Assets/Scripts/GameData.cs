@@ -72,6 +72,8 @@ public class GameData
 
     public bool newGame;
 
+    public bool gameStart;
+
     public int toolScore;
 
     public int paintScore;

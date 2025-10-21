@@ -43,7 +43,11 @@ public class ShopManager : MonoBehaviour
 
         ShowCategory("All");
 
-        CloseShop();
+        if (shopPanel != null)
+        {
+            shopPanel.SetActive(false);
+        }
+
     }
 
     public void ShowCategory(string category)

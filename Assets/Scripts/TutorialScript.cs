@@ -69,6 +69,7 @@ public class TutorialScript : MonoBehaviour
         TVDemo.gameObject.SetActive(false);
         toDolistDemo.gameObject.SetActive(false);
         demoIndicator.gameObject.SetActive(false);
+        
 
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
@@ -427,6 +428,7 @@ public class TutorialScript : MonoBehaviour
                 Debug.Log("Aiya, debugging is sad!");
                 RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
                 RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+                TimerScript.instance.StopTimer();
             }
             else if (StaticData.startOfDay == false)
             {
