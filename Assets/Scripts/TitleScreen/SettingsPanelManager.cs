@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.Localization.Settings;
+using System.Collections;
 
 public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 {
@@ -70,6 +71,12 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
+        Debug.Log("Available locales count: " + LocalizationSettings.AvailableLocales.Locales.Count);
+        for (int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; i++)
+        {
+            Debug.Log($"Locale {i}: {LocalizationSettings.AvailableLocales.Locales[i]}");
+        }
+
         if (PlayerPrefs.HasKey("MasterVolume"))
         {
             masterVolumeValue = PlayerPrefs.GetFloat("MasterVolume");
@@ -150,12 +157,20 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         {
             // General Settings
             case 0:
+
                 selectedLanguage = languageSelector.GetCurrentValue();
 
                 if(selectedLanguage == "English")
-                    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
-                else if(selectedLanguage == "Filipino")
-                    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[1];
+                    //SetLocale(0);
+                    StartCoroutine(SetLocaleAfterDelay(0));
+                    //LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
+                else if (selectedLanguage == "Filipino")
+                {
+                    StartCoroutine(SetLocaleAfterDelay(1));
+                    //SetLocale(1);
+                    //LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[1];
+                }
+                
 
                 masterVolumeValue = masterVolume.GetValue();
                 sfxVolumeValue = sfxVolume.GetValue();
@@ -198,6 +213,12 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         ShowGeneralSettings();
         DataPersistenceManager.Instance.SaveGame();
         mainPanel.SetActive(false);
+    }
+
+    private IEnumerator SetLocaleAfterDelay(int localeIndex)
+    {
+        yield return LocalizationSettings.InitializationOperation;
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localeIndex];
     }
 
     public void BackToMainMenu()
@@ -341,7 +362,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
                 break;
             case "Filipino":
                 languageSelector.Init("Language", new List<string> { "English", "Filipino" }, 1);
-                LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
+                LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[1];
                 break;
         }
 

@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: 
     m_Metadata:
       m_Items: []
+  - m_Id: 3997654018293760
+    m_Key: titleScreen.Tester
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
