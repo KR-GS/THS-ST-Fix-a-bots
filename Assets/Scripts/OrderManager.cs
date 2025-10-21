@@ -120,9 +120,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         if (level >= 1 && level < 6)
         {
-            newOrder.needsTool = true;
+            newOrder.needsTool = true; //originally true, gonna QA
             newOrder.needsPaint = false; //originally false, gonna QA
-            newOrder.needsWire = false;
+            newOrder.needsWire = false; //originally false, gonna QA
         }
 
         else if (level >= 6 && level < 11)
@@ -139,7 +139,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             float rand = Random.value;
             newOrder.needsTool = Random.value < 0.5f;
             newOrder.needsPaint = Random.value < 0.5f;
-            newOrder.needsWire = false; //Set to 0.5 if wire is finalized
+            newOrder.needsWire = Random.value < 0.5f;
         }
         
         // Ensure at least one requirement
@@ -307,24 +307,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         return null;
     }
-    /*
-    public void ShowOrderCompletePanel()
-    {
-        orderCompletePanel.SetActive(true);
-    }
-
-    public void HideOrderCompletePanel()
-    {
-        orderCompletePanel.SetActive(false);
-    }
-
-    public void OnButtonClick()
-    {
-        HideOrderCompletePanel();
-        GameLoopManager.Instance.CompleteLevel();
-        //raycastInteractor.enabled = true;
-    }
-    */
 
     public void ShowOrderCompletePanel()
     {

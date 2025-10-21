@@ -36,14 +36,14 @@ EditorBuildSettings:
     path: Assets/Scenes/LO_Tool.unity
     guid: 86b44f707acdf854b86566c3cb6a28e9
   - enabled: 0
-    path: Assets/Scenes/LO_Wire.unity
-    guid: 4e63145dab683f04e849754cc4fa121f
-  - enabled: 0
     path: Assets/Scenes/LO_Tool 1.unity
     guid: 97f901e0485ee3d41ac64b240a2af4b2
   - enabled: 1
     path: Assets/Scenes/LO_Paint_GUI.unity
     guid: 75f02a228bc4414478bbedce6d1309c5
+  - enabled: 1
+    path: Assets/Scenes/LO_Wire.unity
+    guid: 4e63145dab683f04e849754cc4fa121f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

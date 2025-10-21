@@ -27,6 +27,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> currentPaintPattern;
 
+    private List<int> currentWirePattern;
+
     public static GameLoopManager Instance;
 
     public static DataPersistenceManager dpm;
@@ -326,12 +328,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Static Data for paint difficulty is hard!");
         }
 
-        if (wireScore >= 0 && wireScore < 250) //We do not have wire yet
+        if (wireScore >= 0 && wireScore < 200) //We do not have wire yet
         {
             StaticData.wireDifficulty = 0; // Easy
             Debug.Log("Static Data for wire difficulty is easy!");
         }
-        else if (wireScore >= 250 && wireScore < 500)
+        else if (wireScore >= 200 && wireScore < 500)
         {
             StaticData.wireDifficulty = 1; // Medium
             Debug.Log("Static Data for wire difficulty is medium!");
@@ -349,10 +351,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.paintWrong = data.paintWrong;
         StaticData.wireWrong = data.wireWrong;
 
+        StaticData.valuestoChange = data.valuestoChange;
+
         Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
 
         StaticData.paintpatternLength = data.paintpatternLength;
         StaticData.toolpatternLength = data.toolpatternLength;
+        StaticData.wirepatternLength = data.wirepatternLength;
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
         StaticData.selectedStickerIndex = data.selectedStickerIndex;
         StaticData.selectedStickerIndexTwo = data.selectedStickerIndexTwo;
@@ -365,6 +370,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             currentPaintPattern = new List<int>(data.paintPattern);
             StaticData.paintPattern = new List<int>(data.paintPattern);
+        }
+        if(data.wirePattern != null)
+        {
+            currentWirePattern = new List<int>(data.wirePattern);
+            StaticData.wirePattern = new List<int>(data.wirePattern);
         }
         if (data.incorrectPattern != null)
         {
@@ -394,6 +404,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
         data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
         data.paintPattern = new List<int>(currentPaintPattern); // Store the current paint pattern
+        data.wirePattern = new List<int>(currentWirePattern); // Store the current wire pattern
         data.paintScore = this.paintScore;
         data.toolScore = this.toolScore;
         data.wireScore = this.wireScore;
@@ -403,10 +414,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.selectedStickerIndexTwo = StaticData.selectedStickerIndexTwo;
         data.paintpatternLength = StaticData.paintpatternLength;
         data.toolpatternLength = StaticData.toolpatternLength;
+        data.wirepatternLength = StaticData.wirepatternLength;
         data.startOfDay = StaticData.startOfDay;
         data.toolWrong = StaticData.toolWrong;
         data.paintWrong = StaticData.paintWrong;
         data.wireWrong = StaticData.wireWrong;
+        data.valuestoChange = StaticData.valuestoChange;
     }
 
     public void UpdateMoneyText()
@@ -451,14 +464,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         DifficultyLevel difficulty = DifficultyLevel.easy;
 
-        switch (StaticData.paintDifficulty)
+        switch (StaticData.toolDifficulty)
         {
             case 0: difficulty = DifficultyLevel.easy; break;
             case 1: difficulty = DifficultyLevel.medium; break;
             case 2: difficulty = DifficultyLevel.hard; break;
         }
-
-        
 
         if (difficulty == DifficultyLevel.easy)
         {
@@ -512,6 +523,44 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         return numberPaintPatternList;
     }
 
+    private List<int> GenerateWirePatternArray(int patternLen) //This is for tool
+    {
+        generatedDifference = Random.Range(diff_Lowest, diff_Highest);
+        StaticData.sequenceDiff = generatedDifference; // Store in StaticData for sequence difference
+        int baseHolder = Random.Range(base_Lowest, base_Highest);
+
+        List<int> numberWirePatternList = new List<int>();
+
+        DifficultyLevel difficulty = DifficultyLevel.easy;
+
+        switch (StaticData.wireDifficulty)
+        {
+            case 0: difficulty = DifficultyLevel.easy; break;
+            case 1: difficulty = DifficultyLevel.medium; break;
+            case 2: difficulty = DifficultyLevel.hard; break;
+        }
+
+        if (difficulty == DifficultyLevel.easy || difficulty == DifficultyLevel.medium)
+        {
+            for (int i = 1; i <= patternLen; i++)
+            {
+                numberWirePatternList.Add(baseHolder + (generatedDifference * i));
+            }
+        }
+
+        else if (difficulty == DifficultyLevel.hard)
+        {
+            for (int i = 1; i <= patternLen; i++)
+            {
+                baseHolder += (generatedDifference + i);
+                numberWirePatternList.Add(baseHolder);
+            }
+
+        }
+
+        return numberWirePatternList;
+    }
+
     public List<int> GetPattern(int length)
     {
         return GeneratePatternArray(length);
@@ -522,10 +571,14 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         return GeneratePaintPatternArray(length);
     }
 
+    public List<int> GetWirePattern(int length)
+    {
+        return GenerateWirePatternArray(length);
+    }
+
     private void ConfigureDifficulty(out int incorrectVals, out int missingVals, out int noOfTypes, Minigame gameType)
     {
         Debug.Log("hello from configure");
-        //out int patternLength
         DifficultyLevel level = DifficultyLevel.easy;
 
         switch (gameType)
@@ -558,7 +611,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 break;
         }
 
-        int patternLength = 6;
         incorrectVals = 1;
         missingVals = 0;
         noOfTypes = 1;
@@ -619,6 +671,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (gameType == Minigame.paint)
         {
             StaticData.paintpatternLength = 6;
+        }
+
+        if (gameType == Minigame.wire)
+        {
+            StaticData.wirepatternLength = 6;
         }
 
         //StaticData.patternLength = patternLength;
@@ -867,6 +924,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             StaticData.selectedStickerIndex = (StaticData.selectedStickerIndex + 1) % 3; // Wrap around if same index
         }
+
+
+        Debug.Log("Wire wire, pants on fire");
+        ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.wire);
+        currentWirePattern = GenerateWirePatternArray(StaticData.wirepatternLength);
+        StaticData.wirePattern = currentWirePattern;
+        StaticData.valuestoChange = Random.Range(2, 6);
+
+
+
+
     }
 
     public void ShowTV(bool response)

@@ -88,11 +88,13 @@ public class LoWireMinigame : MonoBehaviour
         ResultUI.enabled = false;
 
         Vector2 size = new Vector2(origWire.transform.lossyScale.x, origWire.transform.lossyScale.y);
-        num_patterns = patternManager.ReturnPatternArray(6).ToArray();
+        //num_patterns = patternManager.ReturnPatternArray(6).ToArray();
+        num_patterns = StaticData.wirePattern.ToArray();
+        Debug.Log("Your pattern array is: " + num_patterns);
 
         isDragging = false;
 
-        int valueToChange = Random.Range(2, 6);
+        int valueToChange = StaticData.valuestoChange;
 
         for (int i = 0; i < 6; i++)
         {
@@ -103,7 +105,7 @@ public class LoWireMinigame : MonoBehaviour
             int red_segments = num_patterns[i];
             int total_val = red_segments;
 
-            if (difficultyManager.GetDifficulty() == "easy")
+            if (StaticData.wireDifficulty == 0)
             {
                 if (i == 5)
                 {
@@ -111,7 +113,7 @@ public class LoWireMinigame : MonoBehaviour
                     total_val = 0;
                 }
             }
-            else if (difficultyManager.GetDifficulty() == "medium" || difficultyManager.GetDifficulty() == "hard")
+            else if (StaticData.wireDifficulty == 1 || StaticData.wireDifficulty == 2)
             {
                 if (valueToChange == i)
                 {
@@ -526,6 +528,14 @@ public class LoWireMinigame : MonoBehaviour
                     OverallUI.enabled = false;
 
                     ResultUI.enabled = true;
+
+                    StaticData.isWireDone = true;
+
+                    if (DataPersistenceManager.Instance != null)
+                    {
+                        DataPersistenceManager.Instance.SaveGame();
+                        Debug.Log("Wire station completion saved to StaticData.");
+                    }
                 }
                 else
                 {
@@ -535,6 +545,9 @@ public class LoWireMinigame : MonoBehaviour
                         child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
                     }
                     Debug.Log("Value is Wrong!");
+
+                    StaticData.wireWrong += 1;
+                    Debug.Log("Added one penalty to wire score");
 
                     j++;
                 }

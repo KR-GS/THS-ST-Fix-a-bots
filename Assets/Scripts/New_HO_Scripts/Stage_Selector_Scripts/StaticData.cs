@@ -35,6 +35,8 @@ public class StaticData
     public static List<int> incorrectToolPattern;
     public static List<int> paintPattern;
     public static List<int> incorrectPaintPattern;
+    public static List<int> wirePattern;
+    public static List<int> incorrectWirePattern;
     public static int selectedStickerIndex, selectedStickerIndexTwo;
     public static List<int> incorrectIndices = new List<int>();
     public static List<int> incorrectValues = new List<int>();
@@ -43,9 +45,11 @@ public class StaticData
     public static int sequenceDiff;
     public static int paintpatternLength;
     public static int toolpatternLength;
+    public static int wirepatternLength;
     public static int incorrectVals;
     public static int missingVals;
     public static int noOfTypes;
+    public static int valuestoChange;
 
     public static bool startOfDay = false;
     public static int toolWrong = 0;

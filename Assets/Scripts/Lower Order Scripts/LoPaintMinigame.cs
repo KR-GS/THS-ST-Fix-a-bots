@@ -87,53 +87,6 @@ public class LoPaintMinigame : MonoBehaviour
         RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
 
         List<int> packToUse = new List<int>();
-        //Transform roboPart = FindFirstObjectByType<RobotPaintPart>().transform.parent;
-
-        /*
-        if (StaticData.diffInt == 0 || StaticData.diffInt == 1)
-        {
-            numberPattern.Add(patternGameManager.ReturnPatternArray(numOfSides).ToArray());
-            Debug.Log("Number of sides: " + numOfSides);
-            packToUse.Add(Random.Range(0, stickerPacks.Length));
-            packUsed.Add(stickerPacks[packToUse[0]].GetStickerNum());
-        }
-        else if(StaticData.diffInt == 2)
-        {
-            Debug.Log("Else If triggered");
-            for(int i = 0; i<2; i++)
-            {
-                numberPattern.Add(patternGameManager.ReturnPatternArray(numOfSides).ToArray());
-            }
-
-            Debug.Log("Pattern Total: " + numberPattern.Count);
-
-            int j = 0;
-
-            while (j < 2)
-            {
-                int rand = Random.Range(0, stickerPacks.Length);
-                bool isFound = false;
-                foreach (int val in packToUse)
-                {
-                    if (val == rand)
-                    {
-                        isFound = true;
-                        break;
-                    }
-                }
-
-                if (!isFound)
-                {
-                    Debug.Log("Sticker Pack value to add: "+rand);
-                    packToUse.Add(rand);
-                    packUsed.Add(stickerPacks[packToUse[j]].GetStickerNum());
-                    j++;
-                }
-            }
-
-            Debug.Log(packToUse.Count);
-        }
-        */
         
         if (StaticData.paintPattern != null && StaticData.paintPattern.Count > 0)
         {

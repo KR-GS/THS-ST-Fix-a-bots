@@ -39,7 +39,7 @@ public class Station : MonoBehaviour
                 break;
 
             case StationType.Wire:
-                gameObject.SetActive(currentLevel >= 11);
+                gameObject.SetActive(true); //originally 11
                 break;
         }
     }
@@ -62,7 +62,6 @@ public class Station : MonoBehaviour
                     if (currentOrder.needsTool && !currentOrder.toolDone)
                     {
                         SceneManager.LoadScene("LO_Tool_GUI");
-                        //currentOrder.toolDone = true;
                         Debug.Log("Tool station activated!");
                     }
                     break;
@@ -71,7 +70,6 @@ public class Station : MonoBehaviour
                     if (currentOrder.needsPaint && !currentOrder.paintDone)
                     {
                         SceneManager.LoadScene("LO_Paint_GUI");
-                        //currentOrder.paintDone = true;
                         Debug.Log("Paint station activated!");
                     }
                     break;
@@ -80,7 +78,6 @@ public class Station : MonoBehaviour
                     if (currentOrder.needsWire && !currentOrder.wireDone)
                     {
                         SceneManager.LoadScene("LO_Wire");
-                        //currentOrder.wireDone = true;
                         Debug.Log("Wire station activated!");
                     }
                     break;

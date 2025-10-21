@@ -43,6 +43,8 @@ public class GameData
 
     public List<int> incorrectPaintPattern;
 
+    public List<int> wirePattern;
+
     public List<int> incorrectIndices;
 
     public List<int> incorrectValues;
@@ -59,11 +61,15 @@ public class GameData
 
     public int paintpatternLength;
 
+    public int wirepatternLength;
+
     public bool isToolDone;
 
     public bool isPaintDone;
 
     public bool isWireDone;
+
+    public int valuestoChange;
 
     public bool isOrderChecked;
 
@@ -122,6 +128,7 @@ public class GameData
         this.toolWrong = 0;
         this.paintWrong = 0;
         this.wireWrong = 0;
+        this.valuestoChange = 0;
     }
 
 

@@ -77,7 +77,35 @@ public class StationExit : MonoBehaviour
                     }
                     break;
                 case StationType.Wire:
-                    currentOrder.wireDone = true;
+                    if(StaticData.isWireDone)
+                    {
+                        currentOrder.wireDone = true;
+                        Debug.Log("Wire task completed, marking wireDone = true");
+                        if (StaticData.wireWrong == 0)
+                        {
+                            Debug.Log("All tools used correctly! Earn 10 points!");
+                            GameLoopManager.Instance.wireScore += 10;
+                        }
+                        else if (StaticData.wireWrong > 0 && StaticData.wireWrong < 3)
+                        {
+                            Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                            GameLoopManager.Instance.wireScore += 5;
+                        }
+                        else if (StaticData.wireWrong >= 3)
+                        {
+                            Debug.Log("You performed poorly! Earn 1 points!");
+                            GameLoopManager.Instance.wireScore += 1;
+                        }
+
+                        StaticData.wireWrong = 0;
+                        Debug.LogWarning("Wire wrongs set to 0!");
+
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Wire task not completed yet!");
+
+                    }
                     break;
             }
 
