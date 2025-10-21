@@ -96,7 +96,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (scene.name == "LO_WS2D")
         {
-            if (StaticData.cutscenePlay == true)
+            if (StaticData.newGame == false)
             {
                 Debug.Log("This appears when opening the game right???");
 
@@ -204,6 +204,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
                 StartCoroutine(UpdateStationsNextFrame());
             }
+            
 
         }
         else
@@ -896,6 +897,28 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             {
                 TV.SetActive(true);
             }
+        }
+    }
+
+    public void ShowUI(bool response)
+    {
+        if (response == false)
+        {
+            moneyImage.gameObject.SetActive(false);
+            dayNumber.gameObject.SetActive(false);
+            moneyText.gameObject.SetActive(false);
+            remainingOrders.gameObject.SetActive(false);
+            ordersOnboard.gameObject.SetActive(false);
+            shopButton.gameObject.SetActive(false);
+        }
+        else if (response == true)
+        {
+            moneyImage.gameObject.SetActive(true);
+            dayNumber.gameObject.SetActive(true);
+            moneyText.gameObject.SetActive(true);
+            remainingOrders.gameObject.SetActive(true);
+            ordersOnboard.gameObject.SetActive(true);
+            shopButton.gameObject.SetActive(true);
         }
     }
     public void StartNewLevel()

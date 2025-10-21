@@ -48,10 +48,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
-        if (orderCompletePanel != null)
-            HideOrderCompletePanel();
-        else
-            Debug.LogWarning("Order Complete Panel not assigned yet!");
 
         //DataPersistenceManager.Instance.LoadGame();
     }
@@ -73,6 +69,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         if (orderCompletePanel != null)
         {
             HideOrderCompletePanel();
+
+            if (StaticData.newGame == true)
+            {
+                GameLoopManager.Instance.ShowUI(false);
+                RaycastInteractor.Instance.timeText.gameObject.SetActive(false);
+            }
         }
         else
         {
@@ -385,7 +387,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
         GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
-
 
     }
 

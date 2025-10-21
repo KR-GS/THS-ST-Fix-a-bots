@@ -79,10 +79,11 @@ public class RaycastInteractor : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+       
+
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
         if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
-
 
         StartCoroutine(DelayedOrderUISetup());
 
@@ -95,6 +96,7 @@ public class RaycastInteractor : MonoBehaviour
 
             DisableRaycasting();
 
+            
             GameLoopManager.Instance.ShowTV(false);
 
             TimerScript.instance.StopTimer();
@@ -102,6 +104,17 @@ public class RaycastInteractor : MonoBehaviour
 
             tutorialIndicator.gameObject.SetActive(true);
             pointTutorial.gameObject.SetActive(true);
+
+            Debug.Log("moneyImage active before: " + GameLoopManager.Instance.moneyImage.gameObject.activeSelf);
+            GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
+            Debug.Log("moneyImage active after: " + GameLoopManager.Instance.moneyImage.gameObject.activeSelf);
+
+            //GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
+            GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
+            GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
+            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+            GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
 
 
             readyIndicator.gameObject.SetActive(false);
@@ -136,6 +149,8 @@ public class RaycastInteractor : MonoBehaviour
 
             }
 
+            HideOrderSheetPanel();
+
             if (StaticData.startOfDay == true)
             {
                 Debug.Log("Aiya, debugging is sad!");
@@ -148,6 +163,8 @@ public class RaycastInteractor : MonoBehaviour
                 readyIndicator.gameObject.SetActive(false);
                 readyText.gameObject.SetActive(false);
             }
+
+            
 
             GameLoopManager.Instance.ordersOnboard.text = "Active Orders: " + OrderManager.Instance.activeOrders.Count.ToString();
         }

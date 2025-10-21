@@ -121,6 +121,8 @@ public class ShopManager : MonoBehaviour
         GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
         GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
+        RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+        RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
 
         if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
         if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
@@ -147,6 +149,8 @@ public class ShopManager : MonoBehaviour
         {
             shopPanel.SetActive(false);
         }
+
+        RaycastInteractor.Instance.EnableRaycasting();
 
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
         GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
@@ -176,12 +180,14 @@ public class ShopManager : MonoBehaviour
             Debug.Log("Aiya, debugging is sad!");
             RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
             RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            TimerScript.instance.StopTimer();
         }
         else if (StaticData.startOfDay == false)
         {
             Debug.Log("Ayo, will this work?");
             RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            TimerScript.instance.StartTimer();
         }
 
 
@@ -190,34 +196,14 @@ public class ShopManager : MonoBehaviour
             RaycastInteractor.Instance.timeText.gameObject.SetActive(true); // Hide the time text
         }
 
-        TimerScript.instance.StartTimer();
+        
 
         RaycastInteractor.Instance.isOrderChecked = StaticData.isOrderChecked;
         Debug.Log("isOrderChecked status: " + RaycastInteractor.Instance.isOrderChecked);
 
         if (!RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
         {
-
-            Debug.Log("Setting indicators active...");
-
-            if (savedOrder.needsTool)
-            {
-                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
-                Debug.Log("ToolIndicator enabled");
-            }
-            if (savedOrder.needsWire)
-            {
-                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
-                Debug.Log("WireIndicator enabled");
-            }
-            if (savedOrder.needsPaint)
-            {
-                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
-                Debug.Log("PaintIndicator enabled");
-            }
-
-            RaycastInteractor.Instance.isOrderChecked = true;
-            StaticData.isOrderChecked = true;
+            Debug.Log("You still haven't checked your orders yet...");
         }
         else if (RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
         {

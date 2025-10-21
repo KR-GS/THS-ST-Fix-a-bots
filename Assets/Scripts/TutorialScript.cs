@@ -41,10 +41,13 @@ public class TutorialScript : MonoBehaviour
 
         if (tutorialObject != null)
         {
+            /*
             if (StaticData.newGame)
                 tutorialObject.SetActive(true);
             else
                 tutorialObject.SetActive(false);
+            */
+            tutorialObject.SetActive(false);
         }
         else
         {

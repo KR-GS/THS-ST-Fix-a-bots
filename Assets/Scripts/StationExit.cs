@@ -98,6 +98,7 @@ public class StationExit : MonoBehaviour
             GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
             GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
             GameLoopManager.Instance.ShowTV(true);
             if (TimerScript.instance != null && TimerScript.instance.timer != null)
             {
