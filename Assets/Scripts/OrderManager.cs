@@ -117,7 +117,15 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         newOrder.robotname = robotList[namePicker];
 
 
+        if (level >= 1)
+        {
+            float rand = Random.value;
+            newOrder.needsTool = Random.value < 0.5f;
+            newOrder.needsPaint = Random.value < 0.5f;
+            newOrder.needsWire = Random.value < 0.5f;
+        }
 
+        /*
         if (level >= 1 && level < 6)
         {
             newOrder.needsTool = true; //originally true, gonna QA
@@ -141,9 +149,15 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = Random.value < 0.5f;
         }
-        
+        */
+
         // Ensure at least one requirement
-        
+        if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)
+        {
+            Debug.Log("Are we seriously doing this???");
+            newOrder.needsTool = true;
+        }
+
 
 
         orderList.Add(newOrder);

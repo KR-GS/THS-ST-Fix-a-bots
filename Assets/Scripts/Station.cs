@@ -35,7 +35,7 @@ public class Station : MonoBehaviour
                 break;
 
             case StationType.Paint:
-                gameObject.SetActive(currentLevel >= 6); //originally 6
+                gameObject.SetActive(true); //originally currentLevel >= 6
                 break;
 
             case StationType.Wire:
