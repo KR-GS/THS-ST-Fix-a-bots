@@ -876,24 +876,25 @@ public class LoToolMinigame : MonoBehaviour
         Debug.Log("Current Child Count before reset: " + fastenerObj[currentInt].transform.childCount);
 
         Debug.Log(fastenerObj[currentInt].transform.position);
-
-        if (numberToDisplay[currentInt] <= max_HitCount)
+        if(numberToDisplay[currentInt] <= max_HitCount)
         {
             textCounter.gameObject.SetActive(false);
-            fastenerObj[currentInt].SetActive(true);
-            hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt]-1].GetHitIcon());
+            if (numberToDisplay[currentInt]>0)
+            {
+                fastenerObj[currentInt].SetActive(true);
+                hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt] - 1].GetHitIcon());
+            }
+            else
+            {
+                fastenerObj[currentInt].SetActive(false);
+            }
+            
         }
         else if(numberToDisplay[currentInt] > max_HitCount)
         {
             SetZoomedInTextCounter(currentInt);
             fastenerObj[currentInt].SetActive(false);
             textCounter.gameObject.SetActive(true);
-        }
-        else
-        {
-            fastenerObj[currentInt].SetActive(false);
-            textCounter.gameObject.SetActive(false);
-
         }
     }
 
