@@ -532,7 +532,7 @@ public class LoWireMinigame : MonoBehaviour
 
                     ResultUI.enabled = true;
 
-                    notesManager.ToggleNotes();
+                    //notesManager.ToggleNotes();
 
                     StaticData.isWireDone = true;
 

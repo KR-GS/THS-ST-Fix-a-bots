@@ -48,10 +48,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
+        /*
         if (orderCompletePanel != null)
             HideOrderCompletePanel();
         else
             Debug.LogWarning("Order Complete Panel not assigned yet!");
+        */
 
         //DataPersistenceManager.Instance.LoadGame();
     }
