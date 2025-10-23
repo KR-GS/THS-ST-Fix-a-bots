@@ -532,8 +532,6 @@ public class LoWireMinigame : MonoBehaviour
 
                     ResultUI.enabled = true;
 
-                    //notesManager.ToggleNotes();
-
                     StaticData.isWireDone = true;
 
                     if (DataPersistenceManager.Instance != null)
@@ -541,6 +539,8 @@ public class LoWireMinigame : MonoBehaviour
                         DataPersistenceManager.Instance.SaveGame();
                         Debug.Log("Wire station completion saved to StaticData.");
                     }
+
+                    notesManager.ToggleNotes();
                 }
                 else
                 {
