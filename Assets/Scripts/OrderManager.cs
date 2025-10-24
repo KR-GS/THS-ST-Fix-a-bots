@@ -92,6 +92,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             TryCompleteOrder();
         }
 
+        if(StaticData.newGame == true)
+        {
+            TutorialScript.Instance.ResetTutorial();
+            StaticData.newGame = false;
+        }
+
     }
     
 
