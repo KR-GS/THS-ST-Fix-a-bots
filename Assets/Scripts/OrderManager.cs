@@ -280,8 +280,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             }
         }
 
-        GameLoopManager.Instance.UpdateRemainingOrders();
-
         if (orderList.Count == 0)
         {
             isFinished = true;
@@ -338,7 +336,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
-        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
+        GameLoopManager.Instance.onboardImage.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
 
         if (nextdayButton != null)
@@ -370,7 +368,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+        GameLoopManager.Instance.onboardImage.gameObject.SetActive(true);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
 
         

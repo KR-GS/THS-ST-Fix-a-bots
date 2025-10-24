@@ -128,7 +128,7 @@ public class StationExit : MonoBehaviour
             GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+            GameLoopManager.Instance.onboardImage.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
             GameLoopManager.Instance.ShowTV(true);
             if (TimerScript.instance != null && TimerScript.instance.timer != null)

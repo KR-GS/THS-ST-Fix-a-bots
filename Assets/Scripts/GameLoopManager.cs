@@ -47,13 +47,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public TextMeshProUGUI moneyText;
 
-    public TextMeshProUGUI remainingOrders;
-
     public TextMeshProUGUI ordersOnboard;
 
     private TimerScript timer;
 
     public Image moneyImage;
+
+    public Image onboardImage;
 
     public int toolScore;
 
@@ -131,24 +131,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 Debug.LogWarning("MoneyText object not found in LO_Workshop.");
             }
 
-            GameObject remainingOrderObj = GameObject.Find("RemainingOrders");
-            if (remainingOrderObj != null)
-            {
-                remainingOrders = remainingOrderObj.GetComponent<TextMeshProUGUI>();
-                if (remainingOrders != null)
-                {
-                    UpdateRemainingOrders(); 
-                }
-                else
-                {
-                    Debug.LogWarning("TextMeshPro component not found on RemainingOrders object.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
-            }
-
             GameObject ordersOnboardObj = GameObject.Find("OrdersOnboard");
             if (ordersOnboardObj != null)
             {
@@ -165,7 +147,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
             else
             {
-                Debug.LogWarning("RemainingOrders object not found in LO_Workshop.");
+                Debug.LogWarning("OrdersOnboard object not found in LO_Workshop.");
             }
 
             if (TimerScript.instance != null)
@@ -202,9 +184,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             if (dayNumber != null) dayNumber.gameObject.SetActive(false);
             if (moneyText != null) moneyText.gameObject.SetActive(false);
-            if (remainingOrders != null) remainingOrders.gameObject.SetActive(false);
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
             if (moneyImage != null) moneyImage.gameObject.SetActive(false);
+            if (onboardImage != null) onboardImage.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
             RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
             ShowTV(false);
@@ -430,14 +412,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void UpdateRemainingOrders()
-    {
-        if (remainingOrders != null && OrderManager.Instance != null)
-        {
-            remainingOrders.text = "Remaining Orders: " + OrderManager.Instance.orderList.Count;
-        }
-    }
-
     private IEnumerator UpdateOrdersOnboardPeriodically()
     {
         while (true)
@@ -451,7 +425,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         if (ordersOnboard != null && OrderManager.Instance != null)
         {
-            ordersOnboard.text = "Pending Orders: " + OrderManager.Instance.activeOrders.Count;
+            ordersOnboard.text = "" + OrderManager.Instance.activeOrders.Count;
         }
     }
     private List<int> GeneratePatternArray(int patternLen) //This is for tool

@@ -180,7 +180,7 @@ public class RaycastInteractor : MonoBehaviour
             GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
             GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
             GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+            GameLoopManager.Instance.onboardImage.gameObject.SetActive(true);
             GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
             if (timeText != null)
             {
@@ -288,7 +288,6 @@ public class RaycastInteractor : MonoBehaviour
                     {
                         OrderManager.Instance.StartOrderBatch();
                         TimerScript.instance.timer.gameObject.SetActive(true);
-                        GameLoopManager.Instance.UpdateRemainingOrders();
 
                         if (readyIndicator != null && readyText != null)
                         {
@@ -357,7 +356,7 @@ public class RaycastInteractor : MonoBehaviour
         GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
         GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
         GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
-        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
+        GameLoopManager.Instance.onboardImage.gameObject.SetActive(false);
         GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
