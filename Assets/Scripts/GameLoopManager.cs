@@ -447,6 +447,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (difficulty == DifficultyLevel.easy)
         {
+            for (int i = 1; i <= patternLen; i++)
+            {
+                numberPatternList.Add(baseHolder + (generatedDifference * i));
+            }
+        }
+        else if (difficulty == DifficultyLevel.medium)
+        {
             int isNega = Random.Range(0, 1) * 2 - 1;
             if (isNega == -1)
             {
@@ -457,13 +464,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             {
                 numberPatternList.Add(baseHolder + isNega * (generatedDifference * i));
             }
-        }
-        else if (difficulty == DifficultyLevel.medium)
-        {
+
+            /*
             if (StaticData.medValue <= 5){
                 for (int i = 1; i <= patternLen; i++)
                 {
-                    numberPatternList.Add(baseHolder + (generatedDifference * i));
+                    numberPatternList.Add(baseHolder + isNega * (generatedDifference * i));
                 }
             }
             else
@@ -474,6 +480,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                     numberPatternList.Add(baseHolder);
                 }
             }
+            */
+
+            
         }
         else if (difficulty == DifficultyLevel.hard)
         {
