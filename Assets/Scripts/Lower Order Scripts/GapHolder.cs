@@ -9,9 +9,12 @@ public class GapHolder : MonoBehaviour
 
     public void SetGapVal(int gap_val, int right_val)
     {
-        if(gap_val > 0)
+        if (gap_val > 0)
         {
             gapObj.text = "+" + gap_val.ToString();
+        } else if (gap_val < 0)
+        {
+            gapObj.text = gap_val.ToString();
         }
         else
         {
@@ -21,7 +24,7 @@ public class GapHolder : MonoBehaviour
 
         if (gap_val != right_val || gap_val == 0)
         {
-            gapObj.color = Color.blue;
+            gapObj.color = Color.yellow;
         }
         else
         {
