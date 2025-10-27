@@ -15,9 +15,9 @@ public class Tool : MonoBehaviour
         statusAnimator = GetComponentInChildren<Animator>();
         clips = statusAnimator.runtimeAnimatorController.animationClips;
         Debug.Log(clips.Length);
-        events = clips[1].events;
+        //events = clips[1].events;
 
-        Debug.Log("Event time: " + events[0].time);
+        //Debug.Log("Event time: " + events[0].time);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public IEnumerator TriggerToolAnimation(PartTile fastener)

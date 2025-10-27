@@ -622,9 +622,11 @@ public class LoToolMinigame : MonoBehaviour
         if (currentInt >= patternLength - slotToFix)
         {
             fastenerList[0].transform.parent.gameObject.SetActive(true);
+
             if (fastenerValues[currentInt] > 0)
             {
-                SelectTool(fastenerValues[currentInt] - 1, currentInt);
+                Transform holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
+                SelectTool(fastenerValues[currentInt] - 1, currentInt, holder);
                 addTenBtn.gameObject.SetActive(true);
 
                 addTenBtn.GetComponent<Image>().sprite = fastenerList[fastenerValues[currentInt] - 1].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
@@ -766,7 +768,7 @@ public class LoToolMinigame : MonoBehaviour
 
             Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
 
-            SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType() - 1, currentInt);
+            SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType() - 1, currentInt, holder);
 
             numberToDisplay[currentInt] = 0;
             foreach (Transform child in fastenerObj[currentInt].transform)
@@ -776,11 +778,11 @@ public class LoToolMinigame : MonoBehaviour
         }
     }
 
-    private void SelectTool(int value, int i)
+    private void SelectTool(int value, int i, Transform holder)
     {
         int currentFastenerVal = fastenerValues[i];
         Debug.Log("Fastener in place: " + currentFastenerVal);
-        toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
+        toolHolder.position = holder.position;
 
         if (currentTool != null)
         {
@@ -789,20 +791,26 @@ public class LoToolMinigame : MonoBehaviour
 
         addTenBtn.gameObject.SetActive(true);
 
-        
-
         addTenBtn.GetComponent<Image>().sprite = fastenerList[value].GetHitIcon().transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 
         currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
-        currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
+
+        currentTool.transform.localPosition = new Vector2(0, 0);
+        //currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
 
         addTenBtn.transform.position = currentTool.GetComponent<Tool>().GetAddTenPos();
 
         Debug.Log("What is happening???");
+
+        holder.gameObject.SetActive(false);
     }
 
     public void OverheadView()
     {
+        Transform holder = tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition();
+
+        holder.gameObject.SetActive(true);
+
         Debug.Log(currentInt);
         fastenerObj[currentInt].SetActive(false);
         currentInt = -1;

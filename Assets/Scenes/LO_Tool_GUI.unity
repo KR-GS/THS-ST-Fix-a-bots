@@ -1676,7 +1676,7 @@ MonoBehaviour:
   fastenerHitPrefab: {fileID: 8997990762073031256, guid: 5dcb76c746c54e0468f3214297578cc9, type: 3}
   fastenerType: 0
   fastenerValue: 1
-  tool: {fileID: 6710342850988161296, guid: 562f8e9bcd9413846bf00c716d3e6f4e, type: 3}
+  tool: {fileID: 3200441463033314186, guid: 8c07b1d79bd12444e90721bdf3d9eed1, type: 3}
   missingPrefab: {fileID: 3200441463033314186, guid: b44c380fc894609428c76a40ed1ed0f6, type: 3}
 --- !u!1 &450526536
 GameObject:
@@ -1827,7 +1827,7 @@ MonoBehaviour:
   fastenerHitPrefab: {fileID: 8997990762073031256, guid: f5a27e4fb199c2c4aa00f9a8ac6720cc, type: 3}
   fastenerType: 2
   fastenerValue: 3
-  tool: {fileID: 5915793044961681256, guid: 54ebcf16cbb9745458c0f8f7bd5ccd5b, type: 3}
+  tool: {fileID: 3200441463033314186, guid: 70ac0194519fe644887b060eeb9d9811, type: 3}
   missingPrefab: {fileID: 3200441463033314186, guid: 298da4e9bed001847bf81cd8d046c197, type: 3}
 --- !u!1 &462270654
 GameObject:
@@ -5362,7 +5362,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hammer_NormalHit
+  m_Name: Hammer_Idle
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -22,24 +22,6 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -1522578738, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.083333336
-      value: {fileID: 1415454591, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.16666667
-      value: {fileID: -572768611, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.25
-      value: {fileID: -974009269, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.33333334
-      value: {fileID: -1748452254, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.41666666
-      value: {fileID: -974009269, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.5
-      value: {fileID: -572768611, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.5833333
-      value: {fileID: 842875838, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.75
-      value: {fileID: 842875838, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - time: 0.9166667
-      value: {fileID: 1415454591, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
     - time: 1
       value: {fileID: -1522578738, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
     attribute: m_Sprite
@@ -65,15 +47,6 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: -1522578738, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: 1415454591, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: -572768611, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: -974009269, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: -1748452254, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: -974009269, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: -572768611, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: 842875838, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: 842875838, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
-    - {fileID: 1415454591, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
     - {fileID: -1522578738, guid: 9a0dfe26383d3554483c20a069010506, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
