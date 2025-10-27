@@ -63,6 +63,8 @@ public class LoToolMinigame : MonoBehaviour
 
     private Vector3 offset;
 
+    private bool showGaps = false;
+
     [SerializeField]
     private List<ToolBtn> toolButtons;
 
@@ -422,6 +424,28 @@ public class LoToolMinigame : MonoBehaviour
         foreach (GameObject fastener in fastenerObj)
         {
             fastener.transform.parent = robotPart.transform;
+        }
+
+        switch (StaticData.toolDifficulty)
+        {
+            case 0:
+                showGaps = true;
+
+                Debug.Log("Gaps will be shown");
+                break;
+            case 1:
+                showGaps = false;
+
+                Debug.Log("Will be hidden as hints");
+                break;
+            case 2:
+                showGaps = false;
+
+                Debug.Log("Wont be shown");
+                break;
+            default:
+                Debug.Log("Playing tutorial code");
+                break;
         }
 
         robotPart.AddComponent<BoxCollider2D>();
