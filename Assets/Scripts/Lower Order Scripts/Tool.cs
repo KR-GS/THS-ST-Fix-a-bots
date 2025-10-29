@@ -22,10 +22,10 @@ public class Tool : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public IEnumerator TriggerToolAnimation(PartTile fastener)
     {
-        GetComponentInChildren<ToolEvent>().SetCurrentFastener(fastener);
+        //GetComponentInChildren<ToolEvent>().SetCurrentFastener(fastener);
         GetComponent<Collider2D>().enabled = false;
         statusAnimator.SetTrigger("IsUsed");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         GetComponent<Collider2D>().enabled = true;
     }
 

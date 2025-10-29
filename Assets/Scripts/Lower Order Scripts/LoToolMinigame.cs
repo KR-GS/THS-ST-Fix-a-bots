@@ -602,9 +602,12 @@ public class LoToolMinigame : MonoBehaviour
                     {
                         currentInt = i;
                     }
-                    ToggleOverviewCounters(false);
-                    ToggleGapHolder(false);
                 }
+
+                ToggleOverviewCounters(false);
+                ToggleGapHolder(false);
+
+                robotPart.layer = LayerMask.NameToLayer("Ignore Raycast");
 
                 CheckIfEditable();
 
@@ -673,6 +676,8 @@ public class LoToolMinigame : MonoBehaviour
         {
             SetZoomedInTextCounter(currentInt);
         }
+
+        Debug.Log("Playing animation");
         yield return StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
     }
 
@@ -823,6 +828,8 @@ public class LoToolMinigame : MonoBehaviour
         ToggleOverviewCounters(true);
 
         ToggleGapHolder(true);
+
+        robotPart.layer = LayerMask.NameToLayer("Default");
 
         if (currentTool != null)
         {
