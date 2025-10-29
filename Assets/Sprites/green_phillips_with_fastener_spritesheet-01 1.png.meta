@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef6817d345d62d54dbdba2aa2ed5641b
+guid: 94a8929f2a47bbc4cabebf8385651697
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: phil_with_fastener_0
+      name: green_phillips_with_fastener_spritesheet-01 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,42 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15404fa2979c61f4eafccedb219397e7
-      internalID: 284208864
+      spriteID: 63ea3fb54d5af1e4ea5eba3f70fdf9c5
+      internalID: 1380270683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: phil_with_fastener_1
+      name: green_phillips_with_fastener_spritesheet-01 1_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1026
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 22c155652f90c4141a853500f7ee2a7f
-      internalID: 160749450
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: phil_with_fastener_2
-      rect:
-        serializedVersion: 2
-        x: 1026
+        x: 4275
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,42 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7ad608386e1cee488de0f9ffa3d67f7
-      internalID: -641038711
+      spriteID: 78bcfdb9b6ab39140b5ed5dec0b60744
+      internalID: 519611852
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: phil_with_fastener_3
+      name: green_phillips_with_fastener_spritesheet-01 1_2
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 1026
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bb0942a17e5339746bee79644d4a9565
-      internalID: 1816773602
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: phil_with_fastener_4
-      rect:
-        serializedVersion: 2
-        x: 2052
+        x: 8550
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,20 +182,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfc5d26565ab5e640baeae7c09a64e8e
-      internalID: -152385174
+      spriteID: 3e49fceb8ed195541b4d8e2f561fefe6
+      internalID: -130419825
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: phil_with_fastener_5
+      name: green_phillips_with_fastener_spritesheet-01 1_3
       rect:
         serializedVersion: 2
-        x: 2052
-        y: 1026
-        width: 1026
-        height: 1026
+        x: 12825
+        y: 0
+        width: 4275
+        height: 4275
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,8 +204,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ad589872c3150b4bad90bb6d273e740
-      internalID: 1241859320
+      spriteID: e3be3a14d966cae42ac29043132056a0
+      internalID: -1971658744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: green_phillips_with_fastener_spritesheet-01 1_4
+      rect:
+        serializedVersion: 2
+        x: 17100
+        y: 0
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5659a10e1e91204c961bff1b9e061dd
+      internalID: -882501984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: green_phillips_with_fastener_spritesheet-01 1_5
+      rect:
+        serializedVersion: 2
+        x: 21375
+        y: 0
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ccb5fd0d93067341925c7b111e88a8f
+      internalID: 2029988764
       vertices: []
       indices: 
       edges: []
@@ -258,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2b15c7011e084af4f88485abd9914217
+    spriteID: 6e4f66dcd384b5445a000117bcf0f238
     internalID: 0
     vertices: []
     indices: 
@@ -268,12 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      phil_with_fastener_0: 284208864
-      phil_with_fastener_1: 160749450
-      phil_with_fastener_2: -641038711
-      phil_with_fastener_3: 1816773602
-      phil_with_fastener_4: -152385174
-      phil_with_fastener_5: 1241859320
+      green_phillips_with_fastener_spritesheet-01 1_0: 1380270683
+      green_phillips_with_fastener_spritesheet-01 1_1: 519611852
+      green_phillips_with_fastener_spritesheet-01 1_2: -130419825
+      green_phillips_with_fastener_spritesheet-01 1_3: -1971658744
+      green_phillips_with_fastener_spritesheet-01 1_4: -882501984
+      green_phillips_with_fastener_spritesheet-01 1_5: 2029988764
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

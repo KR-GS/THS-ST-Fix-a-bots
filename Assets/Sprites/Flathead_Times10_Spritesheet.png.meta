@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e28da6b04bd69394c9a31ba942452dfe
+guid: 3aa23f3d6bec8884b93a7d8df81a254a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_0
+      name: Flathead_Times10_Spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -138,14 +138,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1b47bb74b3aa1b419a7192b08fc5c9c
-      internalID: -558583457
+      spriteID: 217cc1699d7f701459bf628c1704bd65
+      internalID: -1456585493
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_1
+      name: Flathead_Times10_Spritesheet_1
       rect:
         serializedVersion: 2
         x: 1026
@@ -160,14 +160,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a05fcc61799d974598d270e2c1bcf2f
-      internalID: 1252857770
+      spriteID: 29a50f3930565824c825e5c1147ef2f1
+      internalID: -300534716
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_2
+      name: Flathead_Times10_Spritesheet_2
       rect:
         serializedVersion: 2
         x: 2052
@@ -182,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f174123f31f251d41a75ed2f265e8163
-      internalID: -290257457
+      spriteID: a8c6940c5ec00db46b132728b339f212
+      internalID: 311181458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_3
+      name: Flathead_Times10_Spritesheet_3
       rect:
         serializedVersion: 2
         x: 3078
@@ -204,14 +204,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc6eebcbb80a48144ac33c3eaa9bdf4f
-      internalID: 805434230
+      spriteID: 0061e33d626521c4696be13f2a94a334
+      internalID: 1806677946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_4
+      name: Flathead_Times10_Spritesheet_4
       rect:
         serializedVersion: 2
         x: 4104
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56a7a849032341240b7095b187289767
-      internalID: 248863345
+      spriteID: 7bc62ccb93e7adf40b2379c9f4b64f55
+      internalID: 1074266877
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_5
+      name: Flathead_Times10_Spritesheet_5
       rect:
         serializedVersion: 2
         x: 5130
@@ -248,14 +248,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a28796a76a1fd564998f22ca4c716f5c
-      internalID: 2101483021
+      spriteID: de543b269cbbe614d999c53c6e851b69
+      internalID: 1291050335
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_6
+      name: Flathead_Times10_Spritesheet_6
       rect:
         serializedVersion: 2
         x: 6156
@@ -270,14 +270,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9c8b4ac32ef3854388396599531be33
-      internalID: -489627357
+      spriteID: b3d6707802c72914dbadb2c181e105ed
+      internalID: 1882443790
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_7
+      name: Flathead_Times10_Spritesheet_7
       rect:
         serializedVersion: 2
         x: 7182
@@ -292,14 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f0ade015aaa9214e91d37b6a3092f3a
-      internalID: 1122820259
+      spriteID: 2826c7cc53861b34e84f393a2983f27b
+      internalID: -473069285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_8
+      name: Flathead_Times10_Spritesheet_8
       rect:
         serializedVersion: 2
         x: 8208
@@ -314,14 +314,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f99d10f3272a194ba0e186b8e41d730
-      internalID: -780415799
+      spriteID: f1ae98ffe4b6b9f48be968facd7f0765
+      internalID: -334364463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_9
+      name: Flathead_Times10_Spritesheet_9
       rect:
         serializedVersion: 2
         x: 9234
@@ -336,14 +336,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e295cd1922569e4b83866a307baf505
-      internalID: -767203465
+      spriteID: a33a9e4674b63d14da3fedae312198aa
+      internalID: -971457153
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_10
+      name: Flathead_Times10_Spritesheet_10
       rect:
         serializedVersion: 2
         x: 10260
@@ -358,14 +358,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d205b2d01a76dca469159abbf68e8a73
-      internalID: -299408855
+      spriteID: 90ef313501176394e82a864642c8e477
+      internalID: -172298681
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_11
+      name: Flathead_Times10_Spritesheet_11
       rect:
         serializedVersion: 2
         x: 11286
@@ -380,14 +380,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40f4880544db17245a8ebf2f83d2d805
-      internalID: 2025531561
+      spriteID: da170b4143bcc904391121c01de584a0
+      internalID: -533763565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_12
+      name: Flathead_Times10_Spritesheet_12
       rect:
         serializedVersion: 2
         x: 12312
@@ -402,14 +402,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5baa9102017172f4bbc15ea415b366ab
-      internalID: 1869992783
+      spriteID: e08c2d8bf65f26c4fb023bf1380ad693
+      internalID: -1091604111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_13
+      name: Flathead_Times10_Spritesheet_13
       rect:
         serializedVersion: 2
         x: 13338
@@ -424,30 +424,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25bcd5d7770afee41a4c49e9ae629a48
-      internalID: 228967250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Phillips_Times10_Spritesheet_14
-      rect:
-        serializedVersion: 2
-        x: 14364
-        y: 0
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ebc8243c1951c0f4ab147e13ad7adc17
-      internalID: -1617517209
+      spriteID: 60a8565f372bf3e43894ca877a592f33
+      internalID: 2114732021
       vertices: []
       indices: 
       edges: []
@@ -456,7 +434,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d9a0dec0c0c3595439678921b5113da4
+    spriteID: 4827a372ebeb5a548a3fb89b58610625
     internalID: 0
     vertices: []
     indices: 
@@ -466,21 +444,20 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Phillips_Times10_Spritesheet_0: -558583457
-      Phillips_Times10_Spritesheet_1: 1252857770
-      Phillips_Times10_Spritesheet_10: -299408855
-      Phillips_Times10_Spritesheet_11: 2025531561
-      Phillips_Times10_Spritesheet_12: 1869992783
-      Phillips_Times10_Spritesheet_13: 228967250
-      Phillips_Times10_Spritesheet_14: -1617517209
-      Phillips_Times10_Spritesheet_2: -290257457
-      Phillips_Times10_Spritesheet_3: 805434230
-      Phillips_Times10_Spritesheet_4: 248863345
-      Phillips_Times10_Spritesheet_5: 2101483021
-      Phillips_Times10_Spritesheet_6: -489627357
-      Phillips_Times10_Spritesheet_7: 1122820259
-      Phillips_Times10_Spritesheet_8: -780415799
-      Phillips_Times10_Spritesheet_9: -767203465
+      Flathead_Times10_Spritesheet_0: -1456585493
+      Flathead_Times10_Spritesheet_1: -300534716
+      Flathead_Times10_Spritesheet_10: -172298681
+      Flathead_Times10_Spritesheet_11: -533763565
+      Flathead_Times10_Spritesheet_12: -1091604111
+      Flathead_Times10_Spritesheet_13: 2114732021
+      Flathead_Times10_Spritesheet_2: 311181458
+      Flathead_Times10_Spritesheet_3: 1806677946
+      Flathead_Times10_Spritesheet_4: 1074266877
+      Flathead_Times10_Spritesheet_5: 1291050335
+      Flathead_Times10_Spritesheet_6: 1882443790
+      Flathead_Times10_Spritesheet_7: -473069285
+      Flathead_Times10_Spritesheet_8: -334364463
+      Flathead_Times10_Spritesheet_9: -971457153
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

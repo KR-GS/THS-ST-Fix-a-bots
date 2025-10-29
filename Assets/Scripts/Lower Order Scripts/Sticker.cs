@@ -14,6 +14,9 @@ public class Sticker : MonoBehaviour
     [SerializeField]
     private bool isDefault = false;
 
+    [SerializeField]
+    private Color highlight;
+
     private Vector3 defaultPos;
 
     private int partOn;
@@ -80,5 +83,15 @@ public class Sticker : MonoBehaviour
     public int GetPartOn()
     {
         return partOn;
+    }
+
+    public void SetIsHighlighted()
+    {
+        GetComponent<SpriteRenderer>().color = highlight;
+    }
+
+    public void ResetColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

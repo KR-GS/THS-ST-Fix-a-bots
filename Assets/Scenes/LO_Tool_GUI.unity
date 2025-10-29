@@ -795,7 +795,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 183823275}
   m_OnClick:
     m_PersistentCalls:
@@ -866,7 +866,7 @@ MonoBehaviour:
   fastenerHitPrefab: {fileID: 8997990762073031256, guid: a71d3498d25de5b4988ae1855751793c, type: 3}
   fastenerType: 3
   fastenerValue: 4
-  tool: {fileID: 6710342850988161296, guid: d3af05035617e194fbe5682ffba3820b, type: 3}
+  tool: {fileID: 3200441463033314186, guid: 36940cf6f7870c44eaacb910f00e329d, type: 3}
   missingPrefab: {fileID: 3200441463033314186, guid: 1fb43ccb514eccd4ab0ca23ed76785b8, type: 3}
 --- !u!1 &202795837
 GameObject:

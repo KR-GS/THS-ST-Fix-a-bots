@@ -218,6 +218,7 @@ public class LoPaintMinigame : MonoBehaviour
             {
                 if (dragging)
                 {
+                    draggableObject.GetComponent<Sticker>().ResetColor();
                     if (draggableObject.GetComponent<Sticker>().IsOnPart())
                     {
                         dragging = false;
@@ -243,7 +244,7 @@ public class LoPaintMinigame : MonoBehaviour
                                 touchPos.y = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_DownVal();
                             }
 
-                            Vector3 newPos = new Vector3(touchPos.x, touchPos.y, draggableObject.transform.position.z);
+                            Vector3 newPos = new Vector3(touchPos.x, touchPos.y, 0);
 
                             draggableObject.GetComponent<Sticker>().SetDefaultPos(newPos);
                             draggableObject.transform.position = newPos;
@@ -271,8 +272,9 @@ public class LoPaintMinigame : MonoBehaviour
             {
                 if (dragging)
                 {
-                    Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                    draggableObject.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    Vector2 cameraPoint = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                    Vector3 touchPos = new Vector3(cameraPoint.x, cameraPoint.y, -0.1f);
+                    draggableObject.transform.position = touchPos;
                 }
             }
         }
@@ -296,11 +298,14 @@ public class LoPaintMinigame : MonoBehaviour
                 else
                 {
                     draggableObject = Instantiate(sticker.transform.gameObject);
+                    draggableObject.transform.position = new Vector3(draggableObject.transform.position.x, draggableObject.transform.position.y, -0.1f);
                     draggableObject.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
                     draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();
                     Debug.Log(draggableObject.GetComponent<Sticker>().IsADuplicate());
                     
                 }
+
+                draggableObject.GetComponent<Sticker>().SetIsHighlighted();
                 dragging = true;
                 Debug.Log(draggableObject.name);
             }
