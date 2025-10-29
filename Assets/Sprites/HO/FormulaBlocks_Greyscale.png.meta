@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 73d3bc62c78b2fe4d8d274ca16e89333
+guid: 47a993264aa882d4dbc4d90cb65187e9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -52,7 +52,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Puzzle_UnConnected_Blue
+      name: FormulaBlocks_Greyscale_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 592
-        height: 592
+        x: 134
+        y: 120
+        width: 400
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5492c4d3de20f44392352018402f1cb
-      internalID: 1564306514
+      spriteID: f563459bf9f10e146861a5e73ce3034a
+      internalID: -1336862511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Puzzle_UnConnected_Pink
+      name: FormulaBlocks_Greyscale_1
       rect:
         serializedVersion: 2
-        x: 592
-        y: 0
-        width: 592
-        height: 592
+        x: 726
+        y: 120
+        width: 400
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e32d70fdf994b434abd4874c0ee80ff0
-      internalID: 1442297267
+      spriteID: 66b5b98f6f8703c4b850a5ee44f28c1f
+      internalID: -1431971053
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Puzzle_UnConnected_Orange
+      name: FormulaBlocks_Greyscale_2
       rect:
         serializedVersion: 2
-        x: 1184
-        y: 0
-        width: 592
-        height: 592
+        x: 1318
+        y: 120
+        width: 326
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +182,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36777b1373b15ec4a8ed01de5e05db1e
-      internalID: -1111628073
+      spriteID: 3ad9047e73b4e5b4aa61625ff22326f7
+      internalID: -1550239491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Puzzle_UnConnected_yellow
+      name: FormulaBlocks_Greyscale_3
       rect:
         serializedVersion: 2
-        x: 1776
-        y: 0
-        width: 592
-        height: 592
+        x: 1836
+        y: 120
+        width: 400
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76cd649f8a83fb741bd4627cbbe4c933
-      internalID: -1046063435
+      spriteID: ed9fda85a5a756847b767eb209a9761c
+      internalID: -397059569
       vertices: []
       indices: 
       edges: []
@@ -214,7 +214,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a250f2a7a7febae408af3abb362a4459
+    spriteID: 22f705516e8858c45b716e900a773a04
     internalID: 0
     vertices: []
     indices: 
@@ -224,10 +224,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Puzzle_UnConnected_Blue: 1564306514
-      Puzzle_UnConnected_Orange: -1111628073
-      Puzzle_UnConnected_Pink: 1442297267
-      Puzzle_UnConnected_yellow: -1046063435
+      FormulaBlocks_Greyscale_0: -1336862511
+      FormulaBlocks_Greyscale_1: -1431971053
+      FormulaBlocks_Greyscale_2: -1550239491
+      FormulaBlocks_Greyscale_3: -397059569
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

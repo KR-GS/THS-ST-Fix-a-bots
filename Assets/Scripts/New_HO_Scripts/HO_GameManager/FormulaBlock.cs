@@ -106,7 +106,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         originalPosition = rectTransform.anchoredPosition;
         originalParent = transform.parent;
 
-        // Set up snap slots if they don't exist
+        // Set up snap slots 
         SetupSnapSlots();
 
         // Set up the block appearance
@@ -145,7 +145,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         BlockSnapSlot snapSlot = slotObj.AddComponent<BlockSnapSlot>();
 
         // Position the snap slot
-        float xOffset = position == SnapPosition.Left ? -110f : 110f;
+        float xOffset = position == SnapPosition.Left ? -115f : 115f;
         slotRect.anchoredPosition = new Vector2(xOffset, 0);
         slotRect.sizeDelta = new Vector2(60f, 60f);
 
@@ -338,6 +338,9 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         // Clear the parent reference
         parentBlock = null;
+        
+        // Reset color on disconnect
+        blockImage.color = blockColor; 
 
         // Notify about the disconnection
         FormulaInputPanel.Instance?.OnBlockDisconnected(this, previousParent);
@@ -393,6 +396,32 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
 
         slot.SetConnectedBlock(this);
+        
+        // Change color to indicate correct placement
+        // TODO: Make this only work for certain stages so new StaticData var?
+        if (FormulaInputPanel.Instance != null)
+        {
+            var seq = FormulaInputPanel.Instance.GetTargetSequence(); // get the correct target
+            if (slot.GetPosition() == SnapPosition.Left && blockType == BlockType.Coefficient)
+            {
+                // Check if coefficient matches
+                if (value == seq.Coefficient)
+                    blockImage.color = BlockManager.variableColor;
+            }
+            else if (slot.GetPosition() == SnapPosition.Right && blockType == BlockType.Sign)
+            {
+                // For sign, check if this symbol is the correct one
+                string expectedSymbol = seq.Constant >= 0 ? "+" : "-";
+                if (symbol == expectedSymbol)
+                    blockImage.color = BlockManager.variableColor;
+            }
+            else if (slot.GetPosition() == SnapPosition.Right && blockType == BlockType.Constant)
+            {
+                // Check if constant matches
+                if (value == Mathf.Abs(seq.Constant))
+                    blockImage.color = BlockManager.variableColor;
+            }
+        }
 
         // Notify the formula panel
         FormulaInputPanel.Instance?.OnBlockConnected(this, targetBlock, slot.GetPosition());
@@ -528,6 +557,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         if (locked)
         {
+            blockColor = BlockManager.variableColor;
             blockImage.color = Color.Lerp(blockColor, Color.gray, 0.5f);
         }
         else

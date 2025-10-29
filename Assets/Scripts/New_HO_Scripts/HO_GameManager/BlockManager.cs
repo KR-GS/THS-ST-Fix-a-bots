@@ -14,10 +14,10 @@ public class BlockManager : MonoBehaviour
     public Transform blockContainer;
     
     [Header("Block Colors")]
-    public Color coefficientColor = Color.blue;
-    public Color signColor = Color.yellow;
-    public Color constantColor = Color.green;
-    public Color variableColor = Color.red;
+    public static Color coefficientColor = Color.red;
+    public static Color signColor = Color.yellow;
+    public static Color constantColor = Color.green;
+    public static Color variableColor = Color.blue;
     
     [Header("Block Ranges")]
     private int maxCoefficientValue = 5;

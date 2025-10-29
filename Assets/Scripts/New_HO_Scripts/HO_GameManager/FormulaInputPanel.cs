@@ -57,6 +57,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private DataPersistenceManager dpm;
 
+    public Sequence GetTargetSequence()
+    {
+        return targetSequence;
+    }
+
     private void Awake()
     {
         Instance = this;

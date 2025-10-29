@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 73d3bc62c78b2fe4d8d274ca16e89333
+guid: b4f3d43d66595ee43bd3f54955ae7bec
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -52,7 +52,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Puzzle_UnConnected_Blue
+      name: Greyscale_Puzzle_UnConnected_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 592
-        height: 592
+        x: 134
+        y: 120
+        width: 400
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +138,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5492c4d3de20f44392352018402f1cb
-      internalID: 1564306514
+      spriteID: 2930bc102449428488ef8da28e92cb52
+      internalID: -305835416
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Puzzle_UnConnected_Pink
+      name: Greyscale_Puzzle_UnConnected_1
       rect:
         serializedVersion: 2
-        x: 592
-        y: 0
-        width: 592
-        height: 592
+        x: 726
+        y: 120
+        width: 400
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +160,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e32d70fdf994b434abd4874c0ee80ff0
-      internalID: 1442297267
+      spriteID: 8551470e65d260c49a3bf3529eddf909
+      internalID: -1423057254
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Puzzle_UnConnected_Orange
+      name: Greyscale_Puzzle_UnConnected_2
       rect:
         serializedVersion: 2
-        x: 1184
-        y: 0
-        width: 592
-        height: 592
+        x: 1318
+        y: 120
+        width: 326
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +182,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36777b1373b15ec4a8ed01de5e05db1e
-      internalID: -1111628073
+      spriteID: 9528e69598abc4447a1a4056f983273b
+      internalID: 495435616
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Puzzle_UnConnected_yellow
+      name: Greyscale_Puzzle_UnConnected_3
       rect:
         serializedVersion: 2
-        x: 1776
-        y: 0
-        width: 592
-        height: 592
+        x: 1836
+        y: 120
+        width: 400
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76cd649f8a83fb741bd4627cbbe4c933
-      internalID: -1046063435
+      spriteID: 65dc61e8c309cb245a501d719baa2a0b
+      internalID: 681247210
       vertices: []
       indices: 
       edges: []
@@ -214,7 +214,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a250f2a7a7febae408af3abb362a4459
+    spriteID: abc16c87b2a2bbf4590c60b66c23a278
     internalID: 0
     vertices: []
     indices: 
@@ -224,10 +224,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Puzzle_UnConnected_Blue: 1564306514
-      Puzzle_UnConnected_Orange: -1111628073
-      Puzzle_UnConnected_Pink: 1442297267
-      Puzzle_UnConnected_yellow: -1046063435
+      Greyscale_Puzzle_UnConnected_0: -305835416
+      Greyscale_Puzzle_UnConnected_1: -1423057254
+      Greyscale_Puzzle_UnConnected_2: 495435616
+      Greyscale_Puzzle_UnConnected_3: 681247210
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1973,7 +1973,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 200, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &344626786
 GameObject:
@@ -2587,7 +2587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.89433956, g: 0.89433956, b: 0.89433956, a: 0.5686275}
+  m_Color: {r: 0.19607843, g: 0.19215687, b: 0.28627452, a: 0.5686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4416,10 +4416,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1649963811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5366667}
-  m_AnchorMax: {x: 0.5, y: 0.5366667}
-  m_AnchoredPosition: {x: 96.162025, y: 282.91998}
-  m_SizeDelta: {x: 909.4371, y: 660.9636}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 174.20288, y: 447.42294}
+  m_SizeDelta: {x: 1800, y: 1200}
   m_Pivot: {x: 0.5967794, y: 0.87285244}
 --- !u!114 &1253231072
 MonoBehaviour:
@@ -5137,10 +5137,6 @@ MonoBehaviour:
   formulaArea: {fileID: 344626787}
   blockPrefab: {fileID: 7897813398521036286, guid: 990f5daf6d178d848bcfa7977925fe0f, type: 3}
   blockContainer: {fileID: 437882176}
-  coefficientColor: {r: 0, g: 0, b: 1, a: 1}
-  signColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  constantColor: {r: 0, g: 1, b: 0, a: 1}
-  variableColor: {r: 1, g: 0, b: 0, a: 1}
   useRandomSpawning: 1
 --- !u!1 &1603606088
 GameObject:
@@ -5445,9 +5441,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 129588470}
   - {fileID: 842840115}
   - {fileID: 1253231070}
+  - {fileID: 129588470}
   - {fileID: 1563559286}
   - {fileID: 1708861251}
   - {fileID: 562736251}

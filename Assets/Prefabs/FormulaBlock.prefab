@@ -67,15 +67,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
+  m_sharedMaterial: {fileID: -262727986562645402, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -174,7 +174,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8886841215074296025
 CanvasRenderer:
@@ -246,7 +246,7 @@ MonoBehaviour:
   blockImage: {fileID: 8623567672783077116}
   leftSnapSlot: {fileID: 0}
   rightSnapSlot: {fileID: 0}
-  coefficientSprite: {fileID: 1564306514, guid: 73d3bc62c78b2fe4d8d274ca16e89333, type: 3}
-  signSprite: {fileID: -1111628073, guid: 73d3bc62c78b2fe4d8d274ca16e89333, type: 3}
-  constantSprite: {fileID: -1046063435, guid: 73d3bc62c78b2fe4d8d274ca16e89333, type: 3}
-  variableSprite: {fileID: 1442297267, guid: 73d3bc62c78b2fe4d8d274ca16e89333, type: 3}
+  coefficientSprite: {fileID: -305835416, guid: b4f3d43d66595ee43bd3f54955ae7bec, type: 3}
+  signSprite: {fileID: 495435616, guid: b4f3d43d66595ee43bd3f54955ae7bec, type: 3}
+  constantSprite: {fileID: 681247210, guid: b4f3d43d66595ee43bd3f54955ae7bec, type: 3}
+  variableSprite: {fileID: -1423057254, guid: b4f3d43d66595ee43bd3f54955ae7bec, type: 3}
