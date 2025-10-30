@@ -5,33 +5,73 @@ using System.Xml.Serialization;
 
 public class PatternGameManager : MonoBehaviour
 {
+    [SerializeField]
+    private int base_Lowest;
+
+    [SerializeField]
+    private int base_Highest;
+
+    [SerializeField]
+    private int diff_Lowest;
+
+    [SerializeField] 
+    private int diff_Highest;
+
+    [SerializeField]
+    private DifficultyManager difficulty;
+
     private int generatedDifference;
 
-    private List<int> numberPatternList = new List<int>();
+    //private List<int> numberPatternList = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    void Awake()
-    {
-        generatedDifference = Random.Range(1, 5);
-    }
 
     public int ReturnDifference()
     {
         return generatedDifference;
     }
 
-    private void GeneratePatternArray(int patternLen)
+    private List<int> GeneratePatternArray(int patternLen)
     {
-        for(int i = 1; i<= patternLen; i++)
+        generatedDifference = Random.Range(diff_Lowest, diff_Highest);
+
+        int baseHolder = Random.Range(base_Lowest, base_Highest);
+
+        List<int> numberPatternList = new List<int>();
+
+        if (difficulty.GetMinigame() == "paint")
         {
-            numberPatternList.Add(generatedDifference * i);
+            for (int i = 1; i <= patternLen; i++)
+            {
+                numberPatternList.Add(baseHolder + (generatedDifference * i));
+            }
         }
+        else
+        {
+            if (difficulty.GetDifficulty() == "easy" || difficulty.GetDifficulty() == "medium")
+            {
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    numberPatternList.Add(baseHolder + (generatedDifference * i));
+                }
+            }
+            else if (difficulty.GetDifficulty() == "hard")
+            {
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    baseHolder = baseHolder + (generatedDifference + i);
+                    numberPatternList.Add(baseHolder);
+                }
+            }
+        }
+
+        return numberPatternList;
     }
 
     public List<int> ReturnPatternArray(int intInput)
     {
-        GeneratePatternArray(intInput);
+        List<int> numberPatternList = GeneratePatternArray(intInput);
         return numberPatternList;
     }
 }

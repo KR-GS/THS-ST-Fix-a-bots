@@ -33,7 +33,7 @@ public class HitCountManager : MonoBehaviour
         for(int i = 0; i<value; i++)
         {
             newObj = Instantiate(hitSprite, presetObject.transform);
-            newObj.transform.position = presetObject.transform.localPosition;
+            newObj.transform.position = presetObject.transform.position;
         }
 
         TapIconLayout(presetObject, hitSprite);

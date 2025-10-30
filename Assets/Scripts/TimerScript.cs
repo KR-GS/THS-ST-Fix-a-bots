@@ -4,10 +4,10 @@ using TMPro;
 public class TimerScript : MonoBehaviour, IDataPersistence {
     public static TimerScript instance;
 
-    public float timeAmt = 300f; //300 seconds -> 5 minutes
+    public float timeAmt = 900f; //300 seconds -> 5 minutes
     public float timeLft; //how much time you have left
 
-    public TextMeshPro timer; 
+    public TextMeshProUGUI timer; 
 
     private bool isRunning = false;
     private void Awake()
@@ -40,7 +40,7 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
 
     public void ResetTimer()
     {
-        timeLft = 300f;
+        timeLft = 900f;
     }
     public void Update()
     {
@@ -65,7 +65,7 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
             GameObject textObj = GameObject.Find("Time_Text");
             if (textObj != null)
             {
-                timer = textObj.GetComponent<TextMeshPro>();
+                timer = textObj.GetComponent<TextMeshProUGUI>();
             }
         }
         else if (timer != null)

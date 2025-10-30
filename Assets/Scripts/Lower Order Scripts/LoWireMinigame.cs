@@ -1,26 +1,247 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
-using System.Drawing;
+using System.Collections;
+using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
+
 
 public class LoWireMinigame : MonoBehaviour
 {
-    private GameObject WireSlots;
+    [SerializeField]
+    private GameObject generator;
+
+    [SerializeField]
+    private GameObject robot_part;
+
+    [SerializeField]
+    private Transform wireGeneratedPlace;
+
+    [SerializeField]
+    private PatternGameManager patternManager;
+
+    [SerializeField]
+    private DifficultyManager difficultyManager;
+
+    [SerializeField]
+    private Canvas ValueUI;
+
+    [SerializeField]
+    private Wire origWire;
+
+    [SerializeField]
+    private WireSlot[] wireSlots;
+
+    [SerializeField]
+    private Canvas OverallUI;
+
+    [SerializeField]
+    private Transform sparks_vfx;
+
+    [SerializeField]
+    private Canvas ResultUI;
+
+    [SerializeField]
+    private Transform[] copper_Ends;
+
+    [SerializeField]
+    private NotesManager notesManager;
+
+    /*
+    [SerializeField]
+    private WireGenerator wireGenerator;
+    */
+
+    private int[] num_patterns;
 
     private bool isDragging;
 
-    private int wireNoTotal;
-
     private GameObject wireToAdd;
 
-    private Transform wireGeneratedPlace;
+    private GameObject pliers;
+
+    private bool isOpen = false;
+
+    private bool isDeleting = false;
+
+    private int item_dragged = 0;
+
+    private Vector2 origPos_Pliers;
+
+    private bool onWireToCut;
+
+    private List<int> wireToEdit = new List<int>();
+
+    private List<Transform> vfxList = new List<Transform>();
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        wireNoTotal = 0;
+        WireGenerator wireGenerator = FindAnyObjectByType<WireGenerator>();
+
+        Color btn_Red = wireGenerator.GetRed();
+
+        Color btn_Blue = wireGenerator.GetBlue();
+
+        Color btn_Yellow = wireGenerator.GetYellow();
+
+        generator.SetActive(true);
+
+        ResultUI.enabled = false;
+
+        Vector2 size = new Vector2(origWire.transform.lossyScale.x, origWire.transform.lossyScale.y);
+        //num_patterns = patternManager.ReturnPatternArray(6).ToArray();
+        num_patterns = StaticData.wirePattern.ToArray();
+        Debug.Log("Your pattern array is: " + num_patterns);
 
         isDragging = false;
+
+        int valueToChange = StaticData.valuestoChange;
+
+        for (int i = 0; i < 6; i++)
+        {
+            GameObject newWire = new GameObject("Default Wire " + i);
+            newWire.transform.position = origWire.transform.position;
+            List<GameObject> wireSegments = new List<GameObject>();
+            Debug.Log("Current Int: " + num_patterns[i]);
+            int red_segments = num_patterns[i];
+            int total_val = red_segments;
+
+            if (StaticData.wireDifficulty == 0)
+            {
+                if (i == 5)
+                {
+                    red_segments = 0;
+                    total_val = 0;
+                }
+            }
+            else if (StaticData.wireDifficulty == 1 || StaticData.wireDifficulty == 2)
+            {
+                if (valueToChange == i)
+                {
+                    Debug.Log("Changing Value of Index " + valueToChange);
+                    int diff = Random.Range(2, 3);
+                    red_segments = red_segments - diff;
+                    total_val = red_segments;
+                    Debug.Log("New Value: " + red_segments);
+                }
+            }
+
+            if (red_segments > 0)
+            {
+                int yellow_segments = red_segments / 10;
+                red_segments = red_segments - (yellow_segments * 10);
+                int blue_segments = red_segments / 5;
+                red_segments = red_segments - (blue_segments * 5);
+                int totalSegments = yellow_segments + blue_segments + red_segments;
+
+                Debug.Log("total segments for " + num_patterns[i] + ": " + totalSegments);
+
+                wireSegments = ChangeWireValue(totalSegments, origWire, newWire);
+
+                int currentSegment = 0;
+
+                if (yellow_segments > 0)
+                {
+                    for (int j = 0; j < yellow_segments; j++)
+                    {
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = btn_Yellow;
+                        currentSegment++;
+                    }
+                }
+
+                if (blue_segments > 0)
+                {
+                    for (int j = 0; j < blue_segments; j++)
+                    {
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = btn_Blue;
+                        currentSegment++;
+                    }
+                }
+
+                if (red_segments > 0)
+                {
+                    for (int j = 0; j < red_segments; j++)
+                    {
+                        wireSegments[currentSegment].GetComponent<SpriteRenderer>().color = btn_Red;
+                        currentSegment++;
+                    }
+                }
+
+                for (int j = 0; j < newWire.transform.childCount; j++)
+                {
+                    newWire.transform.GetChild(j).GetComponent<BoxCollider2D>().enabled = false;
+                    Destroy(newWire.transform.GetChild(j).GetComponent<Wire>());
+                }
+
+                newWire.AddComponent<BoxCollider2D>();
+                newWire.AddComponent<SpriteRenderer>();
+                newWire.AddComponent<Wire>();
+                newWire.AddComponent<Rigidbody2D>();
+
+                newWire.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                newWire.GetComponent<Wire>().SetWireNumber(total_val);
+                newWire.GetComponent<Wire>().SetComplete();
+
+                newWire.transform.SetParent(null);
+                newWire.GetComponent<BoxCollider2D>().size = size;
+                newWire.GetComponent<BoxCollider2D>().isTrigger = true;
+
+                Transform copper_L = Instantiate(copper_Ends[0]);
+                Transform copper_R = Instantiate(copper_Ends[1]);
+                copper_L.transform.SetParent(newWire.transform);
+                copper_R.transform.SetParent(newWire.transform);
+
+                newWire.transform.position = wireSlots[i].transform.position;
+                newWire.transform.SetParent(wireSlots[i].transform.parent);
+
+                if (total_val != num_patterns[i])
+                {
+                    GameObject extraVFX = new GameObject();
+
+                    extraVFX = Instantiate(sparks_vfx.gameObject, robot_part.transform);
+
+                    extraVFX.transform.position = wireSlots[i].transform.position;
+
+                    extraVFX.GetComponent<VFXManager>().SetSlotNumber(i);
+
+                    foreach (Transform child in extraVFX.transform)
+                    {
+                        child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
+                    }
+
+                    vfxList.Add(extraVFX.transform);
+
+                    wireToEdit.Add(i);
+                }
+            }
+            else
+            {
+                GameObject extraVFX = new GameObject();
+
+                extraVFX = Instantiate(sparks_vfx.gameObject, robot_part.transform);
+
+                extraVFX.transform.position = wireSlots[i].transform.position;
+
+                extraVFX.GetComponent<VFXManager>().SetSlotNumber(i);
+
+                foreach(Transform child in extraVFX.transform)
+                {
+                    child.GetComponent<VfxSegment>().ToggleVFXAnimOff();
+                }
+
+                vfxList.Add(extraVFX.transform);
+
+                wireToEdit.Add(i);
+            }
+        }
+
+        generator.SetActive(isOpen);
+
+        robot_part.SetActive(!isOpen);
+
+        sparks_vfx.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -30,30 +251,99 @@ public class LoWireMinigame : MonoBehaviour
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                Debug.Log("Hello World");
-                HandleClickEvent(Input.GetTouch(0).position);
+                if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
+                {
+                    Debug.Log("Hello World");
+                    HandleClickEvent(Input.GetTouch(0).position);
+                }
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 if (isDragging)
                 {
-                    isDragging = false;
-
-                    if (wireToAdd.GetComponent<Wire>().GetSlotStatus())
+                    //Debug.Log(wireToAdd.GetComponent<Wire>().GetNewNearbyPos());
+                    if (item_dragged == 1)
                     {
-                        wireToAdd.transform.position = wireToAdd.GetComponent<Wire>().GetNewNearbyPos().position;
+                        if (wireToAdd.GetComponent<Wire>().CheckOnSlot())
+                        {
+
+                            wireToAdd.transform.SetParent(wireToAdd.GetComponent<Wire>().GetNewNearbyPos().parent);
+
+                            wireToAdd.transform.position = wireToAdd.GetComponent<Wire>().GetNewNearbyPos().position;
+
+                            //wireToAdd.GetComponent<Wire>().SetSlotStatus();
+                        }
+                        else
+                        {
+                            wireToAdd.transform.SetParent(null);
+
+                            wireToAdd.GetComponent<Wire>().SetNewWirePos(wireGeneratedPlace);
+
+                            wireToAdd.transform.position = wireGeneratedPlace.position;
+                        }
+
+                        wireToAdd = null;
                     }
+                    else if (item_dragged == 2)
+                    {
+                        Debug.Log(origPos_Pliers);
+                        Debug.Log(pliers.transform.position);
+
+                        if (pliers.GetComponent<WirePliers>().GetIsOnPart())
+                        {
+                            Debug.Log("Cutting part now");
+                            StartCoroutine(StartWireCutting());
+                        }
+                        else
+                        {
+                            pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
+                        }
+                    }
+
+                    item_dragged = 0;
+
+                    isDragging = false;
                 }
             }
             else
             {
                 if (isDragging)
                 {
-                    Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                    wireToAdd.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    if(item_dragged == 1)
+                    {
+                        Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                        wireToAdd.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    }
+                    else if (item_dragged == 2)
+                    {
+                        Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                        pliers.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    }
                 }
             }
         }
+    }
+
+    private bool HandleUIClickEvent()
+    {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = Input.GetTouch(0).position;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, raycastResults);
+
+        if (raycastResults.Count > 0)
+        {
+            foreach (var go in raycastResults)
+            {
+                if (go.gameObject.transform.root.TryGetComponent(out OverviewCounter overviewCounter))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void HandleClickEvent(Vector2 position)
@@ -64,20 +354,35 @@ public class LoWireMinigame : MonoBehaviour
             Debug.Log(rayHit.transform.name);
             if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
             {
-                if (wire.GetComplete())
+                if (!isDragging)
                 {
-                    Debug.Log(wire.transform.name);
-                    wireToAdd = wire.transform.gameObject;
-                    isDragging = true;
-                    wireGeneratedPlace = wire.transform;
+                    if (wire.GetComplete() && wire.GetMovableStatus())
+                    {
+                        Debug.Log(wire.transform.name);
+                        wireToAdd = wire.transform.gameObject;
+                        isDragging = true;
+                        //wireGeneratedPlace = wire.transform;
+                        item_dragged = 1;
+                    }
                 }
-                    
+            }
+            else if (rayHit.transform.gameObject.TryGetComponent(out WirePliers plier))
+            {
+                if (!isDragging)
+                {
+                    Debug.Log("Using the pliers");
+                    pliers = plier.transform.gameObject;
+                    isDragging = true;
+                    item_dragged = 2;
+                    origPos_Pliers = plier.transform.position;
+                }
             }
         }
     }
 
     public List<GameObject> ChangeWireValue(float value, Wire wireToChange, GameObject parent)
     {
+        wireToChange.gameObject.SetActive(true);
         List<GameObject> generatedChildren = new List<GameObject>();
         List<float> generatePoints = new List<float>();
 
@@ -94,12 +399,13 @@ public class LoWireMinigame : MonoBehaviour
         for (int i = 0; i < intValue; i++)
         {
             generatedChildren.Add(Instantiate(wireToChange.transform.gameObject));
-            generatedChildren[i].transform.localScale = new Vector2(newLen, 1f);
+            generatedChildren[i].transform.localScale = new Vector2(newLen, wireToChange.GetWireHeight());
 
             generatedChildren[i].name = i.ToString();
 
             generatedChildren[i].transform.SetParent(parent.transform);
 
+            /*
             if (i % 2 == 0)
             {
                 generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.white;
@@ -108,14 +414,149 @@ public class LoWireMinigame : MonoBehaviour
             {
                 generatedChildren[i].GetComponent<SpriteRenderer>().color = UnityEngine.Color.grey;
             }
+            */
 
-            generatedChildren[i].transform.position = new Vector2(generatePoints[i], generatedChildren[i].transform.position.y);
+            //generatedChildren[i].GetComponent<SpriteRenderer>().sortingOrder = 4;
+
+            generatedChildren[i].transform.position = new Vector2(generatePoints[i], parent.transform.position.y);
         }
 
         Debug.Log("Current Value");
 
+        wireToChange.gameObject.SetActive(false);
+
         return generatedChildren;
     }
 
-    
+    public void ToggleGenerator()
+    {
+        isOpen = !isOpen;
+
+        isDeleting = false;
+
+        generator.SetActive(isOpen);
+
+        robot_part.SetActive(!isOpen);
+
+        ValueUI.enabled = !isOpen;
+
+        OverallUI.enabled = !isOpen;
+
+
+    }
+
+    public void ToggleDelete()
+    {
+        isDeleting = !isDeleting;
+    }
+
+    private IEnumerator StartWireCutting()
+    {
+        Transform currentSegment = pliers.GetComponent<WirePliers>().GetSegment().transform.parent;
+        int current_Side = pliers.GetComponent<WirePliers>().GetSegment().GetSide();
+        //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
+
+        pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
+
+        pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
+
+        yield return new WaitForSeconds(1f);
+
+        pliers.GetComponent<WirePliers>().StopParticleEmission();
+
+        VfxSegment next_Side = currentSegment.GetComponent<VFXManager>().GetOppositeSide(current_Side);
+
+        //pliers.transform.position = next_Side.transform.position;
+
+        //yield return new WaitForSeconds(0.05f);
+
+        pliers.GetComponent<WirePliers>().SetSegment(next_Side);
+
+        yield return new WaitForSeconds(0.5f);
+
+        pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
+
+        pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
+
+        yield return new WaitForSeconds(1f);
+
+        pliers.GetComponent<WirePliers>().StopParticleEmission();
+
+        //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
+
+
+        /*
+        int sidecount = 0;
+
+        foreach(Transform child in currentSegment)
+        {
+            if (!child.GetComponent<BoxCollider2D>().enabled)
+            {
+                sidecount++;
+            }
+        }
+        */
+
+        yield return new WaitForSeconds(0.5f);
+
+        Transform wireObj = wireSlots[currentSegment.GetComponent<VFXManager>().GetSlotNumber()].transform.parent.GetComponentInChildren<Wire>().transform;
+        wireObj.transform.position = new Vector3(wireObj.position.x, wireObj.position.y, -0.1f);
+        wireObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+        yield return new WaitForSeconds(1f);
+
+        Destroy(wireObj.gameObject);
+
+        //StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5));
+
+        pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5);
+
+        //pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
+
+        pliers = null;
+    }
+
+    public void CheckWire()
+    {
+        int j = 0;
+        foreach(int i in wireToEdit)
+        {
+            if (wireSlots[i].CheckSlotStatus())
+            {
+                wireSlots[i].GetWireInSlot().SetMovableStatus();
+                if (wireSlots[i].GetWireSlotVal() == num_patterns[i])
+                {
+                    Debug.Log("Value is Correct!");
+
+                    OverallUI.enabled = false;
+
+                    ResultUI.enabled = true;
+
+                    StaticData.isWireDone = true;
+
+                    if (DataPersistenceManager.Instance != null)
+                    {
+                        DataPersistenceManager.Instance.SaveGame();
+                        Debug.Log("Wire station completion saved to StaticData.");
+                    }
+
+                    notesManager.ToggleNotes();
+                }
+                else
+                {
+                    //Debug.Log(sparks_vfx.name);
+                    foreach (Transform child in vfxList[j])
+                    {
+                        child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
+                    }
+                    Debug.Log("Value is Wrong!");
+
+                    StaticData.wireWrong += 1;
+                    Debug.Log("Added one penalty to wire score");
+
+                    j++;
+                }
+            }
+        }
+    }
 }

@@ -35,8 +35,17 @@ public class ToolTilingManager : MonoBehaviour
         {
             tiles[i] = Instantiate(tileObj.gameObject);
             if(i>0)
-                tiles[i].transform.position = new Vector2(tiles[i-1].transform.position.x + tiles[i].GetComponentInChildren<SpriteRenderer>().bounds.size.x, tilePosition.y);
+                tiles[i].transform.position = new Vector2(tiles[i-1].transform.position.x + tileSize.x, tilePosition.y);
         }
+    }
+
+    public Vector3 GetTileDistance()
+    {
+        Vector3 distance;
+
+        distance = tiles[1].transform.position;
+
+        return distance;
     }
 
     public float TileMidPoint()
@@ -48,8 +57,20 @@ public class ToolTilingManager : MonoBehaviour
         return midPoint;
     }
 
+    public Vector2 TileLength()
+    {
+        Vector2 tile_Length = new Vector2(tileSize.x * tiles.Length, tileSize.y);
+
+        return tile_Length;
+    }
+
     public GameObject[] GetTileList()
     {
         return tiles;
+    }
+
+    public float GetYPosOfTile()
+    {
+        return tiles[0].GetComponent<PartTile>().GetSpritePosition().y;
     }
 }

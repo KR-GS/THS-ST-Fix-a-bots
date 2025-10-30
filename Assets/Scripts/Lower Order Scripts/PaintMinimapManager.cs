@@ -92,4 +92,9 @@ public class PaintMinimapManager : MonoBehaviour
     public RenderTexture[] GetGeneratedRT() {
         return miniMapRT;
     }
+
+    public Vector3 GetMinimapPosition(int map_index)
+    {
+        return minimapArr[map_index].transform.position;
+    }
 }

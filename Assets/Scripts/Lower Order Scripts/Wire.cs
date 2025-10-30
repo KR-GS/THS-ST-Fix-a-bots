@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class Wire : MonoBehaviour
 {
-    private SpriteRenderer wireSprite;
 
     private float wireStartPoint;
 
@@ -18,20 +17,23 @@ public class Wire : MonoBehaviour
     [SerializeField]
     private bool isCompleteWire = false;
 
+    [SerializeField]
     private bool isOnSlot = false;
+
+    [SerializeField]
+    private bool canBeMoved = false;
 
     private Transform newWirePos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        wireSprite = GetComponent<SpriteRenderer>();
-        Debug.Log(wireSprite.bounds.size.x);
+        Debug.Log("Object Size: " + transform.lossyScale.x);
 
-        wireStartPoint = transform.position.x - ((wireSprite.bounds.size.x) / 2);
+        wireStartPoint = transform.position.x - ((transform.lossyScale.x) / 2);
         Debug.Log(wireStartPoint);
 
-        wireEndPoint = transform.position.x + ((wireSprite.bounds.size.x) / 2);
+        wireEndPoint = transform.position.x + ((transform.lossyScale.x) / 2);
         Debug.Log(wireEndPoint);
 
         origColor = GetComponent<SpriteRenderer>().color;
@@ -53,6 +55,11 @@ public class Wire : MonoBehaviour
         return wireEndPoint;
     }
 
+    public float GetWireHeight()
+    {
+        return transform.lossyScale.y;
+    }
+
     public int GetWireNumber()
     {
         return wireNumberTotal; 
@@ -68,24 +75,51 @@ public class Wire : MonoBehaviour
          return isCompleteWire;
     }
 
+    public bool GetMovableStatus()
+    {
+        return canBeMoved;
+    }
+
+    public void SetMovableStatus()
+    {
+        canBeMoved = !canBeMoved;
+    }
+
     public void SetComplete()
     {
         isCompleteWire = true;
     }
 
-    public bool GetSlotStatus()
+    public bool CheckOnSlot()
     {
         return isOnSlot;
     }
 
+    public void ToggleOnSlot(bool value)
+    {
+        isOnSlot = value;
+    }
+
+    public bool GetSlotStatus()
+    {
+        return newWirePos.GetComponent<WireSlot>().CheckSlotStatus();
+    }
+
     public void SetSlotStatus()
     {
-        isOnSlot = true;
+        newWirePos.gameObject.GetComponent<WireSlot>().ToggleSlotStatus();
     }
 
     public void SetNewWirePos(Transform newPos)
     {
-        newWirePos = newPos;
+        if(newPos != null)
+        {
+            newWirePos = newPos;
+        }
+        else
+        {
+            isOnSlot = false;
+        }
     }
 
     public Transform GetNewNearbyPos()
@@ -93,23 +127,26 @@ public class Wire : MonoBehaviour
         return newWirePos;
     }
 
+    public void ResetColor()
+    {
+        GetComponent<SpriteRenderer>().color = origColor;
+    }
+
     public List<float> GetDivisionPoints(int numDiv)
     {
+        
         if (divisionPoints.Count > 0)
         {
             divisionPoints.Clear();
         }
 
-        float wireLen = wireSprite.bounds.size.x / numDiv;
+        float wireLen = transform.lossyScale.x / numDiv;
         float currentLen = wireStartPoint;
-
         float prevPoint;
-
         float midPoint;
-
-        for(int i = 0; i<numDiv; i++)
+        for (int i = 0; i<numDiv; i++)
         {
-            if(currentLen < wireEndPoint)
+            if (currentLen < wireEndPoint)
             {
                 prevPoint = currentLen;
                 currentLen += wireLen;
@@ -121,14 +158,5 @@ public class Wire : MonoBehaviour
         }
 
         return divisionPoints;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out WireColor clrChange))
-        {
-            Debug.Log(clrChange.GetBtnColor());
-            GetComponent<SpriteRenderer>().color = clrChange.GetBtnColor();
-        }
     }
 }

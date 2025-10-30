@@ -1,30 +1,25 @@
 using UnityEngine;
 
 public class Sticker : MonoBehaviour
-{
-    [SerializeField]
-    private string stickerType;
-
+{ 
     [SerializeField]
     private int stickerNum;
 
-    private Vector2 stickerPosition;
+    [SerializeField]
+    private bool isDuplicate = false;
 
-    private bool isDuplicate;
+    [SerializeField]
+    private bool onPart = false;
 
-    private bool onPart;
+    [SerializeField]
+    private bool isDefault = false;
 
-    void Start()
-    {
-        stickerPosition = transform.position;
-        isDuplicate = false;
-        onPart = false;
-    }
+    [SerializeField]
+    private Color highlight;
 
-    public string GetStickerType()
-    {
-        return stickerType;
-    }
+    private Vector3 defaultPos;
+
+    private int partOn;
 
     public int GetStickerNum()
     {
@@ -41,6 +36,11 @@ public class Sticker : MonoBehaviour
         return onPart;
     }
 
+    public bool IsADefault()
+    {
+        return isDefault;
+    }
+
     public void ToggleIsOnPart()
     {
         onPart = !onPart;
@@ -50,5 +50,48 @@ public class Sticker : MonoBehaviour
     public void ToggleIsADuplicate()
     {
         isDuplicate = !isDuplicate;
+    }
+
+    public void ToggleIsDefault()
+    {
+        isDefault = !isDefault;
+    }
+
+    public void SetDefaultPos(Vector3 pos)
+    {
+        if(pos != Vector3.zero)
+        {
+            defaultPos = pos;
+        }
+        else
+        {
+            defaultPos = transform.position;
+        }
+            
+    }
+
+    public Vector3 GetDefaultPos()
+    {
+        return defaultPos;
+    }
+
+    public void SetPart(int val)
+    {
+        partOn = val;
+    }
+
+    public int GetPartOn()
+    {
+        return partOn;
+    }
+
+    public void SetIsHighlighted()
+    {
+        GetComponent<SpriteRenderer>().color = highlight;
+    }
+
+    public void ResetColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

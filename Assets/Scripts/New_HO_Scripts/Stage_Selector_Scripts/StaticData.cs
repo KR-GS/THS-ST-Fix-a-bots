@@ -21,6 +21,55 @@ public class StaticData
     public static float cycleInterval, cycleLeniency;
     public static List<bool> isFormulaSeen, lockCoefficient, lockConstant, isRandomSequence, refSeen;
 
+    public static int dayNo = 0;
+
+    public static bool isToolDone = false;
+    public static bool isWireDone = false;
+    public static bool isPaintDone = false;
+    public static int selectedFastenerIndex;
+
+    public static int medValue = 0;
+
+    public static bool isOrderChecked = false;
+
+    public static bool sendNewOrder = false;
+
+    public static bool isPatternStarted;
+
+    public static int diffInt = 0; // 0 = easy, 1 = medium, 2 = hard
+
+    public static int toolDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
+    public static int paintDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
+    public static int wireDifficulty = 0; // 0 = easy, 1 = medium, 2 = hard
+
+    public static List<int> toolPattern;
+    public static List<int> incorrectToolPattern;
+    public static List<int> paintPattern;
+    public static List<int> incorrectPaintPattern;
+    public static List<int> wirePattern;
+    public static List<int> incorrectWirePattern;
+    public static int selectedStickerIndex, selectedStickerIndexTwo;
+    public static List<int> incorrectIndices = new List<int>();
+    public static List<int> incorrectValues = new List<int>();
+
+    public static int paintDiff;
+    public static int sequenceDiff;
+    public static int paintpatternLength;
+    public static int toolpatternLength;
+    public static int wirepatternLength;
+    public static int incorrectVals;
+    public static int missingVals;
+    public static int noOfTypes;
+    public static int valuestoChange;
+
+    public static bool startOfDay = false;
+    public static int toolWrong = 0;
+    public static int paintWrong = 0;
+    public static int wireWrong = 0;   
+
+
+    public static Sprite lastTVSprite;
+
     //USED FOR RANDOM BLOCK SPAWNING
 
     public static List<int> stageRandomCoefficientCount;

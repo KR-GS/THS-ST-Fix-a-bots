@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,10 +13,24 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject orderCompletePanel;
     [SerializeField] private RaycastInteractor raycastInteractor;
     private Button button;
+    public Button nextdayButton;
+    public TextMeshProUGUI completeText;
     private int prize;
     private bool isFinished = false;
+    private bool sendNewOrder = false;
 
     public List<Order> orderList = new List<Order>();
+    public List<Order> activeOrders = new List<Order>();
+    public Queue<Order> pendingOrders = new Queue<Order>();
+    private Coroutine deliveryRoutine;
+    public Order currentOrder;
+    public bool orderReceived;
+    public SpriteRenderer TVSprite;
+    public Sprite TVSpriteNoOrder;
+    public Sprite TVSpriteIP;
+    public Sprite TVSpriteNO;
+    private Coroutine scheduleRoutine;
+
     public int currentOrderIndex = -1;
 
 
@@ -32,12 +48,19 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
-        HideOrderCompletePanel();
+        /*
+        if (orderCompletePanel != null)
+            HideOrderCompletePanel();
+        else
+            Debug.LogWarning("Order Complete Panel not assigned yet!");
+        */
+
+        //DataPersistenceManager.Instance.LoadGame();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "LO_Workshop")
+        if (scene.name == "LO_WS2D")
         {
             Debug.Log("Returned to WorkshopScene. Checking for completed orders...");
             StartCoroutine(HandleWorkshopSceneLoad());
@@ -49,38 +72,97 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     {
         yield return null;
 
+        if (orderCompletePanel != null)
+        {
+            HideOrderCompletePanel();
+        }
+        else
+        {
+            Debug.LogWarning("Order Complete Panel not assigned yet!");
+        }
+        
+
         if (isFinished)
         {
             Debug.Log("isFinished was true. Showing complete panel...");
             ShowOrderCompletePanel();
-            raycastInteractor.enabled = false;
         }
         else
         {
-            TryCompleteOrder(); 
+            TryCompleteOrder();
         }
-    }
 
-    public void CreateNewOrder()
+    }
+    
+
+    public Order CreateNewOrder()
     {
-        if (TimerScript.instance != null)
+
+        int level = GameLoopManager.Instance.level; // adjust if you track level differently
+        Order newOrder = new Order();
+
+        string[] customerList = new string[]
         {
-            TimerScript.instance.timer.gameObject.SetActive(true);  // show
-        }
-  
-        Order newOrder = new Order
-        {
-            needsTool = Random.value > 0.5f,
-            needsPaint = Random.value > 0.5f,
-            needsWire = Random.value > 0.5f
+            "Mr. Burr", "JMC", "Juanton", "Vens", "Bev",
+            "Gabe", "KC", "Manny", "Jan", "MacDonald"
         };
+
+        string[] robotList = new string[]
+        {
+            "Theo", "MerryBot", "Toyo", "EthicAI", "TutorBot",
+            "M.O.N.O", "PHPper", "FightBot", "TennisPro", "The Planter"
+        };
+
+        int namePicker = Random.Range(0, customerList.Length);
+
+        newOrder.customername = customerList[namePicker];
+        newOrder.robotname = robotList[namePicker];
+
+
+        if (level >= 1)
+        {
+            float rand = Random.value;
+            newOrder.needsTool = Random.value < 0.5f;
+            newOrder.needsPaint = Random.value < 0.5f;
+            newOrder.needsWire = Random.value < 0.5f;
+        }
+
+        /*
+        if (level >= 1 && level < 6)
+        {
+            newOrder.needsTool = true; //originally true, gonna QA
+            newOrder.needsPaint = false; //originally false, gonna QA
+            newOrder.needsWire = false; //originally false, gonna QA
+        }
+
+        else if (level >= 6 && level < 11)
+        {
+            float rand = Random.value;
+            newOrder.needsTool = Random.value < 0.5f;
+            newOrder.needsPaint = Random.value < 0.5f;
+            newOrder.needsWire = false;
+        }
+
+        
+        else if (level >= 11)
+        {
+            float rand = Random.value;
+            newOrder.needsTool = Random.value < 0.5f;
+            newOrder.needsPaint = Random.value < 0.5f;
+            newOrder.needsWire = Random.value < 0.5f;
+        }
+        */
 
         // Ensure at least one requirement
         if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)
+        {
+            Debug.Log("Are we seriously doing this???");
             newOrder.needsTool = true;
+        }
+
 
         orderList.Add(newOrder);
-        currentOrderIndex = orderList.Count - 1;
+        currentOrderIndex = 0;
 
         Debug.Log("New Order Created!");
 
@@ -88,47 +170,139 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             TimerScript.instance.StartTimer();
         }
+
+        return newOrder;
     }
 
+    public void AddToActiveOrders(Order order)
+    {
+        activeOrders.Add(order);
+    }
+
+
+    public void StartOrderBatch()
+    {
+            if (!orderReceived)
+            {
+                pendingOrders.Clear();
+                orderReceived = true;
+                for (int i = 0; i < 5; i++)
+                {
+                    Order o = CreateNewOrder();
+                    pendingOrders.Enqueue(o);
+                }
+
+                if (pendingOrders.Count > 0)
+                {
+                    var firstOrder = pendingOrders.Dequeue();
+                    AddToActiveOrders(firstOrder);
+                    currentOrder = firstOrder;
+                    Debug.Log("First order delivered!");
+                    TVSprite.sprite = TVSpriteNO;
+
+                    // lock sending more until this order is completed
+                    sendNewOrder = false;
+                    StaticData.sendNewOrder = false;
+                }
+
+                // start coroutine to handle the rest
+                Instance.StartCoroutine(ScheduleNextOrder());
+            }
+            else if (orderReceived)
+            {
+            Debug.Log("Orders have already been received for this level.");
+        }
+    }
+
+    private IEnumerator ScheduleNextOrder()
+    {
+        while (pendingOrders.Count > 0)
+        {
+            yield return new WaitUntil(() => sendNewOrder);
+            yield return new WaitForSeconds(5f);
+            var nextOrder = pendingOrders.Dequeue();
+            AddToActiveOrders(nextOrder); 
+            Debug.Log("Delivered order!");
+            Debug.Log("isChecked status: " + StaticData.isOrderChecked);
+            TVSprite.sprite = TVSpriteNO;
+
+            sendNewOrder = false;
+            StaticData.sendNewOrder = false;
+            Debug.Log("Order will be sent after you complete this task!"); 
+            Debug.Log("SendNewOrder status: " + sendNewOrder);
+        }
+    }
     public void TryCompleteOrder()
     {
-        if (GetCurrentOrder()?.IsComplete() ?? false)
+        if (orderList == null || orderList.Count == 0)
+            return;
+
+ 
+        if (orderList[0].IsComplete())
         {
-            isFinished = true;
             Debug.Log("Order Complete!");
+            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
+            orderList.RemoveAt(0);
+            activeOrders.RemoveAt(0); 
+            StaticData.isToolDone = false;
+            StaticData.isPaintDone = false;
+            StaticData.isWireDone = false;
+            StaticData.isOrderChecked = false;
+            StaticData.incorrectIndices.Clear();
+            StaticData.incorrectValues.Clear();
+            StaticData.missingVals = 0;
+            GameLoopManager.Instance.GenerateAndStorePattern();
+
+
             if (TimerScript.instance != null)
             {
-                TimerScript.instance.StopTimer();
-                if (TimerScript.instance.timeLft >= 240f)
+                if(TimerScript.instance.timeLft > 0)
                 {
-                    prize = 5;
-                }
-                else if (TimerScript.instance.timeLft >= 180f && TimerScript.instance.timeLft < 240f)
-                {
-                    prize = 4;
-                }
-                else if (TimerScript.instance.timeLft >= 120f && TimerScript.instance.timeLft < 180f)
-                {
-                    prize = 3;
-                }
-                else if (TimerScript.instance.timeLft >= 60f && TimerScript.instance.timeLft < 120f)
-                {
-                    prize = 2;
-                }
-                else if (TimerScript.instance.timeLft >= 1f && TimerScript.instance.timeLft < 60f)
-                {
-                    prize = 1;
+                    Debug.Log("Order completed on time! You receive full amount as payment!");
+                    GameLoopManager.Instance.money += 50; //Base value 50
+                    GameLoopManager.Instance.UpdateMoneyText();
+
                 }
                 else
                 {
-                    prize = 0;
+                    Debug.Log("Order completed late! You receive half amount as payment!");
+                    GameLoopManager.Instance.money += 25; //Base value 50
+                    GameLoopManager.Instance.UpdateMoneyText();
                 }
             }
+
+            if (RaycastInteractor.Instance != null)
+            {
+                sendNewOrder = true;
+                StaticData.sendNewOrder = true;
+                Debug.Log("sendNewOrder is now set to true!:" + sendNewOrder);
+                Debug.Log("StaticData.sendNewOrder is now set to true!:" + StaticData.sendNewOrder);
+            }
+        }
+
+        if (orderList.Count == 0)
+        {
+            isFinished = true;
+            Debug.Log("All Orders Complete!");
+            TimerScript.instance.StopTimer();
             ShowOrderCompletePanel();
             raycastInteractor.enabled = false;
-            orderList.RemoveAt(currentOrderIndex);
-            currentOrderIndex = Mathf.Clamp(currentOrderIndex - 1, 0, orderList.Count - 1);
+
         }
+
+
+    }
+
+    public Order GetNextPendingOrder()
+    {
+        foreach (var order in pendingOrders)
+        {
+            if (!order.IsComplete())
+            {
+                return order;
+            }
+        }
+        return null;
     }
 
     public Order GetCurrentOrder()
@@ -139,72 +313,123 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         return null;
     }
 
+    public Order GetActiveOrder()
+    {
+        if(activeOrders.Count > 0)
+            return activeOrders[0];
+
+        return null;
+    }
+
     public void ShowOrderCompletePanel()
     {
-        Transform prizeTextFind = orderCompletePanel.transform.Find("PrizeText");
-        if (prizeTextFind != null)
+        if (orderCompletePanel == null)
         {
-            TextMeshProUGUI prizeTexts = prizeTextFind.GetComponent<TextMeshProUGUI>();
-            if (prize == 5)
-            {
-                prizeTexts.text = "Excellent in all marks! Earned 5 currency!";
-            }
-            else if (prize == 4)
-            {
-                prizeTexts.text = "Very good job! Earned 4 currency!";
-            }
-            else if (prize == 3)
-            {
-                prizeTexts.text = "Good job! Earned 3 currency!";
-            }
-            else if (prize == 2)
-            {
-                prizeTexts.text = "Nice! Earned 2 currency!";
-            }
-            else if (prize == 1)
-            {
-                prizeTexts.text = "You took too long... but it's acceptable. Earned 1 currency.";
-            }
-            else
-            {
-                prizeTexts.text = "That was disappointing... Earned nothing.";
-            }
+            Debug.LogError("[OrderManager] Order Complete Panel is not assigned!");
+            return;
         }
+
         orderCompletePanel.SetActive(true);
+        Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
+
+        //completeText.gameObject.SetActive(true);
+        GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
+        GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
+        GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+        GameLoopManager.Instance.onboardImage.gameObject.SetActive(false);
+        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+
+        if (nextdayButton != null)
+        {
+            nextdayButton.gameObject.SetActive(true);
+            nextdayButton.onClick.RemoveAllListeners();
+            nextdayButton.onClick.AddListener(() =>
+            {
+                HideOrderCompletePanel();
+                GameLoopManager.Instance.CompleteLevel();
+            });
+        }
     }
 
     public void HideOrderCompletePanel()
     {
+        if (orderCompletePanel == null)
+        {
+            Debug.LogWarning("[OrderManager] Order Complete Panel not assigned — nothing to hide.");
+            return;
+        }
+
+
         orderCompletePanel.SetActive(false);
+        Debug.Log("[OrderManager] Hiding panel: " + orderCompletePanel.name);
+        Debug.Log("[LOOK HERE] Pending orders count: " + pendingOrders.Count);
+
+        //completeText.gameObject.SetActive(false);
+        GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
+        GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+        GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+        GameLoopManager.Instance.onboardImage.gameObject.SetActive(true);
+        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+
+        
     }
 
-    public void OnButtonClick()
-    {
-        HideOrderCompletePanel();
-        GameLoopManager.Instance.CompleteLevel();
-        raycastInteractor.enabled = true;
-    }
+
 
     public void LoadData(GameData data)
     {
+        this.orderReceived = data.orderReceived;
         this.orderList = data.savedOrders ?? new List<Order>();
+        this.activeOrders = data.savedActiveOrders ?? new List<Order>();
         this.currentOrderIndex = data.currentOrderIndex;
         this.isFinished = data.finished;
         this.prize = data.prize;
+        StaticData.isPaintDone = data.isPaintDone;
+        StaticData.isToolDone = data.isToolDone;
+        StaticData.isWireDone = data.isWireDone;
+        StaticData.isOrderChecked = data.isOrderChecked;
+        StaticData.sendNewOrder = data.sendNewOrder;
 
+     
         if (TimerScript.instance != null && GetCurrentOrder() != null)
         {
             TimerScript.instance.StartTimer();
             Debug.Log("Timer started from OrderManager.LoadData");
         }
+
+        if (data.pendingOrdersList != null)
+        {
+            this.pendingOrders = new Queue<Order>(data.pendingOrdersList);
+        }
+        else
+        {
+            Debug.Log("There are no saved pending orders. Initializing empty queue.");
+            this.pendingOrders = new Queue<Order>();
+        }
+     
+
+
+        if (orderReceived && pendingOrders.Count > 0)
+        {
+            StartCoroutine(ScheduleNextOrder());
+        }
+        
     }
 
     public void SaveData(ref GameData data)
     {
         data.savedOrders = this.orderList;
+        data.savedActiveOrders = this.activeOrders;
+        data.pendingOrdersList = new List<Order>(this.pendingOrders);
         data.currentOrderIndex = this.currentOrderIndex;
+        data.orderReceived = this.orderReceived;
         data.finished = this.isFinished;
         data.prize = this.prize;
+        data.isPaintDone = StaticData.isPaintDone;
+        data.isToolDone = StaticData.isToolDone;
+        data.isWireDone = StaticData.isWireDone;
+        data.isOrderChecked = StaticData.isOrderChecked;
+        data.sendNewOrder = StaticData.sendNewOrder;
     }
 
     public int GetPrize()

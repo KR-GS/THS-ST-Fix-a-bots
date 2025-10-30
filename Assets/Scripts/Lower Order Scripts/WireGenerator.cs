@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using System.Drawing;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class WireGenerator : MonoBehaviour
 {
@@ -16,32 +18,44 @@ public class WireGenerator : MonoBehaviour
     [SerializeField]
     private LoWireMinigame generalWireScript;
 
+    [SerializeField]
+    private GameObject select_icon;
+
+    [SerializeField]
+    private TextMeshProUGUI slider_Number;
+
+    [SerializeField]
+    private Transform[] copper_Ends;
+
+    [SerializeField]
+    private WireColor[] btn_Colors;
+
     private List<GameObject> createdWireChild = new List<GameObject>();
 
     private GameObject wireParent;
 
-    private bool isDragging;
+    private Color color = Color.white;
 
-    private GameObject color;
-
-    private int wireNoTotal;
+    private int wire_count = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isDragging = false;
-
-        wireParent = new GameObject();
-
-        wireParent.name = "Wire Parent";
+        wireParent = new GameObject("New Wire " + wire_count);
 
         wireParent.transform.position = originalWire.transform.position;
 
-        createdWireChild.Add(Instantiate(originalWire.transform.gameObject));
+        wireParent.transform.SetParent(transform);
 
-        createdWireChild[0].name = "0";
+        createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(1, originalWire, wireParent));
 
-        createdWireChild[0].transform.SetParent(wireParent.transform);
+        //createdWireChild[0].transform.localPosition = new Vector3(0, 0, 0);
+
+        //createdWireChild[0].name = "0";
+
+        select_icon.SetActive(false);
+
+        slider_Number.text = "1";
     }
 
     // Update is called once per frame
@@ -53,12 +67,14 @@ public class WireGenerator : MonoBehaviour
             {
                 HandleClickEvent(Input.GetTouch(0).position);
             }
+            /*
             else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 if (isDragging)
                 {
-                    Destroy(color);
+                    color = null;
                     isDragging = false;
+                    //Destroy(color);
                 }
             }
             else
@@ -69,6 +85,7 @@ public class WireGenerator : MonoBehaviour
                     color.transform.position = new Vector2(touchPos.x, touchPos.y);
                 }
             }
+            */
         }
     }
 
@@ -80,8 +97,21 @@ public class WireGenerator : MonoBehaviour
             if (rayHit.transform.gameObject.TryGetComponent(out WireColor selectedColor))
             {
                 Debug.Log(selectedColor.transform.name);
-                color = Instantiate(selectedColor.transform.gameObject);
-                isDragging = true;
+                color = selectedColor.GetBtnColor();
+                select_icon.SetActive(true);
+                select_icon.transform.position = selectedColor.transform.position;
+                //isDragging = true;
+                if(Color.yellow == color)
+                {
+                    Debug.Log("Color chosen is yellow!");
+                }
+            }
+            else if (rayHit.transform.gameObject.TryGetComponent(out Wire wire))
+            {
+                if(color != Color.white)
+                {
+                    wire.GetComponent<SpriteRenderer>().color = color;
+                }
             }
         }
     }
@@ -92,7 +122,10 @@ public class WireGenerator : MonoBehaviour
         {
             Destroy(child);
         }
+        
         createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(value, originalWire, wireParent));
+
+        slider_Number.text = ((int)value).ToString();
     }
 
     public void CheckColorNumber()
@@ -100,47 +133,140 @@ public class WireGenerator : MonoBehaviour
         int redTotal = 0;
         int blueTotal = 0;
         int yellowTotal = 0;
+
+        int wireTotal = 0;
         foreach (GameObject childClr in createdWireChild)
         {
-            if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.red)
+            if (childClr.GetComponent<SpriteRenderer>().color == btn_Colors[0].GetBtnColor())
             {
                 redTotal++;
             }
-            else if (childClr.GetComponent<SpriteRenderer>().color == UnityEngine.Color.blue)
+            else if (childClr.GetComponent<SpriteRenderer>().color == btn_Colors[1].GetBtnColor())
             {
                 blueTotal++;
             }
-            else
+            else if (childClr.GetComponent<SpriteRenderer>().color == btn_Colors[2].GetBtnColor())
             {
                 yellowTotal++;
             }
         }
 
-        wireNoTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
+        Debug.Log("Red Segments: " + redTotal);
+        Debug.Log("Blue Segments: " + blueTotal);
+        Debug.Log("Yellow Segments: " + yellowTotal);
 
-        Debug.Log(wireNoTotal);
+        int totalColored = redTotal + blueTotal + yellowTotal;
 
-        GenerateWire();
+        if (totalColored == createdWireChild.Count)
+        {
+            wireTotal = redTotal + (blueTotal * 5) + (yellowTotal * 10);
+
+            Debug.Log(wireTotal);
+
+            GenerateWire(wireTotal);
+        }
+        else
+        {
+            Debug.Log("Segments color incomplete!");
+        }
+            
     }
     
-    private void GenerateWire()
+    private void GenerateWire(int wireTotal)
     {
-        for(int i = 0; i<wireParent.transform.childCount; i++)
+        //GameObject new_wire = new GameObject("Complete Wire " + wire_count);
+        originalWire.gameObject.SetActive(true);
+
+        Vector3 originalPos = originalWire.transform.position;
+
+        for (int i = 0; i<wireParent.transform.childCount; i++)
         {
             wireParent.transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = false;
-            wireParent.transform.GetChild(i).GetComponent<Wire>().enabled = false;
+            Destroy(wireParent.transform.GetChild(i).GetComponent<Wire>());
         }
-
-        wireParent.transform.position = generateLocation.position;
 
         wireParent.AddComponent<BoxCollider2D>();
 
         wireParent.AddComponent<SpriteRenderer>();
 
+        wireParent.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
         wireParent.AddComponent<Wire>();
 
-        wireParent.GetComponent<Wire>().SetWireNumber(wireNoTotal);
+        wireParent.GetComponent<Wire>().SetWireNumber(wireTotal);
 
         wireParent.GetComponent<Wire>().SetComplete();
+
+        wireParent.GetComponent<Wire>().SetMovableStatus();
+
+        //wireParent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+        Vector2 size = new Vector2(0, wireParent.transform.GetChild(0).lossyScale.y);
+
+        foreach(Transform child in wireParent.transform)
+        {
+            size += new Vector2(child.lossyScale.x, 0);
+        }
+
+        wireParent.GetComponent<BoxCollider2D>().size = size;
+
+        //wireParent.GetComponent<BoxCollider2D>().offset = new Vector2(0, 0);
+
+        wireParent.GetComponent<BoxCollider2D>().isTrigger = true;
+
+        Transform copper_L = Instantiate(copper_Ends[0]);
+
+        Transform copper_R = Instantiate(copper_Ends[1]);
+
+        copper_L.transform.SetParent(wireParent.transform);
+
+        copper_R.transform.SetParent(wireParent.transform);
+
+        //copper_L.transform.localPosition = new Vector2(-4.36f, 0);
+
+        //copper_R.transform.localPosition = new Vector2(4.36f, 0);
+
+        generalWireScript.ToggleGenerator();
+
+        //wireParent.transform.SetParent(new_wire.transform);
+
+        wireParent.transform.position = generateLocation.position;
+
+        wireParent.transform.SetParent(generateLocation);
+
+        wire_count++;
+
+        wireParent = new GameObject("New Wire " + wire_count);
+
+        wireParent.transform.position = originalPos;
+
+        wireParent.transform.SetParent(transform);
+
+        createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(1, originalWire, wireParent));
+
+        originalWire.gameObject.SetActive(false);
+
+        color = Color.white;
+
+        select_icon.SetActive(false);
+    }
+
+    public void ResetValue(Slider slider)
+    {
+        slider.value = slider.minValue;
+    }
+
+    public Color GetRed()
+    {
+        return btn_Colors[0].GetBtnColor();
+    }
+
+    public Color GetBlue()
+    {
+        return btn_Colors[1].GetBtnColor();
+    }
+    public Color GetYellow()
+    {
+        return btn_Colors[2].GetBtnColor();
     }
 }

@@ -14,20 +14,145 @@ public class StationExit : MonoBehaviour
             switch (type)
             {
                 case StationType.Tool:
-                    currentOrder.toolDone = true;
+                    if (StaticData.isToolDone)
+                    {
+                        currentOrder.toolDone = true;
+                        Debug.Log("Tool task completed, marking toolDone = true");
+                        RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
+                        if (StaticData.toolWrong == 0)
+                        {
+                            Debug.Log("All tools used correctly! Earn 10 points!");
+                            GameLoopManager.Instance.toolScore += 10;
+                        }
+                        else if (StaticData.toolWrong > 0 && StaticData.toolWrong < 3)
+                        {
+                            Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                            GameLoopManager.Instance.toolScore += 5;
+                        }
+                        else if (StaticData.toolWrong >= 3)
+                        {
+                            Debug.Log("You performed poorly! Earn 1 point!");
+                            GameLoopManager.Instance.toolScore += 1;
+                        }
+
+                        StaticData.toolWrong = 0;
+                        Debug.LogWarning("Tool wrongs set to 0!");
+
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Tool task not completed yet!");
+                        
+                    }
                     break;
                 case StationType.Paint:
-                    currentOrder.paintDone = true;
+                    if (StaticData.isPaintDone)
+                    {
+                        currentOrder.paintDone = true;
+                        Debug.Log("Paint task completed, marking paintDone = true");
+                        if (StaticData.paintWrong == 0)
+                        {
+                            Debug.Log("All tools used correctly! Earn 10 points!");
+                            GameLoopManager.Instance.paintScore += 10;
+                        }
+                        else if (StaticData.paintWrong > 0 && StaticData.paintWrong < 3)
+                        {
+                            Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                            GameLoopManager.Instance.paintScore += 5;
+                        }
+                        else if (StaticData.paintWrong >= 3)
+                        {
+                            Debug.Log("You performed poorly! Earn 1 points!");
+                            GameLoopManager.Instance.paintScore += 1;
+                        }
+
+                        StaticData.paintWrong = 0;
+                        Debug.LogWarning("Paint wrongs set to 0!");
+
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Paint task not completed yet!");
+                       
+                    }
                     break;
                 case StationType.Wire:
-                    currentOrder.wireDone = true;
+                    if(StaticData.isWireDone)
+                    {
+                        currentOrder.wireDone = true;
+                        Debug.Log("Wire task completed, marking wireDone = true");
+                        if (StaticData.wireWrong == 0)
+                        {
+                            Debug.Log("All tools used correctly! Earn 10 points!");
+                            GameLoopManager.Instance.wireScore += 10;
+                        }
+                        else if (StaticData.wireWrong > 0 && StaticData.wireWrong < 3)
+                        {
+                            Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                            GameLoopManager.Instance.wireScore += 5;
+                        }
+                        else if (StaticData.wireWrong >= 3)
+                        {
+                            Debug.Log("You performed poorly! Earn 1 points!");
+                            GameLoopManager.Instance.wireScore += 1;
+                        }
+
+                        StaticData.wireWrong = 0;
+                        Debug.LogWarning("Wire wrongs set to 0!");
+
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Wire task not completed yet!");
+
+                    }
                     break;
             }
 
-            Debug.Log($"{type} station task marked complete!");
+            Debug.Log($"Successfully returned from {type} station!");
             //OrderManager.Instance.TryCompleteOrder();
+
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("It is the start of day indeed!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("No it ain't the start of the day!");
+                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            }
+
+            GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
+            GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+            GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+            GameLoopManager.Instance.onboardImage.gameObject.SetActive(true);
+            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            GameLoopManager.Instance.ShowTV(true);
+            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            {
+                TimerScript.instance.timer.gameObject.SetActive(true); // hide
+            }
+
+
+            if (currentOrder.needsTool && !StaticData.isToolDone)
+            {
+                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsPaint && !StaticData.isPaintDone)
+            {
+                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsWire && !StaticData.isWireDone)
+            {
+                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+            }
+            
+
         }
 
-        SceneManager.LoadScene("LO_Workshop");
+        SceneManager.LoadScene("LO_WS2D");
     }
 }
