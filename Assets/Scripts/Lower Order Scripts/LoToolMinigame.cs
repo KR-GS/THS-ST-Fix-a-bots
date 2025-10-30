@@ -801,7 +801,7 @@ public class LoToolMinigame : MonoBehaviour
         currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
 
         currentTool.transform.localPosition = new Vector2(0, 0);
-        //currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
+        currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
 
         addTenBtn.transform.position = currentTool.GetComponent<Tool>().GetAddTenPos();
 

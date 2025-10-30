@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PartTile : MonoBehaviour
@@ -7,6 +8,9 @@ public class PartTile : MonoBehaviour
 
     [SerializeField]
     private Transform part_Sprite;
+
+    [SerializeField]
+    private float speed;
 
     private bool isRight = false;
 
@@ -22,7 +26,17 @@ public class PartTile : MonoBehaviour
 
     public void SetFastenerPosition(float newPos)
     {
-        fastenerHolder.GetChild(0).localPosition = new Vector3(0, newPos, 0);
+        Vector3 position = new Vector3(0, newPos, 0);
+
+        fastenerHolder.GetChild(0).localPosition = position;
+
+        /*
+        while (Vector3.Distance(fastenerHolder.GetChild(0).localPosition, position)>0.01)
+        {
+            Vector3.MoveTowards(fastenerHolder.GetChild(0).localPosition, position, speed * Time.deltaTime);
+            yield return new WaitForSeconds(0.05f);
+        }
+        */
     }
 
     public void SetIsWrong(bool value)

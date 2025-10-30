@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class ToolEvent : MonoBehaviour
 {
+    [SerializeField]
+    private Tool tool_Parent;
+
     private float fastenerHeightValue;
     private PartTile currentFastener;
 
@@ -18,22 +21,8 @@ public class ToolEvent : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void TriggerFastenerChange()
     {
-        if (fastenerHeightValue != -1f)
-        {
-            currentFastener.SetFastenerPosition(fastenerHeightValue);
-        }
-        else
-        {
-            if (currentFastener.GetIsRight())
-            {
-                currentFastener.SetFastenerPosition(fastenerHeightValue);
-            }
-            else
-            {
-                currentFastener.SetFastenerPosition(0);
-                currentFastener.GetFastenerPosition().GetComponentInChildren<Fastener>().SetBrokenSprite();
-            }
-        }
+        currentFastener.SetFastenerPosition(fastenerHeightValue);
+        StartCoroutine(tool_Parent.TriggerToolChange(fastenerHeightValue));
 
         Debug.Log("Hello World");
     }
