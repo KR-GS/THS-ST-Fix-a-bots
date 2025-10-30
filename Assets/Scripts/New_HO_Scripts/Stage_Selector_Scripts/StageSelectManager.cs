@@ -261,6 +261,8 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         StaticData.cycleInterval = confirmedSpeed;
         StaticData.cycleLeniency = confirmedSpeed - confirmedSpeed / 4;
 
+        Debug.Log("Loading Stage: " + StaticData.stageNum);
+
         if (stageNum <= 15)
         {
             // SceneManager.LoadScene("HO_BotTennisScene");
