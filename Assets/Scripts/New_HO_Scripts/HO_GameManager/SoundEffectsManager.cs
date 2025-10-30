@@ -14,7 +14,8 @@ public class SoundEffectsManager : MonoBehaviour
     public AudioClip idle;
     public AudioClip miss;
     public AudioClip hit;
-    public AudioClip bgmMusic;
+    public AudioClip higherOrderBGM;
+    public AudioClip lowerOrderBGM;
 
     private void Start()
     {
@@ -23,8 +24,15 @@ public class SoundEffectsManager : MonoBehaviour
         audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
 
         audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
-        
-        music.clip = bgmMusic;
+
+        if (StaticData.isOnHigherOrderGame)
+        {
+            music.clip = higherOrderBGM;
+        }
+        else if (StaticData.isOnLowerOrder)
+        {
+            music.clip = lowerOrderBGM;
+        }
         music.Play();
     }
 

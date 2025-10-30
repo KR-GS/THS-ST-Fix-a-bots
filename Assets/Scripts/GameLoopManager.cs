@@ -65,6 +65,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public int wireScore;
 
+    public SoundEffectsManager soundEffectsManager;
+
     private void Awake()
     {
         pauseButton.onClick.AddListener(() =>
