@@ -712,6 +712,8 @@ public class LoToolMinigame : MonoBehaviour
             if (currentTool != null)
             {
                 Destroy(currentTool);
+
+                tiledParts[currentInt + 1].GetComponent<PartTile>().GetFastenerPosition().gameObject.SetActive(true);
             }
         }
     }
@@ -730,12 +732,14 @@ public class LoToolMinigame : MonoBehaviour
 
             //SetZoomedInTextCounter(currentInt);
 
-            StartCoroutine(TriggerFastenerChange(button, prevInt));
-
             if (currentTool != null)
             {
                 Destroy(currentTool);
+                tiledParts[currentInt - 1].GetComponent<PartTile>().GetFastenerPosition().gameObject.SetActive(true);
+
             }
+
+            StartCoroutine(TriggerFastenerChange(button, prevInt));
         }
     }
 
@@ -787,7 +791,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         int currentFastenerVal = fastenerValues[i];
         Debug.Log("Fastener in place: " + currentFastenerVal);
-        toolHolder.position = holder.position;
+        toolHolder.position = holder.GetChild(0).position;
 
         if (currentTool != null)
         {
@@ -818,6 +822,13 @@ public class LoToolMinigame : MonoBehaviour
 
         Debug.Log(currentInt);
         fastenerObj[currentInt].SetActive(false);
+
+        if (currentTool != null)
+        {
+            Destroy(currentTool);
+            tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition().gameObject.SetActive(true);
+        }
+
         currentInt = -1;
 
         foreach (GameObject part in tiledParts)
@@ -831,10 +842,7 @@ public class LoToolMinigame : MonoBehaviour
 
         robotPart.layer = LayerMask.NameToLayer("Default");
 
-        if (currentTool != null)
-        {
-            Destroy(currentTool);
-        }
+        
     }
 
     public void UndoHitCounts()
