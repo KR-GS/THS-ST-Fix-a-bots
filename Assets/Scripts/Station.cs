@@ -59,7 +59,7 @@ public class Station : MonoBehaviour
             switch (type)
             {
                 case StationType.Tool:
-                    if (currentOrder.needsTool && !currentOrder.toolDone)
+                    if (currentOrder.needsTool && !StaticData.isToolDone) //formerly !currentOrder.toolDone
                     {
                         SceneManager.LoadScene("LO_Tool_GUI");
                         Debug.Log("Tool station activated!");
@@ -67,7 +67,7 @@ public class Station : MonoBehaviour
                     break;
 
                 case StationType.Paint:
-                    if (currentOrder.needsPaint && !currentOrder.paintDone)
+                    if (currentOrder.needsPaint && !StaticData.isPaintDone)
                     {
                         SceneManager.LoadScene("LO_Paint_GUI");
                         Debug.Log("Paint station activated!");
@@ -75,7 +75,7 @@ public class Station : MonoBehaviour
                     break;
 
                 case StationType.Wire:
-                    if (currentOrder.needsWire && !currentOrder.wireDone)
+                    if (currentOrder.needsWire && !StaticData.isWireDone)
                     {
                         SceneManager.LoadScene("LO_Wire");
                         Debug.Log("Wire station activated!");
