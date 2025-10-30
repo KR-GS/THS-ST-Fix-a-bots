@@ -18,6 +18,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void Awake()
     {
+        
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -26,6 +27,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
         /*
         if (Instance != null)
         {

@@ -6,6 +6,8 @@ public class TVManager : MonoBehaviour
     {
         // Make sure only one TVManager exists
         GameObject[] tvs = GameObject.FindGameObjectsWithTag("TV");
+
+        /*
         if (tvs.Length > 1)
         {
             Destroy(gameObject); // Remove duplicates when coming back
@@ -13,5 +15,6 @@ public class TVManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+        */
     }
 }

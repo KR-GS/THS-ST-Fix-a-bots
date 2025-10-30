@@ -25,6 +25,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private int generatedDifference;
 
+    public OrderManager om;
+
+    public RaycastInteractor ri;
+
     public GameObject TV;
 
     private List<int> currentPattern;
@@ -33,7 +37,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> currentWirePattern;
 
-    public static GameLoopManager Instance;
+    //public static GameLoopManager Instance;
 
     public static DataPersistenceManager dpm;
 
@@ -81,6 +85,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.isOnLowerOrder= true;
 
         //Instance = this;
+        /*
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -89,10 +94,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        */
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        OrderManager.Instance.TryCompleteOrder();
+        om.TryCompleteOrder();
     }
 
     private void OnDestroy()
@@ -169,7 +175,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             if (TimerScript.instance != null)
             {
-                if (OrderManager.Instance != null && OrderManager.Instance.GetCurrentOrder() != null)
+                if (om != null && om.GetCurrentOrder() != null)
                 {
                     TimerScript.instance.StartTimer();
                 }
@@ -179,19 +185,19 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 }
             }
 
-            Debug.Log("[LOOK HERE] Pending orders count: " + OrderManager.Instance.pendingOrders.Count);
+            Debug.Log("[LOOK HERE] Pending orders count: " + om.pendingOrders.Count);
 
             if (StaticData.startOfDay == true)
             {
                 Debug.Log("It is the start of day indeed!");
-                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
-                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+                ri.readyIndicator.gameObject.SetActive(true);
+                ri.readyText.gameObject.SetActive(true);
             }
             else
             {
                 Debug.Log("No it ain't the start of the day!");
-                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+                ri.readyIndicator.gameObject.SetActive(false);
+                ri.readyText.gameObject.SetActive(false);
             }
 
             StartCoroutine(UpdateStationsNextFrame());
@@ -204,16 +210,16 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
             if (moneyImage != null) moneyImage.gameObject.SetActive(false);
             if (onboardImage != null) onboardImage.gameObject.SetActive(false);
-            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-            RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            ri.readyIndicator.gameObject.SetActive(false);
+            ri.readyText.gameObject.SetActive(false);
             ShowTV(false);
             if (TimerScript.instance != null && TimerScript.instance.timer != null)
             {
                 TimerScript.instance.timer.gameObject.SetActive(false); // hide
             }
-            if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
-            if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
-            if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);
+            if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
+            if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
+            if (ri.PaintIndicator != null) ri.PaintIndicator.gameObject.SetActive(false);
 
         }
 
@@ -388,7 +394,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             StaticData.incorrectValues = new List<int>(data.incorrectValues);
         }
         
-        
+        StaticData.orderReceived = data.orderReceived;
+        StaticData.isOrderChecked = data.isOrderChecked;
 
         HandleSceneInitialization();
     }
@@ -419,6 +426,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.paintWrong = StaticData.paintWrong;
         data.wireWrong = StaticData.wireWrong;
         data.valuestoChange = StaticData.valuestoChange;
+        data.isOrderChecked = StaticData.isOrderChecked;
+        data.orderReceived = StaticData.orderReceived;
     }
 
     public void UpdateMoneyText()
@@ -440,9 +449,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public void UpdateOrdersOnboard()
     {
-        if (ordersOnboard != null && OrderManager.Instance != null)
+        if (ordersOnboard != null && om != null)
         {
-            ordersOnboard.text = "" + OrderManager.Instance.activeOrders.Count;
+            ordersOnboard.text = "" + om.activeOrders.Count;
         }
     }
     private List<int> GeneratePatternArray(int patternLen) //This is for tool
@@ -970,16 +979,16 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     }
     public void StartNewLevel()
     {
-        OrderManager.Instance.SetStatus(false);
-        OrderManager.Instance.orderReceived = false; // Reset order received status
+        om.SetStatus(false);
+        om.orderReceived = false; // Reset order received status
         level++;
         StaticData.dayNo = level;
 
         if (StaticData.startOfDay == false)
         {
             Debug.Log("Good job, let's start the day again!");
-            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
-            RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
+            ri.readyIndicator.gameObject.SetActive(true);
+            ri.readyText.gameObject.SetActive(true);
             StaticData.startOfDay = true;
         }
 

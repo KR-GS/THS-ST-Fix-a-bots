@@ -7,6 +7,8 @@ public class Station : MonoBehaviour
     public enum StationType { Tool, Paint, Wire }
     public StationType type;
     public static List<Station> AllStations = new List<Station>();
+    public OrderManager om;
+    public GameLoopManager glm;
 
     private void Awake()
     {
@@ -17,6 +19,7 @@ public class Station : MonoBehaviour
     private void OnDestroy()
     {
         AllStations.Remove(this);
+        
     }
 
     private void Start()
@@ -26,7 +29,7 @@ public class Station : MonoBehaviour
 
     public void SetStationVisibility()
     {
-        int currentLevel = GameLoopManager.Instance.level;
+        int currentLevel = glm.level;
 
         switch (type)
         {
@@ -45,8 +48,7 @@ public class Station : MonoBehaviour
     }
     public void Interact()
     {
-        Order currentOrder = OrderManager.Instance.GetActiveOrder();
-        
+        Order currentOrder = om.GetActiveOrder();
 
         if (currentOrder == null)
         {
@@ -54,7 +56,7 @@ public class Station : MonoBehaviour
             return;
         }
 
-        if(RaycastInteractor.Instance.isOrderChecked == true)
+        if(StaticData.isOrderChecked == true)
         {
             switch (type)
             {
@@ -85,6 +87,6 @@ public class Station : MonoBehaviour
         }
         
 
-        OrderManager.Instance.TryCompleteOrder();
+        om.TryCompleteOrder();
     }
 }

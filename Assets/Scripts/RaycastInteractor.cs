@@ -20,6 +20,9 @@ public class RaycastInteractor : MonoBehaviour
     public GameObject orderSheetPanel;
     public bool isOrderChecked = false;
 
+    public OrderManager om;
+    public GameLoopManager glm;
+
     public TextMeshProUGUI botName;
     public TextMeshProUGUI customerName;
 
@@ -61,14 +64,18 @@ public class RaycastInteractor : MonoBehaviour
 
     private void Awake()
     {
+        /*
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
+        
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        */
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
@@ -81,14 +88,14 @@ public class RaycastInteractor : MonoBehaviour
 
     private void Start()
     {
-        if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() != null)
+        if (om != null && om.GetActiveOrder() != null)
         {
             if (TVSprite != null)
             {
                 TVSprite.sprite = TVSpriteIP;
             }
         }
-        else if (OrderManager.Instance != null && OrderManager.Instance.GetActiveOrder() == null)
+        else if (om != null && om.GetActiveOrder() == null)
         {
             if (TVSprite != null)
             {
@@ -135,9 +142,9 @@ public class RaycastInteractor : MonoBehaviour
     {
         yield return null;
 
-        if (OrderManager.Instance != null)
+        if (om != null)
         {
-            Order savedOrder = OrderManager.Instance.GetCurrentOrder();
+            Order savedOrder = om.GetCurrentOrder();
 
             if (savedOrder != null && (savedOrder.needsTool || savedOrder.needsWire || savedOrder.needsPaint))
             {
@@ -166,22 +173,22 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("Hiding order sheet panel.");
             orderSheetPanel.SetActive(false);
 
-            Order savedOrder = OrderManager.Instance.GetActiveOrder();
+            Order savedOrder = om.GetActiveOrder();
 
             if (TVSprite != null && TVSprite.sprite == TVSpriteNO)
             {
                 TVSprite.sprite = TVSpriteIP;
             }
 
-            Debug.Log("Internal tool score: " + GameLoopManager.Instance.toolScore);
-            Debug.Log("Internal paint score: " + GameLoopManager.Instance.paintScore);
-            Debug.Log("Internal wire score: " + GameLoopManager.Instance.wireScore);
+            Debug.Log("Internal tool score: " + glm.toolScore);
+            Debug.Log("Internal paint score: " + glm.paintScore);
+            Debug.Log("Internal wire score: " + glm.wireScore);
 
-            GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-            GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
-            GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-            GameLoopManager.Instance.onboardImage.gameObject.SetActive(true);
-            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            glm.moneyImage.gameObject.SetActive(true);
+            glm.dayNumber.gameObject.SetActive(true);
+            glm.moneyText.gameObject.SetActive(true);
+            glm.onboardImage.gameObject.SetActive(true);
+            glm.ordersOnboard.gameObject.SetActive(true);
             if (timeText != null)
             {
                 timeText.gameObject.SetActive(true); // Hide the time text
@@ -284,9 +291,9 @@ public class RaycastInteractor : MonoBehaviour
                 // TV interaction
                 if (hitCollider.CompareTag("TV"))
                 {
-                    if (!OrderManager.Instance.orderReceived)
+                    if (!StaticData.orderReceived)
                     {
-                        OrderManager.Instance.StartOrderBatch();
+                        om.StartOrderBatch();
                         TimerScript.instance.timer.gameObject.SetActive(true);
 
                         if (readyIndicator != null && readyText != null)
@@ -298,17 +305,17 @@ public class RaycastInteractor : MonoBehaviour
                                 readyText.gameObject.SetActive(false);
                                 StaticData.startOfDay = false;
                                 Debug.Log("Ready indicator status after TV: " + StaticData.startOfDay);
-                               
+                                StaticData.orderReceived = true;
+
                             }
                         }
                     }
                     else
                     {
                         Debug.Log("You have unfinished orders!");
-                        if (OrderManager.Instance.currentOrder != null)
+                        if (om.currentOrder != null)
                         {
                             ShowOrderUI();
-                            //ShowOrderUI(OrderManager.Instance.currentOrder);
                         }
                     }
 
@@ -329,7 +336,7 @@ public class RaycastInteractor : MonoBehaviour
             yield return new WaitForSeconds(1f); // small delay before showing next order
 
             Order nextOrder = pendingOrders.Dequeue();
-            OrderManager.Instance.AddToActiveOrders(nextOrder);
+            om.AddToActiveOrders(nextOrder);
             currentOrder = nextOrder;
 
             Debug.Log("Order delivered to active queue!");
@@ -341,23 +348,23 @@ public class RaycastInteractor : MonoBehaviour
     {
         //Get all the data from StaticData
 
-        if (OrderManager.Instance.activeOrders.Count == 0)
+        if (om.activeOrders.Count == 0)
         {
             Debug.LogWarning("No active orders to show!");
             return;
         }
 
-        Order order = OrderManager.Instance.GetActiveOrder(); // Get the first active order (activeOrders[0])
+        Order order = om.GetActiveOrder(); // Get the first active order (activeOrders[0])
 
         customerName.text = order.customername;
         botName.text = order.robotname;
 
         orderSheetPanel.gameObject.SetActive(true);
-        GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
-        GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
-        GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
-        GameLoopManager.Instance.onboardImage.gameObject.SetActive(false);
-        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+        glm.moneyImage.gameObject.SetActive(false);
+        glm.dayNumber.gameObject.SetActive(false);
+        glm.moneyText.gameObject.SetActive(false);
+        glm.onboardImage.gameObject.SetActive(false);
+        glm.ordersOnboard.gameObject.SetActive(false);
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);

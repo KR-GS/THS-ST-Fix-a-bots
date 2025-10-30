@@ -12,6 +12,7 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
     private bool isRunning = false;
     private void Awake()
     {
+        /*
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -19,7 +20,8 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
         }
 
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
+        */
     }
 
     public void StartTimer() {
@@ -90,9 +92,9 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
     public void TimerFinished()
     {
         Debug.Log("Time's up! You failed the level.");
-        if (GameLoopManager.Instance != null)
+        if (glm != null)
         {
-            GameLoopManager.Instance.OnTimerExpired();
+            glm.OnTimerExpired();
         }
     }
     */

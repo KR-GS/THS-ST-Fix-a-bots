@@ -9,9 +9,10 @@ using UnityEngine.UI;
 
 public class OrderManager : MonoBehaviour, IDataPersistence
 {
-    public static OrderManager Instance;
+    //public static OrderManager Instance;
     [SerializeField] private GameObject orderCompletePanel;
-    [SerializeField] private RaycastInteractor raycastInteractor;
+    [SerializeField] private RaycastInteractor ri;
+    [SerializeField] private GameLoopManager glm;
     private Button button;
     public Button nextdayButton;
     public TextMeshProUGUI completeText;
@@ -36,6 +37,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
+        /*
         if (Instance == null)
         {
             Instance = this;
@@ -47,6 +49,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Destroy(gameObject);
             return;
         }
+        */
+
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         /*
         if (orderCompletePanel != null)
@@ -98,7 +104,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     public Order CreateNewOrder()
     {
 
-        int level = GameLoopManager.Instance.level; // adjust if you track level differently
+        int level = glm.level; // adjust if you track level differently
         Order newOrder = new Order();
 
         string[] customerList = new string[]
@@ -206,7 +212,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 }
 
                 // start coroutine to handle the rest
-                Instance.StartCoroutine(ScheduleNextOrder());
+                StartCoroutine(ScheduleNextOrder());
             }
             else if (orderReceived)
             {
@@ -241,7 +247,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         if (orderList[0].IsComplete())
         {
             Debug.Log("Order Complete!");
-            RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
+            ri.TVSprite.sprite = TVSpriteNoOrder;
             orderList.RemoveAt(0);
             activeOrders.RemoveAt(0); 
             StaticData.isToolDone = false;
@@ -251,7 +257,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             StaticData.incorrectIndices.Clear();
             StaticData.incorrectValues.Clear();
             StaticData.missingVals = 0;
-            GameLoopManager.Instance.GenerateAndStorePattern();
+            glm.GenerateAndStorePattern();
 
 
             if (TimerScript.instance != null)
@@ -259,19 +265,19 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 if(TimerScript.instance.timeLft > 0)
                 {
                     Debug.Log("Order completed on time! You receive full amount as payment!");
-                    GameLoopManager.Instance.money += 50; //Base value 50
-                    GameLoopManager.Instance.UpdateMoneyText();
+                    glm.money += 50; //Base value 50
+                    glm.UpdateMoneyText();
 
                 }
                 else
                 {
                     Debug.Log("Order completed late! You receive half amount as payment!");
-                    GameLoopManager.Instance.money += 25; //Base value 50
-                    GameLoopManager.Instance.UpdateMoneyText();
+                    glm.money += 25; //Base value 50
+                    glm.UpdateMoneyText();
                 }
             }
 
-            if (RaycastInteractor.Instance != null)
+            if (ri != null)
             {
                 sendNewOrder = true;
                 StaticData.sendNewOrder = true;
@@ -286,7 +292,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Debug.Log("All Orders Complete!");
             TimerScript.instance.StopTimer();
             ShowOrderCompletePanel();
-            raycastInteractor.enabled = false;
+            ri.enabled = false;
 
         }
 
@@ -333,11 +339,11 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
 
         //completeText.gameObject.SetActive(true);
-        GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
-        GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
-        GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
-        GameLoopManager.Instance.onboardImage.gameObject.SetActive(false);
-        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+        glm.moneyImage.gameObject.SetActive(false);
+        glm.dayNumber.gameObject.SetActive(false);
+        glm.moneyText.gameObject.SetActive(false);
+        glm.onboardImage.gameObject.SetActive(false);
+        glm.ordersOnboard.gameObject.SetActive(false);
 
         if (nextdayButton != null)
         {
@@ -346,7 +352,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             nextdayButton.onClick.AddListener(() =>
             {
                 HideOrderCompletePanel();
-                GameLoopManager.Instance.CompleteLevel();
+                glm.CompleteLevel();
             });
         }
     }
@@ -365,11 +371,11 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         Debug.Log("[LOOK HERE] Pending orders count: " + pendingOrders.Count);
 
         //completeText.gameObject.SetActive(false);
-        GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-        GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
-        GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-        GameLoopManager.Instance.onboardImage.gameObject.SetActive(true);
-        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+        glm.moneyImage.gameObject.SetActive(true);
+        glm.dayNumber.gameObject.SetActive(true);
+        glm.moneyText.gameObject.SetActive(true);
+        glm.onboardImage.gameObject.SetActive(true);
+        glm.ordersOnboard.gameObject.SetActive(true);
 
         
     }
