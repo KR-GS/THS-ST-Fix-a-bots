@@ -10,6 +10,7 @@ public class StationExit : MonoBehaviour
     public OrderManager om;
     public GameLoopManager glm;
     public RaycastInteractor ri;
+    [SerializeField] private TimerScript ts;
 
     public void ExitStation(){
         Order currentOrder = om?.GetCurrentOrder();
@@ -138,9 +139,9 @@ public class StationExit : MonoBehaviour
             glm.ordersOnboard.gameObject.SetActive(true);
             glm.ShowTV(true);
 
-            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            if (ts != null && ts.timer != null)
             {
-                TimerScript.instance.timer.gameObject.SetActive(true); // hide
+                ts.timer.gameObject.SetActive(true); // hide
             }
 
 

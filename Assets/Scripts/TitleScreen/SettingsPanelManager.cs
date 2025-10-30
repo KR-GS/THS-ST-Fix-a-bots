@@ -208,10 +208,6 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
             SceneManager.LoadScene("LO_WS2D");
         else if (!StaticData.isOnHigherOrderGame && !StaticData.isOnLowerOrderGame)
         {
-            if (SceneManager.GetActiveScene().name == "LO_WS2D")
-            {
-                SceneManager.UnloadSceneAsync("LO_WS2D");
-            }
             SceneManager.LoadScene("Title_Screen");
         }
     }

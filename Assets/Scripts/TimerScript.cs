@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 
 public class TimerScript : MonoBehaviour, IDataPersistence {
-    public static TimerScript instance;
+    //public static TimerScript instance;
 
     public float timeAmt = 900f; //300 seconds -> 5 minutes
     public float timeLft; //how much time you have left

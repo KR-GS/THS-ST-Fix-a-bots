@@ -17,6 +17,7 @@ public class RaycastInteractor : MonoBehaviour
     public float rayLength = 10f;
     public TextMeshProUGUI timeText;
     [SerializeField] private GameLoopManager gameLoopManager;
+    [SerializeField] private TimerScript ts;
     public GameObject orderSheetPanel;
     public bool isOrderChecked = false;
 
@@ -294,7 +295,7 @@ public class RaycastInteractor : MonoBehaviour
                     if (!StaticData.orderReceived)
                     {
                         om.StartOrderBatch();
-                        TimerScript.instance.timer.gameObject.SetActive(true);
+                        ts.timer.gameObject.SetActive(true);
 
                         if (readyIndicator != null && readyText != null)
                         {

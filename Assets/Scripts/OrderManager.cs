@@ -7,12 +7,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class OrderManager : MonoBehaviour, IDataPersistence
+public class OrderManager : MonoBehaviour
 {
     //public static OrderManager Instance;
     [SerializeField] private GameObject orderCompletePanel;
     [SerializeField] private RaycastInteractor ri;
     [SerializeField] private GameLoopManager glm;
+    [SerializeField] private TimerScript ts;
     private Button button;
     public Button nextdayButton;
     public TextMeshProUGUI completeText;
@@ -50,19 +51,14 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
         */
-
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        /*
-        if (orderCompletePanel != null)
-            HideOrderCompletePanel();
-        else
-            Debug.LogWarning("Order Complete Panel not assigned yet!");
-        */
-
-        //DataPersistenceManager.Instance.LoadGame();
+       
     }
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -76,6 +72,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     private System.Collections.IEnumerator HandleWorkshopSceneLoad()
     {
+        Debug.Log("Hello World");
         yield return null;
 
         if (orderCompletePanel != null)
@@ -172,9 +169,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         Debug.Log("New Order Created!");
 
-        if (TimerScript.instance != null)
+        if (ts != null)
         {
-            TimerScript.instance.StartTimer();
+            ts.StartTimer();
         }
 
         return newOrder;
@@ -260,9 +257,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             glm.GenerateAndStorePattern();
 
 
-            if (TimerScript.instance != null)
+            if (ts != null)
             {
-                if(TimerScript.instance.timeLft > 0)
+                if(ts.timeLft > 0)
                 {
                     Debug.Log("Order completed on time! You receive full amount as payment!");
                     glm.money += 50; //Base value 50
@@ -290,7 +287,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             isFinished = true;
             Debug.Log("All Orders Complete!");
-            TimerScript.instance.StopTimer();
+            ts.StopTimer();
             ShowOrderCompletePanel();
             ri.enabled = false;
 
@@ -397,9 +394,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         StaticData.sendNewOrder = data.sendNewOrder;
 
      
-        if (TimerScript.instance != null && GetCurrentOrder() != null)
+        if (ts != null && GetCurrentOrder() != null)
         {
-            TimerScript.instance.StartTimer();
+            ts.StartTimer();
             Debug.Log("Timer started from OrderManager.LoadData");
         }
 

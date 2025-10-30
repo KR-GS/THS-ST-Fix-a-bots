@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.Overlays;
 
-public class TitleScreen : MonoBehaviour
+public class TitleScreen : MonoBehaviour, IDataPersistence
 {
     [Header("Panels")]
     public GameObject continuePanel;
@@ -28,14 +29,14 @@ public class TitleScreen : MonoBehaviour
         LOButton.gameObject.SetActive(false);
         settingsButton.gameObject.SetActive(false);
 
-        
+
         continueButton.onClick.AddListener(OnContinue);
         settingsButton.onClick.AddListener(OnSettings);
 
         settingsPanel.SetActive(false);
 
-        HOButton.onClick.AddListener(() => LoadScene("Stage_Select")); 
-        LOButton.onClick.AddListener(() => LoadScene("LO_WS2D")); 
+        HOButton.onClick.AddListener(() => LoadScene("Stage_Select"));
+        LOButton.onClick.AddListener(() => LoadScene("LO_WS2D"));
     }
 
     private void OnContinue()
@@ -54,5 +55,13 @@ public class TitleScreen : MonoBehaviour
     private void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadData(GameData data)
+    {
+    }
+
+    public void SaveData(ref GameData data)
+    {
     }
 }

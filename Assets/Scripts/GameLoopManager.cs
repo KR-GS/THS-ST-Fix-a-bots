@@ -27,6 +27,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public OrderManager om;
 
+    [SerializeField] private TimerScript ts;
+
     public RaycastInteractor ri;
 
     public GameObject TV;
@@ -39,7 +41,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     //public static GameLoopManager Instance;
 
-    public static DataPersistenceManager dpm;
+    public DataPersistenceManager dpm;
 
     //[SerializeField] private String fileName;
 
@@ -99,6 +101,20 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         om.TryCompleteOrder();
+
+        DataPersistenceManager.Instance.SaveGame();
+    }
+
+    private void Start()
+    {
+        if (DataPersistenceManager.Instance != null)
+        {
+            DataPersistenceManager.Instance.LoadGame();
+        }
+        else
+        {
+            Debug.LogError("The DataPersistence.Instance is NULL!!!");
+        }
     }
 
     private void OnDestroy()
@@ -108,6 +124,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
+        
 
         if (cam != null)
         {
@@ -173,11 +191,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 Debug.LogWarning("OrdersOnboard object not found in LO_Workshop.");
             }
 
-            if (TimerScript.instance != null)
+            if (ts != null)
             {
                 if (om != null && om.GetCurrentOrder() != null)
                 {
-                    TimerScript.instance.StartTimer();
+                    ts.StartTimer();
                 }
                 else
                 {
@@ -213,9 +231,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             ri.readyIndicator.gameObject.SetActive(false);
             ri.readyText.gameObject.SetActive(false);
             ShowTV(false);
-            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            if (ts != null && ts.timer != null)
             {
-                TimerScript.instance.timer.gameObject.SetActive(false); // hide
+                ts.timer.gameObject.SetActive(false); // hide
             }
             if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
             if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
@@ -1060,11 +1078,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         dayNumber.text = "Day: " + this.level;
         moneyText.text = this.money.ToString();
         Debug.Log("Starting Level " + level);
-        if (TimerScript.instance != null && TimerScript.instance.timer != null)
+        if (ts != null && ts.timer != null)
         {
-            TimerScript.instance.timer.gameObject.SetActive(false); // hide
+            ts.timer.gameObject.SetActive(false); // hide
         }
-        TimerScript.instance.ResetTimer();
+        ts.ResetTimer();
 
         StartCoroutine(EnableInteractorAfterFrame());
     }
