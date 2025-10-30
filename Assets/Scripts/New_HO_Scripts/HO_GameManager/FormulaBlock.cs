@@ -399,7 +399,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         
         // Change color to indicate correct placement
         // TODO: Make this only work for certain stages so new StaticData var?
-        if (FormulaInputPanel.Instance != null)
+        if (FormulaInputPanel.Instance != null && StaticData.stageFormulaHint[StaticData.stageNum])
         {
             var seq = FormulaInputPanel.Instance.GetTargetSequence(); // get the correct target
             if (slot.GetPosition() == SnapPosition.Left && blockType == BlockType.Coefficient)
@@ -558,7 +558,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if (locked)
         {
             blockColor = BlockManager.variableColor;
-            blockImage.color = Color.Lerp(blockColor, Color.gray, 0.5f);
+            //blockImage.color = Color.Lerp(blockColor, Color.gray, 0.5f);
         }
         else
         {

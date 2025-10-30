@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using Unity.Android.Gradle.Manifest;
+
 
 public class StageSelectManager : MonoBehaviour, IDataPersistence
 {
@@ -92,9 +92,12 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         for (int i = 0; i < stageButtons.Length; i++)
         {
             int stageNum = i;
-            stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
-
-
+            if(StaticData.numStageDone < 15)
+            {
+                // LIMITS STUDENTS TO FIRST 15 STAGES
+                stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
+            }
+            
             stageButtons[i].onClick.AddListener(() =>
             {
                  // Use the latest confirmed speed

@@ -23,8 +23,9 @@ public class SoundEffectsManager : MonoBehaviour
         audioMixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFXVolume"));
 
         audioMixer.SetFloat("MusicVolume", PlayerPrefs.GetFloat("MusicVolume"));
-        
+
         music.clip = bgmMusic;
+        music.loop = true;
         music.Play();
     }
 
