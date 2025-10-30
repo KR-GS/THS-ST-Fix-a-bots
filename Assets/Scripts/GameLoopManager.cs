@@ -11,6 +11,10 @@ using System.Linq;
 
 public class GameLoopManager : MonoBehaviour, IDataPersistence
 {
+    //Pause Button and Panel
+    [SerializeField] private Button pauseButton;
+    [SerializeField] private GameObject pausePanel;
+
     [SerializeField] private Camera cam;
 
     [SerializeField] private int base_Lowest = 1;
@@ -63,6 +67,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
+        pauseButton.onClick.AddListener(() =>
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0f; // Pause the game
+        });
+
+        StaticData.isOnHigherOrderGame = false;
+        StaticData.isOnHigherOrder = false;
+
+        StaticData.isOnLowerOrder= true;
+
         //Instance = this;
         if (Instance != null && Instance != this)
         {

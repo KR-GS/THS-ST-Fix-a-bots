@@ -32,8 +32,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LO_Workshop.unity
     guid: 68fac90f20ef69646a9b7d05066e7f60
-    path: Assets/Scenes/LO_WS2D.unity
-    guid: 8805b86981fd9cc46988e85c904100e5
   - enabled: 1
     path: Assets/Scenes/LO_Tool_GUI.unity
     guid: beea7f4e3baeece4593f5456aa2832a6
@@ -49,14 +47,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LO_Tool 1.unity
     guid: 97f901e0485ee3d41ac64b240a2af4b2
-    path: Assets/Scenes/LO_Tool 1.unity
-    guid: 97f901e0485ee3d41ac64b240a2af4b2
   - enabled: 1
     path: Assets/Scenes/LO_Paint_GUI.unity
     guid: 75f02a228bc4414478bbedce6d1309c5
   - enabled: 1
     path: Assets/Scenes/LO_Wire.unity
     guid: 4e63145dab683f04e849754cc4fa121f
+  - enabled: 1
+    path: Assets/Scenes/LO_WS2D.unity
+    guid: 8805b86981fd9cc46988e85c904100e5
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: a1e7f8120a36cba4e87252e009bc9906, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
