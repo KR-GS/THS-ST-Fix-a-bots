@@ -52,6 +52,11 @@ public class StaticData
     public static List<int> incorrectIndices = new List<int>();
     public static List<int> incorrectValues = new List<int>();
 
+    public static List<Order> orderList = new List<Order>();
+    public static List<Order> activeOrders = new List<Order>();
+    public static Queue<Order> pendingOrders = new Queue<Order>();
+    public static Order currentOrder = new Order();
+
     public static int paintDiff;
     public static int sequenceDiff;
     public static int paintpatternLength;

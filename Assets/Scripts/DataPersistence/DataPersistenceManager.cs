@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Net;
 using System;
+using UnityEngine.SceneManagement;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -27,39 +28,50 @@ public class DataPersistenceManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
-        /*
-        if (Instance != null)
-        {
-            Debug.LogError("Found more than one Data Persistence Manager in the scene");
-        }
-        Instance = this;
-        */
+
         dataPersistenceObjects = new List<IDataPersistence>();
         Debug.Log("Awake has been called, instance set");
+    }
+    private void OnEnable()
+    {
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Debug.Log("DataPersistenceManager subscribed to sceneLoaded event");
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"===== SCENE LOADED: {scene.name} =====");
+
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        Debug.Log($"Found {dataPersistenceObjects.Count} IDataPersistence objects");
+
+        LoadGame();
     }
 
     public void Start()
     {
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        //this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        //this.dataPersistenceObjects = FindAllDataPersistenceObjects();
 
         if (!hasLoadedFromFile)
         {
             LoadGame();
             hasLoadedFromFile = true;
         }
-        /*
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        LoadGame();
-        */
+        
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsByType<MonoBehaviour>
             (FindObjectsSortMode.None).OfType<IDataPersistence>();
+
+        Debug.Log($"FindAllDataPersistenceObjects found: {dataPersistenceObjects.Count()} objects");
 
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
@@ -79,6 +91,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
+        Debug.Log("===== DPM LoadGame Called! =====");
+
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
 
         this.gameData = dataHandler.Load();
@@ -91,6 +105,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
+            Debug.Log($"Calling LoadData on: {dataPersistenceObj.GetType().Name}");
             dataPersistenceObj.LoadData(gameData);
         }
 

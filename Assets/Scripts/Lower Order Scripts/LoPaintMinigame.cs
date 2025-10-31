@@ -413,12 +413,16 @@ public class LoPaintMinigame : MonoBehaviour
             overviewUI.enabled = false;
             notesUI.enabled = false;
             StaticData.isPaintDone = true;
+            Debug.Log("Paint station marked as done in StaticData.");
 
+            /*
             if (DataPersistenceManager.Instance != null)
             {
                 DataPersistenceManager.Instance.SaveGame();
                 Debug.Log("Paint station completion saved to StaticData.");
             }
+            */
+
             checkUI.transform.Find("Result Image").GetComponent<Image>().sprite = correct_sprite;
             checkUI.transform.Find("Button").gameObject.SetActive(true);
         }

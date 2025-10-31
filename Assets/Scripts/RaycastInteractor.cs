@@ -89,15 +89,44 @@ public class RaycastInteractor : MonoBehaviour
 
     private void Start()
     {
-        if (om != null && om.GetActiveOrder() != null)
+        if (om.GetActiveOrder() != null) //om != null && om.GetActiveOrder() != null
         {
+            Debug.Log("Is this for real???");
             if (TVSprite != null)
             {
                 TVSprite.sprite = TVSpriteIP;
+                readyIndicator.gameObject.SetActive(false);
+                readyText.gameObject.SetActive(false);
+            }
+
+            glm.moneyImage.gameObject.SetActive(true);
+            glm.dayNumber.gameObject.SetActive(true);
+            glm.moneyText.gameObject.SetActive(true);
+            glm.onboardImage.gameObject.SetActive(true);
+            glm.ordersOnboard.gameObject.SetActive(true);
+            glm.ShowTV(true);
+
+            if (ts != null && ts.timer != null)
+            {
+                ts.timer.gameObject.SetActive(true); // hide
+            }
+
+            if (currentOrder.needsTool && !StaticData.isToolDone)
+            {
+                ToolIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsPaint && !StaticData.isPaintDone)
+            {
+                PaintIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsWire && !StaticData.isWireDone)
+            {
+                WireIndicator.gameObject.SetActive(true);
             }
         }
-        else if (om != null && om.GetActiveOrder() == null)
+        else if (om.GetActiveOrder() == null) // != null && om.GetActiveOrder() == null
         {
+            Debug.Log("No shot sherlock!");
             if (TVSprite != null)
             {
                 TVSprite.sprite = TVSpriteNoOrder;
@@ -120,7 +149,7 @@ public class RaycastInteractor : MonoBehaviour
                 readyIndicator.gameObject.SetActive(false);
                 readyText.gameObject.SetActive(false);
             }
-           
+
         }
     }
 
@@ -225,6 +254,8 @@ public class RaycastInteractor : MonoBehaviour
             else if (isOrderChecked && savedOrder != null)
             {
                 Debug.Log("Order is checked, returning old indicators...");
+
+                //om.TryCompleteOrder()
 
                 if (savedOrder.needsTool && !StaticData.isToolDone)
                 {

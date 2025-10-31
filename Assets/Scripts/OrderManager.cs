@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class OrderManager : MonoBehaviour
+public class OrderManager : MonoBehaviour, IDataPersistence
 {
     //public static OrderManager Instance;
-    [SerializeField] private GameObject orderCompletePanel;
+    [SerializeField] public GameObject orderCompletePanel;
     [SerializeField] private RaycastInteractor ri;
     [SerializeField] private GameLoopManager glm;
     [SerializeField] private TimerScript ts;
@@ -18,7 +18,7 @@ public class OrderManager : MonoBehaviour
     public Button nextdayButton;
     public TextMeshProUGUI completeText;
     private int prize;
-    private bool isFinished = false;
+    public bool isFinished = false;
     private bool sendNewOrder = false;
 
     public List<Order> orderList = new List<Order>();
@@ -33,46 +33,36 @@ public class OrderManager : MonoBehaviour
     public Sprite TVSpriteNO;
     private Coroutine scheduleRoutine;
 
+    private bool isScheduleRunning = false;
+
     public int currentOrderIndex = -1;
 
-
+  
     private void Awake()
-    {
-        /*
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(transform.root.gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-        */
-       
-    }
-
-    private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
-
+    
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "LO_WS2D")
         {
             Debug.Log("Returned to WorkshopScene. Checking for completed orders...");
+            Debug.Log("Hey, I answered the call!");
             StartCoroutine(HandleWorkshopSceneLoad());
         }
 
     }
 
+    private void OnDestroy()
+    {
+        DataPersistenceManager.Instance.SaveGame();
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+   
     private System.Collections.IEnumerator HandleWorkshopSceneLoad()
     {
-        Debug.Log("Hello World");
+        Debug.Log("Now we wait!");
         yield return null;
 
         if (orderCompletePanel != null)
@@ -83,7 +73,7 @@ public class OrderManager : MonoBehaviour
         {
             Debug.LogWarning("Order Complete Panel not assigned yet!");
         }
-        
+
 
         if (isFinished)
         {
@@ -92,11 +82,12 @@ public class OrderManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("I am going to complete your order!!!");
             TryCompleteOrder();
         }
 
     }
-    
+   
 
     public Order CreateNewOrder()
     {
@@ -200,6 +191,7 @@ public class OrderManager : MonoBehaviour
                     var firstOrder = pendingOrders.Dequeue();
                     AddToActiveOrders(firstOrder);
                     currentOrder = firstOrder;
+                    StaticData.currentOrder = firstOrder;
                     Debug.Log("First order delivered!");
                     TVSprite.sprite = TVSpriteNO;
 
@@ -219,12 +211,23 @@ public class OrderManager : MonoBehaviour
 
     private IEnumerator ScheduleNextOrder()
     {
+        if (isScheduleRunning)
+        {
+            Debug.LogWarning("ScheduleNextOrder already running! Skipping duplicate start.");
+            yield break;
+        }
+
+        isScheduleRunning = true;
+        Debug.Log("ScheduleNextOrder started.");
+
         while (pendingOrders.Count > 0)
         {
             yield return new WaitUntil(() => sendNewOrder);
             yield return new WaitForSeconds(5f);
             var nextOrder = pendingOrders.Dequeue();
-            AddToActiveOrders(nextOrder); 
+            AddToActiveOrders(nextOrder);
+            currentOrder = nextOrder;
+            StaticData.currentOrder = nextOrder;
             Debug.Log("Delivered order!");
             Debug.Log("isChecked status: " + StaticData.isOrderChecked);
             TVSprite.sprite = TVSpriteNO;
@@ -234,11 +237,102 @@ public class OrderManager : MonoBehaviour
             Debug.Log("Order will be sent after you complete this task!"); 
             Debug.Log("SendNewOrder status: " + sendNewOrder);
         }
+
+        isScheduleRunning = false;
+        Debug.Log("ScheduleNextOrder finished.");
     }
     public void TryCompleteOrder()
     {
+
         if (orderList == null || orderList.Count == 0)
-            return;
+        {
+            Debug.Log("How the heck did you get here???");
+            return; 
+        }
+
+        if (orderList[0].IsComplete() == false)
+        {
+            Debug.Log("You still have not finished your task!");
+
+            Debug.Log("StaticData tool value" + StaticData.isToolDone);
+            Debug.Log("StaticData paint value" + StaticData.isPaintDone);
+            Debug.Log("StaticData wire value" + StaticData.isWireDone);
+
+            if (StaticData.isToolDone == true)
+            {
+                Debug.Log("Yeah... you did complete tool!");
+                orderList[0].toolDone = true;
+                ri.ToolIndicator.gameObject.SetActive(false);
+                if (StaticData.toolWrong == 0)
+                {
+                    Debug.Log("All tools used correctly! Earn 10 points!");
+                    glm.toolScore += 10;
+                }
+                else if (StaticData.toolWrong > 0 && StaticData.toolWrong < 3)
+                {
+                    Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                    glm.toolScore += 5;
+                }
+                else if (StaticData.toolWrong >= 3)
+                {
+                    Debug.Log("You performed poorly! Earn 1 point!");
+                    glm.toolScore += 1;
+                }
+
+                StaticData.toolWrong = 0;
+                Debug.LogWarning("Tool wrongs set to 0!");
+            }
+
+            if (StaticData.isPaintDone == true)
+            {
+                Debug.Log("Magnificent... you did complete sticker!");
+                orderList[0].paintDone = true;
+                ri.PaintIndicator.gameObject.SetActive(false);
+                if (StaticData.paintWrong == 0)
+                {
+                    Debug.Log("All tools used correctly! Earn 10 points!");
+                    glm.paintScore += 10;
+                }
+                else if (StaticData.paintWrong > 0 && StaticData.paintWrong < 3)
+                {
+                    Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                    glm.paintScore += 5;
+                }
+                else if (StaticData.paintWrong >= 3)
+                {
+                    Debug.Log("You performed poorly! Earn 1 points!");
+                    glm.paintScore += 1;
+                }
+
+                StaticData.paintWrong = 0;
+                Debug.LogWarning("Paint wrongs set to 0!");
+            }
+
+            if (StaticData.isWireDone == true)
+            {
+                Debug.Log("Shocking... you did complete wire!");
+                orderList[0].wireDone = true;
+                ri.WireIndicator.gameObject.SetActive(false);
+                if (StaticData.wireWrong == 0)
+                {
+                    Debug.Log("All tools used correctly! Earn 10 points!");
+                    glm.wireScore += 10;
+                }
+                else if (StaticData.wireWrong > 0 && StaticData.wireWrong < 3)
+                {
+                    Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                    glm.wireScore += 5;
+                }
+                else if (StaticData.wireWrong >= 3)
+                {
+                    Debug.Log("You performed poorly! Earn 1 points!");
+                    glm.wireScore += 1;
+                }
+
+                StaticData.wireWrong = 0;
+                Debug.LogWarning("Wire wrongs set to 0!");
+            }
+        }
 
  
         if (orderList[0].IsComplete())
@@ -246,7 +340,10 @@ public class OrderManager : MonoBehaviour
             Debug.Log("Order Complete!");
             ri.TVSprite.sprite = TVSpriteNoOrder;
             orderList.RemoveAt(0);
-            activeOrders.RemoveAt(0); 
+            activeOrders.RemoveAt(0);
+            StaticData.orderList = orderList;
+            StaticData.activeOrders = activeOrders;
+            StaticData.pendingOrders = pendingOrders;
             StaticData.isToolDone = false;
             StaticData.isPaintDone = false;
             StaticData.isWireDone = false;
@@ -256,7 +353,7 @@ public class OrderManager : MonoBehaviour
             StaticData.missingVals = 0;
             glm.GenerateAndStorePattern();
 
-
+            
             if (ts != null)
             {
                 if(ts.timeLft > 0)
@@ -274,13 +371,14 @@ public class OrderManager : MonoBehaviour
                 }
             }
 
-            if (ri != null)
+            if (ri != null && pendingOrders.Count > 0)
             {
                 sendNewOrder = true;
                 StaticData.sendNewOrder = true;
                 Debug.Log("sendNewOrder is now set to true!:" + sendNewOrder);
                 Debug.Log("StaticData.sendNewOrder is now set to true!:" + StaticData.sendNewOrder);
             }
+
         }
 
         if (orderList.Count == 0)
@@ -293,19 +391,8 @@ public class OrderManager : MonoBehaviour
 
         }
 
+        DataPersistenceManager.Instance.SaveGame();
 
-    }
-
-    public Order GetNextPendingOrder()
-    {
-        foreach (var order in pendingOrders)
-        {
-            if (!order.IsComplete())
-            {
-                return order;
-            }
-        }
-        return null;
     }
 
     public Order GetCurrentOrder()
@@ -374,16 +461,17 @@ public class OrderManager : MonoBehaviour
         glm.onboardImage.gameObject.SetActive(true);
         glm.ordersOnboard.gameObject.SetActive(true);
 
-        
+        DataPersistenceManager.Instance.SaveGame();
     }
-
 
 
     public void LoadData(GameData data)
     {
         this.orderReceived = data.orderReceived;
         this.orderList = data.savedOrders ?? new List<Order>();
+        //StaticData.orderList = this.orderList;
         this.activeOrders = data.savedActiveOrders ?? new List<Order>();
+        //StaticData.activeOrders = this.activeOrders;
         this.currentOrderIndex = data.currentOrderIndex;
         this.isFinished = data.finished;
         this.prize = data.prize;
@@ -409,15 +497,47 @@ public class OrderManager : MonoBehaviour
             Debug.Log("There are no saved pending orders. Initializing empty queue.");
             this.pendingOrders = new Queue<Order>();
         }
-     
-
 
         if (orderReceived && pendingOrders.Count > 0)
         {
             StartCoroutine(ScheduleNextOrder());
         }
-        
+
+        if (SceneManager.GetActiveScene().name == "LO_WS2D")
+        {
+            Debug.Log("Data loaded in workshop scene. Checking orders...");
+            Debug.Log("Hey, I answered the call after loading data!");
+            StartCoroutine(HandleWorkshopSceneLoadAfterData());
+        }
+
     }
+
+    private System.Collections.IEnumerator HandleWorkshopSceneLoadAfterData()
+    {
+        yield return null; // Wait one frame for everything to initialize
+
+        if (orderCompletePanel != null)
+        {
+            HideOrderCompletePanel();
+        }
+        else
+        {
+            Debug.LogWarning("Order Complete Panel not assigned yet!");
+        }
+
+        if (isFinished)
+        {
+            Debug.Log("isFinished was true. Showing complete panel...");
+            ShowOrderCompletePanel();
+        }
+        else
+        {
+            Debug.Log("I am going to complete your order!!!");
+            Debug.Log($"OrderList count: {orderList.Count}");
+            TryCompleteOrder();
+        }
+    }
+
 
     public void SaveData(ref GameData data)
     {
@@ -433,6 +553,7 @@ public class OrderManager : MonoBehaviour
         data.isWireDone = StaticData.isWireDone;
         data.isOrderChecked = StaticData.isOrderChecked;
         data.sendNewOrder = StaticData.sendNewOrder;
+
     }
 
     public int GetPrize()

@@ -41,7 +41,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     //public static GameLoopManager Instance;
 
-    public DataPersistenceManager dpm;
+    //public DataPersistenceManager dpm;
 
     //[SerializeField] private String fileName;
 
@@ -100,13 +100,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        om.TryCompleteOrder();
-
-        DataPersistenceManager.Instance.SaveGame();
+        // DataPersistenceManager.Instance.SaveGame();
     }
 
     private void Start()
     {
+        Debug.Log("I am calling data at GLM, with values of tooldone, paintdone and wiredone" + StaticData.isToolDone + StaticData.isPaintDone + StaticData.isWireDone);
+
         if (DataPersistenceManager.Instance != null)
         {
             DataPersistenceManager.Instance.LoadGame();
@@ -115,17 +115,18 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             Debug.LogError("The DataPersistence.Instance is NULL!!!");
         }
+
+
     }
 
     private void OnDestroy()
     {
+        DataPersistenceManager.Instance.SaveGame();
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-
-        
 
         if (cam != null)
         {
@@ -205,18 +206,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             Debug.Log("[LOOK HERE] Pending orders count: " + om.pendingOrders.Count);
 
-            if (StaticData.startOfDay == true)
-            {
-                Debug.Log("It is the start of day indeed!");
-                ri.readyIndicator.gameObject.SetActive(true);
-                ri.readyText.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.Log("No it ain't the start of the day!");
-                ri.readyIndicator.gameObject.SetActive(false);
-                ri.readyText.gameObject.SetActive(false);
-            }
 
             StartCoroutine(UpdateStationsNextFrame());
 

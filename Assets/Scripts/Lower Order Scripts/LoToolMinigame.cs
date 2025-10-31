@@ -83,13 +83,13 @@ public class LoToolMinigame : MonoBehaviour
         int index;
         FastenerBtn temp;
 
-        for (int i=0; i<4; i ++)
+        for (int i = 0; i < 4; i++)
         {
             index = i;
 
-            for(int j = i+1; j<4; j++)
+            for (int j = i + 1; j < 4; j++)
             {
-                if (fastenerList[j].GetFastenerType()< fastenerList[index].GetFastenerType())
+                if (fastenerList[j].GetFastenerType() < fastenerList[index].GetFastenerType())
                 {
                     index = j;
                 }
@@ -114,7 +114,7 @@ public class LoToolMinigame : MonoBehaviour
         int medValue;
         int randomValue;
         int randFastenerVal;
-        bool isFix=false;
+        bool isFix = false;
         int[] tempArr;
         GameObject originalCounter = FindFirstObjectByType<OverviewCounter>().gameObject;
 
@@ -189,7 +189,7 @@ public class LoToolMinigame : MonoBehaviour
                 }
                 */
 
-                slotToFix = Random.Range(1,2);
+                slotToFix = Random.Range(1, 2);
 
                 break;
             case 2:
@@ -211,7 +211,7 @@ public class LoToolMinigame : MonoBehaviour
                 Debug.Log("Playing tutorial code");
                 break;
         }
-        
+
         currentInt = 0;
 
         toolTilingManager.SpawnPartTiled(patternLength);
@@ -302,12 +302,12 @@ public class LoToolMinigame : MonoBehaviour
             numberToDisplay[i] = 0;
         }
 
-        for (int i=0; i<patternLength; i++)
+        for (int i = 0; i < patternLength; i++)
         {
             originalHitValues[i] = numberToDisplay[i];
         }
 
-        for(int i=0; i<patternLength-1; i++)
+        for (int i = 0; i < patternLength - 1; i++)
         {
             gapToDisplay[i] = numberToDisplay[i + 1] - numberToDisplay[i];
             originalGaps[i] = generatedList[i + 1] - generatedList[i];
@@ -330,8 +330,8 @@ public class LoToolMinigame : MonoBehaviour
             Debug.Log("Creating Object number " + i);
             fastenerObj[i] = new GameObject("Fastener " + (i + 1).ToString());
             fastenerObj[i].transform.position = new Vector2(tiledParts[i].transform.position.x, hitCountManager.transform.position.y);
-            
-            Debug.Log(i+ " value: " + numberToDisplay[i]);
+
+            Debug.Log(i + " value: " + numberToDisplay[i]);
             if (numberToDisplay[i] > 0)
             {
                 Debug.Log($"Index i = {i}, fastenerCheckVal[i] = {fastenerCheckVal[i]}, fastenerList.Length = {fastenerList.Length}");
@@ -344,7 +344,7 @@ public class LoToolMinigame : MonoBehaviour
             }
         }
 
-        for (int i = 0; i< patternLength; i++)
+        for (int i = 0; i < patternLength; i++)
         {
             if (numberToDisplay[i] > 0)
             {
@@ -353,28 +353,29 @@ public class LoToolMinigame : MonoBehaviour
 
 
                 Debug.Log("Adding Fastener " + i);
-                fastenerValues[i] = randFastenerVal+1;
+                fastenerValues[i] = randFastenerVal + 1;
             }
             else
             {
                 if (StaticData.toolDifficulty == 0)
                 {
                     Instantiate(fastenerList[randFastenerVal].GetMissingPrefab(), tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
-                }else if (StaticData.toolDifficulty == 2 || StaticData.toolDifficulty == 1)
+                }
+                else if (StaticData.toolDifficulty == 2 || StaticData.toolDifficulty == 1)
                 {
                     Instantiate(randMissing_Prefab, tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
                 }
-                    
+
 
                 Debug.Log("Adding Missing Fastener");
             }
 
-            fastenerCheckVal[i] = randFastenerVal+1;
+            fastenerCheckVal[i] = randFastenerVal + 1;
         }
 
         counterHolder[0] = originalCounter;
 
-        for (int i = 0; i<patternLength; i++)
+        for (int i = 0; i < patternLength; i++)
         {
             Vector3 position = new Vector3(tiledParts[i].transform.position.x, originalCounter.transform.position.y, originalCounter.transform.position.z);
 
@@ -384,16 +385,16 @@ public class LoToolMinigame : MonoBehaviour
 
                 counterHolder[i].transform.position = position;
             }
-                
+
 
             counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerCheckVal[i] - 1].GetHitIcon());
         }
 
         gapHolder[0] = originalGap;
 
-        for (int i = 0;i<patternLength-1; i++)
+        for (int i = 0; i < patternLength - 1; i++)
         {
-            Vector3 position = new Vector3((tiledParts[i].transform.position.x + tiledParts[i+1].transform.position.x)/2, originalGap.transform.position.y, originalGap.transform.position.z);
+            Vector3 position = new Vector3((tiledParts[i].transform.position.x + tiledParts[i + 1].transform.position.x) / 2, originalGap.transform.position.y, originalGap.transform.position.z);
             if (i > 0)
             {
                 gapHolder[i] = Instantiate(originalGap);
@@ -450,7 +451,7 @@ public class LoToolMinigame : MonoBehaviour
 
         robotPart.AddComponent<BoxCollider2D>();
 
-       // robotPart.AddComponent<Rigidbody2D>();
+        // robotPart.AddComponent<Rigidbody2D>();
 
         robotPart.GetComponent<BoxCollider2D>().size = toolTilingManager.TileLength();
 
@@ -478,7 +479,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            if(Input.GetTouch(0).phase == TouchPhase.Began)
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
                 {
@@ -517,17 +518,17 @@ public class LoToolMinigame : MonoBehaviour
 
                         robotPart.transform.position = new Vector2(endPoints[0].x, robotPart.transform.position.y);
                     }
-                    else if (tiledParts[tiledParts.Length-2].transform.position.x < 0)
+                    else if (tiledParts[tiledParts.Length - 2].transform.position.x < 0)
                     {
                         robotPart.transform.position = new Vector2(endPoints[1].x, robotPart.transform.position.y);
                     }
                     isDragging = false;
                     isOnObject = false;
                 }
-                    
+
             }
         }
-        
+
     }
 
     private bool HandleUIClickEvent()
@@ -571,7 +572,7 @@ public class LoToolMinigame : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
         if (rayHit.collider != null)
         {
-            if(rayHit.transform.gameObject.TryGetComponent(out Tool tool))
+            if (rayHit.transform.gameObject.TryGetComponent(out Tool tool))
             {
                 bool useCountManager;
                 numberToDisplay[currentInt]++;
@@ -591,14 +592,14 @@ public class LoToolMinigame : MonoBehaviour
 
                 StartCoroutine(HitAnimation(tool, useCountManager));
             }
-            else if(rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
+            else if (rayHit.transform.gameObject.TryGetComponent(out PartTile roboPart))
             {
                 Camera.main.GetComponent<ToolCamera>().FocusedCameraView(roboPart.transform.position.x);
 
-                for (int i=0; i< tiledParts.Length; i++)
+                for (int i = 0; i < tiledParts.Length; i++)
                 {
                     tiledParts[i].layer = LayerMask.NameToLayer("Ignore Raycast");
-                    if(roboPart.gameObject == tiledParts[i])
+                    if (roboPart.gameObject == tiledParts[i])
                     {
                         currentInt = i;
                     }
@@ -670,7 +671,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (value)
         {
-            hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[fastenerValues[currentInt]-1].GetHitIcon());
+            hitCountManager.IncreaseChildCount(fastenerObj[currentInt], fastenerList[fastenerValues[currentInt] - 1].GetHitIcon());
         }
         else
         {
@@ -694,15 +695,15 @@ public class LoToolMinigame : MonoBehaviour
             Camera.main.GetComponent<ToolCamera>().CreateLoadingIcons(Camera.main.WorldToScreenPoint(position));
         }
 
-        StartCoroutine(ValueCheckCoroutine());    
+        StartCoroutine(ValueCheckCoroutine());
     }
 
     public void ChangeToLeftElement(Button button)
     {
-        if (currentInt>0)
+        if (currentInt > 0)
         {
             int prevInt = 1;
-                
+
             currentInt--;
 
             addTenBtn.gameObject.SetActive(false);
@@ -720,7 +721,7 @@ public class LoToolMinigame : MonoBehaviour
 
     public void ChangeToRightElement(Button button)
     {
-        if (currentInt < numberToDisplay.Length-1)
+        if (currentInt < numberToDisplay.Length - 1)
         {
             int prevInt = -1;
 
@@ -842,7 +843,7 @@ public class LoToolMinigame : MonoBehaviour
 
         robotPart.layer = LayerMask.NameToLayer("Default");
 
-        
+
     }
 
     public void UndoHitCounts()
@@ -923,10 +924,10 @@ public class LoToolMinigame : MonoBehaviour
         Debug.Log("Current Child Count before reset: " + fastenerObj[currentInt].transform.childCount);
 
         Debug.Log(fastenerObj[currentInt].transform.position);
-        if(numberToDisplay[currentInt] <= max_HitCount)
+        if (numberToDisplay[currentInt] <= max_HitCount)
         {
             textCounter.gameObject.SetActive(false);
-            if (numberToDisplay[currentInt]>0)
+            if (numberToDisplay[currentInt] > 0)
             {
                 fastenerObj[currentInt].SetActive(true);
                 hitCountManager.PresetCounter(numberToDisplay[currentInt], fastenerObj[currentInt], fastenerList[fastenerValues[currentInt] - 1].GetHitIcon());
@@ -935,9 +936,9 @@ public class LoToolMinigame : MonoBehaviour
             {
                 fastenerObj[currentInt].SetActive(false);
             }
-            
+
         }
-        else if(numberToDisplay[currentInt] > max_HitCount)
+        else if (numberToDisplay[currentInt] > max_HitCount)
         {
             SetZoomedInTextCounter(currentInt);
             fastenerObj[currentInt].SetActive(false);
@@ -976,7 +977,7 @@ public class LoToolMinigame : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        while (i<patternLength)
+        while (i < patternLength)
         {
             /*
             SelectTool(fastenerCheckVal[i] - 1, i);
@@ -1000,7 +1001,7 @@ public class LoToolMinigame : MonoBehaviour
             toolHolder.position = new Vector3(fastenerObj[i].transform.position.x, toolHolder.position.y, toolHolder.position.z);
             */
 
-            
+
 
             if (numberToDisplay[i] != generatedList[i] || fastenerCheckVal[i] != fastenerValues[i])
             {
@@ -1030,7 +1031,7 @@ public class LoToolMinigame : MonoBehaviour
 
             i++;
 
-            
+
         }
 
         /*
@@ -1053,6 +1054,8 @@ public class LoToolMinigame : MonoBehaviour
 
             StaticData.isToolDone = true;
 
+            Debug.Log("Tool station marked as done in StaticData." + StaticData.isToolDone);
+
             if (DataPersistenceManager.Instance != null)
             {
                 DataPersistenceManager.Instance.SaveGame();
@@ -1066,7 +1069,8 @@ public class LoToolMinigame : MonoBehaviour
 
             yield return new WaitForSeconds(3f);
 
-            foreach (GameObject partTile in tiledParts) {
+            foreach (GameObject partTile in tiledParts)
+            {
                 partTile.GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
                 partTile.GetComponent<PartTile>().SetIsWrong(false);
                 partTile.GetComponent<PartTile>().SetFastenerPosition(-0.7f);
@@ -1112,7 +1116,7 @@ public class LoToolMinigame : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         button.interactable = true;
 
-        
+
     }
 
     //toggles the view of the overview counter
@@ -1122,7 +1126,7 @@ public class LoToolMinigame : MonoBehaviour
         {
             for (int i = 0; i < patternLength; i++)
             {
-                if(fastenerValues[i] > 0)
+                if (fastenerValues[i] > 0)
                 {
                     counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerValues[i] - 1].GetHitIcon());
                 }
@@ -1130,13 +1134,13 @@ public class LoToolMinigame : MonoBehaviour
                 {
                     counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerCheckVal[i] - 1].GetHitIcon());
                 }
-                
+
                 counterHolder[i].SetActive(true);
             }
         }
         else
         {
-            foreach(GameObject count in counterHolder)
+            foreach (GameObject count in counterHolder)
             {
                 count.SetActive(false);
             }
@@ -1147,7 +1151,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         if (isShowing)
         {
-            for (int i = 0; i < patternLength-1; i++)
+            for (int i = 0; i < patternLength - 1; i++)
             {
                 gapHolder[i].GetComponent<GapHolder>().SetGapVal(gapToDisplay[i], originalGaps[i]);
 
@@ -1174,7 +1178,7 @@ public class LoToolMinigame : MonoBehaviour
 
     public void AddTenEvent()
     {
-        numberToDisplay[currentInt] = numberToDisplay[currentInt]+10;
+        numberToDisplay[currentInt] = numberToDisplay[currentInt] + 10;
         if (numberToDisplay[currentInt] <= max_HitCount)
         {
             fastenerObj[currentInt].SetActive(true);
@@ -1194,7 +1198,7 @@ public class LoToolMinigame : MonoBehaviour
 
     private IEnumerator AddMoreCoroutine()
     {
-        if (fastenerObj[currentInt].transform.childCount >0)
+        if (fastenerObj[currentInt].transform.childCount > 0)
         {
             foreach (Transform child in fastenerObj[currentInt].transform)
             {
