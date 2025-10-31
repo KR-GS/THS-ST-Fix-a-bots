@@ -28,6 +28,10 @@ public class StaticData
     public static bool isPaintDone = false;
     public static int selectedFastenerIndex;
 
+    public static bool debugTool = false;
+    public static bool debugPaint = false;
+    public static bool debugWire = false;
+
     public static int medValue = 0;
 
     public static bool isOrderChecked = false;

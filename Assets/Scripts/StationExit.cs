@@ -73,10 +73,12 @@ public class StationExit : MonoBehaviour
         if (StaticData.isToolDone == true)
         {
             debugTool = true;
+            StaticData.debugTool = true;
         }
         else
         {
             debugTool = false;
+            StaticData.debugTool = false;
         }
 
         StaticData.isToolDone = debugTool;
@@ -84,10 +86,12 @@ public class StationExit : MonoBehaviour
         if (StaticData.isPaintDone == true)
         {
             debugPaint = true;
+            StaticData.debugPaint = true;
         }
         else
         {
             debugPaint = false;
+            StaticData.debugPaint = false;
         }
 
         StaticData.isPaintDone = debugPaint;
@@ -95,13 +99,16 @@ public class StationExit : MonoBehaviour
         if (StaticData.isWireDone == true)
         {
             debugWire = true;
+            StaticData.debugWire = true;
         }
         else
         {
             debugWire = false;
+            StaticData.debugWire = false;
         }
 
         StaticData.isWireDone = debugWire;
+
 
         DataPersistenceManager.Instance.SaveGame();
         Debug.Log("Tool static data = " + StaticData.isToolDone);

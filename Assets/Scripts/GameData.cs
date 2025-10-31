@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Build;
 using UnityEngine;
 
 [System.Serializable]
@@ -79,6 +80,12 @@ public class GameData
     public int paintScore;
 
     public int wireScore;
+
+    public bool paintHover;
+
+    public bool wireHover;
+
+    public bool toolHover;
 
     public int medValue;
 

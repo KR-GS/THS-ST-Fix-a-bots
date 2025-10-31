@@ -33,6 +33,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     public Sprite TVSpriteNO;
     private Coroutine scheduleRoutine;
 
+    private bool wireHover = false;
+    private bool toolHover = false;
+    private bool paintHover = false;
+
     private bool isScheduleRunning = false;
 
     public int currentOrderIndex = -1;
@@ -50,6 +54,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Debug.Log("Returned to WorkshopScene. Checking for completed orders...");
             Debug.Log("Hey, I answered the call!");
             StartCoroutine(HandleWorkshopSceneLoad());
+            DataPersistenceManager.Instance.SaveGame();
+            Debug.Log("Game saved after scene load in OrderManager with StaticData Tool being = ." + StaticData.isToolDone);
         }
 
     }
@@ -263,20 +269,25 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 Debug.Log("Yeah... you did complete tool!");
                 orderList[0].toolDone = true;
                 ri.ToolIndicator.gameObject.SetActive(false);
-                if (StaticData.toolWrong == 0)
+                if(toolHover == false)
                 {
-                    Debug.Log("All tools used correctly! Earn 10 points!");
-                    glm.toolScore += 10;
-                }
-                else if (StaticData.toolWrong > 0 && StaticData.toolWrong < 3)
-                {
-                    Debug.Log("Some tools were used incorrectly! Earn 5 points!");
-                    glm.toolScore += 5;
-                }
-                else if (StaticData.toolWrong >= 3)
-                {
-                    Debug.Log("You performed poorly! Earn 1 point!");
-                    glm.toolScore += 1;
+                    toolHover = true;
+
+                    if (StaticData.toolWrong == 0)
+                    {
+                        Debug.Log("All tools used correctly! Earn 10 points!");
+                        glm.toolScore += 10;
+                    }
+                    else if (StaticData.toolWrong > 0 && StaticData.toolWrong < 3)
+                    {
+                        Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                        glm.toolScore += 5;
+                    }
+                    else if (StaticData.toolWrong >= 3)
+                    {
+                        Debug.Log("You performed poorly! Earn 1 point!");
+                        glm.toolScore += 1;
+                    }
                 }
 
                 StaticData.toolWrong = 0;
@@ -288,20 +299,24 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 Debug.Log("Magnificent... you did complete sticker!");
                 orderList[0].paintDone = true;
                 ri.PaintIndicator.gameObject.SetActive(false);
-                if (StaticData.paintWrong == 0)
+                if (paintHover == false)
                 {
-                    Debug.Log("All tools used correctly! Earn 10 points!");
-                    glm.paintScore += 10;
-                }
-                else if (StaticData.paintWrong > 0 && StaticData.paintWrong < 3)
-                {
-                    Debug.Log("Some tools were used incorrectly! Earn 5 points!");
-                    glm.paintScore += 5;
-                }
-                else if (StaticData.paintWrong >= 3)
-                {
-                    Debug.Log("You performed poorly! Earn 1 points!");
-                    glm.paintScore += 1;
+                    paintHover = true;
+                    if (StaticData.paintWrong == 0)
+                    {
+                        Debug.Log("All tools used correctly! Earn 10 points!");
+                        glm.paintScore += 10;
+                    }
+                    else if (StaticData.paintWrong > 0 && StaticData.paintWrong < 3)
+                    {
+                        Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                        glm.paintScore += 5;
+                    }
+                    else if (StaticData.paintWrong >= 3)
+                    {
+                        Debug.Log("You performed poorly! Earn 1 points!");
+                        glm.paintScore += 1;
+                    }
                 }
 
                 StaticData.paintWrong = 0;
@@ -313,20 +328,24 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 Debug.Log("Shocking... you did complete wire!");
                 orderList[0].wireDone = true;
                 ri.WireIndicator.gameObject.SetActive(false);
-                if (StaticData.wireWrong == 0)
+                if(wireHover == false)
                 {
-                    Debug.Log("All tools used correctly! Earn 10 points!");
-                    glm.wireScore += 10;
-                }
-                else if (StaticData.wireWrong > 0 && StaticData.wireWrong < 3)
-                {
-                    Debug.Log("Some tools were used incorrectly! Earn 5 points!");
-                    glm.wireScore += 5;
-                }
-                else if (StaticData.wireWrong >= 3)
-                {
-                    Debug.Log("You performed poorly! Earn 1 points!");
-                    glm.wireScore += 1;
+                    wireHover = true;
+                    if (StaticData.wireWrong == 0)
+                    {
+                        Debug.Log("All tools used correctly! Earn 10 points!");
+                        glm.wireScore += 10;
+                    }
+                    else if (StaticData.wireWrong > 0 && StaticData.wireWrong < 3)
+                    {
+                        Debug.Log("Some tools were used incorrectly! Earn 5 points!");
+                        glm.wireScore += 5;
+                    }
+                    else if (StaticData.wireWrong >= 3)
+                    {
+                        Debug.Log("You performed poorly! Earn 1 points!");
+                        glm.wireScore += 1;
+                    }
                 }
 
                 StaticData.wireWrong = 0;
@@ -347,6 +366,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             StaticData.isToolDone = false;
             StaticData.isPaintDone = false;
             StaticData.isWireDone = false;
+            wireHover = false;
+            toolHover = false;
+            paintHover = false;
+            StaticData.debugPaint = false;
+            StaticData.debugTool = false;
+            StaticData.debugWire = false;
             StaticData.isOrderChecked = false;
             StaticData.incorrectIndices.Clear();
             StaticData.incorrectValues.Clear();
@@ -475,6 +500,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         this.currentOrderIndex = data.currentOrderIndex;
         this.isFinished = data.finished;
         this.prize = data.prize;
+        this.toolHover = data.toolHover;
+        this.paintHover = data.paintHover;
+        this.wireHover = data.wireHover;
         StaticData.isPaintDone = data.isPaintDone;
         StaticData.isToolDone = data.isToolDone;
         StaticData.isWireDone = data.isWireDone;
@@ -553,6 +581,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         data.isWireDone = StaticData.isWireDone;
         data.isOrderChecked = StaticData.isOrderChecked;
         data.sendNewOrder = StaticData.sendNewOrder;
+        data.toolHover = this.toolHover;
+        data.paintHover = this.paintHover;
+        data.wireHover = this.wireHover;
 
     }
 

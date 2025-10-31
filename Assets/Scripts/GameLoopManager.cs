@@ -83,22 +83,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         StaticData.isOnHigherOrderGame = false;
         StaticData.isOnHigherOrder = false;
-
         StaticData.isOnLowerOrder= true;
 
-        //Instance = this;
-        /*
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        */
-
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        Debug.Log("StaticData Tool value = " + StaticData.isToolDone);
 
         // DataPersistenceManager.Instance.SaveGame();
     }
@@ -106,6 +95,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     private void Start()
     {
         Debug.Log("I am calling data at GLM, with values of tooldone, paintdone and wiredone" + StaticData.isToolDone + StaticData.isPaintDone + StaticData.isWireDone);
+
+        
 
         if (DataPersistenceManager.Instance != null)
         {
@@ -116,7 +107,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.LogError("The DataPersistence.Instance is NULL!!!");
         }
 
+        StaticData.isToolDone = StaticData.debugTool;
+        StaticData.isPaintDone = StaticData.debugPaint;
+        StaticData.isWireDone = StaticData.debugWire;
 
+        Debug.Log("Again again!" + StaticData.isToolDone + StaticData.isPaintDone + StaticData.isWireDone);
     }
 
     private void OnDestroy()
@@ -988,6 +983,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         om.SetStatus(false);
         om.orderReceived = false; // Reset order received status
+        StaticData.orderReceived = false;
         level++;
         StaticData.dayNo = level;
 
