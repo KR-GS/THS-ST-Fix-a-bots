@@ -87,14 +87,17 @@ public class LoPaintMinigame : MonoBehaviour
         RenderTexture[] minimapRT = FindFirstObjectByType<PaintMinimapManager>().GetGeneratedRT();
 
         List<int> packToUse = new List<int>();
+
+        Debug.Log("Current difficulty: " + StaticData.paintDifficulty);
         
         if (StaticData.paintPattern != null && StaticData.paintPattern.Count > 0)
         {
             Debug.Log("Loading paint pattern from StaticData");
 
-            if (StaticData.paintDifficulty == 0 || StaticData.paintDifficulty == 1)
+            if (StaticData.paintDifficulty == 0)
             {
-                numberPattern.Add(StaticData.paintPattern.ToArray());
+                Debug.Log("Hello World");
+                numberPattern.Add(StaticData.paintPattern[0]);
 
                 int randPack = StaticData.selectedStickerIndex;
                 //int randPack = Random.Range(0, stickerPacks.Length);
@@ -109,11 +112,12 @@ public class LoPaintMinigame : MonoBehaviour
                     Debug.LogError($"Invalid sticker pack index: {randPack}");
                 }
             }
-            else if (StaticData.paintDifficulty == 2)   
+            else if (StaticData.paintDifficulty == 1 || StaticData.paintDifficulty == 2)
             {
+                Debug.Log("Current Number Pattern: " + numberPattern);
                 for (int i = 0; i < 2; i++)
                 {
-                    numberPattern.Add(StaticData.paintPattern.ToArray()); // reuse pattern twice
+                    numberPattern.Add(StaticData.paintPattern[i]); // reuse pattern twice
                 }
 
                 int j = 0;
@@ -145,7 +149,6 @@ public class LoPaintMinigame : MonoBehaviour
                 }
             }
         }
-        
         else
         {
             Debug.LogWarning("StaticData.paintPattern is empty. This shouldn't happen if GameLoopManager generated and stored it properly.");

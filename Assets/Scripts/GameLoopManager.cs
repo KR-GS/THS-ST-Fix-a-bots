@@ -25,7 +25,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> currentPattern;
 
-    private List<int> currentPaintPattern;
+    private List<int[]> currentPaintPattern = new List<int[]>();
 
     private List<int> currentWirePattern;
 
@@ -350,8 +350,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         if(data.paintPattern != null)
         {
-            currentPaintPattern = new List<int>(data.paintPattern);
-            StaticData.paintPattern = new List<int>(data.paintPattern);
+            currentPaintPattern = new List<int[]>(data.paintPattern);
+            StaticData.paintPattern = new List<int[]>(data.paintPattern);
         }
         if(data.wirePattern != null)
         {
@@ -385,7 +385,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.correctPattern = new List<int>(currentPattern); // Store the current pattern
         data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
         data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
-        data.paintPattern = new List<int>(currentPaintPattern); // Store the current paint pattern
+        data.paintPattern = new List<int[]>(currentPaintPattern); // Store the current paint pattern
         data.wirePattern = new List<int>(currentWirePattern); // Store the current wire pattern
         data.paintScore = this.paintScore;
         data.toolScore = this.toolScore;
@@ -506,13 +506,17 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> GeneratePaintPatternArray(int patternLen)
     {
-        generatedDifference = Random.Range(diff_Lowest, diff_Highest);
+        generatedDifference = (Random.Range(diff_Lowest, diff_Highest))/2;
         StaticData.sequenceDiff = generatedDifference; // Store in StaticData for sequence difference
         int baseHolder = Random.Range(base_Lowest, base_Highest);
 
+        baseHolder = baseHolder / 3;
+
+        Debug.Log("Base for sticker pattern: " + baseHolder);
+
         List<int> numberPaintPatternList = new List<int>();
         
-        for (int i = 1; i <= patternLen; i++)
+        for (int i = 0; i < patternLen; i++)
         {
             numberPaintPatternList.Add(baseHolder + (generatedDifference * i));
         }
@@ -908,15 +912,29 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
         }
 
+        if(StaticData.paintDifficulty == 1)
+        {
+            Debug.Log("Painty painty");
+            ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
+            currentPaintPattern.Add(GeneratePaintPatternArray(StaticData.paintpatternLength).ToArray());
+            Debug.Log("Current Generated Pattern: " + currentPaintPattern);
+            StaticData.paintPattern = currentPaintPattern;
+        }
+        else if(StaticData.paintDifficulty == 0 || StaticData.paintDifficulty == 2)
+        {
+            for (int i = 0; i<2; i++)
+            {
+                currentPaintPattern.Add(GeneratePaintPatternArray(StaticData.paintpatternLength).ToArray());
+                Debug.Log("Current Generated Pattern " + i + ": " + currentPaintPattern[0]);
+            }
 
-        Debug.Log("Painty painty");
-        ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
-        currentPaintPattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
-        StaticData.paintPattern = currentPaintPattern;
+            StaticData.paintPattern = currentPaintPattern;
+        }
+            
 
         StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
         StaticData.selectedStickerIndex = Random.Range(0, 3);
-        StaticData.selectedStickerIndex = Random.Range(0, 3);
+        StaticData.selectedStickerIndexTwo = Random.Range(0, 3);
         if (StaticData.selectedStickerIndex == StaticData.selectedFastenerIndex) // Ensure different indices
         {
             StaticData.selectedStickerIndex = (StaticData.selectedStickerIndex + 1) % 3; // Wrap around if same index
