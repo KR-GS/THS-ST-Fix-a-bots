@@ -48,7 +48,7 @@ public class StaticData
 
     public static List<int> toolPattern;
     public static List<int> incorrectToolPattern;
-    public static List<int> paintPattern;
+    public static List<int[]> paintPattern;
     public static List<int> incorrectPaintPattern;
     public static List<int> wirePattern;
     public static List<int> incorrectWirePattern;

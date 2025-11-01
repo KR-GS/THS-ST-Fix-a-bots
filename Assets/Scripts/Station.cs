@@ -66,7 +66,7 @@ public class Station : MonoBehaviour
                     {
                         SceneManager.LoadScene("LO_Tool_GUI");
                         Debug.Log("Tool station activated!");
-                    }
+                    } 
                     break;
 
                 case StationType.Paint:

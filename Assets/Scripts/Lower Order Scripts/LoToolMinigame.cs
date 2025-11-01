@@ -455,7 +455,7 @@ public class LoToolMinigame : MonoBehaviour
 
         robotPart.GetComponent<BoxCollider2D>().size = toolTilingManager.TileLength();
 
-        robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -6f);
+        robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -5f);
 
         robotPart.GetComponent<BoxCollider2D>().layerOverridePriority = 1;
 
@@ -541,10 +541,12 @@ public class LoToolMinigame : MonoBehaviour
 
         if (raycastResults.Count > 0)
         {
+            Debug.Log("Raycast results more than 0");
             foreach (var go in raycastResults)
             {
-                if (go.gameObject.transform.root.TryGetComponent(out OverviewCounter overviewCounter))
+                if (go.gameObject.transform.parent.parent.parent.TryGetComponent(out OverviewCounter overviewCounter))
                 {
+                    Debug.Log("clicking on overview");
                     return true;
                 }
             }
