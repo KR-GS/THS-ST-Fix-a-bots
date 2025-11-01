@@ -39,6 +39,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
     private bool isScheduleRunning = false;
 
+    public bool didExit = false;
+
     public int currentOrderIndex = -1;
 
   
@@ -59,13 +61,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         }
 
     }
-
     private void OnDestroy()
     {
         DataPersistenceManager.Instance.SaveGame();
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-   
+
     private System.Collections.IEnumerator HandleWorkshopSceneLoad()
     {
         Debug.Log("Now we wait!");
@@ -92,6 +93,34 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             TryCompleteOrder();
         }
 
+        if (orderReceived && didExit == true)
+        {
+            Debug.Log("Oh, you must've exited the app after completing a task... wait hold on for a bit");
+            Debug.Log("You have " + activeOrders.Count + " active orders and " + pendingOrders.Count + " pending orders.");
+            Debug.Log("Is the scheduler running? Here's the answer!" + isScheduleRunning);
+            if (activeOrders.Count == 0 && pendingOrders.Count > 0 && isScheduleRunning == true)
+            {
+                sendNewOrder = true;
+                isScheduleRunning = false;
+                didExit = false;
+                StartCoroutine(ScheduleNextOrder());
+                Debug.Log("Fixed. Now we wait!");
+            }
+        }
+        else if (orderReceived && didExit == false)
+        {
+            Debug.Log("You did return from the station right?");
+            Debug.Log("You have " + activeOrders.Count + " active orders and " + pendingOrders.Count + " pending orders.");
+            Debug.Log("Is the scheduler running? Here's the answer!" + isScheduleRunning);
+            if (activeOrders.Count == 0 && pendingOrders.Count > 0 && isScheduleRunning == true)
+            {
+                sendNewOrder = true;
+                isScheduleRunning = false;
+                didExit = false;
+                StartCoroutine(ScheduleNextOrder());
+                Debug.Log("Sending your next order!");
+            }
+        }
     }
    
 
@@ -225,9 +254,10 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         isScheduleRunning = true;
         Debug.Log("ScheduleNextOrder started.");
-
+        Debug.Log("Pending orders count: " + pendingOrders.Count);
         while (pendingOrders.Count > 0)
         {
+            Debug.Log("I do have lots right?");
             yield return new WaitUntil(() => sendNewOrder);
             yield return new WaitForSeconds(5f);
             var nextOrder = pendingOrders.Dequeue();
@@ -246,6 +276,28 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         isScheduleRunning = false;
         Debug.Log("ScheduleNextOrder finished.");
+    }
+
+    public void SendNewOrderDebug()
+    {
+        Debug.Log("Sending new order because the other one is bugged lol.");
+        Debug.Log("Pending orders count: " + pendingOrders.Count);
+        while (pendingOrders.Count > 0)
+        {
+            Debug.Log("I do have lots right?");
+            var nextOrder = pendingOrders.Dequeue();
+            AddToActiveOrders(nextOrder);
+            currentOrder = nextOrder;
+            StaticData.currentOrder = nextOrder;
+            Debug.Log("Delivered order!");
+            Debug.Log("isChecked status: " + StaticData.isOrderChecked);
+            TVSprite.sprite = TVSpriteNO;
+
+            sendNewOrder = false;
+            StaticData.sendNewOrder = false;
+            Debug.Log("Order will be sent after you complete this task!");
+            Debug.Log("SendNewOrder status: " + sendNewOrder);
+        }
     }
     public void TryCompleteOrder()
     {
@@ -396,13 +448,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 }
             }
 
-            if (ri != null && pendingOrders.Count > 0)
-            {
-                sendNewOrder = true;
-                StaticData.sendNewOrder = true;
-                Debug.Log("sendNewOrder is now set to true!:" + sendNewOrder);
-                Debug.Log("StaticData.sendNewOrder is now set to true!:" + StaticData.sendNewOrder);
-            }
 
         }
 
@@ -503,6 +548,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         this.toolHover = data.toolHover;
         this.paintHover = data.paintHover;
         this.wireHover = data.wireHover;
+        this.isScheduleRunning = data.isSchedulerRunning;
         StaticData.isPaintDone = data.isPaintDone;
         StaticData.isToolDone = data.isToolDone;
         StaticData.isWireDone = data.isWireDone;
@@ -530,6 +576,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             StartCoroutine(ScheduleNextOrder());
         }
+
 
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
@@ -584,7 +631,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         data.toolHover = this.toolHover;
         data.paintHover = this.paintHover;
         data.wireHover = this.wireHover;
-
+        data.isSchedulerRunning = this.isScheduleRunning;
+        didExit = true;
+        data.didExit = this.didExit;
     }
 
     public int GetPrize()

@@ -87,6 +87,10 @@ public class GameData
 
     public bool toolHover;
 
+    public bool didExit;
+
+    public bool isSchedulerRunning;
+
     public int medValue;
 
     public int toolWrong;
@@ -155,7 +159,9 @@ public class GameData
         this.toolWrong = 0;
         this.paintWrong = 0;
         this.wireWrong = 0;
+        this.isSchedulerRunning = false;
         this.valuestoChange = 0;
+        this.didExit = true;
     }
 
 
