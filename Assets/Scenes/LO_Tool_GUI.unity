@@ -870,7 +870,7 @@ MonoBehaviour:
   fastenerType: 3
   fastenerValue: 4
   tool: {fileID: 3200441463033314186, guid: 36940cf6f7870c44eaacb910f00e329d, type: 3}
-  missingPrefab: {fileID: 3200441463033314186, guid: 1fb43ccb514eccd4ab0ca23ed76785b8, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: afc1c72c441274442961eb1141a40c1d, type: 3}
 --- !u!1 &202795837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,7 +1680,7 @@ MonoBehaviour:
   fastenerType: 0
   fastenerValue: 1
   tool: {fileID: 3200441463033314186, guid: 8c07b1d79bd12444e90721bdf3d9eed1, type: 3}
-  missingPrefab: {fileID: 3200441463033314186, guid: b44c380fc894609428c76a40ed1ed0f6, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: e1ad52d12cf20c34b95abbae5f6c419c, type: 3}
 --- !u!1 &450526536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,7 +1831,7 @@ MonoBehaviour:
   fastenerType: 2
   fastenerValue: 3
   tool: {fileID: 3200441463033314186, guid: 70ac0194519fe644887b060eeb9d9811, type: 3}
-  missingPrefab: {fileID: 3200441463033314186, guid: 298da4e9bed001847bf81cd8d046c197, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: ba27175ba3c1d8c41998f24ba823f23f, type: 3}
 --- !u!1 &462270654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2239,7 +2239,7 @@ MonoBehaviour:
   fastenerType: 1
   fastenerValue: 2
   tool: {fileID: 3200441463033314186, guid: 6bbbdbbb30cb87a4cb01fcdbc1c5c8f8, type: 3}
-  missingPrefab: {fileID: 3200441463033314186, guid: fc26f0b060de85c4a88373a9b1c07c2a, type: 3}
+  missingPrefab: {fileID: 3200441463033314186, guid: 9cb3586391ddd70469f2abb1514e1d7b, type: 3}
 --- !u!223 &536181604 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 5314409936409160288, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
