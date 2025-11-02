@@ -42,6 +42,8 @@ public class GameData
 
     public List<int> paintPattern;
 
+    public List<int> paint2Pattern;
+
     public List<int> incorrectPaintPattern;
 
     public List<int> wirePattern;

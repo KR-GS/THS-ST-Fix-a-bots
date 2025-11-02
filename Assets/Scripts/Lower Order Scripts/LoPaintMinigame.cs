@@ -69,6 +69,8 @@ public class LoPaintMinigame : MonoBehaviour
 
     private List<int[]> numberPattern = new List<int[]>();
 
+    private List<int[]> number2Pattern = new List< int[]>();
+
     private List<int> packUsed = new List<int>();
 
     private List<GameObject> loading_list = new List<GameObject>();
@@ -90,9 +92,9 @@ public class LoPaintMinigame : MonoBehaviour
 
         Debug.Log("Current difficulty: " + StaticData.paintDifficulty);
         
-        if (StaticData.paintPattern != null && StaticData.paintPattern.Count > 0)
+        if (StaticData.paintPattern != null && StaticData.paintPattern.Count > 0 && StaticData.paint2Pattern != null && StaticData.paint2Pattern.Count > 0)
         {
-            Debug.Log("Loading paint pattern from StaticData");
+            Debug.Log("Loading paint patterns from StaticData");
 
             if (StaticData.paintDifficulty == 0)
             {
@@ -116,12 +118,18 @@ public class LoPaintMinigame : MonoBehaviour
             else if (StaticData.paintDifficulty == 1 || StaticData.paintDifficulty == 2)
             {
                 Debug.Log("Current Number Pattern: " + numberPattern);
+                Debug.Log("Current 2nd Number Pattern: " + number2Pattern);
+                /*
                 for (int i = 0; i < 2; i++)
                 {
                     Debug.Log("Wello horld!");
                     numberPattern.Add(StaticData.paintPattern.ToArray()); // reuse pattern twice
                     //numberPattern.Add(StaticData.paintPattern[i]);
                 }
+                */
+
+                numberPattern.Add(StaticData.paintPattern.ToArray());
+                numberPattern.Add(StaticData.paint2Pattern.ToArray());
 
                 int j = 0;
                 while (j < 2)

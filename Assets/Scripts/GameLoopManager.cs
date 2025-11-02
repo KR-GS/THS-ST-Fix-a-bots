@@ -37,6 +37,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> currentPaintPattern;
 
+    private List<int> currentP2Pattern;
+
     private List<int> currentWirePattern;
 
     //public static GameLoopManager Instance;
@@ -319,12 +321,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Static Data for tool difficulty is hard!");
         }
 
-        if (paintScore >= 0 && paintScore < 200)
+        if (paintScore >= -2 && paintScore < 0) //originally 0-199
         {
             StaticData.paintDifficulty = 0; // Easy
             Debug.Log("Static Data for paint difficulty is easy!");
         }
-        else if (paintScore >= 200 && paintScore < 500)
+        else if (paintScore >= 0 && paintScore < 500) //originally 200-499
         {
             StaticData.paintDifficulty = 1; // Medium
             Debug.Log("Static Data for paint difficulty is medium!");
@@ -335,7 +337,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Static Data for paint difficulty is hard!");
         }
 
-        if (wireScore >= 0 && wireScore < 200) //We do not have wire yet
+        if (wireScore >= 0 && wireScore < 200) 
         {
             StaticData.wireDifficulty = 0; // Easy
             Debug.Log("Static Data for wire difficulty is easy!");
@@ -378,6 +380,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             currentPaintPattern = new List<int>(data.paintPattern);
             StaticData.paintPattern = new List<int>(data.paintPattern);
         }
+        if(data.paint2Pattern != null)
+        {
+            currentP2Pattern = new List<int>(data.paint2Pattern);
+            StaticData.paint2Pattern = new List<int>(data.paint2Pattern);
+        }
         if(data.wirePattern != null)
         {
             currentWirePattern = new List<int>(data.wirePattern);
@@ -412,6 +419,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
         data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
         data.paintPattern = new List<int>(currentPaintPattern); // Store the current paint pattern
+        data.paint2Pattern = new List<int>(currentP2Pattern); // Store the current paint2 pattern
         data.wirePattern = new List<int>(currentWirePattern); // Store the current wire pattern
         data.paintScore = this.paintScore;
         data.toolScore = this.toolScore;
@@ -1018,13 +1026,18 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         else if(StaticData.paintDifficulty == 1 || StaticData.paintDifficulty == 2)
         {
+            /*
             for (int i = 0; i<2; i++)
             {
                 currentPaintPattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
                 //Debug.Log("Current Generated Pattern " + i + ": " + currentPaintPattern[0]);
             }
+            */
 
+            currentPaintPattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
             StaticData.paintPattern = currentPaintPattern;
+            currentP2Pattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
+            StaticData.paint2Pattern = currentP2Pattern;
         }
             
 
