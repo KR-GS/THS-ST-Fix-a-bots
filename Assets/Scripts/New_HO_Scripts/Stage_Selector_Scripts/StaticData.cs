@@ -91,6 +91,7 @@ public class StaticData
 
     // FOR IF THE HO SWIPE HINT IS SEEN
     public static List<bool> hintSeen;
+    public static List<bool> stageFormulaHint;
 
     //How swipes are managed per stage in HO
     // UPDATE: As of now "Up" and "Down" and "Left" and "Right" are functionally the same, so they can be used interchangeably
@@ -98,20 +99,20 @@ public class StaticData
     {
         //SCENARIO 1
         { 1, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 2, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 3, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 4, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 5, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 2, new List<string> { "Up", "Up", "Down", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 3, new List<string> { "Down", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 4, new List<string> { "Right", "Left", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 5, new List<string> { "Up", "Left", "Left", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 6, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 7, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 8, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 9, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 10, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 11, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 12, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 13, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 14, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 15, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 7, new List<string> { "Left", "Left", "Down", "Down", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 8, new List<string> { "Right", "Right", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 9, new List<string> { "Down", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 10, new List<string> { "Left", "Left", "Right", "Up", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 11, new List<string> { "Down", "Right", "Up", "Left", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 12, new List<string> { "Left", "Down", "Down", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 13, new List<string> { "Right", "Down", "Left", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 14, new List<string> { "Up", "Left", "Left", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 15, new List<string> { "Up", "Right", "Left", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
 
         //SCENARIO 2
         { 16, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
@@ -164,7 +165,7 @@ public class StaticData
         maxNumber = new List<int>()
         {
             // SCENARIO 1
-            15, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25,
+            15, 15, 15, 15, 18, 18, 18, 20, 20, 20, 25, 25, 25, 25, 25,
             // SCENARIO 2
             15, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25,
             // SCENARIO 3
@@ -175,7 +176,7 @@ public class StaticData
         coefficient = new List<int>()
         {
             // SCENARIO 1
-            2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5,
+            2, 2, 3, 3, 3, 3, 4, 2, 3, 4, 4, 3, 3, 4, 5,
             // SCENARIO 2
             2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5,
             // SCENARIO 3
@@ -186,18 +187,29 @@ public class StaticData
         constant = new List<int>()
         {
             // SCENARIO 1
-            3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3,
+            0, 0, 1, 2, 0, -1, -1, -1, 2, -3, 2, -2, -1, 2, -3,
             // SCENARIO 2
             3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3,
             // SCENARIO 3
             3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3
         };
 
+        // Whether the reference is seen (NOT USED)
+        refSeen = new List<bool>()
+        {
+            // SCENARIO 1
+            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false,
+            // SCENARIO 2
+            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false,
+            // SCENARIO 3
+            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false
+        };
+
         // Number of pre-pressed blocks at the start (From left to right)
         prePressedCount = new List<int>()
         {
             // SCENARIO 1
-            3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1,
+            3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 1, 2, 0, 0,
             // SCENARIO 2
             3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1,
             // SCENARIO 3
@@ -226,28 +238,6 @@ public class StaticData
             true, false, false, false, false, false, false, false, false, false, false, false, false, false, false
         };
 
-        // Whether the coefficient is locked or not (locked meaning already given and cannot be changed by the player)
-        lockCoefficient = new List<bool>()
-        {
-            // SCENARIO 1
-            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
-            // SCENARIO 2
-            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
-            // SCENARIO 3
-            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false
-        };
-
-        // Whether the constant is locked or not (locked meaning already given and cannot be changed by the player)
-        lockConstant = new List<bool>()
-        {
-            // SCENARIO 1
-            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false,
-            // SCENARIO 2
-            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false,
-            // SCENARIO 3
-            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false
-        };
-
         // Whether the sequence is random or not (TO BE USED FOR RANDOM STAGE GENERATION IN THE FUTURE)
         isRandomSequence = new List<bool>()
         {
@@ -259,22 +249,33 @@ public class StaticData
             false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
         };
 
-        // Whether the reference is seen (NOT USED)
-        refSeen = new List<bool>()
+        // Whether the coefficient is locked or not (locked meaning already given and cannot be changed by the player)
+        lockCoefficient = new List<bool>()
         {
             // SCENARIO 1
-            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false,
+            true, true, true, true, true, true, true, true, false, false, false, true, false, false, false,
             // SCENARIO 2
-            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false,
+            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
             // SCENARIO 3
-            true, true, true, false, true, false, true, false, true, false, false, true, false, true, false
+            true, false, false, true, true, true, false, false, false, false, true, false, false, false, false
+        };
+
+        // Whether the constant is locked or not (locked meaning already given and cannot be changed by the player)
+        lockConstant = new List<bool>()
+        {
+            // SCENARIO 1
+            true, true, true, false, false, false, false, false, true, true, true, false, true, false, false,
+            // SCENARIO 2
+            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false,
+            // SCENARIO 3
+            true, true, true, false, false, false, true, false, false, false, false, true, false, false, false
         };
 
         // How may wrong coefficient blocks are spawned in the formula input screen
         stageRandomCoefficientCount = new List<int>()
         {
             // SCENARIO 1
-            2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 1, 2, 2,
             
             // SCENARIO 2
             2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
@@ -287,7 +288,7 @@ public class StaticData
         stageMaxCoefficientValue = new List<int>()
         {
             //SCENARIO 1
-            1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
+            3, 3, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
 
             //SCENARIO 2
             1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
@@ -296,11 +297,23 @@ public class StaticData
             1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
         };
 
+        stageFormulaHint = new List<bool>()
+        {
+            //SCENARIO 1
+            true, true, true, true, true, true, true, true, true, false, false, false, false, false, false,
+
+            //SCENARIO 2
+            true, true, true, true, true, true, true, true, true, false, false, false, false, false, false,
+
+            //SCENARIO 3
+            true, true, true, true, true, true, true, true, true, false, false, false, false, false, false
+        };
+
         // How may wrong constant blocks are spawned in the formula input screen
         stageRandomConstantCount = new List<int>()
         {
             //SCENARIO 1
-            1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
+            0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 1, 0, 1, 2, 2,
 
             //SCENARIO 2
             1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
@@ -326,7 +339,7 @@ public class StaticData
         hintSeen = new List<bool>()
         {
             //SCENARIO 1
-            true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
+            true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
 
             //SCENARIO 2
             true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,

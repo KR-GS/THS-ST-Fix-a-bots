@@ -104,7 +104,9 @@ public class SequenceGameManager : MonoBehaviour
 
     void GetData()
     {
+        stageNum = StaticData.stageNum;
         maxNumber = StaticData.maxNumber[stageNum + 1];
+        Debug.Log("Max Number: " + StaticData.maxNumber[stageNum + 1] + " for stage " + (stageNum + 1));
         cycleInterval = StaticData.cycleInterval;
         cycleLeniency = StaticData.cycleLeniency;
         prePressedCount = StaticData.prePressedCount[stageNum + 1];
