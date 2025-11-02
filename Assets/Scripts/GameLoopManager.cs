@@ -321,12 +321,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Static Data for tool difficulty is hard!");
         }
 
-        if (paintScore >= -2 && paintScore < 0) //originally 0-199
+        if (paintScore >= 0 && paintScore < 200) //originally 0-199
         {
             StaticData.paintDifficulty = 0; // Easy
             Debug.Log("Static Data for paint difficulty is easy!");
         }
-        else if (paintScore >= 0 && paintScore < 500) //originally 200-499
+        else if (paintScore >= 200 && paintScore < 500) //originally 200-499
         {
             StaticData.paintDifficulty = 1; // Medium
             Debug.Log("Static Data for paint difficulty is medium!");
