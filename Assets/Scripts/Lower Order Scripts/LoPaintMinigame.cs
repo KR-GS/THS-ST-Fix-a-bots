@@ -97,7 +97,8 @@ public class LoPaintMinigame : MonoBehaviour
             if (StaticData.paintDifficulty == 0)
             {
                 Debug.Log("Hello World");
-                numberPattern.Add(StaticData.paintPattern[0]);
+                numberPattern.Add(StaticData.paintPattern.ToArray());
+                //numberPattern.Add(StaticData.paintPattern[0]);
 
                 int randPack = StaticData.selectedStickerIndex;
                 //int randPack = Random.Range(0, stickerPacks.Length);
@@ -117,7 +118,9 @@ public class LoPaintMinigame : MonoBehaviour
                 Debug.Log("Current Number Pattern: " + numberPattern);
                 for (int i = 0; i < 2; i++)
                 {
-                    numberPattern.Add(StaticData.paintPattern[i]); // reuse pattern twice
+                    Debug.Log("Wello horld!");
+                    numberPattern.Add(StaticData.paintPattern.ToArray()); // reuse pattern twice
+                    //numberPattern.Add(StaticData.paintPattern[i]);
                 }
 
                 int j = 0;

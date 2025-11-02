@@ -35,7 +35,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> currentPattern;
 
-    private List<int[]> currentPaintPattern = new List<int[]>();
+    private List<int> currentPaintPattern;
 
     private List<int> currentWirePattern;
 
@@ -375,8 +375,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         if(data.paintPattern != null)
         {
-            currentPaintPattern = new List<int[]>(data.paintPattern);
-            StaticData.paintPattern = new List<int[]>(data.paintPattern);
+            currentPaintPattern = new List<int>(data.paintPattern);
+            StaticData.paintPattern = new List<int>(data.paintPattern);
         }
         if(data.wirePattern != null)
         {
@@ -411,7 +411,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.correctPattern = new List<int>(currentPattern); // Store the current pattern
         data.incorrectPattern = new List<int>(StaticData.incorrectToolPattern); // Store the incorrect pattern
         data.incorrectIndices = new List<int>(StaticData.incorrectIndices); // Store incorrect indices
-        data.paintPattern = new List<int[]>(currentPaintPattern); // Store the current paint pattern
+        data.paintPattern = new List<int>(currentPaintPattern); // Store the current paint pattern
         data.wirePattern = new List<int>(currentWirePattern); // Store the current wire pattern
         data.paintScore = this.paintScore;
         data.toolScore = this.toolScore;
@@ -538,7 +538,16 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.sequenceDiff = generatedDifference; // Store in StaticData for sequence difference
         int baseHolder = Random.Range(base_Lowest, base_Highest);
 
-        generatedDifference = generatedDifference / 2;
+        generatedDifference = generatedDifference / 2; //formally wasn't divided by 2
+
+        Debug.Log("Generated difference between numbers: " + generatedDifference);
+
+        if(generatedDifference < 1)
+        {
+            Debug.Log("Why did 1 get divided by 2? TO get a generated difference of 0!");
+            generatedDifference = 1;
+        }
+
 
         baseHolder = baseHolder / 2;
 
@@ -1003,7 +1012,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             Debug.Log("Painty painty");
             ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
-            currentPaintPattern.Add(GeneratePaintPatternArray(StaticData.paintpatternLength).ToArray());
+            currentPaintPattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
             Debug.Log("Current Generated Pattern: " + currentPaintPattern);
             StaticData.paintPattern = currentPaintPattern;
         }
@@ -1011,7 +1020,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             for (int i = 0; i<2; i++)
             {
-                currentPaintPattern.Add(GeneratePaintPatternArray(StaticData.paintpatternLength).ToArray());
+                currentPaintPattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
                 //Debug.Log("Current Generated Pattern " + i + ": " + currentPaintPattern[0]);
             }
 
