@@ -10,6 +10,7 @@ TagManager:
   - Paint
   - Tool
   - Wire
+  - Pause
   layers:
   - Default
   - TransparentFX

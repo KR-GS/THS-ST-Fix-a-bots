@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 
 
@@ -38,6 +39,8 @@ public class RaycastInteractor : MonoBehaviour
     public Sprite TVSpriteNO;
     public Sprite TVSpriteNoOrder;
 
+    public Button pauseButton;
+
     public Image ToolIndicator;
     public Image WireIndicator;
     public Image PaintIndicator;
@@ -65,23 +68,10 @@ public class RaycastInteractor : MonoBehaviour
 
     private void Awake()
     {
-        /*
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        */
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
         if (PaintIndicator != null) PaintIndicator.gameObject.SetActive(false);
-
 
         StartCoroutine(DelayedOrderUISetup());
 
@@ -295,6 +285,12 @@ public class RaycastInteractor : MonoBehaviour
     {
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
+            if (IsPointerOverUI(Input.GetTouch(0).position))
+            {
+                Debug.Log("Pressing the button!");
+                return; 
+            }
+
             Vector2 touchPosition = Input.GetTouch(0).position;
 
             // Convert screen position to world position for 2D
@@ -311,7 +307,6 @@ public class RaycastInteractor : MonoBehaviour
             {
                 Debug.Log("2D Point detection hit: " + hitCollider.name);
 
-                // Station interaction
                 Station station = hitCollider.GetComponent<Station>();
                 if (station != null)
                 {
@@ -350,14 +345,29 @@ public class RaycastInteractor : MonoBehaviour
                             ShowOrderUI();
                         }
                     }
-
                 }
+                
             }
             else
             {
                 Debug.Log("2D Point detection did not hit anything.");
             }
         }
+    }
+
+    private bool IsPointerOverUI(Vector2 touchPosition)
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = touchPosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            Debug.Log("UI Raycast hit: " + result.gameObject.name);
+        }
+
+        return results.Count > 0;
     }
 
     private IEnumerator ScheduleNextOrder()
