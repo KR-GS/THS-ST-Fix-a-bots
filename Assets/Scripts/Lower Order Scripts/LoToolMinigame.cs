@@ -455,7 +455,7 @@ public class LoToolMinigame : MonoBehaviour
 
         robotPart.GetComponent<BoxCollider2D>().size = toolTilingManager.TileLength();
 
-        robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -5f);
+        robotPart.GetComponent<BoxCollider2D>().offset = new Vector2(0, -8f);
 
         robotPart.GetComponent<BoxCollider2D>().layerOverridePriority = 1;
 
@@ -544,7 +544,7 @@ public class LoToolMinigame : MonoBehaviour
             Debug.Log("Raycast results more than 0");
             foreach (var go in raycastResults)
             {
-                if (go.gameObject.transform.parent.parent.parent.TryGetComponent(out OverviewCounter overviewCounter))
+                if (go.gameObject.transform.TryGetComponent(out CounterText counterText))
                 {
                     Debug.Log("clicking on overview");
                     return true;
@@ -780,13 +780,15 @@ public class LoToolMinigame : MonoBehaviour
 
             Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
 
-            SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType() - 1, currentInt, holder);
+            holder.GetChild(0).localPosition = new Vector2(0, 0);
 
             numberToDisplay[currentInt] = 0;
             foreach (Transform child in fastenerObj[currentInt].transform)
             {
                 Destroy(child.gameObject);
             }
+
+            SelectTool(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerType() - 1, currentInt, holder);
         }
     }
 
@@ -794,7 +796,7 @@ public class LoToolMinigame : MonoBehaviour
     {
         int currentFastenerVal = fastenerValues[i];
         Debug.Log("Fastener in place: " + currentFastenerVal);
-        toolHolder.position = holder.GetChild(0).position;
+        toolHolder.position = holder.position;
 
         if (currentTool != null)
         {
@@ -807,7 +809,7 @@ public class LoToolMinigame : MonoBehaviour
 
         currentTool = Instantiate(fastenerList[value].GetToolToUse(), toolHolder);
 
-        currentTool.transform.localPosition = new Vector2(0, 0);
+        currentTool.transform.localPosition = holder.GetChild(0).localPosition;
         currentTool.GetComponent<Tool>().SetHeightValue(-0.7f);
 
         addTenBtn.transform.position = currentTool.GetComponent<Tool>().GetAddTenPos();

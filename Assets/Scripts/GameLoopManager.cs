@@ -534,20 +534,79 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     private List<int> GeneratePaintPatternArray(int patternLen)
     {
-        generatedDifference = (Random.Range(diff_Lowest, diff_Highest))/2;
+        generatedDifference = (Random.Range(diff_Lowest, diff_Highest));
         StaticData.sequenceDiff = generatedDifference; // Store in StaticData for sequence difference
         int baseHolder = Random.Range(base_Lowest, base_Highest);
 
-        baseHolder = baseHolder / 3;
+        generatedDifference = generatedDifference / 2;
+
+        baseHolder = baseHolder / 2;
 
         Debug.Log("Base for sticker pattern: " + baseHolder);
 
         List<int> numberPaintPatternList = new List<int>();
-        
-        for (int i = 0; i < patternLen; i++)
+
+        DifficultyLevel difficulty = DifficultyLevel.easy;
+
+        switch (StaticData.paintDifficulty)
         {
-            numberPaintPatternList.Add(baseHolder + (generatedDifference * i));
+            case 0: difficulty = DifficultyLevel.easy; break;
+            case 1: difficulty = DifficultyLevel.medium; break;
+            case 2: difficulty = DifficultyLevel.hard; break;
         }
+
+        if (difficulty == DifficultyLevel.easy)
+        {
+            for (int i = 0; i < patternLen; i++)
+            {
+                numberPaintPatternList.Add(baseHolder + (generatedDifference * i));
+            }
+        }
+        else if (difficulty == DifficultyLevel.medium)
+        {
+            int isNega = Random.Range(0, 1) * 2 - 1;
+            int medValue = Random.Range(1,10);
+
+            if(medValue <= 5)
+            {
+                if (isNega == -1)
+                {
+                    baseHolder += patternLen * generatedDifference;
+                }
+
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    numberPaintPatternList.Add(baseHolder + isNega * (generatedDifference * i));
+                }
+            }
+            else
+            {
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    baseHolder += (generatedDifference + i);
+                    numberPaintPatternList.Add(baseHolder);
+                }
+            }
+        }
+        else if (difficulty == DifficultyLevel.hard)
+        {
+            int isNega = Random.Range(0, 1) * 2 - 1;
+
+            if (isNega == -1)
+            {
+                for (int i = 1; i <= patternLen; i++)
+                {
+                    baseHolder += (generatedDifference + i);
+                }
+            }
+
+            for (int i = 1; i <= patternLen; i++)
+            {
+                baseHolder += isNega * (generatedDifference + i);
+                numberPaintPatternList.Add(baseHolder);
+            }
+        }
+
 
         return numberPaintPatternList;
     }
@@ -940,7 +999,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
         }
 
-        if(StaticData.paintDifficulty == 1)
+        if(StaticData.paintDifficulty == 0)
         {
             Debug.Log("Painty painty");
             ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.paint);
@@ -948,12 +1007,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             Debug.Log("Current Generated Pattern: " + currentPaintPattern);
             StaticData.paintPattern = currentPaintPattern;
         }
-        else if(StaticData.paintDifficulty == 0 || StaticData.paintDifficulty == 2)
+        else if(StaticData.paintDifficulty == 1 || StaticData.paintDifficulty == 2)
         {
             for (int i = 0; i<2; i++)
             {
                 currentPaintPattern.Add(GeneratePaintPatternArray(StaticData.paintpatternLength).ToArray());
-                Debug.Log("Current Generated Pattern " + i + ": " + currentPaintPattern[0]);
+                //Debug.Log("Current Generated Pattern " + i + ": " + currentPaintPattern[0]);
             }
 
             StaticData.paintPattern = currentPaintPattern;

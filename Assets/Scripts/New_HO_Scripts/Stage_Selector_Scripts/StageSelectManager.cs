@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using Unity.Android.Gradle.Manifest;
 
 public class StageSelectManager : MonoBehaviour, IDataPersistence
 {

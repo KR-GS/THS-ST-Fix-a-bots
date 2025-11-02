@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3950269421140751759}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brokenSprite: {fileID: 1597143511, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
-  fixedSprite: {fileID: 180500846, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
+  fixedSprite: {fileID: 272432934, guid: b8e1be3e85f3d3844a18ac3dc030ea84, type: 3}
 --- !u!1 &6853393639954619397
 GameObject:
   m_ObjectHideFlags: 0

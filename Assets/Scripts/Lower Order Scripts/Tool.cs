@@ -11,7 +11,6 @@ public class Tool : MonoBehaviour
 
     private Animator statusAnimator;
     private AnimationClip[] clips;
-    private AnimationEvent[] events;
     
     void Awake()
     {
@@ -44,7 +43,7 @@ public class Tool : MonoBehaviour
 
     public IEnumerator TriggerToolChange(float value)
     {
-        Vector3 position = new Vector3(0, value, 0);
+        Vector2 position = new Vector2(0, value);
 
         Debug.Log(position);
 
@@ -53,7 +52,6 @@ public class Tool : MonoBehaviour
         while (Vector2.Distance(transform.localPosition, position) > 0.001f)
         {
             transform.localPosition = Vector2.MoveTowards(transform.localPosition, position, speed * Time.deltaTime);
-            Debug.Log(transform.localPosition);
             yield return null;
         }
     }
