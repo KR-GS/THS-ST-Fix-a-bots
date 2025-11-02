@@ -33,6 +33,7 @@ public class SoundEffectsManager : MonoBehaviour
         {
             music.clip = lowerOrderBGM;
         }
+        music.loop = true;
         music.Play();
     }
 

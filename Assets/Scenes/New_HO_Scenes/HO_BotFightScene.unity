@@ -4204,7 +4204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87744157c8591a348acf0c58f47a4650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: data4.game
+  fileName: data.game
 --- !u!1001 &1176463446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4382,7 +4382,8 @@ MonoBehaviour:
   idle: {fileID: 8300000, guid: 1bd41c85b36fc6142ac59cdc4fd7a9f4, type: 3}
   miss: {fileID: 8300000, guid: 200bb23e82b862644a7d8e13c1221efb, type: 3}
   hit: {fileID: 8300000, guid: 11a7a450d8e3950449900a594cea89d9, type: 3}
-  bgmMusic: {fileID: 8300000, guid: 1fe86a2ae409f2e45808670e6a3a6fdd, type: 3}
+  higherOrderBGM: {fileID: 0}
+  lowerOrderBGM: {fileID: 0}
 --- !u!1 &1253231069
 GameObject:
   m_ObjectHideFlags: 0
