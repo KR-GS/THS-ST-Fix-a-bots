@@ -98,8 +98,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         Debug.Log("I am calling data at GLM, with values of tooldone, paintdone and wiredone" + StaticData.isToolDone + StaticData.isPaintDone + StaticData.isWireDone);
 
-        
-
         if (DataPersistenceManager.Instance != null)
         {
             DataPersistenceManager.Instance.LoadGame();
@@ -375,34 +373,73 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             currentPattern = new List<int>(data.correctPattern);
             StaticData.toolPattern = new List<int>(data.correctPattern);
         }
+        else
+        {
+            currentPattern = new List<int>();
+            StaticData.toolPattern = new List<int>();
+        }
+
         if(data.paintPattern != null)
         {
             currentPaintPattern = new List<int>(data.paintPattern);
             StaticData.paintPattern = new List<int>(data.paintPattern);
         }
-        if(data.paint2Pattern != null)
+        else
+        {
+            currentPaintPattern = new List<int>();
+            StaticData.paintPattern = new List<int>();
+        }
+
+        if (data.paint2Pattern != null)
         {
             currentP2Pattern = new List<int>(data.paint2Pattern);
             StaticData.paint2Pattern = new List<int>(data.paint2Pattern);
         }
-        if(data.wirePattern != null)
+        else
+        {
+            currentP2Pattern = new List<int>();
+            StaticData.paint2Pattern = new List<int>();
+        }
+
+        if (data.wirePattern != null)
         {
             currentWirePattern = new List<int>(data.wirePattern);
             StaticData.wirePattern = new List<int>(data.wirePattern);
         }
+        else
+        {
+            currentWirePattern = new List<int>();
+            StaticData.wirePattern = new List<int>();
+        }
+
         if (data.incorrectPattern != null)
         {
             StaticData.incorrectToolPattern = new List<int>(data.incorrectPattern);
         }
+        else
+        {
+            StaticData.incorrectToolPattern = new List<int>();
+        }
+
         if (data.incorrectIndices != null)
         {
             StaticData.incorrectIndices = new List<int>(data.incorrectIndices);
         }
+        else
+        {
+            StaticData.incorrectIndices = new List<int>();
+        }
+
         if (data.incorrectValues != null)
         {
             StaticData.incorrectValues = new List<int>(data.incorrectValues);
         }
-        
+        else
+        {
+            StaticData.incorrectValues = new List<int>();
+        }
+
+
         StaticData.orderReceived = data.orderReceived;
         StaticData.isOrderChecked = data.isOrderChecked;
 
@@ -804,6 +841,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         Debug.Log("Pattern generated on game start: " + string.Join(", ", currentPattern));
         StaticData.toolPattern = currentPattern; // Store in StaticData for tool pattern
         StaticData.paintPattern = currentPaintPattern;
+        StaticData.paint2Pattern = currentP2Pattern;
 
         if (StaticData.toolDifficulty == 0 || (StaticData.toolDifficulty == 1 && StaticData.medValue <= 5))
         {
@@ -1023,6 +1061,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             currentPaintPattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
             Debug.Log("Current Generated Pattern: " + currentPaintPattern);
             StaticData.paintPattern = currentPaintPattern;
+            currentP2Pattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
+            StaticData.paint2Pattern = currentP2Pattern;
+
         }
         else if(StaticData.paintDifficulty == 1 || StaticData.paintDifficulty == 2)
         {
