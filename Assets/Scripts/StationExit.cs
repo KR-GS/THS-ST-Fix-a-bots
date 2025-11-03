@@ -63,6 +63,37 @@ public class StationExit : MonoBehaviour
             {
                 Debug.Log("You returned from work thinking it's already a new day?"); 
             }
+            /*
+            StaticData.cutscenePlay = true;
+
+
+            GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
+            GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+            GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
+            GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
+            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
+            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
+            GameLoopManager.Instance.ShowTV(true);
+            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            {
+                TimerScript.instance.timer.gameObject.SetActive(true); // hide
+            }
+
+
+            if (currentOrder.needsTool && !StaticData.isToolDone)
+            {
+                RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsPaint && !StaticData.isPaintDone)
+            {
+                RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+            }
+            if (currentOrder.needsWire && !StaticData.isWireDone)
+            {
+                RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+            }
+            */
+            
 
         }
         else

@@ -59,6 +59,27 @@ public class Station : MonoBehaviour
         if(StaticData.isOrderChecked == true)
         {
             DataPersistenceManager.Instance.SaveGame();
+
+            /*
+            if (GameLoopManager.Instance.dayNumber != null) GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
+            if (GameLoopManager.Instance.moneyText != null) GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+            if (GameLoopManager.Instance.tutorialButton != null) GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
+            if (GameLoopManager.Instance.remainingOrders != null) GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
+            if (GameLoopManager.Instance.ordersOnboard != null) GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+            if (GameLoopManager.Instance.moneyImage != null) GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
+            GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
+            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
+            RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+            GameLoopManager.Instance.ShowTV(false);
+            if (TimerScript.instance != null && TimerScript.instance.timer != null)
+            {
+                TimerScript.instance.timer.gameObject.SetActive(false); // hide
+            }
+            if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
+            if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
+            if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);
+            */ 
+
             switch (type)
             {
                 case StationType.Tool:
