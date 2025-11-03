@@ -16,8 +16,8 @@ public class BlockManager : MonoBehaviour
     [Header("Block Colors")]
     public static Color coefficientColor = Color.red;
     public static Color signColor = Color.yellow;
-    public static Color constantColor = Color.green;
-    public static Color variableColor = Color.blue;
+    public static Color constantColor = Color.blue;
+    public static Color variableColor = Color.green;
     
     [Header("Block Ranges")]
     private int maxCoefficientValue = 5;
@@ -50,11 +50,25 @@ public class BlockManager : MonoBehaviour
         {
             CreateRandomBlock(BlockType.Constant, StaticData.constant[StaticData.stageNum + 1], "", constantColor);
         }
-        
+
         //spawns signs
-        CreateRandomBlock(BlockType.Sign, 0, "+", signColor);
-        CreateRandomBlock(BlockType.Sign, 0, "-", signColor);
-        
+        if (StaticData.lockConstant[StaticData.stageNum + 1] == true)
+        {
+            if (StaticData.constant[StaticData.stageNum + 1] < 0)
+            {
+                CreateRandomBlock(BlockType.Sign, 0, "-", signColor);
+            }
+            else
+            {
+                CreateRandomBlock(BlockType.Sign, 0, "+", signColor);
+            }
+
+        }
+        else
+        {
+            CreateRandomBlock(BlockType.Sign, 0, "+", signColor);
+            CreateRandomBlock(BlockType.Sign, 0, "-", signColor);
+        }
 
 
         if (useRandomSpawning)

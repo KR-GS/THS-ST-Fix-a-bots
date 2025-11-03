@@ -50,7 +50,7 @@ MonoBehaviour:
   music: {fileID: 1170502344771875212}
   sfx: {fileID: 9195053565531493556}
   idle: {fileID: 8300000, guid: 1bd41c85b36fc6142ac59cdc4fd7a9f4, type: 3}
-  miss: {fileID: 8300000, guid: 200bb23e82b862644a7d8e13c1221efb, type: 3}
+  miss: {fileID: 8300000, guid: 3e01dab37fa5c574083ac970ecc6002c, type: 3}
   hit: {fileID: 8300000, guid: 11a7a450d8e3950449900a594cea89d9, type: 3}
   higherOrderBGM: {fileID: 8300000, guid: 5f0f9eab5de1dce459f0b541652adace, type: 3}
   lowerOrderBGM: {fileID: 8300000, guid: 1f5ccee487e23224c949f9e4dfc04c3b, type: 3}

@@ -142,14 +142,16 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         }
 
         //if haven't done the stage before, just store everything
-        if (StaticData.numStageDone == stageData.GetStageNum())
+        if (StaticData.numStageDone <= stageData.GetStageNum())
         {
+            Debug.Log("Storing stage data for the first time for stage " + stageData.GetStageNum());
             StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
             StaticData.stageLives[stageData.GetStageNum()] = stageData.GetNumLives();
             StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
             StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
             StaticData.stageStars[stageData.GetStageNum()] = numStars;
             StaticData.numStageDone = stageData.GetStageNum() + 1;
+            Debug.Log("Num stage done " + StaticData.numStageDone);
         }
         
         //else, check if it is better before storing
