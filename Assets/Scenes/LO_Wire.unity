@@ -8898,6 +8898,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  debugTool: 0
+  debugPaint: 0
+  debugWire: 0
 --- !u!114 &1200379521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19137,7 +19140,7 @@ MonoBehaviour:
   copper_Ends:
   - {fileID: 1260075776}
   - {fileID: 1971128843}
-  notesManager: {fileID: 0}
+  notesManager: {fileID: 741182242}
 --- !u!4 &1343552623
 Transform:
   m_ObjectHideFlags: 0
@@ -24345,6 +24348,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  debugTool: 0
+  debugPaint: 0
+  debugWire: 0
 --- !u!114 &1386654051
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -85,6 +85,11 @@ public class Wire : MonoBehaviour
         canBeMoved = !canBeMoved;
     }
 
+    public void DisableMovableStatus()
+    {
+        canBeMoved = false;
+    }
+
     public void SetComplete()
     {
         isCompleteWire = true;

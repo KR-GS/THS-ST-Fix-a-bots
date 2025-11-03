@@ -275,11 +275,11 @@ public class LoWireMinigame : MonoBehaviour
                         }
                         else
                         {
-                            wireToAdd.transform.SetParent(null);
-
                             wireToAdd.GetComponent<Wire>().SetNewWirePos(wireGeneratedPlace);
 
                             wireToAdd.transform.position = wireGeneratedPlace.position;
+
+                            wireToAdd.transform.SetParent(wireGeneratedPlace);
                         }
 
                         wireToAdd = null;
@@ -523,7 +523,7 @@ public class LoWireMinigame : MonoBehaviour
         {
             if (wireSlots[i].CheckSlotStatus())
             {
-                wireSlots[i].GetWireInSlot().SetMovableStatus();
+                wireSlots[i].GetWireInSlot().DisableMovableStatus();
                 if (wireSlots[i].GetWireSlotVal() == num_patterns[i])
                 {
                     Debug.Log("Value is Correct!");
