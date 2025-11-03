@@ -2498,6 +2498,7 @@ GameObject:
   - component: {fileID: 809394026}
   - component: {fileID: 809394029}
   - component: {fileID: 809394028}
+  - component: {fileID: 809394030}
   m_Layer: 0
   m_Name: PaintShow
   m_TagString: Untagged
@@ -2599,6 +2600,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_EffectDistance: {x: 0, y: -4}
   m_UseGraphicAlpha: 1
+--- !u!114 &809394030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809394024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20daed0e3f1c584cb6e270b86c7d782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &813540819
 GameObject:
   m_ObjectHideFlags: 0
@@ -2748,6 +2761,7 @@ GameObject:
   - component: {fileID: 908515813}
   - component: {fileID: 908515816}
   - component: {fileID: 908515815}
+  - component: {fileID: 908515817}
   m_Layer: 0
   m_Name: ToolShow
   m_TagString: Untagged
@@ -2849,6 +2863,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_EffectDistance: {x: 0, y: -4}
   m_UseGraphicAlpha: 1
+--- !u!114 &908515817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908515811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20daed0e3f1c584cb6e270b86c7d782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &966543420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4969,6 +4995,7 @@ GameObject:
   - component: {fileID: 1579741708}
   - component: {fileID: 1579741711}
   - component: {fileID: 1579741710}
+  - component: {fileID: 1579741712}
   m_Layer: 0
   m_Name: WireShow
   m_TagString: Untagged
@@ -5070,6 +5097,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_EffectDistance: {x: 0, y: -4}
   m_UseGraphicAlpha: 1
+--- !u!114 &1579741712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579741706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20daed0e3f1c584cb6e270b86c7d782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1605701611
 GameObject:
   m_ObjectHideFlags: 0

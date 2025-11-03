@@ -365,6 +365,10 @@ public class RaycastInteractor : MonoBehaviour
         foreach (RaycastResult result in results)
         {
             Debug.Log("UI Raycast hit: " + result.gameObject.name);
+            if(result.gameObject.TryGetComponent(out StationShow station))
+            {
+                return false;
+            }
         }
 
         return results.Count > 0;
