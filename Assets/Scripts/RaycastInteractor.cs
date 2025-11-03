@@ -277,7 +277,7 @@ public class RaycastInteractor : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("orderSheetPanel is null — can't hide it.");
+            Debug.LogWarning("orderSheetPanel is null ï¿½ can't hide it.");
         }
     }
 
@@ -367,7 +367,10 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("UI Raycast hit: " + result.gameObject.name);
             if(result.gameObject.TryGetComponent(out StationShow station))
             {
-                return false;
+                if (station.enabled)
+                {
+                    return false;
+                }
             }
         }
 

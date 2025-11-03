@@ -13,7 +13,18 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 {
     //Pause Button and Panel
     [SerializeField] private Button pauseButton;
+    [SerializeField] private Button backButton;
+    [SerializeField] private Button confirmButton;
+    [SerializeField] private Button exitButton;
     [SerializeField] private GameObject pausePanel;
+
+    [SerializeField] private GameObject wireShow;
+
+    [SerializeField] private GameObject toolShow;
+
+    [SerializeField] private GameObject paintShow;
+
+
 
     [SerializeField] private Camera cam;
 
@@ -30,6 +41,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     [SerializeField] private TimerScript ts;
 
     public RaycastInteractor ri;
+
+    //public RaycastController rc;
 
     public GameObject TV;
 
@@ -75,17 +88,24 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public SoundEffectsManager soundEffectsManager;
 
+    public void ToggleShow()
+    {
+        wireShow.GetComponent<StationShow>().enabled = !wireShow.GetComponent<StationShow>().enabled;
+        toolShow.GetComponent<StationShow>().enabled = !toolShow.GetComponent<StationShow>().enabled;
+        paintShow.GetComponent<StationShow>().enabled = !paintShow.GetComponent<StationShow>().enabled;
+    }
     private void Awake()
     {
         pauseButton.onClick.AddListener(() =>
         {
+            //rc.DisableRaycasting();
             pausePanel.SetActive(true);
             Time.timeScale = 0f; // Pause the game
         });
 
         StaticData.isOnHigherOrderGame = false;
         StaticData.isOnHigherOrder = false;
-        StaticData.isOnLowerOrder= true;
+        StaticData.isOnLowerOrder = true;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
