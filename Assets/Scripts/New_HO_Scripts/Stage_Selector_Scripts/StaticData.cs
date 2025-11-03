@@ -73,18 +73,12 @@ public class StaticData
     public static int noOfTypes;
     public static int valuestoChange;
 
-    public static bool newGame = false;
-
-    public static int TVScreen = 0;
-
     public static bool startOfDay = false;
     public static int toolWrong = 0;
     public static int paintWrong = 0;
     public static int wireWrong = 0;
     public static bool orderReceived = false;
 
-
-    public static int TVTime = 0;
 
     public static Sprite lastTVSprite;
 

@@ -42,6 +42,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public RaycastInteractor ri;
 
+    //public RaycastController rc;
+
     public GameObject TV;
 
     private List<int> currentPattern;
@@ -51,6 +53,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     private List<int> currentP2Pattern;
 
     private List<int> currentWirePattern;
+
+    //public static GameLoopManager Instance;
 
     //public DataPersistenceManager dpm;
 
@@ -67,12 +71,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public TextMeshProUGUI dayNumber;
 
     public TextMeshProUGUI moneyText;
-
-    /*
-    public Button tutorialButton;
-
-    public TextMeshProUGUI remainingOrders;
-    */
 
     public TextMeshProUGUI ordersOnboard;
 
@@ -108,7 +106,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.isOnHigherOrderGame = false;
         StaticData.isOnHigherOrder = false;
         StaticData.isOnLowerOrder = true;
-
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -153,17 +150,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (scene.name == "LO_WS2D")
         {
-            // Re-find and assign the new instance of the
-            // I'll find where to put that next
-
-            /*
-            if (StaticData.cutscenePlay == true)
-            {
-                Debug.Log("This appears when opening the game right???");
-
-                GameObject dayTextObject = GameObject.Find("DayNumber");
-                if (dayTextObject != null)
-                */
+            // Re-find and assign the new instance of the text
 
             GameObject dayTextObject = GameObject.Find("DayNumber");
             if (dayTextObject != null)
@@ -247,12 +234,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (onboardImage != null) onboardImage.gameObject.SetActive(false);
             ri.readyIndicator.gameObject.SetActive(false);
             ri.readyText.gameObject.SetActive(false);
-
-            /*
-            if (tutorialButton != null) tutorialButton.gameObject.SetActive(false);
-            RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-            RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
-            */
             ShowTV(false);
             if (ts != null && ts.timer != null)
             {
@@ -329,9 +310,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         StaticData.medValue = data.medValue;
         StaticData.dayNo = this.level;
-
-        StaticData.newGame = data.newGame;
-
+        
 
         if (dayNumber != null)
         {
@@ -406,10 +385,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.paintpatternLength = data.paintpatternLength;
         StaticData.toolpatternLength = data.toolpatternLength;
         StaticData.wirepatternLength = data.wirepatternLength;
-        /*
-        StaticData.TVScreen = data.TVScreen;
-        StaticData.patternLength = data.patternLength;
-        */
         StaticData.selectedFastenerIndex = data.selectedFastenerIndex;
         StaticData.selectedStickerIndex = data.selectedStickerIndex;
         StaticData.selectedStickerIndexTwo = data.selectedStickerIndexTwo;
@@ -479,7 +454,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             StaticData.incorrectValues = new List<int>(data.incorrectValues);
         }
-
         else
         {
             StaticData.incorrectValues = new List<int>();
@@ -521,12 +495,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.valuestoChange = StaticData.valuestoChange;
         data.isOrderChecked = StaticData.isOrderChecked;
         data.orderReceived = StaticData.orderReceived;
-
-        /*
-        data.cutscenePlay = StaticData.cutscenePlay;
-        data.newGame = StaticData.newGame;
-        data.TVScreen = StaticData.TVScreen;
-        */
     }
 
     public void UpdateMoneyText()
@@ -551,8 +519,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (ordersOnboard != null && om != null)
         {
             ordersOnboard.text = "" + om.activeOrders.Count;
-            //ordersOnboard.text = "Active Orders: " + OrderManager.Instance.activeOrders.Count;
-
         }
     }
     private List<int> GeneratePatternArray(int patternLen) //This is for tool

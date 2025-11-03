@@ -59,7 +59,6 @@ public class GameData
     public int selectedStickerIndexTwo;
 
     public int toolpatternLength;
-    public int TVScreen;
 
     public int paintpatternLength;
 
@@ -76,12 +75,6 @@ public class GameData
     public bool isOrderChecked;
 
     public bool sendNewOrder;
-
-    public bool cutscenePlay;
-
-    public bool newGame;
-
-    public bool gameStart;
 
     public int toolScore;
 
@@ -110,7 +103,6 @@ public class GameData
     public bool startOfDay;
 
     [Header("High Order Data")]
-
     public List<int> lives;
 
     public List<int> restarts;
@@ -144,6 +136,7 @@ public class GameData
         this.stageDone = 0;
         this.stageSpeed = 1f;
 
+        //Lower Order
         this.isPatternStarted = false;
         this.correctPattern = new List<int>();
         this.incorrectPattern = new List<int>();
@@ -170,17 +163,6 @@ public class GameData
         this.isSchedulerRunning = false;
         this.valuestoChange = 0;
         this.didExit = true;
-        this.cutscenePlay = false;
-        this.newGame = true;
-        this.TVScreen = 0;
-        int stageCount = 45;
-        this.lives = new List<int>(new int[stageCount]);
-        this.restarts = new List<int>(new int[stageCount]);
-        this.stageTimes = new List<float>(new float[stageCount]);
-        this.formulaAttempts = new List<string>(new string[stageCount]);
-        this.stageStars = new List<int>(new int[stageCount]);
-        this.stageDone = 0;
-        this.stageSpeed = 1f;
     }
 
 
