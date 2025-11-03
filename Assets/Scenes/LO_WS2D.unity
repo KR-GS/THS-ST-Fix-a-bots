@@ -1681,7 +1681,6 @@ GameObject:
   - component: {fileID: 458572018}
   - component: {fileID: 458572022}
   - component: {fileID: 458572021}
-  - component: {fileID: 458572024}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1807,19 +1806,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &458572024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 458572017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab0a11408f9f6141af07a9c48fdc5c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableRaycast: 1
 --- !u!1 &473323048
 GameObject:
   m_ObjectHideFlags: 0
@@ -3376,6 +3362,9 @@ MonoBehaviour:
   confirmButton: {fileID: 1376590390}
   exitButton: {fileID: 1376590389}
   pausePanel: {fileID: 292510078}
+  wireShow: {fileID: 1579741706}
+  toolShow: {fileID: 908515811}
+  paintShow: {fileID: 809394024}
   cam: {fileID: 458572018}
   base_Lowest: 1
   base_Highest: 10
@@ -3384,7 +3373,6 @@ MonoBehaviour:
   om: {fileID: 1069410946}
   ts: {fileID: 1069410944}
   ri: {fileID: 1069410945}
-  rc: {fileID: 458572024}
   TV: {fileID: 330052448}
   level: 1
   medValue: 0
@@ -4241,6 +4229,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1523671783043504958, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523671783043504958, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523671783043504958, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1069410947}
+    - target: {fileID: 1523671783043504958, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523671783043504958, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleShow
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523671783043504958, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameLoopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523671783043504958, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487425394626660879, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487425394626660879, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487425394626660879, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1069410947}
+    - target: {fileID: 2487425394626660879, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487425394626660879, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleShow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487425394626660879, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameLoopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487425394626660879, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3598741543778253387, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4304,6 +4348,34 @@ PrefabInstance:
     - target: {fileID: 8670154242689555671, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955708040183643672, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955708040183643672, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955708040183643672, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1069410947}
+    - target: {fileID: 8955708040183643672, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955708040183643672, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleShow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955708040183643672, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameLoopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955708040183643672, guid: dccf08a2ff8adba4a9d527e86cbd6583, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5973,6 +6045,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 131744263}
     m_Modifications:
+    - target: {fileID: 6903650850564248004, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903650850564248004, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903650850564248004, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1069410947}
+    - target: {fileID: 6903650850564248004, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903650850564248004, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleShow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903650850564248004, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameLoopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903650850564248004, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7345868721109612672, guid: 23649f824fcccca4fa4444ff5f85908d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

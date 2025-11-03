@@ -260,7 +260,7 @@ public class SequenceGameManager : MonoBehaviour
     void Start()
     {
         StaticData.isOnHigherOrderGame = true;
-        StaticData.isOnHigherOrder = false;
+        //StaticData.isOnHigherOrder = false;
     }
 
     void Update()
