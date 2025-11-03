@@ -16,8 +16,10 @@ public class ShopManager : MonoBehaviour
         public int price;
     }
 
-    public static ShopManager Instance;
-
+    //public static ShopManager Instance;
+    [SerializeField] private GameLoopManager glm;
+    [SerializeField] private OrderManager om;
+    [SerializeField] private RaycastInteractor ri;
     public GameObject shopPanel;
     public List<ShopItem> allItems;
     public GameObject itemButtonPrefab;
@@ -86,15 +88,15 @@ public class ShopManager : MonoBehaviour
     {
         if(item.itemName == "A")
         {
-            if(item.price > GameLoopManager.Instance.money)
+            if(item.price > glm.money)
             {
                 Debug.Log("Not enough gold!");
                 return;
             }
             else{
                 Debug.Log($"SUCCESSFULLY Bought {item.itemName} for {item.price} gold!");
-                //GameLoopManager.Instance.money += 50; //Base value 50
-                //GameLoopManager.Instance.UpdateMoneyText();
+                //glm.money += 50; //Base value 50
+                //glm.UpdateMoneyText();
             }
         }
         else
@@ -110,17 +112,16 @@ public class ShopManager : MonoBehaviour
 
         ShowCategory("All");
 
-        RaycastInteractor.Instance.DisableRaycasting();
+        //RaycastInteractor.Instance.DisableRaycasting();
 
-        TimerScript.instance.StopTimer();
+        //TimerScript.instance.StopTimer();
 
-        GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-        GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
-        GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
-        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
-        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
-        GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
+        glm.moneyImage.gameObject.SetActive(true);
+        glm.dayNumber.gameObject.SetActive(false);
+        glm.moneyText.gameObject.SetActive(true);
+        //glm.tutorialButton.gameObject.SetActive(false);
+        glm.ordersOnboard.gameObject.SetActive(false);
+        //glm.shopButton.gameObject.SetActive(false);
         RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
         RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
 
@@ -150,16 +151,79 @@ public class ShopManager : MonoBehaviour
             shopPanel.SetActive(false);
         }
 
-        RaycastInteractor.Instance.EnableRaycasting();
+        Order savedOrder = om.GetActiveOrder();
 
-        GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
-        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
-        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
-        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
-        GameLoopManager.Instance.ShowTV(true);
-        GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
-        RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
+        if (ri.TVSprite != null && ri.TVSprite.sprite == TVSpriteNO)
+        {
+            ri.TVSprite.sprite = TVSpriteIP;
+        }
 
+        Debug.Log("Internal tool score: " + glm.toolScore);
+        Debug.Log("Internal paint score: " + glm.paintScore);
+        Debug.Log("Internal wire score: " + glm.wireScore);
+
+        glm.moneyImage.gameObject.SetActive(true);
+        glm.dayNumber.gameObject.SetActive(true);
+        glm.moneyText.gameObject.SetActive(true);
+        glm.onboardImage.gameObject.SetActive(true);
+        glm.ordersOnboard.gameObject.SetActive(true);
+        if (ri.timeText != null)
+        {
+            ri.timeText.gameObject.SetActive(true); // Hide the time text
+        }
+
+        Debug.Log("isOrderChecked status: " + StaticData.isOrderChecked);
+
+        if (ri.isOrderChecked && savedOrder != null)
+        {
+            Debug.Log("Order is checked, returning old indicators...");
+
+            //om.TryCompleteOrder()
+
+            if (savedOrder.needsTool && !StaticData.isToolDone)
+            {
+                ri.ToolIndicator.gameObject.SetActive(true);
+            }
+            if (savedOrder.needsPaint && !StaticData.isPaintDone)
+            {
+                ri.PaintIndicator.gameObject.SetActive(true);
+            }
+            if (savedOrder.needsWire && !StaticData.isWireDone)
+            {
+                ri.WireIndicator.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.Log("Check your orders first!");
+            //Debug.Log($"Indicators not set. isOrderChecked={ri.isOrderChecked}, currentOrder={savedOrder}");
+        }
+
+        if (StaticData.startOfDay == true)
+        {
+            Debug.Log("It is the start of day indeed!");
+        }
+        else
+        {
+            Debug.Log("No it ain't the start of the day!");
+        }
+
+        //RaycastInteractor.Instance.EnableRaycasting();
+        /*
+        glm.moneyImage.gameObject.SetActive(true);
+        glm.dayNumber.gameObject.SetActive(true);
+        glm.moneyText.gameObject.SetActive(true);
+        glm.onboardImage.gameObject.SetActive(true);
+        glm.ordersOnboard.gameObject.SetActive(true);
+
+        if (ri.timeText != null)
+        {
+            ri.timeText.gameObject.SetActive(true); // Hide the time text
+        }
+
+        ri.TVSprite.gameObject.SetActive(true);
+
+        /*
         if (StaticData.TVScreen == 0)
         {
             RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
@@ -172,6 +236,7 @@ public class ShopManager : MonoBehaviour
         {
             RaycastInteractor.Instance.TVSprite.sprite = TVSpriteIP;
         }
+        
 
         Order savedOrder = OrderManager.Instance.GetActiveOrder();
 
@@ -226,6 +291,7 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log($"Indicators not set. isOrderChecked={RaycastInteractor.Instance.isOrderChecked}, currentOrder={savedOrder}");
         }
+        */
     }
 }
 

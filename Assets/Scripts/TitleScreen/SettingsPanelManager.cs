@@ -203,12 +203,15 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
     public void BackToMainMenu()
     {
         if (StaticData.isOnHigherOrderGame)
-            SceneManager.LoadScene("Stage_Select");
+            //SceneManager.LoadScene("Stage_Select");
+            LoadingScreenManager.Instance.SwitchtoScene(1);
         else if (StaticData.isOnLowerOrderGame)
-            SceneManager.LoadScene("LO_WS2D");
+            //SceneManager.LoadScene("LO_WS2D");
+            LoadingScreenManager.Instance.SwitchtoScene(7);
         else if (!StaticData.isOnHigherOrderGame && !StaticData.isOnLowerOrderGame)
         {
-            SceneManager.LoadScene("Title_Screen");
+            //SceneManager.LoadScene("Title_Screen");
+            LoadingScreenManager.Instance.SwitchtoScene(0);
         }
     }
 

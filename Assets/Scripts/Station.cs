@@ -59,12 +59,14 @@ public class Station : MonoBehaviour
         if(StaticData.isOrderChecked == true)
         {
             DataPersistenceManager.Instance.SaveGame();
+            glm.HideWorkshopElements();
             switch (type)
             {
                 case StationType.Tool:
                     if (currentOrder.needsTool && !StaticData.isToolDone)
                     {
-                        SceneManager.LoadScene("LO_Tool_GUI");
+                        LoadingScreenManager.Instance.SwitchtoScene(4);
+                        //SceneManager.LoadScene("LO_Tool_GUI");
                         Debug.Log("Tool station activated!");
                     } 
                     break;
@@ -72,7 +74,8 @@ public class Station : MonoBehaviour
                 case StationType.Paint:
                     if (currentOrder.needsPaint && !StaticData.isPaintDone)
                     {
-                        SceneManager.LoadScene("LO_Paint_GUI");
+                        LoadingScreenManager.Instance.SwitchtoScene(5);
+                        //SceneManager.LoadScene("LO_Paint_GUI");
                         Debug.Log("Paint station activated!");
                     }
                     break;
@@ -80,7 +83,8 @@ public class Station : MonoBehaviour
                 case StationType.Wire:
                     if (currentOrder.needsWire && !StaticData.isWireDone)
                     {
-                        SceneManager.LoadScene("LO_Wire");
+                        LoadingScreenManager.Instance.SwitchtoScene(6);
+                        //SceneManager.LoadScene("LO_Wire");
                         Debug.Log("Wire station activated!");
                     }
                     break;

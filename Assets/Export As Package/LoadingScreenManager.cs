@@ -29,6 +29,7 @@ public class LoadingScreenManager : MonoBehaviour
     
     public void SwitchtoScene(int id)
     {
+        
         loadingscreenObjects.SetActive(true);
         progressBar.value = 0;
 
@@ -49,11 +50,11 @@ public class LoadingScreenManager : MonoBehaviour
                 break;
 
             case 3:
-                tiptext.text = "TIP: Brave men do not fear if the scheduler turns RR at time slice 7!";
+                tiptext.text = "TIP: PATT loves hiding your toolbox, make sure to check under the sofa!";
                 break;
 
             case 4:
-                tiptext.text = "TIP: You can always restart the level if you make a mistake!";
+                tiptext.text = "TIP: You can use the sticky notes to keep track of lots of things!";
                 break;
 
             case 5:

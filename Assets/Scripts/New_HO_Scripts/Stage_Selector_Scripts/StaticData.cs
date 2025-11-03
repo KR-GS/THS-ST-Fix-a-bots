@@ -50,6 +50,9 @@ public class StaticData
     public static List<int> incorrectToolPattern;
     public static List<int> paintPattern;
     public static List<int> paint2Pattern;
+
+    public static bool cutscenePlay = false;
+
     //public static List<int[]> paintPattern;
     public static List<int> incorrectPaintPattern;
     public static List<int> wirePattern;

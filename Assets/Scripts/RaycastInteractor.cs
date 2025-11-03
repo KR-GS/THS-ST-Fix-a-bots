@@ -277,7 +277,7 @@ public class RaycastInteractor : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("orderSheetPanel is null � can't hide it.");
+            Debug.LogWarning("orderSheetPanel is null... can't hide it.");
         }
     }
 

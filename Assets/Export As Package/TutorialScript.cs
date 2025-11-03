@@ -8,6 +8,9 @@ public class TutorialScript : MonoBehaviour
 {
     public static TutorialScript Instance;
     [SerializeField] private GameObject tutorialObject;
+    [SerializeField] private GameLoopManager glm;
+    [SerializeField] private OrderManager om;
+    [SerializeField] private RaycastInteractor ri;
     public TextMeshProUGUI tutorialText;
     public Button nextButton;
     public Button backButton;
@@ -86,8 +89,8 @@ public class TutorialScript : MonoBehaviour
                     backButton.gameObject.SetActive(false);
                     closeButton.gameObject.SetActive(false);
                     tutorialPointer.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
+                    glm.moneyImage.gameObject.SetActive(false);
+                    glm.moneyText.gameObject.SetActive(false);
                     demoStation.gameObject.SetActive(true);
                     demoStation.rectTransform.anchoredPosition = new Vector2(104, 55);
                     break;
@@ -101,9 +104,9 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-                    GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-                    GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
+                    glm.moneyImage.gameObject.SetActive(true);
+                    glm.moneyText.gameObject.SetActive(true);
+                    //glm.remainingOrders.gameObject.SetActive(false);
                     break;
 
                 case 2:
@@ -116,8 +119,8 @@ public class TutorialScript : MonoBehaviour
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-359, 501);
                     tutorialPointer.gameObject.SetActive(true);
                     tutorialPointer.rectTransform.anchoredPosition = new Vector2(-962, 304);
-                    GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
-                    GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
+                    //glm.remainingOrders.gameObject.SetActive(true);
+                    glm.ordersOnboard.gameObject.SetActive(false);
 
                     break;
                 case 3:
@@ -130,8 +133,8 @@ public class TutorialScript : MonoBehaviour
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-521, 271);
                     tutorialPointer.gameObject.SetActive(true);
                     tutorialPointer.rectTransform.anchoredPosition = new Vector2(-962, 210);
-                    GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
-                    GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
+                    glm.ordersOnboard.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(false);
                     break;
                 case 4:
                     tutorialText.text = "This shows which level / day you are currently at right now.";
@@ -144,7 +147,7 @@ public class TutorialScript : MonoBehaviour
                     tutorialPointer.gameObject.SetActive(true);
                     tutorialPointer.rectTransform.anchoredPosition = new Vector2(-274, 416);
                     RaycastInteractor.Instance.timeText.gameObject.SetActive(false);
-                    GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
                     break;
                 case 5:
                     tutorialText.text = "This shows how much time left to receive full payment when finishing orders. Working late will half the amount received!";
@@ -156,7 +159,7 @@ public class TutorialScript : MonoBehaviour
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-521, 171);
                     tutorialPointer.gameObject.SetActive(true);
                     tutorialPointer.rectTransform.anchoredPosition = new Vector2(-157, 334);
-                    RaycastInteractor.Instance.timeText.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
                     TVDemo.gameObject.SetActive(false);
                     break;
                 case 6:
@@ -221,12 +224,12 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-                    GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-                    GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
-                    GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
-                    GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
-                    RaycastInteractor.Instance.timeText.gameObject.SetActive(true);
+                    glm.moneyImage.gameObject.SetActive(true);
+                    glm.moneyText.gameObject.SetActive(true);
+                    //glm.remainingOrders.gameObject.SetActive(true);
+                    glm.ordersOnboard.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
                     tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -297);
                     tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, -142);
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-225, -27);
@@ -243,12 +246,12 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
-                    GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
-                    GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
-                    GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
-                    RaycastInteractor.Instance.timeText.gameObject.SetActive(false);
+                    glm.moneyImage.gameObject.SetActive(false);
+                    glm.moneyText.gameObject.SetActive(false);
+                    //glm.remainingOrders.gameObject.SetActive(false);
+                    glm.ordersOnboard.gameObject.SetActive(false);
+                    glm.dayNumber.gameObject.SetActive(false);
+                    ri.timeText.gameObject.SetActive(false);
                     TVDemo.gameObject.SetActive(false);
                     demoStation.gameObject.SetActive(false);
                     toDolistDemo.gameObject.SetActive(true);
@@ -266,12 +269,12 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-                    GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-                    GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
-                    GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
-                    GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
-                    RaycastInteractor.Instance.timeText.gameObject.SetActive(true);
+                    glm.moneyImage.gameObject.SetActive(true);
+                    glm.moneyText.gameObject.SetActive(true);
+                    //glm.remainingOrders.gameObject.SetActive(true);
+                    glm.ordersOnboard.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
                     TVDemo.gameObject.SetActive(true);
                     toDolistDemo.gameObject.SetActive(false);
                     tutorialBot.rectTransform.anchoredPosition = new Vector2(438, -423);
@@ -290,12 +293,12 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(false);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(true);
-                    GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
-                    GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
-                    GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
-                    GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
-                    GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
-                    RaycastInteractor.Instance.timeText.gameObject.SetActive(false);
+                    glm.moneyImage.gameObject.SetActive(false);
+                    glm.moneyText.gameObject.SetActive(false);
+                    //glm.remainingOrders.gameObject.SetActive(false);
+                    glm.ordersOnboard.gameObject.SetActive(false);
+                    glm.dayNumber.gameObject.SetActive(false);
+                    ri.timeText.gameObject.SetActive(false);
                     demoStation.gameObject.SetActive(true);
                     TVDemo.gameObject.SetActive(false);
                     toDolistDemo.gameObject.SetActive(false);
@@ -349,15 +352,15 @@ public class TutorialScript : MonoBehaviour
 
         tutorialLights.gameObject.SetActive(true);
 
-        GameLoopManager.Instance.ShowTV(false);
+        glm.ShowTV(false);
 
-        GameLoopManager.Instance.moneyImage.gameObject.SetActive(false);
-        GameLoopManager.Instance.dayNumber.gameObject.SetActive(false);
-        GameLoopManager.Instance.moneyText.gameObject.SetActive(false);
-        GameLoopManager.Instance.tutorialButton.gameObject.SetActive(false);
-        GameLoopManager.Instance.remainingOrders.gameObject.SetActive(false);
-        GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(false);
-        GameLoopManager.Instance.shopButton.gameObject.SetActive(false);
+        glm.moneyImage.gameObject.SetActive(false);
+        glm.dayNumber.gameObject.SetActive(false);
+        glm.moneyText.gameObject.SetActive(false);
+        //glm.tutorialButton.gameObject.SetActive(false);
+        //glm.remainingOrders.gameObject.SetActive(false);
+        glm.ordersOnboard.gameObject.SetActive(false);
+        //glm.shopButton.gameObject.SetActive(false);
 
         if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
         if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
@@ -366,15 +369,15 @@ public class TutorialScript : MonoBehaviour
         RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
         RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
 
-        RaycastInteractor.Instance.tutorialIndicator.gameObject.SetActive(false);
-        RaycastInteractor.Instance.pointTutorial.gameObject.SetActive(false);
+        //RaycastInteractor.Instance.tutorialIndicator.gameObject.SetActive(false);
+        //RaycastInteractor.Instance.pointTutorial.gameObject.SetActive(false);
 
         if (RaycastInteractor.Instance.timeText != null)
         {
-            RaycastInteractor.Instance.timeText.gameObject.SetActive(false); // Hide the time text
+            ri.timeText.gameObject.SetActive(false); // Hide the time text
         }
 
-        TimerScript.instance.StopTimer();
+        //TimerScript.instance.StopTimer();
 
         tutorialObject.SetActive(true);
 
@@ -390,27 +393,30 @@ public class TutorialScript : MonoBehaviour
 
         EnableRaycasting();
 
+        /*
         if (StaticData.newGame)
         {
             StaticData.newGame = false;
         }
 
         TimerScript.instance.StartTimer();
+        */
 
 
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
             //completeText.gameObject.SetActive(false);
-            GameLoopManager.Instance.moneyImage.gameObject.SetActive(true);
-            GameLoopManager.Instance.dayNumber.gameObject.SetActive(true);
-            GameLoopManager.Instance.moneyText.gameObject.SetActive(true);
-            GameLoopManager.Instance.tutorialButton.gameObject.SetActive(true);
-            GameLoopManager.Instance.remainingOrders.gameObject.SetActive(true);
-            GameLoopManager.Instance.ordersOnboard.gameObject.SetActive(true);
-            GameLoopManager.Instance.shopButton.gameObject.SetActive(true);
-            GameLoopManager.Instance.ShowTV(true);
+            glm.moneyImage.gameObject.SetActive(true);
+            glm.dayNumber.gameObject.SetActive(true);
+            glm.moneyText.gameObject.SetActive(true);
+            //glm.tutorialButton.gameObject.SetActive(true);
+            //glm.remainingOrders.gameObject.SetActive(true);
+            glm.ordersOnboard.gameObject.SetActive(true);
+            //glm.shopButton.gameObject.SetActive(true);
+            glm.ShowTV(true);
             RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
 
+            /*
             if (StaticData.TVScreen == 0)
             {
                 RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
@@ -423,15 +429,16 @@ public class TutorialScript : MonoBehaviour
             {
                 RaycastInteractor.Instance.TVSprite.sprite = TVSpriteIP;
             }
+            */
 
-            Order savedOrder = OrderManager.Instance.GetActiveOrder();
+            Order savedOrder = om.GetActiveOrder();
 
             if (StaticData.startOfDay == true)
             {
                 Debug.Log("Aiya, debugging is sad!");
                 RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
                 RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
-                TimerScript.instance.StopTimer();
+                //TimerScript.instance.StopTimer();
             }
             else if (StaticData.startOfDay == false)
             {

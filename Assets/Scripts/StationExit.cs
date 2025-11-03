@@ -17,6 +17,8 @@ public class StationExit : MonoBehaviour
         if (currentOrder != null)
         {
             Debug.Log("Yeah... you did have a current order!");
+            StaticData.cutscenePlay = false;
+
             switch (type)
             {
                 case StationType.Tool:
@@ -112,6 +114,7 @@ public class StationExit : MonoBehaviour
 
         DataPersistenceManager.Instance.SaveGame();
         Debug.Log("Tool static data = " + StaticData.isToolDone);
-        SceneManager.LoadScene("LO_WS2D");
+        //SceneManager.LoadScene("LO_WS2D");
+        LoadingScreenManager.Instance.SwitchtoScene(7);
     }
 }

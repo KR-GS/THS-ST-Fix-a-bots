@@ -247,7 +247,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     }
 
-   
+
     public void HandleSceneInitialization()
     {
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
@@ -1240,6 +1240,24 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (ri != null) ri.enabled = true;
     }
 
+    public void HideWorkshopElements()
+    {
+        if (dayNumber != null) dayNumber.gameObject.SetActive(false);
+        if (moneyText != null) moneyText.gameObject.SetActive(false);
+        if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
+        if (moneyImage != null) moneyImage.gameObject.SetActive(false);
+        if (onboardImage != null) onboardImage.gameObject.SetActive(false);
+        ri.readyIndicator.gameObject.SetActive(false);
+        ri.readyText.gameObject.SetActive(false);
+        ShowTV(false);
+        if (ts != null && ts.timer != null)
+        {
+            ts.timer.gameObject.SetActive(false); // hide
+        }
+        if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
+        if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
+        if (ri.PaintIndicator != null) ri.PaintIndicator.gameObject.SetActive(false);
+    }
 
     public void CompleteLevel()
     {
