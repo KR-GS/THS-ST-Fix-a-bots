@@ -57,13 +57,13 @@ public class LoadingScreenManager : MonoBehaviour
         ResetButtons();
         vanThink.sprite = vanThonk;
         pattspeak.sprite = pattSpoke;
-        prompt.text = "While waiting, let's help Van solve some Math equations.";
+        prompt.text = "While waiting, let's help Van solve Math equations.";
         loadingscreenMath.SetActive(true);
         progressBar.value = 0;
         answered = false;
 
-        number = Random.Range(1, 100);
-        number2 = Random.Range(1, 100);
+        number = Random.Range(1, 51);
+        number2 = Random.Range(1, 51);
         operation = Random.Range(0, 3); // 0: addition, 1: subtraction, 2: multiplication
 
         if(operation == 0)
