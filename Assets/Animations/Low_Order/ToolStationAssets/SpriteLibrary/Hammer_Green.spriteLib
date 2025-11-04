@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: blue_hammer-01_1
+      m_Hash: 198485918
+      m_Sprite: {fileID: -1897995893, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -2036089547, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_1_0
+      m_Hash: 1028897219
+      m_Sprite: {fileID: -1897995893, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -2036089547, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    m_FromMain: 1
+    m_EntryOverrideCount: 2
+  - m_Name: Hit
+    m_Hash: 580870305
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: blue_hammer-01_1
+      m_Hash: 198485918
+      m_Sprite: {fileID: -1897995893, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -2036089547, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_4
+      m_Hash: 1002328849
+      m_Sprite: {fileID: -1240103328, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -417251295, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_3
+      m_Hash: 635094706
+      m_Sprite: {fileID: 1647317307, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1788722963, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_0
+      m_Hash: 1020499720
+      m_Sprite: {fileID: 469843495, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -983255668, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_5
+      m_Hash: 213476231
+      m_Sprite: {fileID: 1755550955, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1475011, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_3_0
+      m_Hash: 1054305709
+      m_Sprite: {fileID: 1647317307, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1788722963, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_2
+      m_Hash: 316536356
+      m_Sprite: {fileID: 241547351, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -1404201912, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_2_0
+      m_Hash: 1058342810
+      m_Sprite: {fileID: 241547351, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -1404201912, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_1_0
+      m_Hash: 1028897219
+      m_Sprite: {fileID: -1897995893, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -2036089547, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_4_0
+      m_Hash: 999848744
+      m_Sprite: {fileID: -1240103328, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -417251295, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_1_1
+      m_Hash: 173312341
+      m_Sprite: {fileID: -1897995893, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -2036089547, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    m_FromMain: 1
+    m_EntryOverrideCount: 11
+  - m_Name: 10Hit
+    m_Hash: 932587321
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: blue_hammer-01_1
+      m_Hash: 198485918
+      m_Sprite: {fileID: -1897995893, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -2036089547, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_4
+      m_Hash: 1002328849
+      m_Sprite: {fileID: -1240103328, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -417251295, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_3
+      m_Hash: 635094706
+      m_Sprite: {fileID: 1647317307, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1788722963, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_0
+      m_Hash: 1020499720
+      m_Sprite: {fileID: 469843495, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -983255668, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_5
+      m_Hash: 213476231
+      m_Sprite: {fileID: 1755550955, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1475011, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_2
+      m_Hash: 316536356
+      m_Sprite: {fileID: 241547351, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -1404201912, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_5_0
+      m_Hash: 978981151
+      m_Sprite: {fileID: 1647317307, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1788722963, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_2_0
+      m_Hash: 1058342810
+      m_Sprite: {fileID: 241547351, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -1404201912, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_5_1
+      m_Hash: 224207241
+      m_Sprite: {fileID: 1647317307, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1788722963, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_2_1
+      m_Hash: 135411468
+      m_Sprite: {fileID: 241547351, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -1404201912, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_5_2
+      m_Hash: 341078067
+      m_Sprite: {fileID: 1647317307, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1788722963, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_2_2
+      m_Hash: 287008438
+      m_Sprite: {fileID: 241547351, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -1404201912, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_4_0
+      m_Hash: 999848744
+      m_Sprite: {fileID: -1240103328, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -417251295, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    - m_Name: blue_hammer-01_1_1
+      m_Hash: 173312341
+      m_Sprite: {fileID: -1897995893, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -2036089547, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+    m_FromMain: 1
+    m_EntryOverrideCount: 14
+  m_PrimaryLibraryGUID: a4f0d99db81400a4ab3238f269221fa2
+  m_ModificationHash: 638978508389397736
+  m_Version: 1

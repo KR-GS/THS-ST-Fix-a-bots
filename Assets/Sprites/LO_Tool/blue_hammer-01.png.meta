@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d3c7e3d76abb1c64dac71986358107ea
+guid: b06dd4d8dc93f62498b8f5a9d141b2f9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,8 +69,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -123,133 +123,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_0
+      name: blue_hammer-01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e8389aedeb41d149943a483fabb7c1c
-      internalID: 483388852
+      spriteID: 28016d815dde0284f92259c7b4943cf5
+      internalID: 469843495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_1
+      name: blue_hammer-01_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 1026
-        width: 1026
-        height: 1026
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dc39b9c3f8e0f443bd0e3d989c47778
-      internalID: -1589441260
+      spriteID: 003c3a63a33074f4d86a76688727bca9
+      internalID: -1897995893
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_2
+      name: blue_hammer-01_2
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 1026
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f69bbe00f691d1949b16ebb86b7897a4
-      internalID: -2127024361
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_3
-      rect:
-        serializedVersion: 2
-        x: 1026
+        x: 4275
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeba460d575f232438bde4418d1b8ebd
-      internalID: -2002767124
+      spriteID: 708668439809c9648b651dfad3d9c077
+      internalID: 241547351
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_4
+      name: blue_hammer-01_3
       rect:
         serializedVersion: 2
-        x: 2052
+        x: 4275
+        y: 4275
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c47763fa298dc449f20cbd43ff76f4
+      internalID: 1647317307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue_hammer-01_4
+      rect:
+        serializedVersion: 2
+        x: 8550
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e1ca9a2107ebc5468956aa365b1c9db
-      internalID: 1830794340
+      spriteID: f3ba395a4ef94974e8c7a9041cbc3bab
+      internalID: -1240103328
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_5
+      name: blue_hammer-01_5
       rect:
         serializedVersion: 2
-        x: 2052
-        y: 1026
-        width: 1026
-        height: 1026
+        x: 8550
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18dbc11e967814b46a4ded22733bf6ea
-      internalID: 1496432189
+      spriteID: e232ee414b3f8634cb4b80695eeccffb
+      internalID: 1755550955
       vertices: []
       indices: 
       edges: []
@@ -258,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b22987fcce29f9342b92eec9de0e0880
+    spriteID: 3b59a0f12f8330a48a80d994f4628b64
     internalID: 0
     vertices: []
     indices: 
@@ -268,12 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      flathead_with_flat_fastener_spritesheet_0: 483388852
-      flathead_with_flat_fastener_spritesheet_1: -1589441260
-      flathead_with_flat_fastener_spritesheet_2: -2127024361
-      flathead_with_flat_fastener_spritesheet_3: -2002767124
-      flathead_with_flat_fastener_spritesheet_4: 1830794340
-      flathead_with_flat_fastener_spritesheet_5: 1496432189
+      blue_hammer-01_0: 469843495
+      blue_hammer-01_1: -1897995893
+      blue_hammer-01_2: 241547351
+      blue_hammer-01_3: 1647317307
+      blue_hammer-01_4: -1240103328
+      blue_hammer-01_5: 1755550955
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

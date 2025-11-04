@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d3c7e3d76abb1c64dac71986358107ea
+guid: 0674430bec81d124fa7949c1dd2f2948
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,8 +69,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
-    resizeAlgorithm: 1
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -123,133 +123,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_0
+      name: yellow_philips-01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e8389aedeb41d149943a483fabb7c1c
-      internalID: 483388852
+      spriteID: 043f09cbfcf117048b9f7039d1a0ee1f
+      internalID: -609725534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_1
+      name: yellow_philips-01_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1026
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8dc39b9c3f8e0f443bd0e3d989c47778
-      internalID: -1589441260
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_2
-      rect:
-        serializedVersion: 2
-        x: 1026
-        y: 1026
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f69bbe00f691d1949b16ebb86b7897a4
-      internalID: -2127024361
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_3
-      rect:
-        serializedVersion: 2
-        x: 1026
+        x: 4275
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeba460d575f232438bde4418d1b8ebd
-      internalID: -2002767124
+      spriteID: df675440e26a3664ca1fd1f64187288f
+      internalID: 461973871
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_4
+      name: yellow_philips-01_2
       rect:
         serializedVersion: 2
-        x: 2052
+        x: 8550
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e1ca9a2107ebc5468956aa365b1c9db
-      internalID: 1830794340
+      spriteID: 1c736790bd6925a4b9be97b0a4ed4cf5
+      internalID: -2131292021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_5
+      name: yellow_philips-01_3
       rect:
         serializedVersion: 2
-        x: 2052
-        y: 1026
-        width: 1026
-        height: 1026
+        x: 12825
+        y: 0
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18dbc11e967814b46a4ded22733bf6ea
-      internalID: 1496432189
+      spriteID: 3ac1ffef9128aed4ab32aa7eaa0d043a
+      internalID: -1158440090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: yellow_philips-01_4
+      rect:
+        serializedVersion: 2
+        x: 17100
+        y: 0
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dd4b880d93244c428866f230be6fa97
+      internalID: 1928364790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: yellow_philips-01_5
+      rect:
+        serializedVersion: 2
+        x: 21375
+        y: 0
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7adec634f3f42af4585c6caccdd74a49
+      internalID: 452337889
       vertices: []
       indices: 
       edges: []
@@ -258,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b22987fcce29f9342b92eec9de0e0880
+    spriteID: 37ef7b0c4058ef14687f1d8edacd31cd
     internalID: 0
     vertices: []
     indices: 
@@ -268,12 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      flathead_with_flat_fastener_spritesheet_0: 483388852
-      flathead_with_flat_fastener_spritesheet_1: -1589441260
-      flathead_with_flat_fastener_spritesheet_2: -2127024361
-      flathead_with_flat_fastener_spritesheet_3: -2002767124
-      flathead_with_flat_fastener_spritesheet_4: 1830794340
-      flathead_with_flat_fastener_spritesheet_5: 1496432189
+      yellow_philips-01_0: -609725534
+      yellow_philips-01_1: 461973871
+      yellow_philips-01_2: -2131292021
+      yellow_philips-01_3: -1158440090
+      yellow_philips-01_4: 1928364790
+      yellow_philips-01_5: 452337889
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

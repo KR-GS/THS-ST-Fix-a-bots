@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d3c7e3d76abb1c64dac71986358107ea
+guid: 000296e90f540384abcb7befb1f53064
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,8 +69,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -123,133 +123,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_0
+      name: green_flathead-01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e8389aedeb41d149943a483fabb7c1c
-      internalID: 483388852
+      spriteID: 6d63d2991c8d42748b0e5fa9f97315a4
+      internalID: -1306171984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_1
+      name: green_flathead-01_1
+      rect:
+        serializedVersion: 2
+        x: 4275
+        y: 0
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b77f249f0058ed748b508af220a06596
+      internalID: 501378701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: green_flathead-01_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 1026
-        width: 1026
-        height: 1026
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dc39b9c3f8e0f443bd0e3d989c47778
-      internalID: -1589441260
+      spriteID: 26efd689e85a8df4db344238e5bee8f6
+      internalID: 1431615835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_2
+      name: green_flathead-01_3
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 1026
-        width: 1026
-        height: 1026
+        x: 4275
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f69bbe00f691d1949b16ebb86b7897a4
-      internalID: -2127024361
+      spriteID: 912444396b02ae344947d46743a4d650
+      internalID: -888220077
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_3
+      name: green_flathead-01_4
       rect:
         serializedVersion: 2
-        x: 1026
+        x: 8550
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeba460d575f232438bde4418d1b8ebd
-      internalID: -2002767124
+      spriteID: 5bdcbbd2ed4124247aa1e050c2f7d482
+      internalID: -1198966632
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_4
+      name: green_flathead-01_5
       rect:
         serializedVersion: 2
-        x: 2052
-        y: 0
-        width: 1026
-        height: 1026
+        x: 8550
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e1ca9a2107ebc5468956aa365b1c9db
-      internalID: 1830794340
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_5
-      rect:
-        serializedVersion: 2
-        x: 2052
-        y: 1026
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18dbc11e967814b46a4ded22733bf6ea
-      internalID: 1496432189
+      spriteID: e7220385e8a28e74fbb137b2468dca03
+      internalID: -240699921
       vertices: []
       indices: 
       edges: []
@@ -258,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b22987fcce29f9342b92eec9de0e0880
+    spriteID: 526bccb67ade4134fb932109d1c121a4
     internalID: 0
     vertices: []
     indices: 
@@ -268,12 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      flathead_with_flat_fastener_spritesheet_0: 483388852
-      flathead_with_flat_fastener_spritesheet_1: -1589441260
-      flathead_with_flat_fastener_spritesheet_2: -2127024361
-      flathead_with_flat_fastener_spritesheet_3: -2002767124
-      flathead_with_flat_fastener_spritesheet_4: 1830794340
-      flathead_with_flat_fastener_spritesheet_5: 1496432189
+      green_flathead-01_0: -1306171984
+      green_flathead-01_1: 501378701
+      green_flathead-01_2: 1431615835
+      green_flathead-01_3: -888220077
+      green_flathead-01_4: -1198966632
+      green_flathead-01_5: -240699921
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

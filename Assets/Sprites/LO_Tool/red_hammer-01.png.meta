@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d3c7e3d76abb1c64dac71986358107ea
+guid: c6f2490fdad705d44a675613429f2e44
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,8 +69,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -123,133 +123,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_0
+      name: red_hammer-01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1026
-        height: 1026
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e8389aedeb41d149943a483fabb7c1c
-      internalID: 483388852
+      spriteID: 5f0c1cc2f7fda484ebf1c7ee78994cf4
+      internalID: -1875350417
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_1
+      name: red_hammer-01_1
+      rect:
+        serializedVersion: 2
+        x: 4275
+        y: 0
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 612f9c99f9adb594cbc77b6db44e97a0
+      internalID: -815620042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red_hammer-01_2
+      rect:
+        serializedVersion: 2
+        x: 8550
+        y: 0
+        width: 4275
+        height: 4275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da4359009c5d27e47b0e00405bd40ee6
+      internalID: -1522860546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: red_hammer-01_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 1026
-        width: 1026
-        height: 1026
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dc39b9c3f8e0f443bd0e3d989c47778
-      internalID: -1589441260
+      spriteID: 0d42c675a96833e4b8746d29541588ad
+      internalID: -1905519440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_2
+      name: red_hammer-01_4
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 1026
-        width: 1026
-        height: 1026
+        x: 4275
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f69bbe00f691d1949b16ebb86b7897a4
-      internalID: -2127024361
+      spriteID: bd40323ca9db60a44a5f2db7c944bdaa
+      internalID: -846103491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_3
+      name: red_hammer-01_5
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 0
-        width: 1026
-        height: 1026
+        x: 8550
+        y: 4275
+        width: 4275
+        height: 4275
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eeba460d575f232438bde4418d1b8ebd
-      internalID: -2002767124
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_4
-      rect:
-        serializedVersion: 2
-        x: 2052
-        y: 0
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1e1ca9a2107ebc5468956aa365b1c9db
-      internalID: 1830794340
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: flathead_with_flat_fastener_spritesheet_5
-      rect:
-        serializedVersion: 2
-        x: 2052
-        y: 1026
-        width: 1026
-        height: 1026
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18dbc11e967814b46a4ded22733bf6ea
-      internalID: 1496432189
+      spriteID: f25257fe54274b944a8b5fde2569195a
+      internalID: 328787728
       vertices: []
       indices: 
       edges: []
@@ -258,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b22987fcce29f9342b92eec9de0e0880
+    spriteID: 348d170e3b09e7e45b5b804a82a9b085
     internalID: 0
     vertices: []
     indices: 
@@ -268,12 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      flathead_with_flat_fastener_spritesheet_0: 483388852
-      flathead_with_flat_fastener_spritesheet_1: -1589441260
-      flathead_with_flat_fastener_spritesheet_2: -2127024361
-      flathead_with_flat_fastener_spritesheet_3: -2002767124
-      flathead_with_flat_fastener_spritesheet_4: 1830794340
-      flathead_with_flat_fastener_spritesheet_5: 1496432189
+      red_hammer-01_0: -1875350417
+      red_hammer-01_1: -815620042
+      red_hammer-01_2: -1522860546
+      red_hammer-01_3: -1905519440
+      red_hammer-01_4: -846103491
+      red_hammer-01_5: 328787728
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

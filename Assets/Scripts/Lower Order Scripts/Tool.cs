@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class Tool : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class Tool : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [SerializeField]
+    SpriteLibraryAsset[] tool_variants;
+
+    private SpriteLibrary tool_sprites;
     private Animator statusAnimator;
     private AnimationClip[] clips;
     
@@ -17,11 +23,21 @@ public class Tool : MonoBehaviour
         statusAnimator = GetComponentInChildren<Animator>();
         clips = statusAnimator.runtimeAnimatorController.animationClips;
         Debug.Log(clips.Length);
+
+        tool_sprites = GetComponentInChildren<SpriteLibrary>();
         //events = clips[1].events;
 
         //Debug.Log("Event time: " + events[0].time);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public void SetToolLook(int variant)
+    {
+        if (tool_variants.Count() > variant)
+        {
+            tool_sprites.spriteLibraryAsset = tool_variants[variant];
+        }
+    }
+
     public IEnumerator TriggerToolAnimation(PartTile fastener)
     {
         GetComponentInChildren<ToolEvent>().SetCurrentFastener(fastener);

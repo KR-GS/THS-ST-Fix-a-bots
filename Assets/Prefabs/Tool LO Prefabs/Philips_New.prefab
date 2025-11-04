@@ -80,6 +80,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   addTenPos: {fileID: 3946121211638168379}
   speed: 5
+  tool_variants:
+  - {fileID: 7108339969198208228, guid: fe82ce9258874af4e94438c7e727fe02, type: 3}
+  - {fileID: 7108339969198208228, guid: 761e2e36cabdd6941b97afa94ccaef0e, type: 3}
+  - {fileID: 7108339969198208228, guid: e42b25eb36d1b8b4ab54cf2be2009bc3, type: 3}
 --- !u!61 &6132068080158388328
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,6 +142,8 @@ GameObject:
   - component: {fileID: 7390747157829889039}
   - component: {fileID: 6806343366483718964}
   - component: {fileID: 4356357023262356235}
+  - component: {fileID: 7713339413198283688}
+  - component: {fileID: 7201090579643765891}
   m_Layer: 0
   m_Name: green_phillips_with_fastener_spritesheet-01_5
   m_TagString: Untagged
@@ -250,3 +256,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool_Parent: {fileID: 3900317434987172821}
+--- !u!114 &7713339413198283688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3818400434235422756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: fe82ce9258874af4e94438c7e727fe02, type: 3}
+--- !u!114 &7201090579643765891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3818400434235422756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 4.3199346e-18
+  m_labelHash: 5.1052626e-19
+  m_SpriteKey: 0
+  m_SpriteHash: 746598753
