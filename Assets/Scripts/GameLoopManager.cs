@@ -242,7 +242,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
             if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
             if (ri.PaintIndicator != null) ri.PaintIndicator.gameObject.SetActive(false);
-
         }
 
     }

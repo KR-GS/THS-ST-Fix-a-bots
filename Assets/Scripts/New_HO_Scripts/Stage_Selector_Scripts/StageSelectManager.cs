@@ -266,11 +266,13 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         if (stageNum <= 15)
         {
             // SceneManager.LoadScene("HO_BotTennisScene");
-            SceneManager.LoadScene("HO_BotFightScene");
+            //SceneManager.LoadScene("HO_BotFightScene");
+            LoadingScreenManager.Instance.SwitchtoSceneMath(2);
         }
         else if (stageNum <= 31)
         {
-            SceneManager.LoadScene("HO_BotTennisScene");
+            //SceneManager.LoadScene("HO_BotTennisScene");
+            LoadingScreenManager.Instance.SwitchtoSceneMath(3);
         }
         /*
         else if (stageNum <= 45)

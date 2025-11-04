@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour, IDataPersistence
 {
+    
     [Header("Panels")]
     public GameObject continuePanel;
     public GameObject settingsPanel;
@@ -34,8 +35,10 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
 
         settingsPanel.SetActive(false);
 
-        HOButton.onClick.AddListener(() => LoadScene("Stage_Select"));
-        LOButton.onClick.AddListener(() => LoadScene("LO_WS2D"));
+        HOButton.onClick.AddListener(() => LoadingScreenManager.Instance.SwitchtoSceneMath(1));
+        //LoadScene("Stage_Select"));
+        LOButton.onClick.AddListener(() => LoadingScreenManager.Instance.SwitchtoSceneMath(7));
+        //LoadScene("LO_WS2D"));
     }
 
     private void OnContinue()

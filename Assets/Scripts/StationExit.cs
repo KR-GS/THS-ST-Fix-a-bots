@@ -115,6 +115,6 @@ public class StationExit : MonoBehaviour
         DataPersistenceManager.Instance.SaveGame();
         Debug.Log("Tool static data = " + StaticData.isToolDone);
         //SceneManager.LoadScene("LO_WS2D");
-        LoadingScreenManager.Instance.SwitchtoScene(7);
+        LoadingScreenManager.Instance.SwitchtoSceneMath(7);
     }
 }

@@ -58,34 +58,50 @@ public class Station : MonoBehaviour
 
         if(StaticData.isOrderChecked == true)
         {
-            DataPersistenceManager.Instance.SaveGame();
-            glm.HideWorkshopElements();
             switch (type)
             {
                 case StationType.Tool:
                     if (currentOrder.needsTool && !StaticData.isToolDone)
                     {
-                        LoadingScreenManager.Instance.SwitchtoScene(4);
+                        DataPersistenceManager.Instance.SaveGame();
+                        glm.HideWorkshopElements();
+                        LoadingScreenManager.Instance.SwitchtoSceneMath(4);
                         //SceneManager.LoadScene("LO_Tool_GUI");
                         Debug.Log("Tool station activated!");
-                    } 
+                    }
+                    else
+                    {
+                        Debug.Log("You do not need tool right now!");
+                    }
                     break;
 
                 case StationType.Paint:
                     if (currentOrder.needsPaint && !StaticData.isPaintDone)
                     {
-                        LoadingScreenManager.Instance.SwitchtoScene(5);
+                        DataPersistenceManager.Instance.SaveGame();
+                        glm.HideWorkshopElements();
+                        LoadingScreenManager.Instance.SwitchtoSceneMath(5);
                         //SceneManager.LoadScene("LO_Paint_GUI");
                         Debug.Log("Paint station activated!");
+                    }
+                    else
+                    {
+                        Debug.Log("You do not need paint right now!");
                     }
                     break;
 
                 case StationType.Wire:
                     if (currentOrder.needsWire && !StaticData.isWireDone)
                     {
-                        LoadingScreenManager.Instance.SwitchtoScene(6);
+                        DataPersistenceManager.Instance.SaveGame();
+                        glm.HideWorkshopElements();
+                        LoadingScreenManager.Instance.SwitchtoSceneMath(6);
                         //SceneManager.LoadScene("LO_Wire");
                         Debug.Log("Wire station activated!");
+                    }
+                    else
+                    {
+                        Debug.Log("You do not need wire right now!");
                     }
                     break;
             }
