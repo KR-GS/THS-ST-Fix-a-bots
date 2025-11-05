@@ -871,6 +871,7 @@ MonoBehaviour:
   fastenerValue: 4
   tool: {fileID: 3200441463033314186, guid: 36940cf6f7870c44eaacb910f00e329d, type: 3}
   missingPrefab: {fileID: 3200441463033314186, guid: afc1c72c441274442961eb1141a40c1d, type: 3}
+  variant_value: 0
 --- !u!1 &202795837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,6 +1682,7 @@ MonoBehaviour:
   fastenerValue: 1
   tool: {fileID: 3200441463033314186, guid: 8c07b1d79bd12444e90721bdf3d9eed1, type: 3}
   missingPrefab: {fileID: 3200441463033314186, guid: e1ad52d12cf20c34b95abbae5f6c419c, type: 3}
+  variant_value: 0
 --- !u!1 &450526536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1832,6 +1834,7 @@ MonoBehaviour:
   fastenerValue: 3
   tool: {fileID: 3200441463033314186, guid: 70ac0194519fe644887b060eeb9d9811, type: 3}
   missingPrefab: {fileID: 3200441463033314186, guid: ba27175ba3c1d8c41998f24ba823f23f, type: 3}
+  variant_value: 0
 --- !u!1 &462270654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,6 +2243,7 @@ MonoBehaviour:
   fastenerValue: 2
   tool: {fileID: 3200441463033314186, guid: 6bbbdbbb30cb87a4cb01fcdbc1c5c8f8, type: 3}
   missingPrefab: {fileID: 3200441463033314186, guid: 9cb3586391ddd70469f2abb1514e1d7b, type: 3}
+  variant_value: 0
 --- !u!223 &536181604 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 5314409936409160288, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
