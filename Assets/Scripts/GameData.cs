@@ -102,6 +102,14 @@ public class GameData
 
     public bool startOfDay;
 
+    public bool isRustyHammerBought;
+
+    public bool isGreenHammerBought;
+
+    public bool isRedHammerBought;
+
+    public int equippedHammer;
+
     [Header("High Order Data")]
     public List<int> lives;
 
@@ -163,6 +171,10 @@ public class GameData
         this.isSchedulerRunning = false;
         this.valuestoChange = 0;
         this.didExit = true;
+        this.isGreenHammerBought = false;
+        this.isRedHammerBought = false;
+        this.isRustyHammerBought = true;
+        this.equippedHammer = 0;
     }
 
 

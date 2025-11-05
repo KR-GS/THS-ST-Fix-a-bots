@@ -82,8 +82,15 @@ public class StaticData
     public static int wireWrong = 0;
     public static bool orderReceived = false;
 
-
     public static Sprite lastTVSprite;
+
+    // SHOP EQUIPPING FLAGS
+    public static bool isRustyHammerBought = true;
+    public static bool isGreenHammerBought = false;
+    public static bool isRedHammerBought = false;
+    public static int equippedHammer = 0; // 0 = rusty, 1 = green
+
+
 
     //USED FOR RANDOM BLOCK SPAWNING
 

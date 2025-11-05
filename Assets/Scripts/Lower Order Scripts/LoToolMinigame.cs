@@ -811,7 +811,14 @@ public class LoToolMinigame : MonoBehaviour
 
         if(value == 0)
         {
-            currentTool.GetComponent<Tool>().SetToolLook(1);
+            if(StaticData.equippedHammer == 0)
+            {
+                currentTool.GetComponent<Tool>().SetToolLook(1);
+            }
+            else if(StaticData.equippedHammer == 1)
+            {
+                currentTool.GetComponent<Tool>().SetToolLook(2);
+            }
         }
 
         currentTool.transform.localPosition = holder.GetChild(0).localPosition;

@@ -209,6 +209,7 @@ public class RaycastInteractor : MonoBehaviour
             glm.moneyText.gameObject.SetActive(true);
             glm.onboardImage.gameObject.SetActive(true);
             glm.ordersOnboard.gameObject.SetActive(true);
+            glm.shopButton.gameObject.SetActive(true);
             if (timeText != null)
             {
                 timeText.gameObject.SetActive(true); // Hide the time text
@@ -414,6 +415,7 @@ public class RaycastInteractor : MonoBehaviour
         glm.moneyText.gameObject.SetActive(false);
         glm.onboardImage.gameObject.SetActive(false);
         glm.ordersOnboard.gameObject.SetActive(false);
+        glm.shopButton.gameObject.SetActive(false);
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);

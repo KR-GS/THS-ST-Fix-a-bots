@@ -16,6 +16,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     [SerializeField] private Button backButton;
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] public Button shopButton;
     [SerializeField] private GameObject pausePanel;
 
     [SerializeField] private GameObject wireShow;
@@ -379,6 +380,12 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         StaticData.valuestoChange = data.valuestoChange;
 
+        StaticData.isRustyHammerBought = data.isRustyHammerBought;
+        StaticData.isGreenHammerBought = data.isGreenHammerBought;
+        StaticData.isRedHammerBought = data.isRedHammerBought;
+        StaticData.equippedHammer = data.equippedHammer;
+
+
         Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
 
         StaticData.paintpatternLength = data.paintpatternLength;
@@ -494,6 +501,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.valuestoChange = StaticData.valuestoChange;
         data.isOrderChecked = StaticData.isOrderChecked;
         data.orderReceived = StaticData.orderReceived;
+        data.isRustyHammerBought = StaticData.isRustyHammerBought;
+        data.isGreenHammerBought = StaticData.isGreenHammerBought;
+        data.isRedHammerBought = StaticData.isRedHammerBought;
+        data.equippedHammer = StaticData.equippedHammer;
     }
 
     public void UpdateMoneyText()
@@ -1256,8 +1267,78 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
         if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
         if (ri.PaintIndicator != null) ri.PaintIndicator.gameObject.SetActive(false);
+        if (shopButton != null) shopButton.gameObject.SetActive(false);
+        if (pauseButton != null) pauseButton.gameObject.SetActive(false);
     }
 
+    public void ShowWorkshopElements()
+    {
+        if (om.GetActiveOrder() != null) //om != null && om.GetActiveOrder() != null
+        {
+            Debug.Log("Is this for real???");
+            if (ri.TVSprite != null)
+            {
+                ri.TVSprite.sprite = ri.TVSpriteIP;
+                ri.readyIndicator.gameObject.SetActive(false);
+                ri.readyText.gameObject.SetActive(false);
+            }
+
+            if (ts != null && ts.timer != null)
+            {
+                ts.timer.gameObject.SetActive(true); // hide
+            }
+
+            if (ri.currentOrder.needsTool && !StaticData.isToolDone)
+            {
+                ri.ToolIndicator.gameObject.SetActive(true);
+            }
+            if (ri.currentOrder.needsPaint && !StaticData.isPaintDone)
+            {
+                ri.PaintIndicator.gameObject.SetActive(true);
+            }
+            if (ri.currentOrder.needsWire && !StaticData.isWireDone)
+            {
+                ri.WireIndicator.gameObject.SetActive(true);
+            }
+        }
+
+        else if (om.GetActiveOrder() == null) // != null && om.GetActiveOrder() == null
+        {
+            Debug.Log("No shot sherlock!");
+            if (ri.TVSprite != null)
+            {
+                ri.TVSprite.sprite = ri.TVSpriteNoOrder;
+            }
+
+            if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
+            if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
+            if (ri.PaintIndicator != null) ri.PaintIndicator.gameObject.SetActive(false);
+
+
+            if (StaticData.startOfDay == true)
+            {
+                Debug.Log("It is the start of day indeed!");
+                ri.readyIndicator.gameObject.SetActive(true);
+                ri.readyText.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("No it ain't the start of the day!");
+                ri.readyIndicator.gameObject.SetActive(false);
+                ri.readyText.gameObject.SetActive(false);
+            }
+
+        }
+
+        moneyImage.gameObject.SetActive(true);
+        dayNumber.gameObject.SetActive(true);
+        moneyText.gameObject.SetActive(true);
+        onboardImage.gameObject.SetActive(true);
+        ordersOnboard.gameObject.SetActive(true);
+        ShowTV(true);
+        shopButton.gameObject.SetActive(true);
+        pauseButton.gameObject.SetActive(true);
+    }
     public void CompleteLevel()
     {
         Debug.Log("Level " + level + " complete!");
