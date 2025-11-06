@@ -833,6 +833,8 @@ public class LoToolMinigame : MonoBehaviour
 
         Debug.Log("What is happening???");
 
+        CheckCounterToDisplay();
+
         holder.gameObject.SetActive(false);
     }
 
