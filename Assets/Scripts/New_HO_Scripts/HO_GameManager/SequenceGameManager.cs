@@ -131,7 +131,7 @@ public class SequenceGameManager : MonoBehaviour
 
     void InitializeStageUi()
     {
-        formulaText.gameObject.SetActive(isFormulaSeen);
+        //formulaText.gameObject.SetActive(isFormulaSeen);
         isCycling = false;
 
         formulaPanel.gameObject.SetActive(false);
@@ -151,6 +151,7 @@ public class SequenceGameManager : MonoBehaviour
         settingsConfirmButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
         settingsExitButton.onClick.AddListener(() => StartCoroutine(ResumeGame()));
         exitButton.onClick.AddListener(() => ExitGame());
+        restartGameButton.onClick.AddListener(() => RestartGame());
 
         feedbackText.text = "Please tap screen to start game";
         livesText.text = $"{stageData.GetNumLives()}";
@@ -326,7 +327,7 @@ public class SequenceGameManager : MonoBehaviour
         currentCycleIndex = 0;
         //isCycling = true;
 
-        feedbackText.text = "Watch the sequence! Tap the screen when the highlighted number is in the sequence.";
+        feedbackText.text = "Watch the sequence! Swipe the screen when the highlighted number is in the sequence.";
     }
 
     // Just to make time for the cycling
