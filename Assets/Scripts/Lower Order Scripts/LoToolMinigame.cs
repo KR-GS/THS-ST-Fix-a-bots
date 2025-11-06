@@ -212,6 +212,11 @@ public class LoToolMinigame : MonoBehaviour
                 break;
         }
 
+        foreach (FastenerBtn fastener in fastenerList)
+        {
+            fastener.SetSpriteVariant(1);
+        }
+
         currentInt = 0;
 
         toolTilingManager.SpawnPartTiled(patternLength);
@@ -385,7 +390,6 @@ public class LoToolMinigame : MonoBehaviour
 
                 counterHolder[i].transform.position = position;
             }
-
 
             counterHolder[i].GetComponent<OverviewCounter>().SetCounterVal(numberToDisplay[i], fastenerList[fastenerCheckVal[i] - 1].GetHitIcon());
         }
@@ -644,6 +648,7 @@ public class LoToolMinigame : MonoBehaviour
         }
         else
         {
+            addTenBtn.gameObject.SetActive(false);
             fastenerList[0].transform.parent.gameObject.SetActive(false);
         }
     }

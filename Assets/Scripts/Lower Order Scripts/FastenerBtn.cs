@@ -28,9 +28,6 @@ public class FastenerBtn : MonoBehaviour
 
     [SerializeField]
     private GameObject missingPrefab;
-
-    [SerializeField]
-    private int variant_value;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public GameObject GetFastenerSprite()
@@ -56,5 +53,10 @@ public class FastenerBtn : MonoBehaviour
     public GameObject GetToolToUse()
     {
         return tool;
+    }
+
+    public void SetSpriteVariant(int value)
+    {
+        fastenerHitPrefab.GetComponent<Hit>().SetVariant(value);
     }
 }

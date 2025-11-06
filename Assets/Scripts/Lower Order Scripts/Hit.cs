@@ -8,8 +8,17 @@ public class Hit : MonoBehaviour
     [SerializeField]
     private SpriteRenderer hit_sprite;
 
-    void SetVariantSprite(int value)
+    private int variant_value;
+
+    public Sprite GetSpriteVariant()
     {
-        hit_sprite.sprite = hit_variants[value];
+        return hit_variants[variant_value];
+    }
+
+    public void SetVariant(int value)
+    {
+        variant_value = value;
+
+        hit_sprite.sprite = hit_variants[variant_value];
     }
 }

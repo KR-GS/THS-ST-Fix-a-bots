@@ -16,7 +16,7 @@ public class OverviewCounter : MonoBehaviour
         else
         {
             counterObj.GetComponentInChildren<TextMeshProUGUI>().text = count.ToString();
-            counterObj.GetComponentInChildren<SpriteRenderer>().sprite = fastenerType.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            counterObj.GetComponentInChildren<SpriteRenderer>().sprite = fastenerType.GetComponent<Hit>().GetSpriteVariant();
         }
     }
 }
