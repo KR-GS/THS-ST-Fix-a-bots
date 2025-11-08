@@ -553,6 +553,10 @@ public class LoToolMinigame : MonoBehaviour
                     Debug.Log("clicking on overview");
                     return true;
                 }
+                else if (go.gameObject.transform.TryGetComponent(out AddText addText))
+                {
+                    return true;
+                }
             }
         }
 
