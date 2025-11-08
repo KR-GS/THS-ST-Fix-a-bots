@@ -8,6 +8,9 @@ public class Fastener : MonoBehaviour
     [SerializeField]
     private Sprite fixedSprite;
 
+    [SerializeField]
+    private SpriteRenderer mainsprite;
+
 
     public void SetBrokenSprite()
     {
