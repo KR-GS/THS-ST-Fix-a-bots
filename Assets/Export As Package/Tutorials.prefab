@@ -1216,6 +1216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialObject: {fileID: 4801505777297055431}
+  glm: {fileID: 0}
+  om: {fileID: 0}
+  ri: {fileID: 0}
   tutorialText: {fileID: 3267597371405217811}
   nextButton: {fileID: 6414091052879129548}
   backButton: {fileID: 7484719659315166231}

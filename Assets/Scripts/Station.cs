@@ -38,11 +38,11 @@ public class Station : MonoBehaviour
                 break;
 
             case StationType.Paint:
-                gameObject.SetActive(true); //originally currentLevel >= 6
+                gameObject.SetActive(currentLevel >= 3); 
                 break;
 
             case StationType.Wire:
-                gameObject.SetActive(true); //originally 11
+                gameObject.SetActive(currentLevel >= 6); 
                 break;
         }
     }
@@ -65,7 +65,8 @@ public class Station : MonoBehaviour
                     {
                         DataPersistenceManager.Instance.SaveGame();
                         glm.HideWorkshopElements();
-                        LoadingScreenManager.Instance.SwitchtoSceneMath(4);
+                        //LoadingScreenManager.Instance.SwitchtoSceneMath(4);
+                        LoadingScreenManager.Instance.SwitchtoSceneGear(4);
                         //SceneManager.LoadScene("LO_Tool_GUI");
                         Debug.Log("Tool station activated!");
                     }
@@ -80,7 +81,8 @@ public class Station : MonoBehaviour
                     {
                         DataPersistenceManager.Instance.SaveGame();
                         glm.HideWorkshopElements();
-                        LoadingScreenManager.Instance.SwitchtoSceneMath(5);
+                        //LoadingScreenManager.Instance.SwitchtoSceneMath(5);
+                        LoadingScreenManager.Instance.SwitchtoSceneGear(5);
                         //SceneManager.LoadScene("LO_Paint_GUI");
                         Debug.Log("Paint station activated!");
                     }
@@ -95,7 +97,8 @@ public class Station : MonoBehaviour
                     {
                         DataPersistenceManager.Instance.SaveGame();
                         glm.HideWorkshopElements();
-                        LoadingScreenManager.Instance.SwitchtoSceneMath(6);
+                        //LoadingScreenManager.Instance.SwitchtoSceneMath(6);
+                        LoadingScreenManager.Instance.SwitchtoSceneGear(6);
                         //SceneManager.LoadScene("LO_Wire");
                         Debug.Log("Wire station activated!");
                     }

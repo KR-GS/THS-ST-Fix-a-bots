@@ -270,13 +270,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -983255668, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -643,6 +643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4591024612070899541}
   - component: {fileID: 8231378951235484413}
+  - component: {fileID: 4964143351884150658}
   m_Layer: 0
   m_Name: Items Proper
   m_TagString: Untagged
@@ -693,6 +694,26 @@ MonoBehaviour:
   itemPriceText: {fileID: 6605211831219766760}
   itemButton: {fileID: 8189954390555366200}
   buttonText: {fileID: 6572336801330824614}
+--- !u!114 &4964143351884150658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8069616926340266515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 200
+  m_PreferredHeight: 250
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &9025352034583899493
 GameObject:
   m_ObjectHideFlags: 0

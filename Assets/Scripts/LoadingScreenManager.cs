@@ -12,6 +12,7 @@ public class LoadingScreenManager : MonoBehaviour
     public static LoadingScreenManager Instance;
     public GameObject loadingscreenObjects;
     public GameObject loadingscreenMath;
+    public GameObject loadingscreenGear;
     public Slider progressBar;
     public TextMeshProUGUI tiptext;
     public TextMeshProUGUI prompt;
@@ -52,7 +53,13 @@ public class LoadingScreenManager : MonoBehaviour
         }
     }
 
-    public void SwitchtoSceneMath(int id)
+    public void SwitchtoSceneGear(int id)
+    {
+        loadingscreenGear.SetActive(true);
+        StartCoroutine(SwitchtoSceneAsync(id));
+    }
+
+    public void SwitchtoSceneMath(int id, System.Action onComplete = null)
     {
         ResetButtons();
         vanThink.sprite = vanThonk;
@@ -188,7 +195,7 @@ public class LoadingScreenManager : MonoBehaviour
         }
 
 
-        StartCoroutine(WaitForAnswerThenLoad(id));
+        StartCoroutine(WaitForAnswerThenLoad(id, onComplete));
     }
 
     public string GetOperator(int choice)
@@ -206,7 +213,7 @@ public class LoadingScreenManager : MonoBehaviour
             return "x";
         }
     }
-    IEnumerator WaitForAnswerThenLoad(int id)
+    IEnumerator WaitForAnswerThenLoad(int id, System.Action onComplete)
     {
         // Wait until the player answers
         while (answered == false)
@@ -216,6 +223,8 @@ public class LoadingScreenManager : MonoBehaviour
 
         // Once answered, wait for 3 seconds then proceed with the next scene
         yield return new WaitForSeconds(1f);
+
+        onComplete?.Invoke();
 
         yield return StartCoroutine(SwitchtoSceneAsync(id));
     }
@@ -343,6 +352,7 @@ public class LoadingScreenManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         loadingscreenObjects.SetActive(false);
         loadingscreenMath.SetActive(false);
+        loadingscreenGear.SetActive(false);
 
     }
 }

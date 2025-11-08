@@ -45,6 +45,8 @@ public class RaycastInteractor : MonoBehaviour
     public Image WireIndicator;
     public Image PaintIndicator;
 
+
+
     [Header("Station Statuses")]
     public UIStationStatus toolStatus;
     public UIStationStatus wireStatus;
@@ -89,11 +91,9 @@ public class RaycastInteractor : MonoBehaviour
                 readyText.gameObject.SetActive(false);
             }
 
-            glm.moneyImage.gameObject.SetActive(true);
             glm.dayNumber.gameObject.SetActive(true);
-            glm.moneyText.gameObject.SetActive(true);
-            glm.onboardImage.gameObject.SetActive(true);
-            glm.ordersOnboard.gameObject.SetActive(true);
+            glm.calendar.gameObject.SetActive(true);
+            //glm.ordersOnboard.gameObject.SetActive(true);
             glm.ShowTV(true);
 
             if (ts != null && ts.timer != null)
@@ -204,12 +204,10 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("Internal paint score: " + glm.paintScore);
             Debug.Log("Internal wire score: " + glm.wireScore);
 
-            glm.moneyImage.gameObject.SetActive(true);
             glm.dayNumber.gameObject.SetActive(true);
-            glm.moneyText.gameObject.SetActive(true);
-            glm.onboardImage.gameObject.SetActive(true);
-            glm.ordersOnboard.gameObject.SetActive(true);
-            glm.shopButton.gameObject.SetActive(true);
+            glm.calendar.gameObject.SetActive(true);
+            //glm.ordersOnboard.gameObject.SetActive(true);
+            //glm.shopButton.gameObject.SetActive(true);
             if (timeText != null)
             {
                 timeText.gameObject.SetActive(true); // Hide the time text
@@ -410,12 +408,9 @@ public class RaycastInteractor : MonoBehaviour
         botName.text = order.robotname;
 
         orderSheetPanel.gameObject.SetActive(true);
-        glm.moneyImage.gameObject.SetActive(false);
         glm.dayNumber.gameObject.SetActive(false);
-        glm.moneyText.gameObject.SetActive(false);
-        glm.onboardImage.gameObject.SetActive(false);
-        glm.ordersOnboard.gameObject.SetActive(false);
-        glm.shopButton.gameObject.SetActive(false);
+        glm.calendar.gameObject.SetActive(false);
+        //glm.ordersOnboard.gameObject.SetActive(false);
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);

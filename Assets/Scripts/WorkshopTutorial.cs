@@ -4,9 +4,8 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class TutorialScript : MonoBehaviour
+public class WorkshopTutorial : MonoBehaviour
 {
-    public static TutorialScript Instance;
     [SerializeField] private GameObject tutorialObject;
     [SerializeField] private GameLoopManager glm;
     [SerializeField] private OrderManager om;
@@ -31,33 +30,18 @@ public class TutorialScript : MonoBehaviour
 
     private bool wasRaycastingEnabled = true;
 
+
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
         if (tutorialObject != null)
         {
-            /*
-            if (StaticData.newGame)
-                tutorialObject.SetActive(true);
-            else
-                tutorialObject.SetActive(false);
-            */
+
             tutorialObject.SetActive(false);
         }
         else
         {
             Debug.LogWarning("Tutorial Object not assigned!");
-            Destroy(gameObject);
         }
-
     }
 
     private void updateContents(int index)
@@ -75,7 +59,7 @@ public class TutorialScript : MonoBehaviour
         TVDemo.gameObject.SetActive(false);
         toDolistDemo.gameObject.SetActive(false);
         demoIndicator.gameObject.SetActive(false);
-        
+
 
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
@@ -89,8 +73,6 @@ public class TutorialScript : MonoBehaviour
                     backButton.gameObject.SetActive(false);
                     closeButton.gameObject.SetActive(false);
                     tutorialPointer.gameObject.SetActive(false);
-                    glm.moneyImage.gameObject.SetActive(false);
-                    glm.moneyText.gameObject.SetActive(false);
                     demoStation.gameObject.SetActive(true);
                     demoStation.rectTransform.anchoredPosition = new Vector2(104, 55);
                     break;
@@ -104,8 +86,6 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    glm.moneyImage.gameObject.SetActive(true);
-                    glm.moneyText.gameObject.SetActive(true);
                     //glm.remainingOrders.gameObject.SetActive(false);
                     break;
 
@@ -120,7 +100,7 @@ public class TutorialScript : MonoBehaviour
                     tutorialPointer.gameObject.SetActive(true);
                     tutorialPointer.rectTransform.anchoredPosition = new Vector2(-962, 304);
                     //glm.remainingOrders.gameObject.SetActive(true);
-                    glm.ordersOnboard.gameObject.SetActive(false);
+                    //glm.ordersOnboard.gameObject.SetActive(false);
 
                     break;
                 case 3:
@@ -133,7 +113,7 @@ public class TutorialScript : MonoBehaviour
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-521, 271);
                     tutorialPointer.gameObject.SetActive(true);
                     tutorialPointer.rectTransform.anchoredPosition = new Vector2(-962, 210);
-                    glm.ordersOnboard.gameObject.SetActive(true);
+                    //glm.ordersOnboard.gameObject.SetActive(true);
                     glm.dayNumber.gameObject.SetActive(false);
                     break;
                 case 4:
@@ -224,10 +204,9 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    glm.moneyImage.gameObject.SetActive(true);
-                    glm.moneyText.gameObject.SetActive(true);
+
                     //glm.remainingOrders.gameObject.SetActive(true);
-                    glm.ordersOnboard.gameObject.SetActive(true);
+                    //glm.ordersOnboard.gameObject.SetActive(true);
                     glm.dayNumber.gameObject.SetActive(true);
                     ri.timeText.gameObject.SetActive(true);
                     tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -297);
@@ -246,10 +225,9 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    glm.moneyImage.gameObject.SetActive(false);
-                    glm.moneyText.gameObject.SetActive(false);
+
                     //glm.remainingOrders.gameObject.SetActive(false);
-                    glm.ordersOnboard.gameObject.SetActive(false);
+                    //glm.ordersOnboard.gameObject.SetActive(false);
                     glm.dayNumber.gameObject.SetActive(false);
                     ri.timeText.gameObject.SetActive(false);
                     TVDemo.gameObject.SetActive(false);
@@ -269,10 +247,9 @@ public class TutorialScript : MonoBehaviour
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    glm.moneyImage.gameObject.SetActive(true);
-                    glm.moneyText.gameObject.SetActive(true);
+
                     //glm.remainingOrders.gameObject.SetActive(true);
-                    glm.ordersOnboard.gameObject.SetActive(true);
+                    //glm.ordersOnboard.gameObject.SetActive(true);
                     glm.dayNumber.gameObject.SetActive(true);
                     ri.timeText.gameObject.SetActive(true);
                     TVDemo.gameObject.SetActive(true);
@@ -287,16 +264,15 @@ public class TutorialScript : MonoBehaviour
                     demoIndicator.gameObject.SetActive(true);
                     demoIndicator.rectTransform.anchoredPosition = new Vector2(98, 92);
 
-                    break;;
+                    break; ;
                 case 13:
                     tutorialText.text = "This is the end of the tutorial. Feel free to click on me if you feel lost again!";
                     nextButton.gameObject.SetActive(false);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(true);
-                    glm.moneyImage.gameObject.SetActive(false);
-                    glm.moneyText.gameObject.SetActive(false);
+
                     //glm.remainingOrders.gameObject.SetActive(false);
-                    glm.ordersOnboard.gameObject.SetActive(false);
+                    //glm.ordersOnboard.gameObject.SetActive(false);
                     glm.dayNumber.gameObject.SetActive(false);
                     ri.timeText.gameObject.SetActive(false);
                     demoStation.gameObject.SetActive(true);
@@ -354,12 +330,10 @@ public class TutorialScript : MonoBehaviour
 
         glm.ShowTV(false);
 
-        glm.moneyImage.gameObject.SetActive(false);
         glm.dayNumber.gameObject.SetActive(false);
-        glm.moneyText.gameObject.SetActive(false);
         //glm.tutorialButton.gameObject.SetActive(false);
         //glm.remainingOrders.gameObject.SetActive(false);
-        glm.ordersOnboard.gameObject.SetActive(false);
+        //glm.ordersOnboard.gameObject.SetActive(false);
         //glm.shopButton.gameObject.SetActive(false);
 
         if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
@@ -406,12 +380,10 @@ public class TutorialScript : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
             //completeText.gameObject.SetActive(false);
-            glm.moneyImage.gameObject.SetActive(true);
             glm.dayNumber.gameObject.SetActive(true);
-            glm.moneyText.gameObject.SetActive(true);
             //glm.tutorialButton.gameObject.SetActive(true);
             //glm.remainingOrders.gameObject.SetActive(true);
-            glm.ordersOnboard.gameObject.SetActive(true);
+            //glm.ordersOnboard.gameObject.SetActive(true);
             //glm.shopButton.gameObject.SetActive(true);
             glm.ShowTV(true);
             RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
@@ -503,9 +475,7 @@ public class TutorialScript : MonoBehaviour
                 Debug.Log($"Indicators not set. isOrderChecked={RaycastInteractor.Instance.isOrderChecked}, currentOrder={savedOrder}");
             }
         }
-        
+
 
     }
-
-
 }
