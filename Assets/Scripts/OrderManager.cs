@@ -14,10 +14,14 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     [SerializeField] private RaycastInteractor ri;
     [SerializeField] private GameLoopManager glm;
     [SerializeField] private TimerScript ts;
+    [SerializeField] private float notificationDuration = 2f;
     private Button button;
     public Button nextdayButton;
     public TextMeshProUGUI completeText;
-    private int prize;
+    public TextMeshProUGUI totalaccumulatedText;
+    public TextMeshProUGUI initialBalanceText;
+    public TextMeshProUGUI finalBalanceText;
+    public int prize;
     public bool isFinished = false;
     private bool sendNewOrder = false;
 
@@ -147,7 +151,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         newOrder.customername = customerList[namePicker];
         newOrder.robotname = robotList[namePicker];
 
-
+        /*
         if (level >= 1)
         {
             float rand = Random.value;
@@ -155,16 +159,17 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = Random.value < 0.5f;
         }
+        */
 
-        /*
-        if (level >= 1 && level < 6)
+        
+        if (level >= 1 && level < 3)
         {
             newOrder.needsTool = true; //originally true, gonna QA
             newOrder.needsPaint = false; //originally false, gonna QA
             newOrder.needsWire = false; //originally false, gonna QA
         }
 
-        else if (level >= 6 && level < 11)
+        else if (level >= 3 && level < 6)
         {
             float rand = Random.value;
             newOrder.needsTool = Random.value < 0.5f;
@@ -173,14 +178,14 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         }
 
         
-        else if (level >= 11)
+        else if (level >= 6)
         {
             float rand = Random.value;
             newOrder.needsTool = Random.value < 0.5f;
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = Random.value < 0.5f;
         }
-        */
+        
 
         // Ensure at least one requirement
         if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)
@@ -433,18 +438,40 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             
             if (ts != null)
             {
-                if(ts.timeLft > 0)
+                glm.prizeText.gameObject.SetActive(true);
+                if (ts.timeLft > 0)
                 {
-                    Debug.Log("Order completed on time! You receive full amount as payment!");
-                    glm.money += 50; //Base value 50
-                    glm.UpdateMoneyText();
+                    if(pendingOrders.Count > 0)
+                    {
+                        Debug.Log("Order completed on time! You receive full amount as payment!");
+                        glm.prizeText.text = "You earned +50 for finishing on time!";
+                        prize += 50;
+                        glm.money += 50;
+                        StartCoroutine(HideNotificationAfterDelay());
+                    }
+                    else
+                    {
+                        prize += 50;
+                        glm.money += 50;
+                    }
 
                 }
                 else
                 {
-                    Debug.Log("Order completed late! You receive half amount as payment!");
-                    glm.money += 25; //Base value 50
-                    glm.UpdateMoneyText();
+                    if(pendingOrders.Count > 0)
+                    {
+                        Debug.Log("Order completed late! You receive half amount as payment!");
+                        glm.prizeText.text = "You earned +25 for finishing late!";
+                        prize += 25;
+                        glm.money += 25;
+                        StartCoroutine(HideNotificationAfterDelay());
+                    }
+                    else
+                    {
+                        prize += 25;
+                        glm.money += 25;
+                    }
+                    
                 }
             }
 
@@ -463,6 +490,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         DataPersistenceManager.Instance.SaveGame();
 
+    }
+
+    private IEnumerator HideNotificationAfterDelay()
+    {
+        yield return new WaitForSeconds(notificationDuration);
+        glm.prizeText.gameObject.SetActive(false);
     }
 
     public Order GetCurrentOrder()
@@ -492,12 +525,13 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         orderCompletePanel.SetActive(true);
         Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
 
-        //completeText.gameObject.SetActive(true);
-        glm.moneyImage.gameObject.SetActive(false);
+        totalaccumulatedText.text = "+" + prize.ToString();
+        initialBalanceText.text = (glm.money - prize).ToString();
+        finalBalanceText.text = glm.money.ToString();
+
         glm.dayNumber.gameObject.SetActive(false);
-        glm.moneyText.gameObject.SetActive(false);
-        glm.onboardImage.gameObject.SetActive(false);
-        glm.ordersOnboard.gameObject.SetActive(false);
+        glm.calendar.gameObject.SetActive(false);
+        glm.shopButton.gameObject.SetActive(true);
 
         if (nextdayButton != null)
         {
@@ -505,8 +539,13 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             nextdayButton.onClick.RemoveAllListeners();
             nextdayButton.onClick.AddListener(() =>
             {
-                HideOrderCompletePanel();
-                glm.CompleteLevel();
+                orderCompletePanel.SetActive(false);
+                ri.timeText.gameObject.SetActive(false);
+                LoadingScreenManager.Instance.SwitchtoSceneMath(7, () =>
+                {
+                    HideOrderCompletePanel();
+                    glm.CompleteLevel();
+                });
             });
         }
     }
@@ -519,17 +558,18 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             return;
         }
 
+        //LoadingScreenManager.Instance.SwitchtoSceneMath(7);
 
-        orderCompletePanel.SetActive(false);
+
+        //orderCompletePanel.SetActive(false);
         Debug.Log("[OrderManager] Hiding panel: " + orderCompletePanel.name);
         Debug.Log("[LOOK HERE] Pending orders count: " + pendingOrders.Count);
 
         //completeText.gameObject.SetActive(false);
-        glm.moneyImage.gameObject.SetActive(true);
         glm.dayNumber.gameObject.SetActive(true);
-        glm.moneyText.gameObject.SetActive(true);
-        glm.onboardImage.gameObject.SetActive(true);
-        glm.ordersOnboard.gameObject.SetActive(true);
+        glm.calendar.gameObject.SetActive(true);
+        //glm.ordersOnboard.gameObject.SetActive(true);
+        glm.shopButton.gameObject.SetActive(false);
 
         DataPersistenceManager.Instance.SaveGame();
     }

@@ -8,6 +8,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Data.SqlTypes;
+using System.Drawing;
 
 public class GameLoopManager : MonoBehaviour, IDataPersistence
 {
@@ -71,15 +73,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public TextMeshProUGUI dayNumber;
 
-    public TextMeshProUGUI moneyText;
-
-    public TextMeshProUGUI ordersOnboard;
+    public TextMeshProUGUI prizeText;
 
     private TimerScript timer;
 
-    public Image moneyImage;
-
-    public Image onboardImage;
+    public Image calendar;
 
     public int toolScore;
 
@@ -159,7 +157,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 dayNumber = dayTextObject.GetComponent<TextMeshProUGUI>();
                 if (dayNumber != null)
                 {
-                    dayNumber.text = "Day: " + level;
+                    dayNumber.text = level.ToString();
                 }
                 else
                 {
@@ -172,41 +170,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
 
             GameObject moneyTextObject = GameObject.Find("Money_Text");
-            if (moneyTextObject != null)
-            {
-                moneyText = moneyTextObject.GetComponent<TextMeshProUGUI>();
-                if (moneyText != null)
-                {
-                    moneyText.text = money.ToString();
-                }
-                else
-                {
-                    Debug.LogWarning("TextMeshPro component not found on MoneyText object.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("MoneyText object not found in LO_Workshop.");
-            }
-
-            GameObject ordersOnboardObj = GameObject.Find("OrdersOnboard");
-            if (ordersOnboardObj != null)
-            {
-                ordersOnboard = ordersOnboardObj.GetComponent<TextMeshProUGUI>();
-                if (ordersOnboard != null)
-                {
-                    UpdateOrdersOnboard();
-                    StartCoroutine(UpdateOrdersOnboardPeriodically());
-                }
-                else
-                {
-                    Debug.LogWarning("TextMeshPro component not found on OrdersOnboard object.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("OrdersOnboard object not found in LO_Workshop.");
-            }
+            
 
             if (ts != null)
             {
@@ -220,6 +184,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
                 }
             }
 
+            dayNumber.gameObject.SetActive(true);
+            calendar.gameObject.SetActive(true);
+
             Debug.Log("[LOOK HERE] Pending orders count: " + om.pendingOrders.Count);
 
 
@@ -229,10 +196,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         else
         {
             if (dayNumber != null) dayNumber.gameObject.SetActive(false);
-            if (moneyText != null) moneyText.gameObject.SetActive(false);
-            if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
-            if (moneyImage != null) moneyImage.gameObject.SetActive(false);
-            if (onboardImage != null) onboardImage.gameObject.SetActive(false);
+            if (calendar != null) calendar.gameObject.SetActive(false);
             ri.readyIndicator.gameObject.SetActive(false);
             ri.readyText.gameObject.SetActive(false);
             ShowTV(false);
@@ -314,13 +278,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         if (dayNumber != null)
         {
-            dayNumber.text = "Day: " + this.level;
+            dayNumber.text = this.level.ToString();
         }
 
-        if (moneyText != null)
-        {
-            moneyText.text = this.money.ToString();
-        }
+        
         Debug.Log("Level: " + level);
 
         if (toolScore >= 0 && toolScore < 200)
@@ -507,14 +468,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.equippedHammer = StaticData.equippedHammer;
     }
 
-    public void UpdateMoneyText()
-    {
-        if (moneyText != null)
-        {
-            moneyText.text = money.ToString();
-        }
-    }
-
+    /*
     private IEnumerator UpdateOrdersOnboardPeriodically()
     {
         while (true)
@@ -531,6 +485,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             ordersOnboard.text = "" + om.activeOrders.Count;
         }
     }
+    */
+
+
     private List<int> GeneratePatternArray(int patternLen) //This is for tool
     {
         generatedDifference = Random.Range(diff_Lowest, diff_Highest);
@@ -1153,6 +1110,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         om.SetStatus(false);
         om.orderReceived = false; // Reset order received status
+        om.prize = 0;
         StaticData.orderReceived = false;
         level++;
         StaticData.dayNo = level;
@@ -1230,8 +1188,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
         GenerateAndStorePattern();
 
-        dayNumber.text = "Day: " + this.level;
-        moneyText.text = this.money.ToString();
+        dayNumber.text = this.level.ToString();
         Debug.Log("Starting Level " + level);
         if (ts != null && ts.timer != null)
         {
@@ -1253,10 +1210,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public void HideWorkshopElements()
     {
         if (dayNumber != null) dayNumber.gameObject.SetActive(false);
-        if (moneyText != null) moneyText.gameObject.SetActive(false);
-        if (ordersOnboard != null) ordersOnboard.gameObject.SetActive(false);
-        if (moneyImage != null) moneyImage.gameObject.SetActive(false);
-        if (onboardImage != null) onboardImage.gameObject.SetActive(false);
+        if (calendar != null) calendar.gameObject.SetActive(false);
         ri.readyIndicator.gameObject.SetActive(false);
         ri.readyText.gameObject.SetActive(false);
         ShowTV(false);
@@ -1330,11 +1284,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         }
 
-        moneyImage.gameObject.SetActive(true);
         dayNumber.gameObject.SetActive(true);
-        moneyText.gameObject.SetActive(true);
-        onboardImage.gameObject.SetActive(true);
-        ordersOnboard.gameObject.SetActive(true);
+        calendar.gameObject.SetActive(true);
         ShowTV(true);
         shopButton.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(true);

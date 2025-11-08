@@ -84,11 +84,22 @@ public class StaticData
 
     public static Sprite lastTVSprite;
 
+    public static bool isFirstWS;
+    public static bool isFirstPaint;
+    public static bool isFirstTool;
+    public static bool isFirstWire;
+    public static bool isFirstHO;
+
+
     // SHOP EQUIPPING FLAGS
     public static bool isRustyHammerBought = true;
     public static bool isGreenHammerBought = false;
     public static bool isRedHammerBought = false;
-    public static int equippedHammer = 0; // 0 = rusty, 1 = green
+    public static bool isBlueScrewdriverBought = true;
+    public static bool isRedScrewdriverBought = false;
+    public static int equippedHammer = 0; // 0 = rusty, 1 = red, 2 = green
+    public static int equippedPhilipsScrewdriver = 3;
+
 
 
 

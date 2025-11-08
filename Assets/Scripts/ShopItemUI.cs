@@ -45,22 +45,14 @@ public class ShopItemUI : MonoBehaviour
 
     public void UpdateButtonState()
     {
-        if (itemButton == null)
-        {
-            Debug.LogWarning($"[ShopItemUI] itemButton is null for {itemData?.itemName ?? "Unknown Item"}");
-            return;
-        }
-
-        bool isBought = IsItemBought(itemData.hammerID);
-        bool isEquipped = StaticData.equippedHammer == itemData.hammerID;
-
-        Debug.Log($"Item: {itemData.itemName}, HammerID: {itemData.hammerID}, IsBought: {isBought}, IsEquipped: {isEquipped}, EquippedHammer: {StaticData.equippedHammer}");
+        bool isBought = IsItemBought(itemData.itemID);
+        bool isEquipped = IsItemEquipped(itemData); // Update this
 
         if (!isBought)
         {
             itemButton.interactable = true;
             if (buttonText != null)
-                buttonText.text = $"BUY";
+                buttonText.text = $"Buy - {itemData.price}";
         }
         else if (isEquipped)
         {
@@ -76,14 +68,41 @@ public class ShopItemUI : MonoBehaviour
         }
     }
 
-    private bool IsItemBought(int hammerID)
+
+    private bool IsItemBought(int itemID)
     {
-        switch (hammerID)
+        switch (itemID)
         {
             case 0: return StaticData.isRustyHammerBought;
             case 1: return StaticData.isGreenHammerBought;
-            case 2: return StaticData.isRedHammerBought; 
+            case 2: return StaticData.isRedHammerBought;
+
+            // Phillips Screwdrivers
+            case 3: return StaticData.isBlueScrewdriverBought;
+            case 4: return StaticData.isRedScrewdriverBought;
+
+            // Add more as needed
             default: return false;
         }
     }
+
+    private bool IsItemEquipped(ShopManager.ShopItem item)
+    {
+        switch (item.category)
+        {
+            case ShopManager.ItemCategory.Hammer:
+                return StaticData.equippedHammer == item.itemID;
+            case ShopManager.ItemCategory.PhilipsScrewdriver:
+                return StaticData.equippedPhilipsScrewdriver == item.itemID;
+                /*
+            case ShopManager.ItemCategory.FlatScrewdriver:
+                return StaticData.equippedFlatScrewdriver == item.itemID;
+            case ShopManager.ItemCategory.Wrench:
+                return StaticData.equippedWrench == item.itemID;
+                */
+            default:
+                return false;
+        }
+    }
+
 }
