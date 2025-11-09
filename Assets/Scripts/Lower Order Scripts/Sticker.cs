@@ -19,6 +19,7 @@ public class Sticker : MonoBehaviour
 
     private Vector3 defaultPos;
 
+    [SerializeField]
     private int partOn;
 
     public int GetStickerNum()

@@ -1104,7 +1104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 1427ff9df7002124e90ece338189569d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 85e2777a68beede489d6b934e4d856cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1746,7 +1746,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1576043298, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
+  m_Sprite: {fileID: -1134684427, guid: 5262a13e74313b444b0f9ec2cbbbb8bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2676,9 +2676,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 700659251, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
+  m_Sprite: {fileID: -404203673, guid: 5262a13e74313b444b0f9ec2cbbbb8bd, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3209,7 +3209,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 1575577801, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3584,7 +3584,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 700659251, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
+  m_Sprite: {fileID: -404203673, guid: 5262a13e74313b444b0f9ec2cbbbb8bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -3682,7 +3682,7 @@ MonoBehaviour:
   TVSprite: {fileID: 330052450}
   TVSpriteIP: {fileID: 21300000, guid: 347ef81bff7d96b499fdef169ed537b6, type: 3}
   TVSpriteNO: {fileID: 21300000, guid: 17831ffc59fa6384d9ae35458dd703d9, type: 3}
-  TVSpriteNoOrder: {fileID: 21300000, guid: 1427ff9df7002124e90ece338189569d, type: 3}
+  TVSpriteNoOrder: {fileID: 21300000, guid: 85e2777a68beede489d6b934e4d856cd, type: 3}
   pauseButton: {fileID: 1931223947}
   ToolIndicator: {fileID: 908515813}
   WireIndicator: {fileID: 1579741708}
@@ -3744,7 +3744,7 @@ MonoBehaviour:
     wireDone: 0
   orderReceived: 0
   TVSprite: {fileID: 330052450}
-  TVSpriteNoOrder: {fileID: 21300000, guid: 1427ff9df7002124e90ece338189569d, type: 3}
+  TVSpriteNoOrder: {fileID: 21300000, guid: 85e2777a68beede489d6b934e4d856cd, type: 3}
   TVSpriteIP: {fileID: 21300000, guid: 347ef81bff7d96b499fdef169ed537b6, type: 3}
   TVSpriteNO: {fileID: 21300000, guid: 17831ffc59fa6384d9ae35458dd703d9, type: 3}
   didExit: 0
@@ -6100,9 +6100,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1576043298, guid: eb0389b275fa0a243a8ac6b71c7eb267, type: 3}
+  m_Sprite: {fileID: -1134684427, guid: 5262a13e74313b444b0f9ec2cbbbb8bd, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class RobotPaintPart : MonoBehaviour
 {
@@ -38,6 +39,11 @@ public class RobotPaintPart : MonoBehaviour
         Debug.Log(testObject.transform.childCount);
     }
 
+    public void AssignSideNumber(int value)
+    {
+        sequenceArray = value;
+    }
+
     public void SetStickersOnSide(Sticker[] stickerToAdd, List<int> packUsed)
     {
         //Sticker stickers = stickersToAdd.GetPackContents();
@@ -58,6 +64,7 @@ public class RobotPaintPart : MonoBehaviour
                 sticker.GetComponent<Sticker>().ToggleIsADuplicate();
                 sticker.GetComponent<Sticker>().ToggleIsDefault();
                 sticker.GetComponent<Sticker>().SetDefaultPos(newPos);
+                sticker.GetComponent<SpriteRenderer>().sortingOrder = 2;
             }
         }
     }
@@ -69,6 +76,8 @@ public class RobotPaintPart : MonoBehaviour
             if (!sticker.IsADefault())
             {
                 AddSticker(sticker);
+                sticker.transform.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                sticker.SetPart(sequenceArray);
             }
             sticker.ToggleIsOnPart();
             Debug.Log("Sticker stuck");

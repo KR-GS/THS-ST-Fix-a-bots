@@ -56,6 +56,9 @@ public class LoPaintMinigame : MonoBehaviour
     [SerializeField]
     private GameObject loading_obj;
 
+    [SerializeField]
+    private GameObject robotPart;
+
     /*
     [SerializeField]
     private DifficultyManager difficulty;
@@ -168,7 +171,7 @@ public class LoPaintMinigame : MonoBehaviour
         Debug.Log("Number of current sticker packs: " + stickerPacks.Length);
         Debug.Log("sticker pack name: " + stickerPacks[0].name);
 
-        partSides[0] = FindFirstObjectByType<RobotPaintPart>().transform.parent.gameObject;
+        partSides[0] = robotPart;
 
         partSides[0].GetComponentInChildren<Camera>().targetTexture = minimapRT[0];
 
@@ -180,11 +183,11 @@ public class LoPaintMinigame : MonoBehaviour
 
         for (int i = 1; i< numOfSides; i++)
         {
-            partSides[i] = Instantiate(partSides[0].gameObject);
+            partSides[i] = Instantiate(partSides[0]);
 
             partSides[i].transform.position = new Vector3(posX, posY - (i * 25), partSides[i].transform.position.z);
 
-            partSides[i].name = partSides[0].name+ " " + i;
+            partSides[i].name = partSides[0].name + " " + i;
 
             partSides[i].GetComponentInChildren<Camera>().targetTexture = minimapRT[i];
         }
@@ -208,6 +211,10 @@ public class LoPaintMinigame : MonoBehaviour
                 Debug.Log(packToUse.Count);
                 partSides[i].GetComponentInChildren<RobotPaintPart>().SetStickersOnSide(stickerPacks, packToUse);
             }
+
+
+
+            partSides[i].GetComponentInChildren<RobotPaintPart>().AssignSideNumber(i);
         }
 
         Debug.Log(partSides[0].name);
@@ -262,6 +269,14 @@ public class LoPaintMinigame : MonoBehaviour
 
                             draggableObject.GetComponent<Sticker>().SetDefaultPos(newPos);
                             draggableObject.transform.position = newPos;
+                        }
+                        else
+                        {
+                            if (draggableObject.GetComponent<Sticker>().GetPartOn() < 5)
+                            {
+                                StartCoroutine(TriggerStickerFall());
+                                dragging = false;
+                            }
                         }
 
                         draggableObject = null;
@@ -324,6 +339,16 @@ public class LoPaintMinigame : MonoBehaviour
                 Debug.Log(draggableObject.name);
             }
         }
+    }
+
+    public IEnumerator TriggerStickerFall()
+    {
+        GameObject obj_to_delete = draggableObject;
+        draggableObject.GetComponent<BoxCollider2D>().enabled = false;
+        draggableObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Deleting obj");
+        Destroy(obj_to_delete);
     }
 
     public void ClearStickers()

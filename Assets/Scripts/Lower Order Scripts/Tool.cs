@@ -41,7 +41,7 @@ public class Tool : MonoBehaviour
         if (tool_variants.Count() > variant)
         {
             tool_sprites.spriteLibraryAsset = tool_variants[variant];
-            Debug.Log("Setting Hit Icon Design");
+            //Debug.Log("Setting Hit Icon Design");
             addOneSprite.sprite = hit_variant[variant];
         }
     }
