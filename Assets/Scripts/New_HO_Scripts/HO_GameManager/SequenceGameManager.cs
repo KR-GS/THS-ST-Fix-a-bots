@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.Burst.CompilerServices;
 
 public class SequenceGameManager : MonoBehaviour
 {
@@ -105,17 +106,17 @@ public class SequenceGameManager : MonoBehaviour
     void GetData()
     {
         stageNum = StaticData.stageNum;
-        maxNumber = StaticData.maxNumber[stageNum + 1];
-        Debug.Log("Max Number: " + StaticData.maxNumber[stageNum + 1] + " for stage " + (stageNum + 1));
+        maxNumber = StaticData.maxNumber[stageNum];
+        Debug.Log("Max Number: " + StaticData.maxNumber[stageNum] + " for stage " + (StaticData.stageNum));
         cycleInterval = StaticData.cycleInterval;
         cycleLeniency = StaticData.cycleLeniency;
-        prePressedCount = StaticData.prePressedCount[stageNum + 1];
-        isFormulaSeen = StaticData.isFormulaSeen[stageNum + 1];
-        isRandomSequence = StaticData.isRandomSequence[stageNum + 1];
+        prePressedCount = StaticData.prePressedCount[stageNum];
+        isFormulaSeen = StaticData.isFormulaSeen[stageNum];
+        isRandomSequence = StaticData.isRandomSequence[stageNum];
         stageNum = StaticData.stageNum;
-        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum + 1]);
-        formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum + 1]);
-        expectedSwipeSequence = StaticData.stageSwipes[stageNum + 1];
+        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum]);
+        formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum]);
+        expectedSwipeSequence = StaticData.stageSwipes[stageNum];
         
     }
 
@@ -286,7 +287,7 @@ public class SequenceGameManager : MonoBehaviour
             Destroy(child.gameObject);
         buttons.Clear();
 
-        for (int i = 1; i <= maxNumber; i++)
+        for (int i = StaticData.constant[stageNum] + 1; i <= maxNumber + StaticData.constant[stageNum]; i++)
         {
             GameObject go = Instantiate(timePeriodButtonPrefab, buttonsParent);
             TimePeriodButton btn = go.GetComponent<TimePeriodButton>();
@@ -308,7 +309,7 @@ public class SequenceGameManager : MonoBehaviour
         }
         else
         {
-            currentSequence = new Sequence(maxNumber, StaticData.coefficient[stageNum + 1], StaticData.constant[stageNum + 1]);
+            currentSequence = new Sequence(maxNumber + StaticData.constant[stageNum], StaticData.coefficient[stageNum], StaticData.constant[stageNum]);
         }
         formulaText.text = $"Rule: {currentSequence.FormulaString}";
 
@@ -319,9 +320,9 @@ public class SequenceGameManager : MonoBehaviour
         {
             int num = currentSequence.Numbers[i];
             pressedNumbers.Add(num);
-            buttons[num - 1].SetGreen();
-            buttons[num - 1].SetSelected(true);
-            buttons[num - 1].SetPreSelected(true);
+            buttons[num - 1 - StaticData.constant[stageNum]].SetGreen();
+            buttons[num - 1 - StaticData.constant[stageNum]].SetSelected(true);
+            buttons[num - 1 - StaticData.constant[stageNum]].SetPreSelected(true);
         }
 
         currentCycleIndex = 0;
@@ -417,11 +418,13 @@ public class SequenceGameManager : MonoBehaviour
 
             Debug.Log("Cycle index: " + currentCycleIndex);
 
-            int btnNumber = currentCycleIndex + 1;
+            int btnNumber = buttons[currentCycleIndex].ButtonNumber;
             bool inSequence = currentSequence.Numbers.Contains(btnNumber);
 
+            Debug.Log($"Button Number: {btnNumber}, In Sequence: {inSequence}");
+
             // Show/hide swipe direction panel based on inSequence
-            if (inSequence && currentSwipeIndex < expectedSwipeSequence.Count && !(buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()))
+            if (inSequence && currentSwipeIndex < expectedSwipeSequence.Count && !(buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()))
             {
                 // Hint only shows if hintSeen is true
                 if (StaticData.hintSeen[stageNum])
@@ -492,7 +495,7 @@ public class SequenceGameManager : MonoBehaviour
 
                         statusAnimator.SetBool("AnticipateTrigger", true);
                         // If the Sequence was pre pressed, automatically plays hit animation
-                        if ((buttons[btnNumber - 1].GetPreSelected() || buttons[btnNumber - 1].GetWasSelected()) && timer > 0.10f)
+                        if ((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.01f)
                         {
                             statusAnimator.SetBool("AnticipateTrigger", false);
 
@@ -580,6 +583,9 @@ public class SequenceGameManager : MonoBehaviour
                 statusAnimator.SetBool("WrongTrigger", false);
                 statusAnimator.SetBool("IdleTrigger", true);
 
+                Debug.Log("pressedNumbers Numbers = " + pressedNumbers);
+                Debug.Log("Current Sequence = " + currentSequence.Numbers);
+
                 if (CheckSequenceComplete() && isCorrect)
                 {
                     feedbackText.text = "Great job! Sequence completed!";
@@ -606,14 +612,14 @@ public class SequenceGameManager : MonoBehaviour
         {
             btn.SetHighlighted(false);
             btn.SetHeight(false);
-        }
-        if (index > 0 && buttons[index - 1].GetSelected())
-        {
-            buttons[index - 1].SetGreen();
-        }
-        if (index == 0 && buttons[maxNumber - 1].GetSelected())
-        {
-            buttons[maxNumber - 1].SetGreen();
+            if(btn.GetWasSelected())
+            {
+                btn.SetGreen();
+            }
+            else if (btn.GetPreSelected())
+            {
+                btn.SetGreen();
+            }
         }
         buttons[index].SetHighlighted(true);
         buttons[index].SetHeight(true);
@@ -709,13 +715,13 @@ public class SequenceGameManager : MonoBehaviour
         }
 
         //Early swipes
-        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency / 2 && gotSwipeCorrect)
+        else if (currentSequence.Numbers.Contains(currentCycleIndex) && timer >= cycleLeniency / 2 && gotSwipeCorrect)
         {
-            buttons[btnNumber].SetGreen();
-            buttons[btnNumber].SetWasSelected(true);
-            pressedNumbers.Add(btnNumber + 1);
-            buttons[btnNumber].SetSelected(true);
-            feedbackText.text = $"Correct swipe {direction} for: {btnNumber + 1}!";
+            buttons[currentCycleIndex].SetGreen();
+            buttons[currentCycleIndex].SetWasSelected(true);
+            pressedNumbers.Add(btnNumber);
+            buttons[currentCycleIndex].SetSelected(true);
+            feedbackText.text = $"Correct swipe {direction} for: {btnNumber}!";
             currentSwipeIndex++;
             gotRight = true;
 
@@ -724,7 +730,7 @@ public class SequenceGameManager : MonoBehaviour
         //Swipe not in sequence
         else if (!inSequence)
         {
-            buttons[btnNumber - 1].SetHighlighted(true);
+            buttons[currentCycleIndex].SetHighlighted(true);
             feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
             statusAnimator.SetBool("WrongTrigger", true);
@@ -748,10 +754,10 @@ public class SequenceGameManager : MonoBehaviour
 
                 if (gotSwipeCorrect)
                 {
-                    buttons[btnNumber - 1].SetGreen();
-                    buttons[btnNumber - 1].SetWasSelected(true);
+                    buttons[currentCycleIndex].SetGreen();
+                    buttons[currentCycleIndex].SetWasSelected(true);
                     pressedNumbers.Add(btnNumber);
-                    buttons[btnNumber - 1].SetSelected(true);
+                    buttons[currentCycleIndex].SetSelected(true);
 
                     feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
                     statusAnimator.SetBool("IdleTrigger", false);
@@ -778,7 +784,7 @@ public class SequenceGameManager : MonoBehaviour
                 //Wrong Swipes But in Sequence
                 else
                 {
-                    buttons[btnNumber - 1].SetHighlighted(true);
+                    buttons[currentCycleIndex].SetHighlighted(true);
                     feedbackText.text = $"Wrong swipe!";
                     statusAnimator.SetBool("IdleTrigger", false);
 
@@ -889,8 +895,8 @@ public class SequenceGameManager : MonoBehaviour
         {
             int num = currentSequence.Numbers[i];
             pressedNumbers.Add(num);
-            buttons[num - 1].SetGreen();
-            buttons[num - 1].SetSelected(true);
+            buttons[num - 1 - StaticData.constant[stageNum]].SetGreen();
+            buttons[num - 1 - StaticData.constant[stageNum]].SetSelected(true);
         }
 
         if(!isStageFinished){
@@ -919,19 +925,17 @@ public class SequenceGameManager : MonoBehaviour
         {
             btn.SetHighlighted(false);
             btn.SetHeight(false);
-        }
-            
-
-        foreach (int num in currentSequence.Numbers)
-        {
-            buttons[num - 1].SetGreen();
+            if(currentSequence.Numbers.Contains(btn.ButtonNumber))
+            {
+                btn.SetGreen();
+            }
         }
 
         foreach (Transform child in buttonsParent2)
             Destroy(child.gameObject);
         buttons2.Clear();
 
-        for (int i = 1; i <= maxNumber; i++)
+        for (int i = StaticData.constant[stageNum] + 1; i <= maxNumber + StaticData.constant[stageNum]; i++)
         {
             GameObject go2 = Instantiate(timePeriodButtonPrefab, buttonsParent2);
             TimePeriodButton btn2 = go2.GetComponent<TimePeriodButton>();

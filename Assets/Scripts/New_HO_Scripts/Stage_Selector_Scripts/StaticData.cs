@@ -131,23 +131,24 @@ public class StaticData
     public static Dictionary<int, List<string>> stageSwipes = new Dictionary<int, List<string>>()
     {
         //SCENARIO 1
-        { 1, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 2, new List<string> { "Up", "Up", "Down", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 3, new List<string> { "Down", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 4, new List<string> { "Right", "Left", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 5, new List<string> { "Up", "Left", "Left", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 6, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 7, new List<string> { "Left", "Left", "Down", "Down", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 8, new List<string> { "Right", "Right", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 9, new List<string> { "Down", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 10, new List<string> { "Left", "Left", "Right", "Up", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 11, new List<string> { "Down", "Right", "Up", "Left", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 12, new List<string> { "Left", "Down", "Down", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 13, new List<string> { "Right", "Down", "Left", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 14, new List<string> { "Up", "Left", "Left", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 15, new List<string> { "Up", "Right", "Left", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 0, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 1, new List<string> { "Up", "Up", "Down", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 2, new List<string> { "Down", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 3, new List<string> { "Right", "Left", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 4, new List<string> { "Up", "Left", "Left", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 5, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 6, new List<string> { "Left", "Left", "Down", "Down", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 7, new List<string> { "Right", "Right", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 8, new List<string> { "Down", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 9, new List<string> { "Left", "Left", "Right", "Up", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 10, new List<string> { "Down", "Right", "Up", "Left", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 11, new List<string> { "Left", "Down", "Down", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 12, new List<string> { "Right", "Down", "Left", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 13, new List<string> { "Up", "Left", "Left", "Up", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
+        { 14, new List<string> { "Up", "Right", "Left", "Down", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
 
         //SCENARIO 2
+        { 15, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 16, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 17, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 18, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
@@ -163,9 +164,9 @@ public class StaticData
         { 28, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 29, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 30, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 31, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
 
         //SCENARIO 3
+        { 31, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 32, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 33, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 34, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
@@ -178,8 +179,7 @@ public class StaticData
         { 41, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 42, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 43, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 44, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
-        { 45, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } }
+        { 44, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } }
     };
     
 
