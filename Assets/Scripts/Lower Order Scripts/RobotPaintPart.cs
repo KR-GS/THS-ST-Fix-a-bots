@@ -13,6 +13,9 @@ public class RobotPaintPart : MonoBehaviour
     [SerializeField]
     private GameObject defaultObj;
 
+    [SerializeField]
+    private GameObject shine_indicator;
+
     private List<int> sideVal = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,6 +45,11 @@ public class RobotPaintPart : MonoBehaviour
     public void AssignSideNumber(int value)
     {
         sequenceArray = value;
+
+        if(value >= 5)
+        {
+            shine_indicator.SetActive(false);
+        }
     }
 
     public void SetStickersOnSide(Sticker[] stickerToAdd, List<int> packUsed)

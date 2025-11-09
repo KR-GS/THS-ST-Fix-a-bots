@@ -185,7 +185,7 @@ public class LoPaintMinigame : MonoBehaviour
         {
             partSides[i] = Instantiate(partSides[0]);
 
-            partSides[i].transform.position = new Vector3(posX, posY - (i * 25), partSides[i].transform.position.z);
+            partSides[i].transform.position = new Vector3(posX - (i * 25), posY, partSides[i].transform.position.z);
 
             partSides[i].name = partSides[0].name + " " + i;
 
@@ -346,7 +346,7 @@ public class LoPaintMinigame : MonoBehaviour
         GameObject obj_to_delete = draggableObject;
         draggableObject.GetComponent<BoxCollider2D>().enabled = false;
         draggableObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Debug.Log("Deleting obj");
         Destroy(obj_to_delete);
     }
