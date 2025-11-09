@@ -97,4 +97,20 @@ public class PaintMinimapManager : MonoBehaviour
     {
         return minimapArr[map_index].transform.position;
     }
+
+    public void DisableMinimapPressing()
+    {
+        foreach(GameObject map in minimapArr)
+        {
+            map.GetComponent<Button>().enabled = false;
+        }
+    }
+
+    public void EnableMinimapPressing()
+    {
+        foreach (GameObject map in minimapArr)
+        {
+            map.GetComponent<Button>().enabled = true;
+        }
+    }
 }

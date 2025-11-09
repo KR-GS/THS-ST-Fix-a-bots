@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 109613891}
   - component: {fileID: 109613892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     m_PressedSprite: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
-    m_SelectedSprite: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -539,7 +539,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 328411497}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 707493499}
+        m_TargetAssemblyTypeName: LoPaintMinigame, Assembly-CSharp
+        m_MethodName: ChangeSideRight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &328411497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -771,7 +783,7 @@ GameObject:
   - component: {fileID: 423445675}
   - component: {fileID: 423445679}
   - component: {fileID: 423445680}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1280,7 +1292,7 @@ GameObject:
   - component: {fileID: 657200563}
   - component: {fileID: 657200562}
   - component: {fileID: 657200566}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Blue_Bandaid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1458,7 +1470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 658213504}
   - component: {fileID: 658213503}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1548,7 +1560,7 @@ GameObject:
   - component: {fileID: 704184086}
   - component: {fileID: 704184085}
   - component: {fileID: 704184084}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pink_Floppydisk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1748,6 +1760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stickerTextCounter: {fileID: 0}
   patternGameManager: {fileID: 0}
+  minimapManager: {fileID: 308976479}
   numOfSides: 6
   stickerPacks:
   - {fileID: 846016934}
@@ -1758,6 +1771,9 @@ MonoBehaviour:
   moveBtn:
   - {fileID: 1493400717}
   - {fileID: 1175512280}
+  moveSidesBtn:
+  - {fileID: 328411496}
+  - {fileID: 787303916}
   checkUI: {fileID: 604964466}
   overviewUI: {fileID: 2018880989}
   notesUI: {fileID: 1847413831}
@@ -1844,7 +1860,7 @@ GameObject:
   - component: {fileID: 787303917}
   - component: {fileID: 787303916}
   m_Layer: 5
-  m_Name: RightPartButton (1)
+  m_Name: LeftPartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1900,7 +1916,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     m_PressedSprite: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
-    m_SelectedSprite: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1912,7 +1928,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 787303917}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 707493499}
+        m_TargetAssemblyTypeName: LoPaintMinigame, Assembly-CSharp
+        m_MethodName: ChangeSideLeft
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &787303917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2141,7 +2169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 853190495}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticker Pack 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2295,7 +2323,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1122348090}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticker Pack 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2407,7 +2435,6 @@ Transform:
   m_LocalScale: {x: 0.7730595, y: 0.77419364, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1700935992}
   - {fileID: 1977237471}
   - {fileID: 330135384}
   m_Father: {fileID: 778998063}
@@ -2514,7 +2541,7 @@ GameObject:
   - component: {fileID: 1175512281}
   - component: {fileID: 1175512280}
   m_Layer: 5
-  m_Name: RightStickerBtn
+  m_Name: DownStickerBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2570,7 +2597,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 59843906, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     m_PressedSprite: {fileID: 59843906, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
-    m_SelectedSprite: {fileID: 59843906, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2960,7 +2987,7 @@ GameObject:
   - component: {fileID: 1493400718}
   - component: {fileID: 1493400717}
   m_Layer: 5
-  m_Name: LeftStickerBtn
+  m_Name: UpStickerBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3016,7 +3043,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 624529934, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     m_PressedSprite: {fileID: 624529934, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
-    m_SelectedSprite: {fileID: 624529934, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -3096,7 +3123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1512401031
 Transform:
   m_ObjectHideFlags: 0
@@ -3417,7 +3444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1668039857}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticker Pack 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3441,93 +3468,6 @@ Transform:
   - {fileID: 657200565}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1700935991
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1700935992}
-  - component: {fileID: 1700935993}
-  m_Layer: 2
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1700935992
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1700935991}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.13, y: 0.13, z: 0.13}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1146391402}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1700935993
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1700935991}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 8d1a5dcf4b1c7f94eb8c1b78d6d309b8, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 7.76, y: 7.75}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &1742507105
 GameObject:
   m_ObjectHideFlags: 0
@@ -3899,7 +3839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1964811731}
   - component: {fileID: 1964811732}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4108,7 +4048,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 115
+    m_Bits: 51
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 6b273e4456649cd438fba833270f4a3c, type: 2}
   m_TargetDisplay: 0
@@ -4253,7 +4193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2025314841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticker Pack 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4555,7 +4495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2126178464}
   - component: {fileID: 2126178465}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

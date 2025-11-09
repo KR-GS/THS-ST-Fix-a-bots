@@ -14,7 +14,10 @@ public class LoPaintMinigame : MonoBehaviour
     
     [SerializeField]
     private PatternGameManager patternGameManager;
-    
+
+    [SerializeField]
+    private PaintMinimapManager minimapManager;
+
 
     private bool dragging = false;
 
@@ -31,6 +34,9 @@ public class LoPaintMinigame : MonoBehaviour
 
     [SerializeField]
     private Button[] moveBtn;
+
+    [SerializeField]
+    private Button[] moveSidesBtn;
 
     [SerializeField]
     private Canvas checkUI;
@@ -77,6 +83,8 @@ public class LoPaintMinigame : MonoBehaviour
     private List<int> packUsed = new List<int>();
 
     private List<GameObject> loading_list = new List<GameObject>();
+
+    private Vector2 pos_anim;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -179,13 +187,15 @@ public class LoPaintMinigame : MonoBehaviour
 
         posX = partSides[0].transform.position.x;
 
+        int base_distance = 50;
 
+        pos_anim = new Vector2(posX - 25, posY);
 
         for (int i = 1; i< numOfSides; i++)
         {
             partSides[i] = Instantiate(partSides[0]);
 
-            partSides[i].transform.position = new Vector3(posX - (i * 25), posY, partSides[i].transform.position.z);
+            partSides[i].transform.position = new Vector3(posX - (i * base_distance), posY, partSides[i].transform.position.z);
 
             partSides[i].name = partSides[0].name + " " + i;
 
@@ -486,6 +496,138 @@ public class LoPaintMinigame : MonoBehaviour
         mapSelect.ChangeSelectedSide(prevSide);
         ChangeSide(prevSide);
         
+    }
+
+    public void ChangeSideRight()
+    {
+        if (currentSide < 5)
+        {
+            StartCoroutine(RightChange());
+        }
+    }
+
+    public void ChangeSideLeft()
+    {
+        if (currentSide > 0)
+        {
+            StartCoroutine(LeftChange());
+        }
+    }
+
+    private IEnumerator RightChange()
+    {
+        int prevSide = currentSide;
+
+        Vector2 origPos1 = partSides[currentSide+1].transform.position;
+
+        Vector2 origPos2 = partSides[prevSide].transform.position;
+
+        Vector2 goalPos = new Vector2(-pos_anim.x, pos_anim.y);
+
+        currentSide++;
+
+        partSides[currentSide].transform.position = pos_anim;
+
+        partSides[prevSide].GetComponentInChildren<BoxCollider2D>().enabled = false;
+
+        partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = false;
+
+        foreach (Button btn in moveSidesBtn)
+        {
+            btn.enabled = false;
+        }
+
+        minimapManager.DisableMinimapPressing();
+
+        while (Vector2.Distance(partSides[prevSide].transform.position, goalPos) > 0.01f)
+        {
+            partSides[prevSide].transform.position = Vector2.MoveTowards(partSides[prevSide].transform.position, goalPos, speed * 3 * Time.deltaTime);
+            yield return null;
+        }
+
+        while (Vector2.Distance(partSides[currentSide].transform.position, origPos2) > 0.01f)
+        {
+            partSides[currentSide].transform.position = Vector2.MoveTowards(partSides[currentSide].transform.position, origPos2, speed * 3 * Time.deltaTime);
+            yield return null;
+        }
+
+        yield return null;
+
+        minimapManager.ChangeSelectedSide(currentSide);
+
+        yield return new WaitForSeconds(0.5f);
+
+        partSides[prevSide].transform.position = origPos1;
+
+        partSides[prevSide].GetComponentInChildren<BoxCollider2D>().enabled = true;
+
+        partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        minimapManager.EnableMinimapPressing();
+
+        foreach (Button btn in moveSidesBtn)
+        {
+            btn.enabled = true;
+        }
+    }
+
+    private IEnumerator LeftChange()
+    {
+        int prevSide = currentSide;
+
+        Vector2 origPos1 = partSides[currentSide - 1].transform.position;
+
+        Vector2 origPos2 = partSides[prevSide].transform.position;
+
+        Vector2 goalPos = new Vector2(-pos_anim.x, pos_anim.y);
+
+        currentSide--;
+
+        partSides[currentSide].transform.position = goalPos;
+
+        partSides[prevSide].GetComponentInChildren<BoxCollider2D>().enabled = false;
+
+        partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = false;
+
+        foreach(Button btn in moveSidesBtn)
+        {
+            btn.enabled = false;
+        }
+
+        minimapManager.DisableMinimapPressing();
+
+        while (Vector2.Distance(partSides[prevSide].transform.position, pos_anim) > 0.01f)
+        {
+            partSides[prevSide].transform.position = Vector2.MoveTowards(partSides[prevSide].transform.position, pos_anim, speed * 3 * Time.deltaTime);
+            yield return null;
+        }
+
+        while (Vector2.Distance(partSides[currentSide].transform.position, origPos2) > 0.01f)
+        {
+            partSides[currentSide].transform.position = Vector2.MoveTowards(partSides[currentSide].transform.position, origPos2, speed * 3 * Time.deltaTime);
+            yield return null;
+        }
+
+        yield return null;
+
+        minimapManager.ChangeSelectedSide(currentSide);
+
+        yield return new WaitForSeconds(1f);
+
+        minimapManager.EnableMinimapPressing();
+
+        partSides[prevSide].transform.position = origPos1;
+
+        partSides[prevSide].GetComponentInChildren<BoxCollider2D>().enabled = true;
+
+        partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = true;
+
+        foreach (Button btn in moveSidesBtn)
+        {
+            btn.enabled = true;
+        }
     }
 
     public void ChangeSide(int val)
