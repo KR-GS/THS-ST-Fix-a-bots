@@ -162,13 +162,14 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         */
 
         
-        if (level >= 1 && level < 3)
+        if (level >= 1) // && level < 3
         {
             newOrder.needsTool = true; //originally true, gonna QA
-            newOrder.needsPaint = false; //originally false, gonna QA
-            newOrder.needsWire = false; //originally false, gonna QA
+            newOrder.needsPaint = true; //originally false, gonna QA
+            newOrder.needsWire = true; //originally false, gonna QA
         }
 
+        /*
         else if (level >= 3 && level < 6)
         {
             float rand = Random.value;
@@ -185,7 +186,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = Random.value < 0.5f;
         }
-        
+        */
 
         // Ensure at least one requirement
         if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)

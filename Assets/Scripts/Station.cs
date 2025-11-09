@@ -38,11 +38,13 @@ public class Station : MonoBehaviour
                 break;
 
             case StationType.Paint:
-                gameObject.SetActive(currentLevel >= 3); 
+                gameObject.SetActive(true);
+                //gameObject.SetActive(currentLevel >= 3); 
                 break;
 
             case StationType.Wire:
-                gameObject.SetActive(currentLevel >= 6); 
+                gameObject.SetActive(true);
+                //gameObject.SetActive(currentLevel >= 6); 
                 break;
         }
     }

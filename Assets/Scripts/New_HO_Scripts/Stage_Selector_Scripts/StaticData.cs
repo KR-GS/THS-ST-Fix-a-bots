@@ -92,15 +92,27 @@ public class StaticData
 
 
     // SHOP EQUIPPING FLAGS
-    public static bool isRustyHammerBought = true;
+    public static bool isBlueHammerBought = true;
     public static bool isGreenHammerBought = false;
     public static bool isRedHammerBought = false;
-    public static bool isBlueScrewdriverBought = true;
-    public static bool isRedScrewdriverBought = false;
-    public static int equippedHammer = 0; // 0 = rusty, 1 = red, 2 = green
-    public static int equippedPhilipsScrewdriver = 3;
+
+    public static bool isGreenPhilipsBought = true; 
+    public static bool isYellowPhilipsBought = false;
+    public static bool isRedPhilipsBought = false;
+
+    public static bool isYellowFlatBought = true;
+    public static bool isRedFlatBought = false;
+    public static bool isGreenFlatBought = false;
+
+    public static bool isRedWrenchBought = true;
+    public static bool isBlueWrenchBought = false;
+    public static bool isGreenWrenchBought = false;
 
 
+    public static int equippedHammer = 0; // 0-2
+    public static int equippedPhilipsScrewdriver = 3; // 3-5
+    public static int equippedFlatScrewdriver = 6; // 6-8
+    public static int equippedWrench = 9; // 9-11
 
 
     //USED FOR RANDOM BLOCK SPAWNING
@@ -169,6 +181,7 @@ public class StaticData
         { 44, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } },
         { 45, new List<string> { "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right", "Up", "Down", "Left", "Right" } }
     };
+    
 
     static StaticData()
     {

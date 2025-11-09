@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using static ShopManager;
 
 public class ShopItemUI : MonoBehaviour
 {
@@ -52,54 +53,103 @@ public class ShopItemUI : MonoBehaviour
         {
             itemButton.interactable = true;
             if (buttonText != null)
-                buttonText.text = $"Buy - {itemData.price}";
+                buttonText.text = $"BUY";
         }
         else if (isEquipped)
         {
             itemButton.interactable = false;
             if (buttonText != null)
-                buttonText.text = "Equipped";
+                buttonText.text = "EQUIPPED";
         }
         else
         {
             itemButton.interactable = true;
             if (buttonText != null)
-                buttonText.text = "Equip";
+                buttonText.text = "EQUIP";
         }
     }
-
 
     private bool IsItemBought(int itemID)
     {
         switch (itemID)
         {
-            case 0: return StaticData.isRustyHammerBought;
+            case 0: return StaticData.isBlueHammerBought;
             case 1: return StaticData.isGreenHammerBought;
             case 2: return StaticData.isRedHammerBought;
 
-            // Phillips Screwdrivers
-            case 3: return StaticData.isBlueScrewdriverBought;
-            case 4: return StaticData.isRedScrewdriverBought;
+            case 3: return StaticData.isGreenPhilipsBought;
+            case 4: return StaticData.isYellowPhilipsBought;
+            case 5: return StaticData.isRedPhilipsBought;
 
-            // Add more as needed
+            case 6: return StaticData.isYellowFlatBought;
+            case 7: return StaticData.isRedFlatBought;
+            case 8: return StaticData.isGreenFlatBought;
+
+            case 9: return StaticData.isRedWrenchBought;
+            case 10: return StaticData.isBlueWrenchBought;
+            case 11: return StaticData.isGreenWrenchBought;
+
+
             default: return false;
         }
     }
 
-    private bool IsItemEquipped(ShopManager.ShopItem item)
+    private void SetItemBought(int itemID, bool value)
+    {
+        switch (itemID)
+        {
+
+            case 0: StaticData.isBlueHammerBought = value; break;
+            case 1: StaticData.isGreenHammerBought = value; break;
+            case 2: StaticData.isRedHammerBought = value; break;
+
+            case 3: StaticData.isGreenPhilipsBought = value; break;
+            case 4: StaticData.isYellowPhilipsBought = value; break;
+            case 5: StaticData.isRedPhilipsBought = value; break;
+
+            case 6: StaticData.isYellowFlatBought = value; break;
+            case 7: StaticData.isRedFlatBought = value; break;
+            case 8: StaticData.isGreenFlatBought = value; break;
+
+            case 9: StaticData.isRedWrenchBought = value; break;
+            case 10: StaticData.isBlueWrenchBought = value; break;
+            case 11: StaticData.isGreenWrenchBought = value; break;
+
+            default: break;
+        }
+    }
+
+    private void EquipItem(ShopItem item)
     {
         switch (item.category)
         {
-            case ShopManager.ItemCategory.Hammer:
+            case ItemCategory.Hammer:
+                StaticData.equippedHammer = item.itemID;
+                break;
+            case ItemCategory.PhilipsScrewdriver:
+                StaticData.equippedPhilipsScrewdriver = item.itemID;
+                break;
+            case ItemCategory.FlatScrewdriver:
+                StaticData.equippedFlatScrewdriver = item.itemID;
+                break;
+            case ItemCategory.Wrench:
+                StaticData.equippedWrench = item.itemID;
+                break;
+        }
+    }
+
+    private bool IsItemEquipped(ShopItem item)
+    {
+        switch (item.category)
+        {
+            case ItemCategory.Hammer:
                 return StaticData.equippedHammer == item.itemID;
-            case ShopManager.ItemCategory.PhilipsScrewdriver:
+            case ItemCategory.PhilipsScrewdriver:
                 return StaticData.equippedPhilipsScrewdriver == item.itemID;
-                /*
-            case ShopManager.ItemCategory.FlatScrewdriver:
+            case ItemCategory.FlatScrewdriver:
                 return StaticData.equippedFlatScrewdriver == item.itemID;
-            case ShopManager.ItemCategory.Wrench:
+            case ItemCategory.Wrench:
                 return StaticData.equippedWrench == item.itemID;
-                */
             default:
                 return false;
         }

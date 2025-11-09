@@ -4018,9 +4018,18 @@ MonoBehaviour:
   threeStar: {fileID: -548197502, guid: b4d157e99d8ab9e428ed4871cd44994f, type: 3}
   fourStar: {fileID: -4640007, guid: b4d157e99d8ab9e428ed4871cd44994f, type: 3}
   fiveStar: {fileID: 183215513, guid: b4d157e99d8ab9e428ed4871cd44994f, type: 3}
-  blueHammer: {fileID: 469843495, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+  blueHammer: {fileID: 591105700, guid: cc65d328511b4ce44839e73690957657, type: 3}
   greenHammer: {fileID: -983255668, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
   redHammer: {fileID: -1875350417, guid: c6f2490fdad705d44a675613429f2e44, type: 3}
+  greenPhilips: {fileID: 1380270683, guid: 94a8929f2a47bbc4cabebf8385651697, type: 3}
+  yellowPhilips: {fileID: -491251751, guid: 4050b100f6543ba449b9948fc490be5d, type: 3}
+  redPhilips: {fileID: -1987908071, guid: 7495af2ae7a67d640af79f7e66a476dc, type: 3}
+  yellowFlat: {fileID: -1850246459, guid: 8a568e709015254418993b89ac867f67, type: 3}
+  redFlat: {fileID: -570486796, guid: 987e7153e7e9a054593cd1c9e61d9eee, type: 3}
+  greenFlat: {fileID: -1306171984, guid: 000296e90f540384abcb7befb1f53064, type: 3}
+  redWrench: {fileID: -343121206, guid: 32614adab788e9b4db8b19d964bee469, type: 3}
+  blueWrench: {fileID: 1755550955, guid: b06dd4d8dc93f62498b8f5a9d141b2f9, type: 3}
+  greenWrench: {fileID: 1475011, guid: b75939e1b7b260440ad810bc4a5f20f4, type: 3}
 --- !u!1 &1171019505
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,9 +41,23 @@ public class ShopManager : MonoBehaviour
     public Sprite threeStar;
     public Sprite fourStar;
     public Sprite fiveStar;
-    public Sprite blueHammer;
+
+    public Sprite blueHammer; //default
     public Sprite greenHammer;
     public Sprite redHammer;
+
+    public Sprite greenPhilips; //default
+    public Sprite yellowPhilips;
+    public Sprite redPhilips;
+
+    public Sprite yellowFlat; //default
+    public Sprite redFlat;
+    public Sprite greenFlat;
+
+    public Sprite redWrench; //default
+    public Sprite blueWrench;
+    public Sprite greenWrench;
+
 
     void Start()
     {
@@ -52,11 +66,17 @@ public class ShopManager : MonoBehaviour
         allItems = new List<ShopItem>()
         {
             new ShopItem() { itemName = "MXWL Hammer", rating = oneStar, icon = blueHammer, price = 0, itemID = 0, category = ItemCategory.Hammer },
-            new ShopItem() { itemName = "Red Hammer", rating = threeStar, icon = redHammer, price = 150, itemID = 1, category = ItemCategory.Hammer },
-            new ShopItem() { itemName = "Chill Boy's Hammer", rating = fiveStar, icon = greenHammer, price = 300, itemID = 2, category = ItemCategory.Hammer },
-            new ShopItem() { itemName = "Blue Screwdriver", rating = oneStar, icon = greenHammer, price = 0, itemID = 3, category = ItemCategory.PhilipsScrewdriver},
-            new ShopItem() { itemName = "Red Screwdriver", rating = threeStar, icon = redHammer, price = 200, itemID = 4, category = ItemCategory.PhilipsScrewdriver },
-
+            new ShopItem() { itemName = "Hot Red Hammer", rating = threeStar, icon = redHammer, price = 450, itemID = 1, category = ItemCategory.Hammer },
+            new ShopItem() { itemName = "Chill Boy's Hammer", rating = fourStar, icon = greenHammer, price = 900, itemID = 2, category = ItemCategory.Hammer },
+            new ShopItem() { itemName = "Green Philips", rating = oneStar, icon = greenPhilips, price = 0, itemID = 3, category = ItemCategory.PhilipsScrewdriver},
+            new ShopItem() { itemName = "Dark Yellow Philips", rating = twoStar, icon = yellowPhilips, price = 400, itemID = 4, category = ItemCategory.PhilipsScrewdriver },
+            new ShopItem() { itemName = "Blazing Neon Philips", rating = fiveStar, icon = redPhilips, price = 800, itemID = 5, category = ItemCategory.PhilipsScrewdriver},
+            new ShopItem() { itemName = "Ol' Reliable Flathead", rating = twoStar, icon = yellowFlat, price = 0, itemID = 6, category = ItemCategory.FlatScrewdriver },
+            new ShopItem() { itemName = "Crimson Flathead", rating = threeStar, icon = redFlat, price = 400, itemID = 7, category = ItemCategory.FlatScrewdriver },
+            new ShopItem() { itemName = "Sage Flathead", rating = fourStar, icon = greenFlat, price = 800, itemID = 8, category = ItemCategory.FlatScrewdriver },
+            new ShopItem() { itemName = "Ruby Wrench", rating = twoStar, icon = redWrench, price = 0, itemID = 9, category = ItemCategory.Wrench },
+            new ShopItem() { itemName = "Sapphire Wrench", rating = threeStar, icon = blueWrench, price = 500, itemID = 10, category = ItemCategory.Wrench },
+            new ShopItem() { itemName = "Emerald Wrench", rating = fiveStar, icon = greenWrench, price = 1500, itemID = 11, category = ItemCategory.Wrench},
         };
 
         PopulateShop();
@@ -149,15 +169,23 @@ public class ShopManager : MonoBehaviour
     {
         switch (itemID)
         {
-            case 0: return StaticData.isRustyHammerBought;
+            case 0: return StaticData.isBlueHammerBought;
             case 1: return StaticData.isGreenHammerBought;
             case 2: return StaticData.isRedHammerBought;
 
-            // Phillips Screwdrivers
-            case 3: return StaticData.isBlueScrewdriverBought;
-            case 4: return StaticData.isRedScrewdriverBought;
+            case 3: return StaticData.isGreenPhilipsBought;
+            case 4: return StaticData.isYellowPhilipsBought;
+            case 5: return StaticData.isRedPhilipsBought;
 
-            // Add more as needed
+            case 6: return StaticData.isYellowFlatBought;
+            case 7: return StaticData.isRedFlatBought;
+            case 8: return StaticData.isGreenFlatBought;
+
+            case 9: return StaticData.isRedWrenchBought;
+            case 10: return StaticData.isBlueWrenchBought;
+            case 11: return StaticData.isGreenWrenchBought;
+
+
             default: return false;
         }
     }
@@ -166,15 +194,24 @@ public class ShopManager : MonoBehaviour
     {
         switch (itemID)
         {
-            // Hammers
-            case 0: StaticData.isRustyHammerBought = value; break;
+
+            case 0: StaticData.isBlueHammerBought = value; break;
             case 1: StaticData.isGreenHammerBought = value; break;
             case 2: StaticData.isRedHammerBought = value; break;
 
-            // Phillips Screwdrivers
-            case 3: StaticData.isBlueScrewdriverBought = value; break;
-            case 4: StaticData.isRedScrewdriverBought = value; break;
+            case 3: StaticData.isGreenPhilipsBought = value; break;
+            case 4: StaticData.isYellowPhilipsBought = value; break;
+            case 5: StaticData.isRedPhilipsBought = value; break;
 
+            case 6: StaticData.isYellowFlatBought = value; break;
+            case 7: StaticData.isRedFlatBought = value; break;
+            case 8: StaticData.isGreenFlatBought = value; break;
+
+            case 9: StaticData.isRedWrenchBought = value; break;
+            case 10: StaticData.isBlueWrenchBought = value; break;
+            case 11: StaticData.isGreenWrenchBought = value; break;
+
+            default: break;
         }
     }
 
@@ -188,14 +225,12 @@ public class ShopManager : MonoBehaviour
             case ItemCategory.PhilipsScrewdriver:
                 StaticData.equippedPhilipsScrewdriver = item.itemID;
                 break;
-                /*
             case ItemCategory.FlatScrewdriver:
                 StaticData.equippedFlatScrewdriver = item.itemID;
                 break;
             case ItemCategory.Wrench:
                 StaticData.equippedWrench = item.itemID;
                 break;
-                */
         }
     }
 
@@ -207,12 +242,10 @@ public class ShopManager : MonoBehaviour
                 return StaticData.equippedHammer == item.itemID;
             case ItemCategory.PhilipsScrewdriver:
                 return StaticData.equippedPhilipsScrewdriver == item.itemID;
-                /*
             case ItemCategory.FlatScrewdriver:
                 return StaticData.equippedFlatScrewdriver == item.itemID;
             case ItemCategory.Wrench:
                 return StaticData.equippedWrench == item.itemID;
-                */
             default:
                 return false;
         }

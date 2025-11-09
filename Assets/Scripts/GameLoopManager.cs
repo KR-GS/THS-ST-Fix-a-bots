@@ -341,10 +341,22 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         StaticData.valuestoChange = data.valuestoChange;
 
-        StaticData.isRustyHammerBought = data.isRustyHammerBought;
+        StaticData.isBlueHammerBought = data.isBlueHammerBought;
         StaticData.isGreenHammerBought = data.isGreenHammerBought;
         StaticData.isRedHammerBought = data.isRedHammerBought;
+        StaticData.isGreenPhilipsBought = data.isGreenPhilipsBought;
+        StaticData.isYellowPhilipsBought = data.isYellowPhilipsBought;
+        StaticData.isRedPhilipsBought = data.isRedPhilipsBought;
+        StaticData.isYellowFlatBought = data.isYellowFlatBought;
+        StaticData.isRedFlatBought = data.isRedFlatBought;
+        StaticData.isGreenFlatBought = data.isGreenFlatBought;
+        StaticData.isRedWrenchBought = data.isRedWrenchBought;
+        StaticData.isBlueWrenchBought = data.isBlueWrenchBought;
+        StaticData.isGreenWrenchBought = data.isGreenWrenchBought;
         StaticData.equippedHammer = data.equippedHammer;
+        StaticData.equippedPhilipsScrewdriver = data.equippedPhilipsScrewdriver;
+        StaticData.equippedFlatScrewdriver = data.equippedFlatScrewdriver;
+        StaticData.equippedWrench = data.equippedWrench;
 
 
         Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
@@ -462,30 +474,23 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.valuestoChange = StaticData.valuestoChange;
         data.isOrderChecked = StaticData.isOrderChecked;
         data.orderReceived = StaticData.orderReceived;
-        data.isRustyHammerBought = StaticData.isRustyHammerBought;
+        data.isBlueHammerBought = StaticData.isBlueHammerBought;
         data.isGreenHammerBought = StaticData.isGreenHammerBought;
         data.isRedHammerBought = StaticData.isRedHammerBought;
+        data.isGreenPhilipsBought = StaticData.isGreenPhilipsBought;
+        data.isYellowPhilipsBought = StaticData.isYellowPhilipsBought;
+        data.isRedPhilipsBought = StaticData.isRedPhilipsBought;
+        data.isYellowFlatBought = StaticData.isYellowFlatBought;
+        data.isRedFlatBought = StaticData.isRedFlatBought;
+        data.isGreenFlatBought = StaticData.isGreenFlatBought;
+        data.isRedWrenchBought = StaticData.isRedWrenchBought;
+        data.isBlueWrenchBought = StaticData.isBlueWrenchBought;
+        data.isGreenWrenchBought = StaticData.isGreenWrenchBought;
+        data.equippedWrench = StaticData.equippedWrench;
         data.equippedHammer = StaticData.equippedHammer;
+        data.equippedPhilipsScrewdriver = StaticData.equippedPhilipsScrewdriver;
+        data.equippedFlatScrewdriver = StaticData.equippedFlatScrewdriver;
     }
-
-    /*
-    private IEnumerator UpdateOrdersOnboardPeriodically()
-    {
-        while (true)
-        {
-            UpdateOrdersOnboard();
-            yield return new WaitForSeconds(1f); // update every 1 second
-        }
-    }
-
-    public void UpdateOrdersOnboard()
-    {
-        if (ordersOnboard != null && om != null)
-        {
-            ordersOnboard.text = "" + om.activeOrders.Count;
-        }
-    }
-    */
 
 
     private List<int> GeneratePatternArray(int patternLen) //This is for tool

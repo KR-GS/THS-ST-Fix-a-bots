@@ -102,13 +102,37 @@ public class GameData
 
     public bool startOfDay;
 
-    public bool isRustyHammerBought;
+    public bool isBlueHammerBought = true;
 
-    public bool isGreenHammerBought;
+    public bool isGreenHammerBought = false;
 
-    public bool isRedHammerBought;
+    public bool isRedHammerBought = false;
 
-    public int equippedHammer;
+    public bool isGreenPhilipsBought = true;
+
+    public bool isYellowPhilipsBought = false;
+
+    public bool isRedPhilipsBought = false;
+
+    public bool isYellowFlatBought = true;
+
+    public bool isRedFlatBought = false;
+
+    public bool isGreenFlatBought = false;
+
+    public bool isRedWrenchBought = true;
+
+    public bool isBlueWrenchBought = false;
+
+    public bool isGreenWrenchBought = false;
+
+    public int equippedHammer = 0; // 0-3
+
+    public int equippedPhilipsScrewdriver = 4; // 4-7
+
+    public int equippedFlatScrewdriver = 8; // 8-11
+
+    public int equippedWrench = 12; // 12-15
 
     [Header("High Order Data")]
     public List<int> lives;
@@ -171,11 +195,23 @@ public class GameData
         this.isSchedulerRunning = false;
         this.valuestoChange = 0;
         this.didExit = true;
+        this.isBlueHammerBought = true;
         this.isGreenHammerBought = false;
         this.isRedHammerBought = false;
-        this.isRustyHammerBought = true;
-        this.equippedHammer = 0;
-    }
+        this.isGreenPhilipsBought = true;
+        this.isYellowPhilipsBought = false;
+        this.isRedPhilipsBought = false;
+        this.isYellowFlatBought = true;
+        this.isRedFlatBought = false;
+        this.isGreenFlatBought = false;
+        this.isRedWrenchBought = true;
+        this.isBlueWrenchBought = false;
+        this.isGreenWrenchBought = false;
+        this.equippedHammer = 0; // 0-3
+        this.equippedPhilipsScrewdriver = 4; // 4-7
+        this.equippedFlatScrewdriver = 8; // 8-11
+        this.equippedWrench = 12; // 12-15
+}
 
 
 }
