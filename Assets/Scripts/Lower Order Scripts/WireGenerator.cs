@@ -22,9 +22,6 @@ public class WireGenerator : MonoBehaviour
     private GameObject select_icon;
 
     [SerializeField]
-    private TextMeshProUGUI slider_Number;
-
-    [SerializeField]
     private Transform[] copper_Ends;
 
     [SerializeField]
@@ -54,8 +51,6 @@ public class WireGenerator : MonoBehaviour
         //createdWireChild[0].name = "0";
 
         select_icon.SetActive(false);
-
-        slider_Number.text = "1";
     }
 
     // Update is called once per frame
@@ -124,8 +119,6 @@ public class WireGenerator : MonoBehaviour
         }
         
         createdWireChild = new List<GameObject>(generalWireScript.ChangeWireValue(value, originalWire, wireParent));
-
-        slider_Number.text = ((int)value).ToString();
     }
 
     public void CheckColorNumber()
@@ -226,7 +219,7 @@ public class WireGenerator : MonoBehaviour
 
         //copper_R.transform.localPosition = new Vector2(4.36f, 0);
 
-        generalWireScript.ToggleGenerator();
+        generalWireScript.ReturnToRobot();
 
         //wireParent.transform.SetParent(new_wire.transform);
 

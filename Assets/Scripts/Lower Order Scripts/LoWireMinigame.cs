@@ -36,6 +36,12 @@ public class LoWireMinigame : MonoBehaviour
     private Canvas OverallUI;
 
     [SerializeField]
+    private Canvas GeneratorUI;
+
+    [SerializeField]
+    private Canvas RobotUI;
+
+    [SerializeField]
     private Transform sparks_vfx;
 
     [SerializeField]
@@ -46,6 +52,9 @@ public class LoWireMinigame : MonoBehaviour
 
     [SerializeField]
     private NotesManager notesManager;
+
+    [SerializeField]
+    private float speed = 5f;
 
     /*
     [SerializeField]
@@ -74,6 +83,9 @@ public class LoWireMinigame : MonoBehaviour
 
     private List<Transform> vfxList = new List<Transform>();
 
+    [SerializeField]
+    private Vector3 origPos_Robot;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -86,9 +98,11 @@ public class LoWireMinigame : MonoBehaviour
 
         Color btn_Yellow = wireGenerator.GetYellow();
 
-        generator.SetActive(true);
-
         ResultUI.enabled = false;
+
+        GeneratorUI.enabled = false;
+
+        origPos_Robot = robot_part.transform.position;
 
         Vector2 size = new Vector2(origWire.transform.lossyScale.x, origWire.transform.lossyScale.y);
         //num_patterns = patternManager.ReturnPatternArray(6).ToArray();
@@ -237,9 +251,9 @@ public class LoWireMinigame : MonoBehaviour
             }
         }
 
-        generator.SetActive(isOpen);
+        //generator.SetActive(isOpen);
 
-        robot_part.SetActive(!isOpen);
+        //robot_part.SetActive(!isOpen);
 
         sparks_vfx.gameObject.SetActive(false);
     }
@@ -284,21 +298,6 @@ public class LoWireMinigame : MonoBehaviour
 
                         wireToAdd = null;
                     }
-                    else if (item_dragged == 2)
-                    {
-                        Debug.Log(origPos_Pliers);
-                        Debug.Log(pliers.transform.position);
-
-                        if (pliers.GetComponent<WirePliers>().GetIsOnPart())
-                        {
-                            Debug.Log("Cutting part now");
-                            StartCoroutine(StartWireCutting());
-                        }
-                        else
-                        {
-                            pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
-                        }
-                    }
 
                     item_dragged = 0;
 
@@ -313,11 +312,6 @@ public class LoWireMinigame : MonoBehaviour
                     {
                         Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
                         wireToAdd.transform.position = new Vector2(touchPos.x, touchPos.y);
-                    }
-                    else if (item_dragged == 2)
-                    {
-                        Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-                        pliers.transform.position = new Vector2(touchPos.x, touchPos.y);
                     }
                 }
             }
@@ -428,21 +422,76 @@ public class LoWireMinigame : MonoBehaviour
         return generatedChildren;
     }
 
-    public void ToggleGenerator()
+    public void OpenGenerator()
     {
-        isOpen = !isOpen;
+        StartCoroutine(MoveToGenerator());
+    }
 
-        isDeleting = false;
+    private IEnumerator MoveToGenerator()
+    {
+        GameObject tempObj = new GameObject();
 
-        generator.SetActive(isOpen);
+        tempObj.transform.position = generator.transform.position;
 
-        robot_part.SetActive(!isOpen);
+        generator.transform.SetParent(tempObj.transform);
 
-        ValueUI.enabled = !isOpen;
+        robot_part.transform.SetParent(tempObj.transform);
 
-        OverallUI.enabled = !isOpen;
+        OverallUI.enabled = false;
 
+        RobotUI.enabled = false;
 
+        while (Vector2.Distance(tempObj.transform.position, origPos_Robot) > 0.01f)
+        {
+            tempObj.transform.position = Vector2.MoveTowards(tempObj.transform.position, origPos_Robot, speed * 3 * Time.deltaTime);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        //OverallUI.enabled = true;
+
+        GeneratorUI.enabled = true;
+
+        generator.transform.SetParent(null);
+
+        robot_part.transform.SetParent(null);
+    }
+
+    public void ReturnToRobot()
+    {
+        StartCoroutine(MoveToRobotPart());
+    }
+
+    private IEnumerator MoveToRobotPart()
+    {
+        GameObject tempObj = new GameObject();
+
+        tempObj.transform.position = robot_part.transform.position;
+
+        robot_part.transform.SetParent(tempObj.transform);
+
+        generator.transform.SetParent(tempObj.transform);
+
+        OverallUI.enabled = false;
+
+        GeneratorUI.enabled = false;
+
+        while (Vector2.Distance(tempObj.transform.position, origPos_Robot) > 0.01f)
+        {
+            tempObj.transform.position = Vector2.MoveTowards(tempObj.transform.position, origPos_Robot, speed * 3 * Time.deltaTime);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.5f); 
+
+        OverallUI.enabled = true;
+
+        RobotUI.enabled = true;
+
+        generator.transform.SetParent(null);
+
+        robot_part.transform.SetParent(null);
     }
 
     public void ToggleDelete()
