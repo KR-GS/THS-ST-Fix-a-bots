@@ -285,6 +285,32 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             block.canvasGroup.blocksRaycasts = true;
         }
 
+        if (HasRightConnection && rightConnectedBlock.blockType == BlockType.Sign)
+        {
+            FormulaBlock signBlock = rightConnectedBlock;
+
+            // Only if the sign doesn't already have a constant attached
+            if (!signBlock.HasRightConnection && signBlock.rightSnapSlot != null)
+            {
+                FormulaBlock nearestConstant = signBlock.FindNearestBlockWithFreeSnap();
+
+                if (nearestConstant != null && nearestConstant.blockType == BlockType.Constant)
+                {
+                    Debug.Log($"Auto-snapping constant {nearestConstant.blockText.text} to sign block {signBlock.blockText.text}");
+                    signBlock.TrySnapToNearestBlock(nearestConstant);
+                }
+            }
+        }
+        else
+        {
+            FormulaBlock nearestBlock = FindNearestBlockWithFreeSnap();
+
+            if (nearestBlock != null)
+            {
+                Debug.Log($"Trying to snap to nearest block: {nearestBlock.blockType} {nearestBlock.blockText.text}");
+                TrySnapToNearestBlock(nearestBlock);
+            }   
+        }
         // Try to snap the entire chain to a valid position
         EnsureChainInBounds();
     }
@@ -302,11 +328,89 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             // Snap to the slot
             ConnectToSlot(nearestSlot);
         }
+
+        FormulaBlock nearestBlock = FindNearestBlockWithFreeSnap();
+
+        if (nearestBlock != null)
+        {
+            Debug.Log($"Trying to snap to nearest block: {nearestBlock.blockType} {nearestBlock.blockText.text}");
+            TrySnapToNearestBlock(nearestBlock);
+        }
         else
         {
             EnsureBlockInReasonableContainer();
         }
     }
+
+    private FormulaBlock FindNearestBlockWithFreeSnap()
+    {
+        FormulaBlock[] allBlocks = FindObjectsOfType<FormulaBlock>();
+        FormulaBlock nearest = null;
+        float nearestDistance = float.MaxValue;
+        float maxSnapDistance = (blockType == BlockType.Sign) ? 150f : 150f;
+
+        foreach (FormulaBlock other in allBlocks)
+        {
+            if (other == this) continue;
+
+            Debug.Log($"Checking block {other.blockType} for snapping. " + other.blockText.text);
+
+            // Skip if already connected to this block or incompatible type
+            if (other.parentBlock == this || this.parentBlock == other) continue;
+
+            Debug.Log($"Checking block {other.blockType} for snapping. It is compatible");
+
+            // Skip if both are of types that cannot connect
+            if (!CanSnapWithBlock(other)) continue;
+
+            Debug.Log($"Checking block {other.blockType} for snapping. It can connect ");
+
+            float distance = Vector3.Distance(rectTransform.position, other.rectTransform.position);
+            if (distance < nearestDistance && distance < maxSnapDistance)
+            {
+                nearest = other;
+                nearestDistance = distance;
+            }
+        }
+
+        Debug.Log(nearest != null ? $"Nearest block found: {nearest.blockType} {nearest.blockText.text}" : "No nearest block found");
+        return nearest;
+    }
+
+    private bool CanSnapWithBlock(FormulaBlock other)
+    {
+        if (this.blockType == BlockType.Sign && other.blockType == BlockType.Variable)
+            return !other.HasRightConnection;
+        if (this.blockType == BlockType.Sign && other.blockType == BlockType.Constant)
+            return !this.HasRightConnection;
+        if (this.blockType == BlockType.Variable && other.blockType == BlockType.Coefficient)
+            return !this.HasLeftConnection;
+        if (this.blockType == BlockType.Variable && other.blockType == BlockType.Sign)
+            return !this.HasRightConnection;    
+        return false;
+    }
+
+    private void TrySnapToNearestBlock(FormulaBlock target)
+    {
+        // Check which side to snap to
+        if (this.blockType == BlockType.Variable && target.blockType == BlockType.Coefficient && this.leftSnapSlot != null)
+        {
+            target.ConnectToSlot(this.leftSnapSlot);
+        }
+        else if (this.blockType == BlockType.Variable && target.blockType == BlockType.Sign && this.rightSnapSlot != null)
+        {
+            target.ConnectToSlot(this.rightSnapSlot);
+        }
+        else if (this.blockType == BlockType.Sign && target.blockType == BlockType.Constant && this.rightSnapSlot != null)
+        {
+            target.ConnectToSlot(this.rightSnapSlot);
+        }
+        else if(this.blockType == BlockType.Sign && target.blockType == BlockType.Constant && target.rightSnapSlot != null)
+        {
+            target.ConnectToSlot(target.rightSnapSlot);
+        }
+    }
+
 
     private void EnsureBlockInReasonableContainer()
     {
@@ -325,12 +429,14 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         if (parentBlock.leftConnectedBlock == this)
         {
+            Debug.Log("Disconnecting from left block");
             parentBlock.leftConnectedBlock = null;
             if (parentBlock.leftSnapSlot != null)
                 parentBlock.leftSnapSlot.SetConnectedBlock(null);
         }
         else if (parentBlock.rightConnectedBlock == this)
         {
+            Debug.Log("Disconnecting from right block");
             parentBlock.rightConnectedBlock = null;
             if (parentBlock.rightSnapSlot != null)
                 parentBlock.rightSnapSlot.SetConnectedBlock(null);

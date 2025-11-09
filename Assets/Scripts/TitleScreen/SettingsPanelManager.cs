@@ -7,9 +7,9 @@ using UnityEngine.Localization.Settings;
 
 public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 {
-    private float[] speedValues = { 2f, 1.5f, 1f, 0.75f, 0.5f };
+    private float[] speedValues = { 2f, 1.5f, 1.2f, 1f, 0.75f };
 
-    private float hoSpeed = 1f;
+    private float hoSpeed = 1.2f;
 
     private int settingsState = 0;
 
@@ -389,13 +389,13 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
             case 1.5f:
                 higherOrderSpeed.Init("Adjustable Speed", new List<string> { "Slowest", "Slow", "Average", "Fast", "Fastest" }, 1);
                 break;
-            case 1.0f:
+            case 1.2f:
                 higherOrderSpeed.Init("Adjustable Speed", new List<string> { "Slowest", "Slow", "Average", "Fast", "Fastest" }, 2);
                 break;
-            case 0.75f:
+            case 0.1f:
                 higherOrderSpeed.Init("Adjustable Speed", new List<string> { "Slowest", "Slow", "Average", "Fast", "Fastest" }, 3);
                 break;
-            case 0.5f:
+            case 0.75f:
                 higherOrderSpeed.Init("Adjustable Speed", new List<string> { "Slowest", "Slow", "Average", "Fast", "Fastest" }, 4);
                 break;
                 

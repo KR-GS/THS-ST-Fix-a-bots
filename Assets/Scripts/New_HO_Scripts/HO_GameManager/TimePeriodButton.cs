@@ -6,8 +6,9 @@ public class TimePeriodButton : MonoBehaviour
 {
     private Vector3 originalPosition;
     private RectTransform rectTransform;
+    
     private TextMeshPro buttontext;
-    private float moveAmount = 15f;
+    private float moveAmount = 50f;
     private bool isInitialized = false;
     public int ButtonNumber;
     public bool isSelected = false;
@@ -52,6 +53,7 @@ public class TimePeriodButton : MonoBehaviour
     public void SetHighlighted(bool selected)
     {
         buttonImage.color = selected ? Color.yellow : Color.white;
+        transform.localScale = selected ? new Vector3(1.5f, 1.5f, 1) : new Vector3(1f, 1f, 1);
         /*if (isInitialized)
         {
             rectTransform.anchoredPosition = selected
@@ -83,7 +85,6 @@ public class TimePeriodButton : MonoBehaviour
     public void SetGreen()
     {
         buttonImage.color = Color.green;
-        Button.GetComponent<Image>().sprite = pressedSprite;
     }
 
     public void SetSelected(bool selected)
