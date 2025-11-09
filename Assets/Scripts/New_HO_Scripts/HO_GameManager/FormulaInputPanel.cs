@@ -211,7 +211,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             timeText.text = $"{Mathf.Round(StaticData.stageTime[StaticData.stageNum] * 100) / 100.0}s";
     }
 
-    private void ShowLinesForCoefficient(int startValue, int coef)
+    private void ShowLinesForCoefficient(int startValue, int coef, List<int> predictedSequence)
     {
         // Clear existing lines
         foreach (var line in activeLines)
@@ -236,10 +236,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         if (coef <= 1) return;
 
         List<int> linePositions = new List<int>();
+        List<int> horizontalPositions = new List<int>();
         int val = startValue;
 
         // Generate all vertical line positions 
-        while (val <= buttons.Count)
+        while (val <= predictedSequence[predictedSequence.Count - 1])
         {
             linePositions.Add(val);
             val += coef;
@@ -260,31 +261,32 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             lineRect.anchoredPosition = new Vector3(0, 40f, 0);
         }
 
-        // Draw smooth horizontal connectors between vertical lines
-        for (int i = 0; i < linePositions.Count - 1; i++)
+        //Generate horizontal line positions
+        for (int n = 0; n < linePositions.Count - 1; n++)
         {
-            int from = linePositions[i];
-            int to = linePositions[i + 1];
+            int from = linePositions[n];
+            int to = linePositions[n + 1];
 
-            TimePeriodButton startButton = buttons.Find(b => b.ButtonNumber == from);
-            TimePeriodButton endButton = buttons.Find(b => b.ButtonNumber == to);
-            if (startButton == null || endButton == null) continue;
+            // Add in-between positions for horizontal lines
+            for (int h = from + 1; h < to && h <= predictedSequence[predictedSequence.Count - 1]; h++)
+            {
+                horizontalPositions.Add(h);
+            }
+        }
 
-            // Create the horizontal connector
-            GameObject connector = Instantiate(horizontalLinePrefab, startButton.transform.parent);
-            activeLines.Add(connector);
+        //Draw Horizontal lines
+        foreach (int pos in horizontalPositions)
+        {
+            TimePeriodButton button = buttons.Find(b => b.ButtonNumber == pos);
+            if (button == null) continue;
 
-            RectTransform connectorRect = connector.GetComponent<RectTransform>();
-            connectorRect.SetAsLastSibling();
+            RectTransform btnRect = button.GetComponent<RectTransform>();
+            GameObject line = Instantiate(horizontalLinePrefab, btnRect);
+            activeLines.Add(line);
 
-            // Calculate midpoint and distance between buttons
-            Vector3 startPos = startButton.GetComponent<RectTransform>().anchoredPosition;
-            Vector3 endPos = endButton.GetComponent<RectTransform>().anchoredPosition;
-            Vector3 midPos = (startPos + endPos) / 2f;
-
-            // Set connector position and size
-            connectorRect.anchoredPosition = new Vector2(midPos.x, 60f);
-            connectorRect.sizeDelta = new Vector2(Mathf.Abs(endPos.x - startPos.x), connectorRect.sizeDelta.y);
+            RectTransform horizontalLineRect = line.GetComponent<RectTransform>();
+            horizontalLineRect.SetAsLastSibling();
+            horizontalLineRect.anchoredPosition = new Vector3(0, 60f, 0);
         }
     }
 
@@ -295,7 +297,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             foreach (var btn in buttons)
                 btn.SetHighlighted(false);
 
-            ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
+            ShowLinesForCoefficient(currentCoef + currentConst, currentCoef, null);
             return;
         }
 
@@ -314,7 +316,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 button.SetBlue();
         }
 
-        ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
+        ShowLinesForCoefficient(currentCoef + currentConst, currentCoef, predictedSequence);
     }
 
 
