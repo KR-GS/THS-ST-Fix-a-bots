@@ -253,7 +253,13 @@ public class SequenceGameManager : MonoBehaviour
     {
         GetData();
         sceneName= SceneManager.GetActiveScene().name;
-        Debug.Log("Current scene: "+ sceneName);
+        Debug.Log("Current scene: " + sceneName);
+        Debug.Log("Stage Number: " + stageNum);
+        Debug.Log("Number of stages done: " + StaticData.numStageDone);
+        if(StaticData.numStageDone <= stageNum)
+        {
+            Debug.Log("Stage Never Been done before, should have a new save");
+        }
         InitilizeStageData();
         InitializeStageUi();
         SetupButtons();
@@ -457,7 +463,7 @@ public class SequenceGameManager : MonoBehaviour
             statusAnimator.SetBool("IdleTrigger", true);
             soundEffectsManager.playIdleSound();
 
-            while (timer < cycleInterval && currentCycleIndex >= 0)
+            while (timer < StaticData.cycleInterval && currentCycleIndex >= 0)
             {
                 if (hasNotClicked)
                 {
@@ -467,6 +473,7 @@ public class SequenceGameManager : MonoBehaviour
                     {
                         Debug.Log("Swipe detected: " + swipeDir);
                         // Hide the swipe direction panel when user swipes
+                        isCycling = false;
                         swipeDirectionPanel.SetActive(false);
                         HandleUserSwipe(swipeDir, btnNumber, inSequence, timer);
                         hasNotClicked = false;
@@ -519,7 +526,7 @@ public class SequenceGameManager : MonoBehaviour
                             hasNotClicked = false;
                         }
                         // if the player misses, plays miss animation
-                        if (timer > cycleLeniency && !gotRight)
+                        if (timer > StaticData.cycleLeniency && !gotRight)
                         {
                             feedbackText.text = "You missed!";
                             statusAnimator.SetBool("AnticipateTrigger", false);
@@ -538,6 +545,8 @@ public class SequenceGameManager : MonoBehaviour
                             */
 
                             statusAnimator.SetBool("MissTrigger", true);
+                            buttons[currentCycleIndex].SetRed();
+                            buttons[currentCycleIndex].toggleWrong();
                             soundEffectsManager.playMissSound();
                             isCorrect = false;
                             currentSwipeIndex++;
@@ -612,7 +621,11 @@ public class SequenceGameManager : MonoBehaviour
         {
             btn.SetHighlighted(false);
             btn.SetHeight(false);
-            if(btn.GetWasSelected())
+            if(btn.GetWrong())
+            {
+                btn.SetRed();
+            }
+            if (btn.GetWasSelected())
             {
                 btn.SetGreen();
             }
@@ -689,6 +702,7 @@ public class SequenceGameManager : MonoBehaviour
 
     void HandleUserSwipe(string direction, int btnNumber, bool inSequence, float timer)
     {
+        Debug.Log("Swiped at " + timer + " seconds. Cycle Leniency: " + StaticData.cycleLeniency);
         string expected = expectedSwipeSequence[currentSwipeIndex];
         bool gotSwipeCorrect = false;
 
@@ -715,13 +729,13 @@ public class SequenceGameManager : MonoBehaviour
         }
 
         //Early swipes
-        else if (currentSequence.Numbers.Contains(currentCycleIndex) && timer >= cycleLeniency / 2 && gotSwipeCorrect)
+        else if (currentSequence.Numbers.Contains(buttons[currentCycleIndex].ButtonNumber + 1) && gotSwipeCorrect)
         {
-            buttons[currentCycleIndex].SetGreen();
-            buttons[currentCycleIndex].SetWasSelected(true);
-            pressedNumbers.Add(btnNumber);
-            buttons[currentCycleIndex].SetSelected(true);
-            feedbackText.text = $"Correct swipe {direction} for: {btnNumber}!";
+            buttons[currentCycleIndex + 1].SetGreen();
+            buttons[currentCycleIndex + 1].SetWasSelected(true);
+            pressedNumbers.Add(btnNumber + 1);
+            buttons[currentCycleIndex + 1].SetSelected(true);
+            feedbackText.text = $"Correct swipe {direction} for: {btnNumber + 1}!";
             currentSwipeIndex++;
             gotRight = true;
 
@@ -730,7 +744,8 @@ public class SequenceGameManager : MonoBehaviour
         //Swipe not in sequence
         else if (!inSequence)
         {
-            buttons[currentCycleIndex].SetHighlighted(true);
+            buttons[currentCycleIndex].SetRed();
+            buttons[currentCycleIndex].toggleWrong();
             feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
             statusAnimator.SetBool("IdleTrigger", false);
             statusAnimator.SetBool("WrongTrigger", true);
@@ -761,7 +776,8 @@ public class SequenceGameManager : MonoBehaviour
 
                     feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
                     statusAnimator.SetBool("IdleTrigger", false);
-                    
+                    statusAnimator.SetBool("AnticipateTrigger", false);
+
                     // Add different animations based on swipe direction
                     /*
                     if (expected == "Up" || expected == "Down")
@@ -776,8 +792,8 @@ public class SequenceGameManager : MonoBehaviour
 
                     statusAnimator.SetBool("HitTrigger", true);
                     soundEffectsManager.playHitSound();
+                    Debug.Log("SFX and animation should have played");
                     gotRight = true;
-
                     currentSwipeIndex++;
                 }
 
@@ -816,8 +832,10 @@ public class SequenceGameManager : MonoBehaviour
             }
 
         }
+        isCycling = true;
     }
 
+    /*
     void HandleUserTap(int btnNumber, bool inSequence, float timer)
     {
         
@@ -839,7 +857,7 @@ public class SequenceGameManager : MonoBehaviour
             soundEffectsManager.playHitSound();
             gotRight = true;
         }
-        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= cycleLeniency/2)
+        else if (currentSequence.Numbers.Contains(btnNumber + 1) && timer >= StaticData.cycleLeniency/2)
         {
             buttons[btnNumber].SetGreen();
             buttons[btnNumber].SetWasSelected(true);
@@ -865,6 +883,7 @@ public class SequenceGameManager : MonoBehaviour
             }
         }
     }
+    */
 
     bool CheckSequenceComplete()
     {
@@ -887,7 +906,10 @@ public class SequenceGameManager : MonoBehaviour
             buttons[i].SetHighlighted(false);
             buttons[i].SetSelected(false);
             buttons[i].SetWasSelected(false);
+            buttons[i].SetHeight(false);
             buttons[i].GetComponent<Image>().sprite = unpressedSprite;
+            if(buttons[i].GetWrong())
+                buttons[i].toggleWrong();
         }
         pressedNumbers.Clear();
 

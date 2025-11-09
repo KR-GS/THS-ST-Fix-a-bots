@@ -33,7 +33,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     public GameObject linePrefab, horizontalLinePrefab, yellowLinePrefab, continuePanel;
     public RectTransform buttonContainer;
     private List<GameObject> activeLines = new List<GameObject>();
-    public Button submitButton, continueButton;
+    public Button submitButton, continueButton, restartButton;
 
     [Header("Block System")]
     public BlockManager blockManager;
@@ -46,6 +46,14 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     [Header("Tutorial")]
     public FormulaInputTutorial formulaInputTutorial;
+
+    [Header("EndScreen Animator")]
+    public EndScreenAnimator endScreenAnimator;
+    public GameObject stageCompletePanel;
+    public GameObject livesTextObj, restartsTextObj, timeTextObj, livesTextHolder, restartsTextHolder, timeTextHolder;
+    public TMP_Text livesText, restartsText, timeText;
+    public GameObject star1, star2, star3;
+    public Sprite fullStarSprite, emptyStarSprite;
 
     private int i = 0;
     private Sequence targetSequence;
@@ -86,10 +94,34 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             });
         }
 
+        if (restartButton != null)
+        {
+            restartButton.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            });
+        }
+
         if (submitButton != null)
         {
             submitButton.onClick.AddListener(ValidateFormula);
         }
+    }
+
+    private void Update()
+    {   
+        FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
+        if (IsFormulaComplete(nBlock))
+        {
+            buttonsParent.SetActive(false);
+            buttonsParent2.SetActive(true);
+        }
+        else
+        {
+            buttonsParent2.SetActive(false);
+            buttonsParent.SetActive(true);
+        }
+
     }
 
     public void SetLockConstant(bool constant)
@@ -142,7 +174,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         }
 
         //if haven't done the stage before, just store everything
-        if (StaticData.numStageDone <= stageData.GetStageNum())
+        if (StaticData.numStageDone <= StaticData.stageNum)
         {
             Debug.Log("Storing stage data for the first time for stage " + stageData.GetStageNum());
             StaticData.stageTime[stageData.GetStageNum()] = stageData.GetElapsedTime();
@@ -150,10 +182,9 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             StaticData.stageRestarts[stageData.GetStageNum()] = stageData.GetNumRestarts();
             StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
             StaticData.stageStars[stageData.GetStageNum()] = numStars;
-            StaticData.numStageDone = stageData.GetStageNum() + 1;
+            StaticData.numStageDone = StaticData.stageNum + 1;
             Debug.Log("Num stage done " + StaticData.numStageDone);
         }
-        
         //else, check if it is better before storing
         else
         {
@@ -175,6 +206,9 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 StaticData.formulaAttempts[stageData.GetStageNum()] = stageStringAttempt;
             }
         }
+            livesText.text = $"{StaticData.stageLives[StaticData.stageNum]}";
+            restartsText.text = $"{StaticData.stageRestarts[StaticData.stageNum]}";
+            timeText.text = $"{Mathf.Round(StaticData.stageTime[StaticData.stageNum] * 100) / 100.0}s";
     }
 
     private void ShowLinesForCoefficient(int startValue, int coef)
@@ -184,19 +218,17 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             Destroy(line);
         activeLines.Clear();
 
+        // Draw initial constant lines
         for (i = 1; i <= currentConst; i++)
         {
-            if (i - 1 >= buttons.Count) break;
+            TimePeriodButton button = buttons.Find(b => b.ButtonNumber == i);
+            if (button == null) continue;
 
-            TimePeriodButton button = buttons[i - 1];
             RectTransform btnRect = button.GetComponent<RectTransform>();
-
-            // Create line
             GameObject line = Instantiate(yellowLinePrefab, btnRect);
             activeLines.Add(line);
 
             RectTransform lineRect = line.GetComponent<RectTransform>();
-
             lineRect.SetAsLastSibling();
             lineRect.anchoredPosition = new Vector3(0, 60f, 0);
         }
@@ -204,62 +236,55 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         if (coef <= 1) return;
 
         List<int> linePositions = new List<int>();
-        List<int> horizontalPositions = new List<int>();
         int val = startValue;
 
-        //getting the vert lines
+        // Generate all vertical line positions 
         while (val <= buttons.Count)
         {
             linePositions.Add(val);
             val += coef;
         }
 
-        val = startValue;
-
-        //getting the horizontal lines
-        while (val <= buttons.Count)
-        {
-            if (!linePositions.Contains(val) && val < linePositions[linePositions.Count - 1] && val > 0)
-            {
-                horizontalPositions.Add(val);
-            }
-            val++;
-        }
-
-        //spawning of vertical lines
+        //Draw vertical lines 
         foreach (int pos in linePositions)
         {
-            if (pos < 1 || pos > buttons.Count) continue;
+            TimePeriodButton button = buttons.Find(b => b.ButtonNumber == pos);
+            if (button == null) continue;
 
-            TimePeriodButton button = buttons[pos - 1];
             RectTransform btnRect = button.GetComponent<RectTransform>();
-
-            // Create line
             GameObject line = Instantiate(linePrefab, btnRect);
             activeLines.Add(line);
 
             RectTransform lineRect = line.GetComponent<RectTransform>();
-
             lineRect.SetAsLastSibling();
             lineRect.anchoredPosition = new Vector3(0, 40f, 0);
         }
 
-        //spawning of horizontal lines
-        foreach (int pos in horizontalPositions)
+        // Draw smooth horizontal connectors between vertical lines
+        for (int i = 0; i < linePositions.Count - 1; i++)
         {
-            if (pos < 1 || pos > buttons.Count || pos == 1) continue;
+            int from = linePositions[i];
+            int to = linePositions[i + 1];
 
-            TimePeriodButton button = buttons[pos - 1];
-            RectTransform btnRect = button.GetComponent<RectTransform>();
+            TimePeriodButton startButton = buttons.Find(b => b.ButtonNumber == from);
+            TimePeriodButton endButton = buttons.Find(b => b.ButtonNumber == to);
+            if (startButton == null || endButton == null) continue;
 
-            // Create line
-            GameObject line = Instantiate(horizontalLinePrefab, btnRect);
-            activeLines.Add(line);
+            // Create the horizontal connector
+            GameObject connector = Instantiate(horizontalLinePrefab, startButton.transform.parent);
+            activeLines.Add(connector);
 
-            RectTransform horizontalLineRect = line.GetComponent<RectTransform>();
+            RectTransform connectorRect = connector.GetComponent<RectTransform>();
+            connectorRect.SetAsLastSibling();
 
-            horizontalLineRect.SetAsLastSibling();
-            horizontalLineRect.anchoredPosition = new Vector3(0, 60f, 0);
+            // Calculate midpoint and distance between buttons
+            Vector3 startPos = startButton.GetComponent<RectTransform>().anchoredPosition;
+            Vector3 endPos = endButton.GetComponent<RectTransform>().anchoredPosition;
+            Vector3 midPos = (startPos + endPos) / 2f;
+
+            // Set connector position and size
+            connectorRect.anchoredPosition = new Vector2(midPos.x, 60f);
+            connectorRect.sizeDelta = new Vector2(Mathf.Abs(endPos.x - startPos.x), connectorRect.sizeDelta.y);
         }
     }
 
@@ -269,29 +294,29 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         {
             foreach (var btn in buttons)
                 btn.SetHighlighted(false);
-                
+
             ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
             return;
         }
 
-        
+        // Generate sequence numbers
+        List<int> predictedSequence = new Sequence(buttons.Count + currentConst, currentCoef, currentConst).Numbers;
 
-        List<int> predictedSequence = new Sequence(buttons.Count, currentCoef, currentConst).Numbers;
-
+        // Clear all highlights first
         foreach (var btn in buttons)
             btn.SetHighlighted(false);
 
-        //shows the coef 
+        // Highlight buttons whose ButtonNumber matches the generated sequence
         foreach (int num in predictedSequence)
         {
-            if (num >= 1 && num <= buttons.Count)
-            {
-                buttons[num - 1].SetBlue();
-            }
+            TimePeriodButton button = buttons.Find(b => b.ButtonNumber == num);
+            if (button != null)
+                button.SetBlue();
         }
 
         ShowLinesForCoefficient(currentCoef + currentConst, currentCoef);
     }
+
 
     public void ShowPanel(Sequence sequence, GameTimer gameTimer1, HOStageData sd, List<TimePeriodButton> btns)
     {
@@ -466,6 +491,21 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         {
             feedbackText.text = "Perfect! Both coefficient and constant are correct!";
 
+            if (nBlock != null)
+            {
+                nBlock.SetColor(Color.green);
+
+                if (nBlock.LeftConnectedBlock != null)
+                    nBlock.LeftConnectedBlock.SetColor(Color.green);
+
+                if (nBlock.RightConnectedBlock != null)
+                {
+                    nBlock.RightConnectedBlock.SetColor(Color.green);
+                    if (nBlock.RightConnectedBlock.RightConnectedBlock != null)
+                        nBlock.RightConnectedBlock.RightConnectedBlock.SetColor(Color.green);
+                }
+            }
+
             Debug.Log("Stage Formula Attempts = " + stageStringAttempt);
 
             if (StaticData.isRandomSequence[StaticData.stageNum])
@@ -476,13 +516,85 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
             {
                 gameTimer.StopTimer();
                 stageData.SetElapsedTime(gameTimer.GetElapsedTime());
+                Debug.Log("Saving Data");
                 StoreStageData();
                 DataPersistenceManager.Instance.SaveGame();
 
-                continuePanel.SetActive(true);
-                continuePanel.transform.SetAsLastSibling();
+                endScreenAnimator.gameObject.SetActive(true);
+                endScreenAnimator.transform.SetAsLastSibling();
+
+                StartCoroutine(LoadEndScreenAnimation());
+
+                //continuePanel.SetActive(true);
+                //continuePanel.transform.SetAsLastSibling();
             }
         }
+    }
+
+    private IEnumerator LoadEndScreenAnimation()
+    {
+        // Wait before showing the panel
+        yield return new WaitForSeconds(2f);
+
+        stageCompletePanel.SetActive(true);
+        stageCompletePanel.transform.SetAsLastSibling();
+
+        IEnumerator PopElement(GameObject obj, float popScale = 1.2f, float duration = 0.2f)
+        {
+            obj.SetActive(true);
+            obj.transform.localScale = Vector3.zero;
+
+            float timer = 0f;
+            while (timer < duration)
+            {
+                timer += Time.deltaTime;
+                float scale = Mathf.Lerp(0f, popScale, timer / duration);
+                obj.transform.localScale = Vector3.one * scale;
+                yield return null;
+            }
+
+            // Shrink slightly back to normal
+            timer = 0f;
+            while (timer < duration / 2f)
+            {
+                timer += Time.deltaTime;
+                float scale = Mathf.Lerp(popScale, 1f, timer / (duration / 2f));
+                obj.transform.localScale = Vector3.one * scale;
+                yield return null;
+            }
+
+            obj.transform.localScale = Vector3.one;
+        }
+
+        // Update stats
+        livesText.text = $"{StaticData.stageLives[StaticData.stageNum]}";
+        restartsText.text = $"{StaticData.stageRestarts[StaticData.stageNum]}";
+        timeText.text = $"{Mathf.Round(StaticData.stageTime[StaticData.stageNum] * 100) / 100.0}s";
+
+        // Pop in stats one by one
+        yield return StartCoroutine(PopElement(livesTextObj));
+        yield return StartCoroutine(PopElement(livesTextHolder));
+        
+        yield return StartCoroutine(PopElement(restartsTextObj));
+        yield return StartCoroutine(PopElement(restartsTextHolder));
+        
+        yield return StartCoroutine(PopElement(timeTextObj));
+        yield return StartCoroutine(PopElement(timeTextHolder));
+
+        // Update stars
+        int stars = StaticData.stageStars[StaticData.stageNum];
+        star1.GetComponent<Image>().sprite = stars >= 1 ? fullStarSprite : emptyStarSprite;
+        star2.GetComponent<Image>().sprite = stars >= 2 ? fullStarSprite : emptyStarSprite;
+        star3.GetComponent<Image>().sprite = stars >= 3 ? fullStarSprite : emptyStarSprite;
+
+        // Pop in stars one by one
+        yield return StartCoroutine(PopElement(star1));
+        yield return StartCoroutine(PopElement(star2));
+        yield return StartCoroutine(PopElement(star3));
+
+        yield return StartCoroutine(PopElement(restartButton.gameObject));
+        yield return StartCoroutine(PopElement(continueButton.gameObject));
+        
     }
 
     private bool IsFormulaComplete(FormulaBlock nBlock)

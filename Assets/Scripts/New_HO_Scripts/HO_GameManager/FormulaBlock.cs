@@ -285,7 +285,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             block.canvasGroup.blocksRaycasts = true;
         }
 
-        if (HasRightConnection && rightConnectedBlock.blockType == BlockType.Sign)
+        if (rightConnectedBlock.blockType == BlockType.Sign)
         {
             FormulaBlock signBlock = rightConnectedBlock;
 
@@ -301,16 +301,15 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 }
             }
         }
-        else
-        {
-            FormulaBlock nearestBlock = FindNearestBlockWithFreeSnap();
 
-            if (nearestBlock != null)
-            {
-                Debug.Log($"Trying to snap to nearest block: {nearestBlock.blockType} {nearestBlock.blockText.text}");
-                TrySnapToNearestBlock(nearestBlock);
-            }   
-        }
+        FormulaBlock nearestBlock = FindNearestBlockWithFreeSnap();
+
+        if (nearestBlock != null)
+        {
+            Debug.Log($"Trying to snap to nearest block: {nearestBlock.blockType} {nearestBlock.blockText.text}");
+            TrySnapToNearestBlock(nearestBlock);
+        }   
+        
         // Try to snap the entire chain to a valid position
         EnsureChainInBounds();
     }
@@ -503,6 +502,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         slot.SetConnectedBlock(this);
         
+        /*
         // Change color to indicate correct placement
         // TODO: Make this only work for certain stages so new StaticData var?
         if (FormulaInputPanel.Instance != null && StaticData.stageFormulaHint[StaticData.stageNum])
@@ -527,7 +527,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 if (value == Mathf.Abs(seq.Constant))
                     blockImage.color = BlockManager.variableColor;
             }
-        }
+        }*/
 
         // Notify the formula panel
         FormulaInputPanel.Instance?.OnBlockConnected(this, targetBlock, slot.GetPosition());
@@ -565,6 +565,12 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         if (rightConnectedBlock != null)
             rightConnectedBlock.CollectConnectedBlocks(blocks);
+    }
+
+    public void SetColor(Color newColor)
+    {
+        if (blockImage != null)
+            blockImage.color = newColor;
     }
 
     private void UpdateChainPositions()
