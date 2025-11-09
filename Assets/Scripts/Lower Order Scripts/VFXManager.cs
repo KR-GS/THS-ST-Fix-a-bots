@@ -34,4 +34,14 @@ public class VFXManager : MonoBehaviour
 
         return segments[side];
     }
+
+    public Vector2 GetPosition(int i)
+    {
+        return segments[i].transform.position;
+    }
+
+    public VfxSegment GetSegment(int i)
+    {
+        return segments[i];
+    }
 }

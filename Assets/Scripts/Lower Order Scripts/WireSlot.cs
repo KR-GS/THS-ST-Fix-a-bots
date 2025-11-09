@@ -21,7 +21,7 @@ public class WireSlot : MonoBehaviour
 
     void Start()
     {
-        wireVal_Text.text = slotValue.ToString();
+        wireVal_Text.SetText("{0:00}", slotValue);
 
         isOccupied = false;
     }
@@ -65,7 +65,7 @@ public class WireSlot : MonoBehaviour
 
     public void SetWireText()
     {
-        wireVal_Text.text = slotValue.ToString();
+        wireVal_Text.SetText("{0:00}", slotValue);
     }
     
     public bool CheckSlotStatus()

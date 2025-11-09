@@ -215,6 +215,10 @@ public class WireGenerator : MonoBehaviour
 
         copper_R.transform.SetParent(wireParent.transform);
 
+        copper_L.transform.localPosition = new Vector3(copper_L.transform.localPosition.x, -0.07f, copper_L.transform.localPosition.z);
+
+        copper_R.transform.localPosition = new Vector3(copper_R.transform.localPosition.x, -0.015f, copper_R.transform.localPosition.z);
+
         //copper_L.transform.localPosition = new Vector2(-4.36f, 0);
 
         //copper_R.transform.localPosition = new Vector2(4.36f, 0);

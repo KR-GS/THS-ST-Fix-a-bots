@@ -1,7 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class WirePliers : MonoBehaviour
 {
@@ -12,6 +12,9 @@ public class WirePliers : MonoBehaviour
     private VfxSegment partToCut;
 
     [SerializeField]
+    private List<Transform> positionsToCutAt = new List<Transform>();
+
+    [SerializeField]
     private float speed;
 
     private bool onPart = false;
@@ -20,12 +23,18 @@ public class WirePliers : MonoBehaviour
 
     private Vector3 origPos;
 
+    private int current_Index = 0;
+
     void Awake()
     {
         origPos = transform.position;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Update()
+    {
+        StartCoroutine(TriggerPlierAnimation());
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent(out VfxSegment segment))
@@ -50,6 +59,16 @@ public class WirePliers : MonoBehaviour
         return onPart;
     }
 
+    public void GetWiresToCut(Transform new_pos)
+    {
+        positionsToCutAt.Add(new_pos);
+    }
+
+    public void ClearWiresToCut()
+    {
+        positionsToCutAt.Clear();
+    }
+
     public VfxSegment GetSegment()
     {
         return partToCut;
@@ -71,59 +90,49 @@ public class WirePliers : MonoBehaviour
         partToCut = next_Segment;
     }
 
-    public void TriggerPlierMovement(bool cuttingPart, float speed_Inc)
+    public void TriggerPlierMovement(Vector3 position, int side)
     {
         Quaternion target_rot = Quaternion.Euler(0,0,0);
         Vector3 target = new Vector3(0, 0, 0);
 
-        if (cuttingPart)
-        {
-            target = partToCut.transform.position;
+        //target = partToCut.transform.position;
 
-            if (partToCut.GetSide() == 1)
-            {
-                target_rot = Quaternion.Euler(0, 0, -90);
-            }
-            else
-            {
-                target_rot = Quaternion.Euler(0, 0, 0);
-            }
+        if (partToCut.GetSide() == 1)
+        {
+            target_rot = Quaternion.Euler(0, 0, -90);
         }
         else
         {
-            target = origPos;
+            target_rot = Quaternion.Euler(0, 0, 0);
         }
 
-        transform.position = target;
+        transform.position = position;
 
         transform.rotation = target_rot;
 
-        /*
-        while (Vector3.Distance(transform.position, target) > 0.01f)
-        {
-            if (Vector3.Distance(transform.position, target) > 0.01f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, target, (speed * speed_Inc) * Time.deltaTime);
-            }
-
-            yield return null;
-        }
-
-        while(Quaternion.Angle(transform.rotation, target_rot) > 0.01f)
-        {
-            
-
-            if (Quaternion.Angle(transform.rotation, target_rot) > 0.01f)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, speed * Time.deltaTime);
-            }
-            
-            yield return null;
-        }
-        */
-
-
-
         Debug.Log("Movement Done!");
+    }
+
+    private IEnumerator TriggerPlierAnimation()
+    {
+        if(current_Index < positionsToCutAt.Count)
+        {
+            partToCut = positionsToCutAt[current_Index].GetComponent<VFXManager>().GetSegment(0);
+            TriggerPlierMovement(positionsToCutAt[current_Index].GetComponent<VFXManager>().GetPosition(0), 0);
+
+            yield return new WaitForSeconds(2f);
+
+            partToCut = positionsToCutAt[current_Index].GetComponent<VFXManager>().GetSegment(1);
+
+            TriggerPlierMovement(positionsToCutAt[current_Index].GetComponent<VFXManager>().GetPosition(1), 1);
+
+            yield return null;
+
+            current_Index++;
+        }
+        else
+        {
+            current_Index = 0;
+        }
     }
 }

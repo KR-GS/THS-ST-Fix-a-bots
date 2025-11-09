@@ -67,6 +67,7 @@ public class LoWireMinigame : MonoBehaviour
 
     private GameObject wireToAdd;
 
+    [SerializeField]
     private GameObject pliers;
 
     private bool isOpen = false;
@@ -75,7 +76,7 @@ public class LoWireMinigame : MonoBehaviour
 
     private int item_dragged = 0;
 
-    private Vector2 origPos_Pliers;
+    //private Vector2 origPos_Pliers;
 
     private bool onWireToCut;
 
@@ -101,8 +102,6 @@ public class LoWireMinigame : MonoBehaviour
         ResultUI.enabled = false;
 
         GeneratorUI.enabled = false;
-
-        origPos_Robot = robot_part.transform.position;
 
         Vector2 size = new Vector2(origWire.transform.lossyScale.x, origWire.transform.lossyScale.y);
         //num_patterns = patternManager.ReturnPatternArray(6).ToArray();
@@ -204,8 +203,12 @@ public class LoWireMinigame : MonoBehaviour
 
                 Transform copper_L = Instantiate(copper_Ends[0]);
                 Transform copper_R = Instantiate(copper_Ends[1]);
+
                 copper_L.transform.SetParent(newWire.transform);
                 copper_R.transform.SetParent(newWire.transform);
+
+                copper_L.transform.localPosition = new Vector3(copper_L.transform.localPosition.x, -0.07f, copper_L.transform.localPosition.z);
+                copper_R.transform.localPosition = new Vector3(copper_R.transform.localPosition.x, -0.015f, copper_R.transform.localPosition.z);
 
                 newWire.transform.position = wireSlots[i].transform.position;
                 newWire.transform.SetParent(wireSlots[i].transform.parent);
@@ -254,6 +257,8 @@ public class LoWireMinigame : MonoBehaviour
         //generator.SetActive(isOpen);
 
         //robot_part.SetActive(!isOpen);
+
+        origPos_Robot = robot_part.transform.position;
 
         sparks_vfx.gameObject.SetActive(false);
     }
@@ -368,7 +373,7 @@ public class LoWireMinigame : MonoBehaviour
                     pliers = plier.transform.gameObject;
                     isDragging = true;
                     item_dragged = 2;
-                    origPos_Pliers = plier.transform.position;
+                    //origPos_Pliers = plier.transform.position;
                 }
             }
         }
@@ -505,7 +510,7 @@ public class LoWireMinigame : MonoBehaviour
         int current_Side = pliers.GetComponent<WirePliers>().GetSegment().GetSide();
         //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
 
-        pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
+        //pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
 
         pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
 
@@ -517,13 +522,13 @@ public class LoWireMinigame : MonoBehaviour
 
         //pliers.transform.position = next_Side.transform.position;
 
-        //yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.05f);
 
         pliers.GetComponent<WirePliers>().SetSegment(next_Side);
 
         yield return new WaitForSeconds(0.5f);
 
-        pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
+        //pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
 
         pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
 
@@ -558,7 +563,7 @@ public class LoWireMinigame : MonoBehaviour
 
         //StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5));
 
-        pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5);
+        //pliers.GetComponent<WirePliers>().TriggerPlierMovement(false, 5);
 
         //pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
 
@@ -567,6 +572,7 @@ public class LoWireMinigame : MonoBehaviour
 
     public void CheckWire()
     {
+        GameObject pliers = Instantiate(this.pliers);
         int j = 0;
         foreach(int i in wireToEdit)
         {
@@ -598,6 +604,9 @@ public class LoWireMinigame : MonoBehaviour
                     {
                         child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
                     }
+
+                    pliers.GetComponent<WirePliers>().GetWiresToCut(vfxList[j]);
+
                     Debug.Log("Value is Wrong!");
 
                     StaticData.wireWrong += 1;
@@ -606,6 +615,11 @@ public class LoWireMinigame : MonoBehaviour
                     j++;
                 }
             }
+        }
+
+        if (j <= 0)
+        {
+            Destroy(pliers);
         }
     }
 }
