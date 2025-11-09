@@ -14,6 +14,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     [SerializeField] private RaycastInteractor ri;
     [SerializeField] private GameLoopManager glm;
     [SerializeField] private TimerScript ts;
+    [SerializeField] private WorkshopTutorial wt;
     [SerializeField] private float notificationDuration = 2f;
     private Button button;
     public Button nextdayButton;
@@ -125,6 +126,12 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 Debug.Log("Sending your next order!");
             }
         }
+
+        if(StaticData.isFirstWS == true)
+        {
+            wt.ResetTutorial();
+            //StaticData.isFirstWS = false;
+        }
     }
    
 
@@ -164,9 +171,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         
         if (level >= 1) // && level < 3
         {
-            newOrder.needsTool = true; //originally true, gonna QA
-            newOrder.needsPaint = true; //originally false, gonna QA
-            newOrder.needsWire = true; //originally false, gonna QA
+            newOrder.needsTool = Random.value < 0.5f; //originally true, gonna QA
+            newOrder.needsPaint = Random.value < 0.5f; //originally false, gonna QA
+            newOrder.needsWire = Random.value < 0.5f; //originally false, gonna QA
         }
 
         /*
@@ -485,7 +492,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             Debug.Log("All Orders Complete!");
             ts.StopTimer();
             ShowOrderCompletePanel();
-            ri.enabled = false;
+            
 
         }
 
@@ -524,12 +531,13 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         }
 
         orderCompletePanel.SetActive(true);
+        glm.prizeText.gameObject.SetActive(false);
         Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
 
         totalaccumulatedText.text = "+" + prize.ToString();
         initialBalanceText.text = (glm.money - prize).ToString();
         finalBalanceText.text = glm.money.ToString();
-
+        glm.tutorialButton.gameObject.SetActive(false);
         glm.dayNumber.gameObject.SetActive(false);
         glm.calendar.gameObject.SetActive(false);
         glm.shopButton.gameObject.SetActive(true);
@@ -569,7 +577,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         //completeText.gameObject.SetActive(false);
         glm.dayNumber.gameObject.SetActive(true);
         glm.calendar.gameObject.SetActive(true);
-        //glm.ordersOnboard.gameObject.SetActive(true);
+        glm.tutorialButton.gameObject.SetActive(true);
         glm.shopButton.gameObject.SetActive(false);
 
         DataPersistenceManager.Instance.SaveGame();

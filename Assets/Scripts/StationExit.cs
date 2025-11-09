@@ -12,6 +12,8 @@ public class StationExit : MonoBehaviour
 
     public bool debugWire = false;
 
+    [SerializeField] StationTimeManager getTime;
+
     public void ExitStation(){
         Order currentOrder = StaticData.currentOrder;
         if (currentOrder != null)
@@ -25,32 +27,38 @@ public class StationExit : MonoBehaviour
                     if (StaticData.isToolDone)
                     {
                         Debug.Log("Tool task completed, marking toolDone = true");
+                        StaticData.timeSpent = getTime.GetStationTime();
                     }
                     else
                     {
                         Debug.LogWarning("Tool task not completed yet!");
-                        
+                        StaticData.timeSpent = getTime.GetStationTime();
+
                     }
                     break;
                 case StationType.Paint:
                     if (StaticData.isPaintDone)
                     {
                         Debug.Log("Paint task completed, marking paintDone = true");
+                        StaticData.timeSpent = getTime.GetStationTime();
                     }
                     else
                     {
                         Debug.LogWarning("Paint task not completed yet!");
-                       
+                        StaticData.timeSpent = getTime.GetStationTime();
+
                     }
                     break;
                 case StationType.Wire:
                     if(StaticData.isWireDone)
                     {  
                         Debug.Log("Wire task completed, marking wireDone = true");
+                        StaticData.timeSpent = getTime.GetStationTime();
                     }
                     else
                     {
                         Debug.LogWarning("Wire task not completed yet!");
+                        StaticData.timeSpent = getTime.GetStationTime();
                     }
                     break;
             }

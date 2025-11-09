@@ -147,6 +147,8 @@ public class GameData
 
     public int stageDone;
 
+    public bool isFirstWS;
+
     public GameData()
     {
         this.level = 1;
@@ -207,10 +209,11 @@ public class GameData
         this.isRedWrenchBought = true;
         this.isBlueWrenchBought = false;
         this.isGreenWrenchBought = false;
-        this.equippedHammer = 0; // 0-3
-        this.equippedPhilipsScrewdriver = 4; // 4-7
-        this.equippedFlatScrewdriver = 8; // 8-11
-        this.equippedWrench = 12; // 12-15
+        this.equippedHammer = 0; // 0-2
+        this.equippedPhilipsScrewdriver = 3; // 3-5
+        this.equippedFlatScrewdriver = 6; // 6-8
+        this.equippedWrench = 9; // 9-11
+        this.isFirstWS = true;
 }
 
 

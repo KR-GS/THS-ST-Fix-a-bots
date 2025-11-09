@@ -14,7 +14,7 @@ using System.Drawing;
 public class GameLoopManager : MonoBehaviour, IDataPersistence
 {
     //Pause Button and Panel
-    [SerializeField] private Button pauseButton;
+    public Button pauseButton;
     [SerializeField] private Button backButton;
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button exitButton;
@@ -86,6 +86,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     public int wireScore;
 
     public SoundEffectsManager soundEffectsManager;
+
+    public Button tutorialButton;
 
     public void ToggleShow()
     {
@@ -186,8 +188,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
             dayNumber.gameObject.SetActive(true);
             calendar.gameObject.SetActive(true);
+            tutorialButton.gameObject.SetActive(true);
 
             Debug.Log("[LOOK HERE] Pending orders count: " + om.pendingOrders.Count);
+
+            ts.timeLft -= StaticData.timeSpent;
+            ts.UpdateTimerDisp();
+            StaticData.timeSpent = 0;
 
 
             StartCoroutine(UpdateStationsNextFrame());
@@ -200,6 +207,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             ri.readyIndicator.gameObject.SetActive(false);
             ri.readyText.gameObject.SetActive(false);
             ShowTV(false);
+            tutorialButton.gameObject.SetActive(false);
             if (ts != null && ts.timer != null)
             {
                 ts.timer.gameObject.SetActive(false); // hide
@@ -357,7 +365,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.equippedPhilipsScrewdriver = data.equippedPhilipsScrewdriver;
         StaticData.equippedFlatScrewdriver = data.equippedFlatScrewdriver;
         StaticData.equippedWrench = data.equippedWrench;
-
+        StaticData.isFirstWS = data.isFirstWS;
 
         Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
 
@@ -490,6 +498,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.equippedHammer = StaticData.equippedHammer;
         data.equippedPhilipsScrewdriver = StaticData.equippedPhilipsScrewdriver;
         data.equippedFlatScrewdriver = StaticData.equippedFlatScrewdriver;
+        data.isFirstWS = StaticData.isFirstWS;
     }
 
 
@@ -1218,6 +1227,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (calendar != null) calendar.gameObject.SetActive(false);
         ri.readyIndicator.gameObject.SetActive(false);
         ri.readyText.gameObject.SetActive(false);
+        tutorialButton.gameObject.SetActive(false);
         ShowTV(false);
         if (ts != null && ts.timer != null)
         {
@@ -1226,7 +1236,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
         if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
         if (ri.PaintIndicator != null) ri.PaintIndicator.gameObject.SetActive(false);
-        if (shopButton != null) shopButton.gameObject.SetActive(false);
         if (pauseButton != null) pauseButton.gameObject.SetActive(false);
     }
 
@@ -1292,7 +1301,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         dayNumber.gameObject.SetActive(true);
         calendar.gameObject.SetActive(true);
         ShowTV(true);
-        shopButton.gameObject.SetActive(true);
+        tutorialButton.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(true);
     }
     public void CompleteLevel()

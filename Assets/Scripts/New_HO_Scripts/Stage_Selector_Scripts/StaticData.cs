@@ -90,6 +90,8 @@ public class StaticData
     public static bool isFirstWire;
     public static bool isFirstHO;
 
+    public static float timeSpent;
+
 
     // SHOP EQUIPPING FLAGS
     public static bool isBlueHammerBought = true;

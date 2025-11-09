@@ -212,10 +212,50 @@ public class LoToolMinigame : MonoBehaviour
                 break;
         }
 
+        
         foreach (FastenerBtn fastener in fastenerList)
         {
-            fastener.SetSpriteVariant(1);
+            if (fastenerList[0])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedHammer);
+            }
+            else if (fastenerList[1])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedPhilipsScrewdriver - 3);
+            }
+            else if (fastenerList[2])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedFlatScrewdriver - 6);
+            }
+            else if (fastenerList[3])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedWrench - 9);
+            }
         }
+
+        /*
+        if (fastenerList[0])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedHammer);
+            }
+            else if (fastenerList[1])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedPhilipsScrewdriver);
+            }
+            else if (fastenerList[2])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedFlatScrewdriver);
+            }
+            else if (fastenerList[3])
+            {
+                fastener.SetSpriteVariant(StaticData.equippedWrench);
+            }
+
+        fastenerList[1].SetSpriteVariant(StaticData.equippedHammer + 1);
+        fastenerList[2].SetSpriteVariant(StaticData.equippedPhilipsScrewdriver + 1);
+        fastenerList[3].SetSpriteVariant(StaticData.equippedFlatScrewdriver + 1);
+        fastenerList[4].SetSpriteVariant(StaticData.equippedWrench + 1);
+        */
 
         currentInt = 0;
 
@@ -820,14 +860,19 @@ public class LoToolMinigame : MonoBehaviour
 
         if(value == 0)
         {
-            if(StaticData.equippedHammer == 0)
-            {
-                currentTool.GetComponent<Tool>().SetToolLook(1);
-            }
-            else if(StaticData.equippedHammer == 1)
-            {
-                currentTool.GetComponent<Tool>().SetToolLook(2);
-            }
+            currentTool.GetComponent<Tool>().SetToolLook(StaticData.equippedHammer);
+        }
+        else if(value == 1)
+        {
+            currentTool.GetComponent<Tool>().SetToolLook(StaticData.equippedPhilipsScrewdriver);
+        }
+        else if(value == 2)
+        {
+            currentTool.GetComponent<Tool>().SetToolLook(StaticData.equippedFlatScrewdriver);
+        }
+        else if(value == 3)
+        {
+            currentTool.GetComponent<Tool>().SetToolLook(StaticData.equippedPhilipsScrewdriver);
         }
 
         currentTool.transform.localPosition = holder.GetChild(0).localPosition;

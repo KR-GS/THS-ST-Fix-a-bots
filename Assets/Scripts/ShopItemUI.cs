@@ -74,8 +74,8 @@ public class ShopItemUI : MonoBehaviour
         switch (itemID)
         {
             case 0: return StaticData.isBlueHammerBought;
-            case 1: return StaticData.isGreenHammerBought;
-            case 2: return StaticData.isRedHammerBought;
+            case 1: return StaticData.isRedHammerBought;
+            case 2: return StaticData.isGreenHammerBought;
 
             case 3: return StaticData.isGreenPhilipsBought;
             case 4: return StaticData.isYellowPhilipsBought;
@@ -100,8 +100,8 @@ public class ShopItemUI : MonoBehaviour
         {
 
             case 0: StaticData.isBlueHammerBought = value; break;
-            case 1: StaticData.isGreenHammerBought = value; break;
-            case 2: StaticData.isRedHammerBought = value; break;
+            case 1: StaticData.isRedHammerBought = value; break;
+            case 2: StaticData.isGreenHammerBought = value; break;
 
             case 3: StaticData.isGreenPhilipsBought = value; break;
             case 4: StaticData.isYellowPhilipsBought = value; break;
@@ -145,7 +145,7 @@ public class ShopItemUI : MonoBehaviour
             case ItemCategory.Hammer:
                 return StaticData.equippedHammer == item.itemID;
             case ItemCategory.PhilipsScrewdriver:
-                return StaticData.equippedPhilipsScrewdriver == item.itemID;
+                return StaticData.equippedPhilipsScrewdriver == item.itemID ;
             case ItemCategory.FlatScrewdriver:
                 return StaticData.equippedFlatScrewdriver == item.itemID;
             case ItemCategory.Wrench:

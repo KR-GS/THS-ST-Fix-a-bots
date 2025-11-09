@@ -770,6 +770,7 @@ MonoBehaviour:
   debugTool: 0
   debugPaint: 0
   debugWire: 0
+  getTime: {fileID: 707493501}
 --- !u!1 &423445674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,6 +1007,7 @@ MonoBehaviour:
   debugTool: 0
   debugPaint: 0
   debugWire: 0
+  getTime: {fileID: 0}
 --- !u!114 &434349867
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,22 +10,23 @@ public class WorkshopTutorial : MonoBehaviour
     [SerializeField] private GameLoopManager glm;
     [SerializeField] private OrderManager om;
     [SerializeField] private RaycastInteractor ri;
+    [SerializeField] private TimerScript ts;
     public TextMeshProUGUI tutorialText;
     public Button nextButton;
     public Button backButton;
     public Button closeButton;
     private int currentPage = 0;
-    private int maxPages = 13;
+    private int maxPages = 8;
     public Sprite TVSpriteNoOrder;
     public Sprite TVSpriteIP;
     public Sprite TVSpriteNO;
-    public Image tutorialBot;
     public Image tutorialPointer;
-    public Image tutorialSpeechBubble;
     public Image TVDemo;
+    public Image PATTSprite;
+    public Image SpeechBubble;
     public Image toDolistDemo;
-    public Image demoStation;
     public Image demoIndicator;
+    public Image demoStation;
     public Image tutorialLights;
 
     private bool wasRaycastingEnabled = true;
@@ -59,6 +60,8 @@ public class WorkshopTutorial : MonoBehaviour
         TVDemo.gameObject.SetActive(false);
         toDolistDemo.gameObject.SetActive(false);
         demoIndicator.gameObject.SetActive(false);
+        glm.calendar.gameObject.SetActive(false);
+        glm.dayNumber.gameObject.SetActive(false);
 
 
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
@@ -66,223 +69,149 @@ public class WorkshopTutorial : MonoBehaviour
             switch (index)
             {
                 case 0:
-                    tutorialText.text = "You are interacting with the workshop at the moment!";
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(18, 6);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-435, 151);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-655, 271);
+                    tutorialText.text = "Welcome to your workshop! Let me tour you around!";
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-258, 42);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-586, -16);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(-18, -5);
                     backButton.gameObject.SetActive(false);
                     closeButton.gameObject.SetActive(false);
                     tutorialPointer.gameObject.SetActive(false);
                     demoStation.gameObject.SetActive(true);
-                    demoStation.rectTransform.anchoredPosition = new Vector2(104, 55);
+                    glm.calendar.gameObject.SetActive(false);
+                    glm.dayNumber.gameObject.SetActive(false);
                     break;
                 case 1:
-                    tutorialText.text = "The coin icon shows how much money you have earned by completing tasks!";
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(301, 261);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-134, 380);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-359, 501);
+                    tutorialText.text = "The calendar here shows how many days since you've first opened right here!";
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-358, 265);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-726, 207);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(-158, 218);
                     tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-962, 388);
+                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-707, 475);
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    //glm.remainingOrders.gameObject.SetActive(false);
+                    glm.calendar.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
                     break;
 
                 case 2:
-                    tutorialText.text = "Remaining orders show how many orders you have left before ending the level.";
+                    tutorialText.text = "Now this shows how much time you have left on the day.";
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-358, 265);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-726, 207);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(-158, 218);
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(301, 261);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-134, 380);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-359, 501);
                     tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-962, 304);
-                    //glm.remainingOrders.gameObject.SetActive(true);
-                    //glm.ordersOnboard.gameObject.SetActive(false);
+                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(41, 437);
+                    glm.calendar.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
+                    TVDemo.gameObject.SetActive(false);
 
                     break;
                 case 3:
-                    tutorialText.text = "Active orders show how many orders you have that are in progress.";
+                    tutorialText.text = "Tap on the T.V. over here to check for any orders you may have.";
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-209, 8);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-537, -50);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(31, -39);
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
+                    tutorialPointer.gameObject.SetActive(false);
                     closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(140, 6);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-309, 151);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-521, 271);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-962, 210);
-                    //glm.ordersOnboard.gameObject.SetActive(true);
-                    glm.dayNumber.gameObject.SetActive(false);
-                    break;
-                case 4:
-                    tutorialText.text = "This shows which level / day you are currently at right now.";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(140, 6);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-309, 151);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-521, 271);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-274, 416);
-                    RaycastInteractor.Instance.timeText.gameObject.SetActive(false);
+                    glm.calendar.gameObject.SetActive(true);
                     glm.dayNumber.gameObject.SetActive(true);
-                    break;
-                case 5:
-                    tutorialText.text = "This shows how much time left to receive full payment when finishing orders. Working late will half the amount received!";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(140, -88);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-309, 55);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-521, 171);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-157, 334);
                     ri.timeText.gameObject.SetActive(true);
-                    TVDemo.gameObject.SetActive(false);
-                    break;
-                case 6:
-                    tutorialText.text = "This is the TV. You get orders here and check its contents.";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -297);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, -142);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-225, -27);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-186, 131);
                     TVDemo.gameObject.SetActive(true);
                     TVDemo.sprite = TVSpriteNoOrder;
-
-
+                    break;
+                case 4:
+                    tutorialText.text = "Check it when it lights up for any new orders from customers!";
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-209, 8);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-537, -50);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(31, -39);
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+                    glm.calendar.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
+                    toDolistDemo.gameObject.SetActive(false);
+                    TVDemo.gameObject.SetActive(true);
+                    demoStation.gameObject.SetActive(true);
+                    TVDemo.sprite = TVSpriteNO;
+                    break;
+                case 5:
+                    tutorialText.text = "The order form here shows what jobs need to be done. Take note of the pictures on the right.";
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-317, -55);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-645, -113);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(-77, -102);
+                    toDolistDemo.gameObject.SetActive(true);
+                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(607, 116);
+                    glm.calendar.gameObject.SetActive(false);
+                    glm.dayNumber.gameObject.SetActive(false);
+                    ri.timeText.gameObject.SetActive(false);
+                    TVDemo.gameObject.SetActive(false);
+                    demoStation.gameObject.SetActive(false);
+                    demoIndicator.gameObject.SetActive(false);
+                    break;
+                case 6:
+                    tutorialText.text = "They appear on the stations the bots need fixing at!";
+                    toDolistDemo.gameObject.SetActive(false);
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-317, -266);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-645, -324);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(-77, -313);
+                    nextButton.gameObject.SetActive(true);
+                    backButton.gameObject.SetActive(true);
+                    closeButton.gameObject.SetActive(false);
+                    tutorialPointer.gameObject.SetActive(false);
+                    TVDemo.gameObject.SetActive(true);
+                    demoStation.gameObject.SetActive(true);
+                    demoIndicator.gameObject.SetActive(true);
+                    TVDemo.sprite = TVSpriteIP;
+                    glm.calendar.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
                     break;
 
                 case 7:
-                    tutorialText.text = "The TV screen you are seeing right now is blank. It shows that there is no order at the moment...";
+                    tutorialText.text = "Look down! Once all jobs are done, you will get paid based on your speed.";
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-258, 42);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-586, -16);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(-18, -5);
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -297);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, -142);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-225, -27);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-186, 131);
+                    glm.calendar.gameObject.SetActive(true);
+                    glm.dayNumber.gameObject.SetActive(true);
+                    ri.timeText.gameObject.SetActive(true);
+                    glm.prizeText.gameObject.SetActive(true);
+                    demoIndicator.gameObject.SetActive(false);
+                    glm.prizeText.text = "You earned +50 for finishing on time!";
+                    tutorialPointer.gameObject.SetActive(false);
                     TVDemo.gameObject.SetActive(true);
                     TVDemo.sprite = TVSpriteNoOrder;
                     break;
 
                 case 8:
-                    tutorialText.text = "This TV screen shows you have a new order! A new order will be set if there are no active orders.";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -297);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, -142);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-225, -27);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-186, 131);
-                    TVDemo.gameObject.SetActive(true);
-                    TVDemo.sprite = TVSpriteNO;
-                    break;
-                case 9:
-                    tutorialText.text = "This TV screen shows you have an order in progress. You can check your current orders here.";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -297);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, -142);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-225, -27);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-186, 131);
-                    TVDemo.gameObject.SetActive(true);
-                    TVDemo.sprite = TVSpriteIP;
-                    break;
-
-                case 10:
-                    tutorialText.text = "When clicking the TV, you will be directed to the order sheet to check its contents.";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-
-                    //glm.remainingOrders.gameObject.SetActive(true);
-                    //glm.ordersOnboard.gameObject.SetActive(true);
-                    glm.dayNumber.gameObject.SetActive(true);
-                    ri.timeText.gameObject.SetActive(true);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -297);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, -142);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-225, -27);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-205, 222);
-                    tutorialPointer.transform.rotation = Quaternion.Euler(0, 0, 180);
-                    TVDemo.gameObject.SetActive(true);
-                    toDolistDemo.gameObject.SetActive(false);
-                    demoStation.gameObject.SetActive(true);
-                    TVDemo.sprite = TVSpriteIP;
-                    break;
-                case 11:
-                    tutorialText.text = "The To-Do List shows what tasks you will be doing to complete the order. As the day progresses, you will encounter new tasks too!";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-
-                    //glm.remainingOrders.gameObject.SetActive(false);
-                    //glm.ordersOnboard.gameObject.SetActive(false);
-                    glm.dayNumber.gameObject.SetActive(false);
-                    ri.timeText.gameObject.SetActive(false);
-                    TVDemo.gameObject.SetActive(false);
-                    demoStation.gameObject.SetActive(false);
-                    toDolistDemo.gameObject.SetActive(true);
-                    demoIndicator.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(424, -134);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, 25);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-225, 143);
-                    tutorialPointer.transform.rotation = Quaternion.Euler(0, 0, 90);
-                    tutorialPointer.gameObject.SetActive(true);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(-186, -335);
-
-                    break;
-                case 12:
-                    tutorialText.text = "After checking out the order sheet, a floating indicator will appear showing which task you will have to do to complete the order.";
-                    nextButton.gameObject.SetActive(true);
-                    backButton.gameObject.SetActive(true);
-                    closeButton.gameObject.SetActive(false);
-
-                    //glm.remainingOrders.gameObject.SetActive(true);
-                    //glm.ordersOnboard.gameObject.SetActive(true);
-                    glm.dayNumber.gameObject.SetActive(true);
-                    ri.timeText.gameObject.SetActive(true);
-                    TVDemo.gameObject.SetActive(true);
-                    toDolistDemo.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(438, -423);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-5, -258);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-225, -136);
-                    tutorialPointer.transform.rotation = Quaternion.Euler(0, 0, 180);
-                    tutorialPointer.gameObject.SetActive(false);
-                    tutorialPointer.rectTransform.anchoredPosition = new Vector2(89, -121);
-                    demoStation.gameObject.SetActive(true);
-                    demoIndicator.gameObject.SetActive(true);
-                    demoIndicator.rectTransform.anchoredPosition = new Vector2(98, 92);
-
-                    break; ;
-                case 13:
-                    tutorialText.text = "This is the end of the tutorial. Feel free to click on me if you feel lost again!";
+                    tutorialText.text = "That’s the tour! If you feel lost, don’t hesitate to ask me!";
+                    tutorialText.rectTransform.anchoredPosition = new Vector2(-258, 42);
+                    PATTSprite.rectTransform.anchoredPosition = new Vector2(-586, -16);
+                    SpeechBubble.rectTransform.anchoredPosition = new Vector2(-18, -5);
                     nextButton.gameObject.SetActive(false);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(true);
-
-                    //glm.remainingOrders.gameObject.SetActive(false);
-                    //glm.ordersOnboard.gameObject.SetActive(false);
-                    glm.dayNumber.gameObject.SetActive(false);
-                    ri.timeText.gameObject.SetActive(false);
-                    demoStation.gameObject.SetActive(true);
-                    TVDemo.gameObject.SetActive(false);
-                    toDolistDemo.gameObject.SetActive(false);
                     tutorialPointer.gameObject.SetActive(false);
-                    demoIndicator.gameObject.SetActive(false);
-                    tutorialBot.rectTransform.anchoredPosition = new Vector2(18, 6);
-                    tutorialSpeechBubble.rectTransform.anchoredPosition = new Vector2(-435, 151);
-                    tutorialText.rectTransform.anchoredPosition = new Vector2(-655, 271);
+                    glm.calendar.gameObject.SetActive(false);
+                    glm.dayNumber.gameObject.SetActive(false);
+                    glm.prizeText.gameObject.SetActive(false);
+                    ri.timeText.gameObject.SetActive(false);
+                    //tutorialPointer.rectTransform.anchoredPosition = new Vector2(-186, 131);
+                    TVDemo.gameObject.SetActive(true);
                     break;
             }
         }
@@ -294,8 +223,8 @@ public class WorkshopTutorial : MonoBehaviour
         if (RaycastInteractor.Instance != null)
         {
             // Store current state before disabling
-            wasRaycastingEnabled = RaycastInteractor.Instance.enabled;
-            RaycastInteractor.Instance.enabled = false;
+            wasRaycastingEnabled = ri.enabled;
+            ri.enabled = false;
             Debug.Log("Raycasting disabled for tutorial");
         }
     }
@@ -304,7 +233,7 @@ public class WorkshopTutorial : MonoBehaviour
     {
         if (RaycastInteractor.Instance != null)
         {
-            RaycastInteractor.Instance.enabled = true;
+            ri.enabled = true;
             Debug.Log("Raycasting re-enabled after tutorial");
         }
     }
@@ -329,28 +258,27 @@ public class WorkshopTutorial : MonoBehaviour
         tutorialLights.gameObject.SetActive(true);
 
         glm.ShowTV(false);
+        
+        glm.pauseButton.gameObject.SetActive(false);
 
         glm.dayNumber.gameObject.SetActive(false);
-        //glm.tutorialButton.gameObject.SetActive(false);
-        //glm.remainingOrders.gameObject.SetActive(false);
-        //glm.ordersOnboard.gameObject.SetActive(false);
-        //glm.shopButton.gameObject.SetActive(false);
 
-        if (RaycastInteractor.Instance.ToolIndicator != null) RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(false);
-        if (RaycastInteractor.Instance.WireIndicator != null) RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(false);
-        if (RaycastInteractor.Instance.PaintIndicator != null) RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(false);
+        if (ri.ToolIndicator != null) ri.ToolIndicator.gameObject.SetActive(false);
+        if (ri.WireIndicator != null) ri.WireIndicator.gameObject.SetActive(false);
+        if (ri.PaintIndicator != null) ri.PaintIndicator.gameObject.SetActive(false);
 
-        RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-        RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+        ri.readyIndicator.gameObject.SetActive(false);
+        ri.readyText.gameObject.SetActive(false);
 
-        //RaycastInteractor.Instance.tutorialIndicator.gameObject.SetActive(false);
-        //RaycastInteractor.Instance.pointTutorial.gameObject.SetActive(false);
+        //ri.tutorialIndicator.gameObject.SetActive(false);
+        //ri.pointTutorial.gameObject.SetActive(false);
 
-        if (RaycastInteractor.Instance.timeText != null)
+        if (ri.timeText != null)
         {
             ri.timeText.gameObject.SetActive(false); // Hide the time text
         }
 
+        ts.StopTimer();
         //TimerScript.instance.StopTimer();
 
         tutorialObject.SetActive(true);
@@ -367,112 +295,84 @@ public class WorkshopTutorial : MonoBehaviour
 
         EnableRaycasting();
 
-        /*
-        if (StaticData.newGame)
+        glm.pauseButton.gameObject.SetActive(true);
+
+        if (StaticData.isFirstWS == true)
         {
-            StaticData.newGame = false;
+            StaticData.isFirstWS = false;
         }
-
-        TimerScript.instance.StartTimer();
-        */
-
 
         if (SceneManager.GetActiveScene().name == "LO_WS2D")
         {
-            //completeText.gameObject.SetActive(false);
-            glm.dayNumber.gameObject.SetActive(true);
-            //glm.tutorialButton.gameObject.SetActive(true);
-            //glm.remainingOrders.gameObject.SetActive(true);
-            //glm.ordersOnboard.gameObject.SetActive(true);
-            //glm.shopButton.gameObject.SetActive(true);
-            glm.ShowTV(true);
-            RaycastInteractor.Instance.TVSprite.gameObject.SetActive(true);
-
-            /*
-            if (StaticData.TVScreen == 0)
-            {
-                RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNoOrder;
-            }
-            else if (StaticData.TVScreen == 1)
-            {
-                RaycastInteractor.Instance.TVSprite.sprite = TVSpriteNO;
-            }
-            else if (StaticData.TVScreen == 2)
-            {
-                RaycastInteractor.Instance.TVSprite.sprite = TVSpriteIP;
-            }
-            */
+            glm.ShowWorkshopElements();
 
             Order savedOrder = om.GetActiveOrder();
+
+            if (ri.timeText != null)
+            {
+                ri.timeText.gameObject.SetActive(true); // Hide the time text
+            }
 
             if (StaticData.startOfDay == true)
             {
                 Debug.Log("Aiya, debugging is sad!");
-                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(true);
-                RaycastInteractor.Instance.readyText.gameObject.SetActive(true);
-                //TimerScript.instance.StopTimer();
+                ri.readyIndicator.gameObject.SetActive(true);
+                ri.readyText.gameObject.SetActive(true);
             }
             else if (StaticData.startOfDay == false)
             {
                 Debug.Log("Ayo, will this work?");
-                RaycastInteractor.Instance.readyIndicator.gameObject.SetActive(false);
-                RaycastInteractor.Instance.readyText.gameObject.SetActive(false);
+                ri.readyIndicator.gameObject.SetActive(false);
+                ri.readyText.gameObject.SetActive(false);
+                ts.StartTimer();
             }
 
+            ri.isOrderChecked = StaticData.isOrderChecked;
+            Debug.Log("isOrderChecked status: " + ri.isOrderChecked);
 
-            if (RaycastInteractor.Instance.timeText != null)
+            if (!ri.isOrderChecked && savedOrder != null)
             {
-                RaycastInteractor.Instance.timeText.gameObject.SetActive(true); // Hide the time text
-            }
-
-
-            RaycastInteractor.Instance.isOrderChecked = StaticData.isOrderChecked;
-            Debug.Log("isOrderChecked status: " + RaycastInteractor.Instance.isOrderChecked);
-
-            if (!RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
-            {
-
                 Debug.Log("Setting indicators active...");
 
                 if (savedOrder.needsTool)
                 {
-                    RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+                    ri.ToolIndicator.gameObject.SetActive(true);
                     Debug.Log("ToolIndicator enabled");
                 }
                 if (savedOrder.needsWire)
                 {
-                    RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+                    ri.WireIndicator.gameObject.SetActive(true);
                     Debug.Log("WireIndicator enabled");
                 }
                 if (savedOrder.needsPaint)
                 {
-                    RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+                    ri.PaintIndicator.gameObject.SetActive(true);
                     Debug.Log("PaintIndicator enabled");
                 }
 
-                RaycastInteractor.Instance.isOrderChecked = true;
+                ri.isOrderChecked = true;
                 StaticData.isOrderChecked = true;
             }
-            else if (RaycastInteractor.Instance.isOrderChecked && savedOrder != null)
+            else if (ri.isOrderChecked && savedOrder != null)
             {
                 Debug.Log("Order is checked, returning old indicators...");
 
                 if (savedOrder.needsTool && !StaticData.isToolDone)
                 {
-                    RaycastInteractor.Instance.ToolIndicator.gameObject.SetActive(true);
+                    ri.ToolIndicator.gameObject.SetActive(true);
                 }
                 if (savedOrder.needsPaint && !StaticData.isPaintDone)
                 {
-                    RaycastInteractor.Instance.PaintIndicator.gameObject.SetActive(true);
+                    ri.PaintIndicator.gameObject.SetActive(true);
                 }
                 if (savedOrder.needsWire && !StaticData.isWireDone)
                 {
-                    RaycastInteractor.Instance.WireIndicator.gameObject.SetActive(true);
+                    ri.WireIndicator.gameObject.SetActive(true);
                 }
             }
             else
             {
-                Debug.Log($"Indicators not set. isOrderChecked={RaycastInteractor.Instance.isOrderChecked}, currentOrder={savedOrder}");
+                Debug.Log($"Indicators not set. isOrderChecked={ri.isOrderChecked}, currentOrder={savedOrder}");
             }
         }
 
