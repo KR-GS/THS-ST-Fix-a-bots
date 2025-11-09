@@ -13,6 +13,8 @@ public class TimePeriodButton : MonoBehaviour
     public int ButtonNumber;
     public bool isSelected = false;
 
+    public bool isWrong = false;
+
     public bool isPreSelected = false;
 
     public bool wasSelected = false;
@@ -75,6 +77,16 @@ public class TimePeriodButton : MonoBehaviour
     public void SetRed()
     {
         buttonImage.color = Color.red;
+    }
+
+    public void toggleWrong()
+    {
+        isWrong = !isWrong;
+    }
+
+    public bool GetWrong()
+    {
+        return isWrong;
     }
 
     public void SetBlue()

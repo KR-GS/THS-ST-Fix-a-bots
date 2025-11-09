@@ -302,6 +302,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 
         data.stageSpeed = hoSpeed;
         StaticData.cycleInterval = hoSpeed;
+        StaticData.cycleLeniency = hoSpeed - hoSpeed / 4;
         data.language = selectedLanguage;
     }
 
@@ -392,7 +393,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
             case 1.2f:
                 higherOrderSpeed.Init("Adjustable Speed", new List<string> { "Slowest", "Slow", "Average", "Fast", "Fastest" }, 2);
                 break;
-            case 0.1f:
+            case 1f:
                 higherOrderSpeed.Init("Adjustable Speed", new List<string> { "Slowest", "Slow", "Average", "Fast", "Fastest" }, 3);
                 break;
             case 0.75f:

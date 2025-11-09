@@ -216,12 +216,11 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    // TODO: Add stars
     void ShowStageInfo(int stageNum)
     {
         selectedStageNum = stageNum;
 
-        if (stageNum == StaticData.stageLives.Count)
+        if (stageNum == StaticData.numStageDone)
         {
             livesText.text = "N/A";
             restartsText.text = "N/A";
