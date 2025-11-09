@@ -337,6 +337,8 @@ public class LoPaintMinigame : MonoBehaviour
                 else
                 {
                     draggableObject = Instantiate(sticker.transform.gameObject);
+
+                    draggableObject.layer = LayerMask.NameToLayer("Default");
                     draggableObject.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(position).x, Camera.main.ScreenToWorldPoint(position).y, -0.1f);
                     draggableObject.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
                     draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();

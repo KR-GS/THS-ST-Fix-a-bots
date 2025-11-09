@@ -73,6 +73,7 @@ public class RobotPaintPart : MonoBehaviour
                 sticker.GetComponent<Sticker>().ToggleIsDefault();
                 sticker.GetComponent<Sticker>().SetDefaultPos(newPos);
                 sticker.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                sticker.layer = LayerMask.NameToLayer("Default");
             }
         }
     }

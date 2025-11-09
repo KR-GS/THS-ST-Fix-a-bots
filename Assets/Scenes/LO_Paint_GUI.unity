@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 109613891}
   - component: {fileID: 109613892}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -784,7 +784,7 @@ GameObject:
   - component: {fileID: 423445675}
   - component: {fileID: 423445679}
   - component: {fileID: 423445680}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1294,7 +1294,7 @@ GameObject:
   - component: {fileID: 657200563}
   - component: {fileID: 657200562}
   - component: {fileID: 657200566}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Blue_Bandaid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1472,7 +1472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 658213504}
   - component: {fileID: 658213503}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1562,7 +1562,7 @@ GameObject:
   - component: {fileID: 704184086}
   - component: {fileID: 704184085}
   - component: {fileID: 704184084}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Pink_Floppydisk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1843,10 +1843,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2010073713}
-  - {fileID: 1146391402}
-  - {fileID: 1573300320}
   - {fileID: 1252829214}
+  - {fileID: 1146391402}
   - {fileID: 1512401031}
+  - {fileID: 1573300320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &787303914
@@ -1994,7 +1994,7 @@ GameObject:
   - component: {fileID: 846016934}
   - component: {fileID: 846016938}
   - component: {fileID: 846016939}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2171,7 +2171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 853190495}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticker Pack 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2325,7 +2325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1122348090}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticker Pack 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2485,7 +2485,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.80715, y: 7.830067}
   m_EdgeRadius: 0
 --- !u!114 &1146391405
 MonoBehaviour:
@@ -3446,7 +3446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1668039857}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticker Pack 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3841,7 +3841,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1964811731}
   - component: {fileID: 1964811732}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4050,7 +4050,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 115
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 6b273e4456649cd438fba833270f4a3c, type: 2}
   m_TargetDisplay: 0
@@ -4195,7 +4195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2025314841}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticker Pack 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4497,7 +4497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2126178464}
   - component: {fileID: 2126178465}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Sticket Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
