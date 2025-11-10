@@ -25,6 +25,10 @@ public class WirePliers : MonoBehaviour
 
     private int current_Index = 0;
 
+    private bool isPlaying = false;
+
+    private bool isCutting = false;
+
     void Awake()
     {
         origPos = transform.position;
@@ -32,9 +36,16 @@ public class WirePliers : MonoBehaviour
 
     void Update()
     {
-        StartCoroutine(TriggerPlierAnimation());
+        if (!isCutting)
+        {
+            if (!isPlaying)
+            {
+                StartCoroutine(TriggerPlierAnimation());
+            }
+        }
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent(out VfxSegment segment))
@@ -44,7 +55,7 @@ public class WirePliers : MonoBehaviour
             onPart = true;
         }
     }
-
+    
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out VfxSegment segment))
@@ -52,6 +63,20 @@ public class WirePliers : MonoBehaviour
             partToCut = null;
             onPart = false;
         }
+    }
+    */
+
+    public void DisableCutting()
+    {
+        isCutting = true;
+        plier_animator.SetBool("IsWaiting", false);
+    }
+
+    public void EnableCutting()
+    {
+        isCutting = false;
+
+        plier_animator.SetBool("IsWaiting", true);
     }
 
     public bool GetIsOnPart()
@@ -90,6 +115,23 @@ public class WirePliers : MonoBehaviour
         partToCut = next_Segment;
     }
 
+    public void RemoveCurrentVFX()
+    {
+        positionsToCutAt.RemoveAt(current_Index);
+    }
+
+    public bool CheckList()
+    {
+        if (positionsToCutAt.Count > 0)
+        {
+            current_Index = 0;
+
+            return true;
+        } 
+
+        return false;
+    }
+
     public void TriggerPlierMovement(Vector3 position, int side)
     {
         Quaternion target_rot = Quaternion.Euler(0,0,0);
@@ -115,24 +157,36 @@ public class WirePliers : MonoBehaviour
 
     private IEnumerator TriggerPlierAnimation()
     {
-        if(current_Index < positionsToCutAt.Count)
+        isPlaying = true;
+        if (current_Index < positionsToCutAt.Count)
         {
-            partToCut = positionsToCutAt[current_Index].GetComponent<VFXManager>().GetSegment(0);
-            TriggerPlierMovement(positionsToCutAt[current_Index].GetComponent<VFXManager>().GetPosition(0), 0);
+            VfxSegment[] segments = positionsToCutAt[current_Index].GetComponent<VFXManager>().GetSegment();
 
-            yield return new WaitForSeconds(2f);
+            Debug.Log(segments.Length);
+            partToCut = segments[0];
+            TriggerPlierMovement(segments[0].transform.position, 0);
 
-            partToCut = positionsToCutAt[current_Index].GetComponent<VFXManager>().GetSegment(1);
+            yield return new WaitForSeconds(3f);
 
-            TriggerPlierMovement(positionsToCutAt[current_Index].GetComponent<VFXManager>().GetPosition(1), 1);
+            //partToCut = positionsToCutAt[current_Index].GetComponent<VFXManager>().GetSegment(1);
+            partToCut = segments[1];
 
-            yield return null;
+            TriggerPlierMovement(segments[1].transform.position, 1);
+
+            yield return new WaitForSeconds(3f);
 
             current_Index++;
+
+            if (current_Index >= positionsToCutAt.Count)
+            {
+                current_Index = 0;
+            }
+
+            
         }
-        else
-        {
-            current_Index = 0;
-        }
+
+        //yield return new WaitForSeconds(3f);
+
+        isPlaying = false;
     }
 }

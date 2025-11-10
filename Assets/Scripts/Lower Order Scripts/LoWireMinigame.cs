@@ -367,14 +367,7 @@ public class LoWireMinigame : MonoBehaviour
             }
             else if (rayHit.transform.gameObject.TryGetComponent(out WirePliers plier))
             {
-                if (!isDragging)
-                {
-                    Debug.Log("Using the pliers");
-                    pliers = plier.transform.gameObject;
-                    isDragging = true;
-                    item_dragged = 2;
-                    //origPos_Pliers = plier.transform.position;
-                }
+                StartCoroutine(StartWireCutting(plier));
             }
         }
     }
@@ -504,19 +497,26 @@ public class LoWireMinigame : MonoBehaviour
         isDeleting = !isDeleting;
     }
 
-    private IEnumerator StartWireCutting()
+    private IEnumerator StartWireCutting(WirePliers wirePliers)
     {
-        Transform currentSegment = pliers.GetComponent<WirePliers>().GetSegment().transform.parent;
-        int current_Side = pliers.GetComponent<WirePliers>().GetSegment().GetSide();
+        Transform currentSegment = wirePliers.GetSegment().transform.parent;
+        int current_Side = wirePliers.GetSegment().GetSide();
+        Vector3 current_Pos = wirePliers.GetSegment().transform.position;
         //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
 
-        //pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
+        wirePliers.DisableCutting();
 
-        pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
+        yield return null;
+
+        wirePliers.GetComponent<BoxCollider2D>().enabled = false;
+
+        wirePliers.TriggerPlierMovement(current_Pos, current_Side);
+
+        wirePliers.TriggerCuttingAnim();
 
         yield return new WaitForSeconds(1f);
 
-        pliers.GetComponent<WirePliers>().StopParticleEmission();
+        wirePliers.StopParticleEmission();
 
         VfxSegment next_Side = currentSegment.GetComponent<VFXManager>().GetOppositeSide(current_Side);
 
@@ -524,17 +524,21 @@ public class LoWireMinigame : MonoBehaviour
 
         yield return new WaitForSeconds(0.05f);
 
-        pliers.GetComponent<WirePliers>().SetSegment(next_Side);
+        wirePliers.SetSegment(next_Side);
 
         yield return new WaitForSeconds(0.5f);
 
-        //pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5);
+        current_Pos = wirePliers.GetSegment().transform.position;
 
-        pliers.GetComponent<WirePliers>().TriggerCuttingAnim();
+        current_Side = wirePliers.GetSegment().GetSide();
+
+        wirePliers.TriggerPlierMovement(current_Pos, current_Side);
+
+        wirePliers.TriggerCuttingAnim();
 
         yield return new WaitForSeconds(1f);
 
-        pliers.GetComponent<WirePliers>().StopParticleEmission();
+        wirePliers.StopParticleEmission();
 
         //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
 
@@ -567,7 +571,22 @@ public class LoWireMinigame : MonoBehaviour
 
         //pliers.transform.position = new Vector2(origPos_Pliers.x, origPos_Pliers.y);
 
-        pliers = null;
+        wirePliers.RemoveCurrentVFX();
+
+        bool currentStatus = wirePliers.CheckList();
+
+        if (wirePliers.CheckList())
+        {
+            wirePliers.GetComponent<BoxCollider2D>().enabled = true;
+
+            yield return new WaitForEndOfFrame();
+
+            wirePliers.EnableCutting();
+        }
+        else
+        {
+            Destroy(wirePliers.gameObject);
+        }
     }
 
     public void CheckWire()

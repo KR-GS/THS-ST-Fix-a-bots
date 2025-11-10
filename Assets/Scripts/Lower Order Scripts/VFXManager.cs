@@ -40,8 +40,8 @@ public class VFXManager : MonoBehaviour
         return segments[i].transform.position;
     }
 
-    public VfxSegment GetSegment(int i)
+    public VfxSegment[] GetSegment()
     {
-        return segments[i];
+        return segments;
     }
 }
