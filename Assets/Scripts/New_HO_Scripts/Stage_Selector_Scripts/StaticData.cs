@@ -63,6 +63,7 @@ public class StaticData
 
     public static List<int> playerToolPattern;
     public static List<int> playerPaintPattern;
+    public static List<int> playerPaint2Pattern;
     public static List<int> playerWirePattern;
 
     public static List<Order> orderList = new List<Order>();
