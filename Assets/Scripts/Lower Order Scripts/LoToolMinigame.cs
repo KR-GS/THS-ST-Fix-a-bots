@@ -411,6 +411,7 @@ public class LoToolMinigame : MonoBehaviour
                     Instantiate(randMissing_Prefab, tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
                 }
 
+                tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(0f);
 
                 Debug.Log("Adding Missing Fastener");
             }
@@ -655,6 +656,11 @@ public class LoToolMinigame : MonoBehaviour
                     }
                 }
 
+                foreach(GameObject part in tiledParts)
+                {
+                    part.GetComponent<PartTile>().SetFastenerSize(true);
+                }
+
                 ToggleOverviewCounters(false);
                 ToggleGapHolder(false);
 
@@ -829,7 +835,11 @@ public class LoToolMinigame : MonoBehaviour
 
             Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
 
-            holder.GetChild(0).localPosition = new Vector2(0, 0);
+            //tiledParts[currentInt].GetComponent<PartTile>().SetDefaultSize(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite().transform.localScale);
+
+            //holder.GetChild(0).localPosition = new Vector2(0, 0);
+
+            tiledParts[currentInt].GetComponent<PartTile>().SetFastenerPosition(0f);
 
             numberToDisplay[currentInt] = 0;
             foreach (Transform child in fastenerObj[currentInt].transform)
@@ -907,6 +917,8 @@ public class LoToolMinigame : MonoBehaviour
         foreach (GameObject part in tiledParts)
         {
             part.layer = LayerMask.NameToLayer("Default");
+
+            part.GetComponent<PartTile>().SetFastenerSize(false);
         }
 
         ToggleOverviewCounters(true);

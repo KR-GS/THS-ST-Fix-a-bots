@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PartTile : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PartTile : MonoBehaviour
     private float speed;
 
     private bool isRight = false;
+
+    private Vector3 default_size;
 
     public Vector2 GetSpriteSize()
     {
@@ -30,6 +33,8 @@ public class PartTile : MonoBehaviour
 
         fastenerHolder.GetChild(0).localPosition = position;
 
+        default_size = fastenerHolder.GetChild(0).localScale;
+
         /*
         while (Vector3.Distance(fastenerHolder.GetChild(0).localPosition, position)>0.01)
         {
@@ -37,6 +42,24 @@ public class PartTile : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         */
+    }
+
+    public void SetDefaultSize(Vector3 size)
+    {
+        default_size = size;
+    }
+
+
+    public void SetFastenerSize(bool zoomed)
+    {
+        if (zoomed)
+        {
+            fastenerHolder.GetChild(0).localScale = default_size;
+        }
+        else
+        {
+            fastenerHolder.GetChild(0).localScale = new Vector3(default_size.x + 0.5f, default_size.y + 0.5f, default_size.z + 0.5f);
+        }
     }
 
     public void SetIsWrong(bool value)
