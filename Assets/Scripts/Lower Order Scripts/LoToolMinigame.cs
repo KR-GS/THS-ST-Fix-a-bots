@@ -37,6 +37,9 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [SerializeField]
+    private Button hint_btn;
+
     private GameObject[] counterHolder;
     private GameObject[] gapHolder;
     private List<int> generatedList = new List<int>();
@@ -167,6 +170,7 @@ public class LoToolMinigame : MonoBehaviour
                 slotToFix = 1;
                 //isFix = true;
                 Debug.Log("Fixing in easy!");
+                hint_btn.gameObject.SetActive(false);
                 break;
             case 1:
                 Debug.Log("Fixing in medium!");
@@ -191,6 +195,8 @@ public class LoToolMinigame : MonoBehaviour
 
                 slotToFix = Random.Range(1, 2);
 
+                hint_btn.gameObject.SetActive(true);
+
                 break;
             case 2:
                 /*
@@ -205,6 +211,8 @@ public class LoToolMinigame : MonoBehaviour
                 //slotToFix = StaticData.missingVals;
                 isFix = true;
                 Debug.Log("Filling");
+
+                hint_btn.gameObject.SetActive(false);
 
                 break;
             default:
@@ -448,7 +456,27 @@ public class LoToolMinigame : MonoBehaviour
             gapHolder[i].transform.position = position;
 
             gapHolder[i].GetComponent<GapHolder>().SetGapVal(gapToDisplay[i], originalGaps[i]);
+
+            switch (StaticData.toolDifficulty)
+            {
+                case 0:
+                    Debug.Log("Showing gap counters");
+                    gapHolder[i].GetComponent<GapHolder>().ShowText();
+                    break;
+                case 1:
+                    gapHolder[i].GetComponent<GapHolder>().HideText();
+                    break;
+                case 2:
+                    Debug.Log("Hiding gap counters");
+                    gapHolder[i].GetComponent<GapHolder>().HideText();
+                    break;
+                default:
+                    gapHolder[i].GetComponent<GapHolder>().ShowText();
+                    break;
+            }
         }
+
+        
 
         robotPart.transform.position = new Vector2(toolTilingManager.TileMidPoint(), tiledParts[0].transform.position.y);
 
@@ -1309,5 +1337,35 @@ public class LoToolMinigame : MonoBehaviour
         }
 
         yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
+    }
+
+    public void ShowHints()
+    {
+        StartCoroutine(ToggleGapView());
+    }
+
+    private IEnumerator ToggleGapView()
+    {
+        hint_btn.GetComponent<Hint>().ChangeSpriteOpen();
+
+        foreach (GameObject gap in gapHolder)
+        {
+            gap.GetComponent<GapHolder>().ShowText();
+        }
+
+        yield return new WaitForSeconds(5f);
+
+        foreach (GameObject gap in gapHolder)
+        {
+            gap.GetComponent<GapHolder>().HideText();
+        }
+
+        hint_btn.interactable = false;
+
+        yield return new WaitForSeconds(15f);
+
+        hint_btn.interactable = true;
+
+        hint_btn.GetComponent<Hint>().ChangeSpriteClose();
     }
 }
