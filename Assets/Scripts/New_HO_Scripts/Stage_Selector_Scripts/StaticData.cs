@@ -392,13 +392,13 @@ public class StaticData
         hintSeen = new List<bool>()
         {
             //SCENARIO 1
-            true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+            true, true, true, false, false, false, false, false, false, false, false, false, false, false, false,
 
             //SCENARIO 2
-            true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
+            true, true, true, false, false, false, false, false, false, false, false, false, false, false, false,
 
             //SCENARIO 3
-            true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
+            true, true, true, false, false, false, false, false, false, false, false, false, false, false, false,
         };
     }
 

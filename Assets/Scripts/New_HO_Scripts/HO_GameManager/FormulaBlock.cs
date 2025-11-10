@@ -504,33 +504,6 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
 
         slot.SetConnectedBlock(this);
-        
-        /*
-        // Change color to indicate correct placement
-        // TODO: Make this only work for certain stages so new StaticData var?
-        if (FormulaInputPanel.Instance != null && StaticData.stageFormulaHint[StaticData.stageNum])
-        {
-            var seq = FormulaInputPanel.Instance.GetTargetSequence(); // get the correct target
-            if (slot.GetPosition() == SnapPosition.Left && blockType == BlockType.Coefficient)
-            {
-                // Check if coefficient matches
-                if (value == seq.Coefficient)
-                    blockImage.color = BlockManager.variableColor;
-            }
-            else if (slot.GetPosition() == SnapPosition.Right && blockType == BlockType.Sign)
-            {
-                // For sign, check if this symbol is the correct one
-                string expectedSymbol = seq.Constant >= 0 ? "+" : "-";
-                if (symbol == expectedSymbol)
-                    blockImage.color = BlockManager.variableColor;
-            }
-            else if (slot.GetPosition() == SnapPosition.Right && blockType == BlockType.Constant)
-            {
-                // Check if constant matches
-                if (value == Mathf.Abs(seq.Constant))
-                    blockImage.color = BlockManager.variableColor;
-            }
-        }*/
 
         // Notify the formula panel
         FormulaInputPanel.Instance?.OnBlockConnected(this, targetBlock, slot.GetPosition());

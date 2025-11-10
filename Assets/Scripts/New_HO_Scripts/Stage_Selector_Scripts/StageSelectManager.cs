@@ -38,10 +38,6 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     public Image[] starObjects;
     public Sprite fullStarSprite;
     public Sprite emptyStarSprite;
-
-    private string[] speedLabels = { "Slowest", "Slow", "Average", "Fast", "Fastest" };
-    private float[] speedValues = { 2f, 1.5f, 1f, 0.75f, 0.5f };
-    private int currentSpeedIndex = 2;
     private float confirmedSpeed = 1f;
 
     private int currentLevelMap = 0;

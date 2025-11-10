@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEditor.Overlays;
 using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
 {
@@ -141,6 +142,18 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
         StartCoroutine(CycleButtons());
     }
 
+    public void ResetAnims()
+    {
+        statusAnimator.SetBool("Early_Trigger", false);
+        statusAnimator.SetBool("Anticipate_Hori_Trigger", false);
+        statusAnimator.SetBool("Hit_Hori_Trigger", false);
+        statusAnimator.SetBool("Anticipate_Vert_Trigger", false);
+        statusAnimator.SetBool("Hit_Vert_Trigger", false);
+        statusAnimator.SetBool("Wrong_Trigger", false);
+        statusAnimator.SetBool("Idle_Trigger", false);
+    }
+
+    // Main loop for the cycling
     IEnumerator CycleButtons()
     {
         while (true)
@@ -156,11 +169,6 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             if (currentCycleIndex == 0)
             {
                 currentSwipeIndex = 0;
-                statusAnimator.SetBool("MissTrigger", false);
-                statusAnimator.SetBool("AnticipateTrigger", false);
-                statusAnimator.SetBool("HitTrigger", false);
-                statusAnimator.SetBool("WrongTrigger", false);
-                statusAnimator.SetBool("IdleTrigger", true);
 
                 foreach (var btn in buttons)
                 {
@@ -184,9 +192,10 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                 
                 feedbackText.text = "Get ready!";
                 yield return new WaitForSeconds(2f);
+                ResetAnims();
             }
-
-
+            
+        
             HighlightButton(currentCycleIndex);
 
             Debug.Log("Cycle index: " + currentCycleIndex);
@@ -198,10 +207,12 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
 
             // Show/hide swipe direction panel based on inSequence
             if (inSequence && currentSwipeIndex < expectedSwipeSequence.Count && !(buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()))
-            {  
+            {
+                // Hint only shows if hintSeen is true
                 swipeDirectionPanel.SetActive(true);
                 string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
                 SetArrowDirection(expectedDirection);
+
             }
             else
             {
@@ -209,18 +220,20 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             }
 
             // Show feedback for cycle step
-            feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
-
+            if(StaticData.stageNum <= 3)
+            {
+                feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
+            }
+            
             // Wait for cycleInterval seconds and listen for input 
             float timer = 0f;
 
             bool hasNotClicked = true;
 
-            statusAnimator.SetBool("MissTrigger", false);
-            statusAnimator.SetBool("AnticipateTrigger", false);
-            statusAnimator.SetBool("HitTrigger", false);
-            statusAnimator.SetBool("WrongTrigger", false);
-            statusAnimator.SetBool("IdleTrigger", true);
+            bool gotRight = false;
+
+            ResetAnims();
+            //statusAnimator.SetBool("Idle_Trigger", true);
             soundEffectsManager.playIdleSound();
 
             while (timer < StaticData.cycleInterval && currentCycleIndex >= 0)
@@ -240,71 +253,71 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                     }
 
                     if (!inSequence && hasNotClicked)
-                    {
-                        statusAnimator.SetBool("IdleTrigger", true);
-                    }
-                    else if (inSequence && hasNotClicked)
-                    {
-                        statusAnimator.SetBool("IdleTrigger", false);
-
-                        // Anticipation animation based on expected swipe direction
-                        /*
+                    {   
                         string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                        ResetAnims();
                         if (expectedDirection == "Up" || expectedDirection == "Down")
                         {
-                            statusAnimator.SetBool("VerticalTrigger", true);
+                            statusAnimator.SetBool("Anticipate_Vert_Trigger", true);
                         }
                         else
                         {
-                            statusAnimator.SetBool("HorizontalTrigger", true);
+                            statusAnimator.SetBool("Anticipate_Hori_Trigger", true);
+                        }             
+                    }
+                    else if (inSequence && hasNotClicked)
+                    {
+                        ResetAnims();
+                        string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+                        if (expectedDirection == "Up" || expectedDirection == "Down")
+                        {
+                            statusAnimator.SetBool("Anticipate_Vert_Trigger", true);
                         }
-                        */
-
-                        statusAnimator.SetBool("AnticipateTrigger", true);
-                        // If the Sequence was pre pressed, automatically plays hit animation
+                        else
+                        {
+                            statusAnimator.SetBool("Anticipate_Hori_Trigger", true);
+                        }
+                    
+                        // If the Sequence was prepressed, automatically plays hit animation
                         if ((buttons[currentCycleIndex].GetPreSelected() || buttons[currentCycleIndex].GetWasSelected()) && timer > 0.01f)
                         {
-                            statusAnimator.SetBool("AnticipateTrigger", false);
-
+                            ResetAnims();
                             // Hit animation based on expected swipe direction
-                            /*
-                            string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
                             if (expectedDirection == "Up" || expectedDirection == "Down")
                             {
-                                statusAnimator.SetBool("VerticalTrigger", true);
+                                statusAnimator.SetBool("Anticipate_Vert_Trigger", true);
+                                statusAnimator.SetBool("Anticipate_Vert_Trigger", false);
+                                statusAnimator.SetBool("Hit_Vert_Trigger", true);
                             }
                             else
                             {
-                                statusAnimator.SetBool("HorizontalTrigger", true);
+                                statusAnimator.SetBool("Anticipate_Hori_Trigger", true);
+                                statusAnimator.SetBool("Anticipate_Hori_Trigger", false);
+                                statusAnimator.SetBool("Hit_Hori_Trigger", true);
                             }
-                            */
-
-                            statusAnimator.SetBool("HitTrigger", true);
                             soundEffectsManager.playHitSound();
                             // Hide panel when auto-completing pre-selected
                             swipeDirectionPanel.SetActive(false);
                             hasNotClicked = false;
+                            currentSwipeIndex++;
                         }
                         // if the player misses, plays miss animation
-                        if (timer > StaticData.cycleLeniency)
+                        if (timer > StaticData.cycleLeniency && !gotRight)
                         {
                             feedbackText.text = "You missed!";
-                            statusAnimator.SetBool("AnticipateTrigger", false);
+                            ResetAnims();
 
                             // Miss animation based on expected swipe direction
-                            /*
-                            string expectedDirection = expectedSwipeSequence[currentSwipeIndex];
+
                             if (expectedDirection == "Up" || expectedDirection == "Down")
                             {
-                                statusAnimator.SetBool("VerticalTrigger", true);
+                                statusAnimator.SetBool("Wrong_Trigger", true);
                             }
                             else
                             {
-                                statusAnimator.SetBool("HorizontalTrigger", true);
+                                statusAnimator.SetBool("Early_Trigger", true);
                             }
-                            */
-
-                            statusAnimator.SetBool("MissTrigger", true);
+                            
                             buttons[currentCycleIndex].SetRed();
                             buttons[currentCycleIndex].toggleWrong();
                             soundEffectsManager.playMissSound();
@@ -314,7 +327,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                             hasNotClicked = false;
                         }
                     }
-
+    
 
                     // Listens to player tapping the screen
                     /*
@@ -336,7 +349,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             // Hide panel when cycle time is up
             swipeDirectionPanel.SetActive(false);
 
-            if(currentCycleIndex == maxNumber - 1)
+            if (currentCycleIndex >= 11)
             {
                 nextStageButton.gameObject.SetActive(true);
             }
@@ -344,6 +357,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             currentCycleIndex = (currentCycleIndex + 1) % maxNumber;
         }
     }
+
     
     void SetArrowDirection(string direction)
     {
@@ -451,13 +465,8 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             }
         }
 
-        if (pressedNumbers.Contains(btnNumber))
-        {
-            feedbackText.text = $"You already swiped for {btnNumber}.";
-            return;
-        }
-
         //Early swipes
+/*
         else if (currentSequence.Numbers.Contains(buttons[currentCycleIndex].ButtonNumber + 1) && gotSwipeCorrect && buttons[currentCycleIndex + 1].GetPreSelected() == false)
         {
             buttons[currentCycleIndex + 1].SetGreen();
@@ -466,17 +475,18 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             buttons[currentCycleIndex + 1].SetSelected(true);
             feedbackText.text = $"Correct swipe {direction} for: {btnNumber + 1}!";
             currentSwipeIndex++;
+            gotRight = true;
 
         }
-
+*/
         //Swipe not in sequence
-        else if (!inSequence)
+        if (!inSequence)
         {
             buttons[currentCycleIndex].SetRed();
             buttons[currentCycleIndex].toggleWrong();
             feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
-            statusAnimator.SetBool("IdleTrigger", false);
-            statusAnimator.SetBool("WrongTrigger", true);
+            ResetAnims();
+            statusAnimator.SetBool("Early_Trigger", true);
             soundEffectsManager.playMissSound();
         }
 
@@ -485,6 +495,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
         {
             if (currentSwipeIndex < expectedSwipeSequence.Count)
             {
+                ResetAnims();
 
                 if (gotSwipeCorrect)
                 {
@@ -494,22 +505,15 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                     buttons[currentCycleIndex].SetSelected(true);
 
                     feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
-                    statusAnimator.SetBool("IdleTrigger", false);
-                    statusAnimator.SetBool("AnticipateTrigger", false);
 
-                    // Add different animations based on swipe direction
-                    /*
                     if (expected == "Up" || expected == "Down")
                     {
-
+                        statusAnimator.SetBool("Hit_Vert_Trigger", true);
                     }
                     else if (expected == "Left" || expected == "Right")
                     {
-
+                        statusAnimator.SetBool("Hit_Hori_Trigger", true);
                     }
-                    */
-
-                    statusAnimator.SetBool("HitTrigger", true);
                     soundEffectsManager.playHitSound();
                     Debug.Log("SFX and animation should have played");
                     currentSwipeIndex++;
@@ -518,26 +522,20 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                 //Wrong Swipes But in Sequence
                 else
                 {
+                    ResetAnims();
                     buttons[currentCycleIndex].SetHighlighted(true);
                     feedbackText.text = $"Wrong swipe!";
-                    statusAnimator.SetBool("IdleTrigger", false);
 
-                    // Add different miss animations based on swipe direction
-                    /*
                     if (expected == "Up" || expected == "Down")
                     {
-
+                        statusAnimator.SetBool("Wrong_Trigger", true);
                     }
                     else if (expected == "Left" || expected == "Right")
                     {
-
+                        statusAnimator.SetBool("Early_Trigger", true);
                     }
-                    */
-
-                    statusAnimator.SetBool("MissTrigger", true);
                     soundEffectsManager.playMissSound();
                     currentSwipeIndex++;
-                    //Only decrease health if stage not finished
                 }
             }
 
