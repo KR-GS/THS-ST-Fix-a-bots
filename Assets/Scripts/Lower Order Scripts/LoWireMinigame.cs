@@ -1,9 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
-using static UnityEngine.GraphicsBuffer;
 
 
 public class LoWireMinigame : MonoBehaviour
@@ -55,6 +54,9 @@ public class LoWireMinigame : MonoBehaviour
 
     [SerializeField]
     private float speed = 5f;
+
+    [SerializeField]
+    private Button hint_btn;
 
     /*
     [SerializeField]
@@ -261,6 +263,25 @@ public class LoWireMinigame : MonoBehaviour
         origPos_Robot = robot_part.transform.position;
 
         sparks_vfx.gameObject.SetActive(false);
+
+        switch (StaticData.wireDifficulty)
+        {
+            case 0:
+                ValueUI.enabled = true;
+                hint_btn.gameObject.SetActive(false);
+                break;
+            case 1:
+                ValueUI.enabled = false;
+                hint_btn.gameObject.SetActive(true);
+                break;
+            case 2:
+                ValueUI.enabled = false;
+                hint_btn.gameObject.SetActive(false);
+                break;
+            default:
+                hint_btn.gameObject.SetActive(false);
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -650,5 +671,29 @@ public class LoWireMinigame : MonoBehaviour
         {
             Destroy(pliers);
         }
+    }
+
+    public void ShowHints()
+    {
+        StartCoroutine(ToggleNumberView());
+    }
+
+    public IEnumerator ToggleNumberView()
+    {
+        hint_btn.GetComponent<Hint>().ChangeSpriteOpen();
+
+        hint_btn.interactable = false;
+
+        ValueUI.enabled = true;
+
+        yield return new WaitForSeconds(5f);
+
+        ValueUI.enabled = false;
+
+        yield return new WaitForSeconds(10f);
+
+        hint_btn.interactable = true;
+
+        hint_btn.GetComponent<Hint>().ChangeSpriteClose();
     }
 }
