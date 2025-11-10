@@ -375,7 +375,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
         SetupBlocks();
         ApplyLockSettings();
-        feedbackText.text = "Drag blocks to build the formula and submit.";
+        feedbackText.text = "I-Drag ang puzzle blocks para buoin ang formula at ipasa.";
     }
 
     private void SetupBlocks()
@@ -504,7 +504,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
         if (!IsFormulaComplete(nBlock))
         {
-            feedbackText.text = "Please complete the formula by connecting all required blocks.";
+            feedbackText.text = "Tapusin muna ang formula sa pamamagitan ng pagdugtong ng mga puzzle piece.";
             return;
         }
 
@@ -522,19 +522,19 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
         if (currentCoef != targetSequence.Coefficient && currentConst != targetSequence.Constant)
         {
-            feedbackText.text = "Both coefficient and constant are wrong";
+            feedbackText.text = "Hala! Parehong mali ang coefficient at constant.";
         }
         else if (currentCoef != targetSequence.Coefficient && currentConst == targetSequence.Constant)
         {
-            feedbackText.text = "Coefficient is wrong";
+            feedbackText.text = "Hala! Mali ang coefficient.";
         }
         else if (currentCoef == targetSequence.Coefficient && currentConst != targetSequence.Constant)
         {
-            feedbackText.text = "Constant is wrong";
+            feedbackText.text = "Hala! Mali ang constant.";
         }
         else if (currentCoef == targetSequence.Coefficient && currentConst == targetSequence.Constant)
         {
-            feedbackText.text = "Perfect! Both coefficient and constant are correct!";
+            feedbackText.text = "Yehey! Parehong tama ang constant at coefficient!";
 
             if (nBlock != null)
             {

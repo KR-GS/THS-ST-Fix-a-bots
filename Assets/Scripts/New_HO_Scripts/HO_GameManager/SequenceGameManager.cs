@@ -156,7 +156,7 @@ public class SequenceGameManager : MonoBehaviour
         exitButton.onClick.AddListener(() => ExitGame());
         restartGameButton.onClick.AddListener(() => RestartGame());
 
-        feedbackText.text = "Please tap screen to start game";
+        feedbackText.text = "I-tap ang screen para magsimula!";
         livesText.text = $"{stageData.GetNumLives()}";
         healthBar.SetMaxHealth(stageData.GetNumLives());
         restartText.text = $"{stageData.GetNumRestarts()}";
@@ -178,7 +178,7 @@ public class SequenceGameManager : MonoBehaviour
         canTap = false;
         pausePanel.SetActive(true);
         pausePanel.transform.SetAsLastSibling();
-        panelText.text = "You Lost! Continue?";
+        panelText.text = "Sayang natalo ka! Isa pa?";
     }
 
     private void RestartGame()
@@ -335,7 +335,7 @@ public class SequenceGameManager : MonoBehaviour
         currentCycleIndex = 0;
         //isCycling = true;
 
-        feedbackText.text = "Watch the sequence! Swipe the screen when the highlighted number is in the sequence.";
+        feedbackText.text = "Tignan ang sequence! I-Swipe ang screen kapag ang number ay nasa sequence.";
     }
 
     // Just to make time for the cycling
@@ -371,7 +371,7 @@ public class SequenceGameManager : MonoBehaviour
     {
         canTap = false;
         isCycling = false;
-        feedbackText.text = "Restarting Stage...";
+        feedbackText.text = "Inuulit ang stage...";
         yield return new WaitForSeconds(1f);
         feedbackText.text = "3";
         yield return new WaitForSeconds(1f);
@@ -459,7 +459,7 @@ public class SequenceGameManager : MonoBehaviour
             // Show feedback for cycle step
             if (StaticData.stageNum < 3)
             {
-                feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
+                feedbackText.text = inSequence ? $"{btnNumber} ay parte ng sequence." : $"{btnNumber} ay HINDI parte ng sequence.";
             }
             else
             {
@@ -542,7 +542,7 @@ public class SequenceGameManager : MonoBehaviour
                         // if the player misses, plays miss animation
                         if (timer > StaticData.cycleLeniency && !gotRight)
                         {
-                            feedbackText.text = "You missed!";
+                            feedbackText.text = "Hala mali! Hindi ka nakaswipe!";
                             ResetAnims();
 
                             // Miss animation based on expected swipe direction
@@ -605,7 +605,7 @@ public class SequenceGameManager : MonoBehaviour
 
                 if (CheckSequenceComplete() && isCorrect)
                 {
-                    feedbackText.text = "Great job! Sequence completed!";
+                    feedbackText.text = "Yehey! Natapos ang sequence!";
                     isStageFinished = true;
                     nextStageButton.gameObject.SetActive(true);
                     nextStageButton.onClick.AddListener(() => OnNextStageButtonClicked());
@@ -615,7 +615,7 @@ public class SequenceGameManager : MonoBehaviour
                 else
                 {
                     Debug.Log("Wrong Sequence");
-                    feedbackText.text = "Sequence not complete or wrong taps. Restarting...";
+                    feedbackText.text = "May mali sa sequence ata? Inuulit ang stage...";
                     ResetSequence();
                 }
             }
@@ -750,7 +750,7 @@ public class SequenceGameManager : MonoBehaviour
         {
             buttons[currentCycleIndex].SetRed();
             buttons[currentCycleIndex].toggleWrong();
-            feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
+            feedbackText.text = $"Maling swipes! {btnNumber} ay hindi nasa sequence.";
             ResetAnims();
             statusAnimator.SetBool("Early_Trigger", true);
             soundEffectsManager.playMissSound();
@@ -779,7 +779,7 @@ public class SequenceGameManager : MonoBehaviour
                     pressedNumbers.Add(btnNumber);
                     buttons[currentCycleIndex].SetSelected(true);
 
-                    feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
+                    feedbackText.text = $"Tamang swipe sa {btnNumber}!";
 
                     if (expected == "Up" || expected == "Down")
                     {
@@ -800,7 +800,7 @@ public class SequenceGameManager : MonoBehaviour
                 {
                     ResetAnims();
                     buttons[currentCycleIndex].SetHighlighted(true);
-                    feedbackText.text = $"Wrong swipe!";
+                    feedbackText.text = $"Maling swipe!";
 
                     if (expected == "Up" || expected == "Down")
                     {
