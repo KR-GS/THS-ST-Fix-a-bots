@@ -158,6 +158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brokenSprite: {fileID: 737612968, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
   fixedSprite: {fileID: -1506010389, guid: a77917e5765d5794380f365276da33ec, type: 3}
+  mainsprite: {fileID: 0}
+  isMissing: 1
 --- !u!1 &4574030513898311674
 GameObject:
   m_ObjectHideFlags: 0

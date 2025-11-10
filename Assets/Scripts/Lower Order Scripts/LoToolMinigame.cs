@@ -774,9 +774,11 @@ public class LoToolMinigame : MonoBehaviour
 
         ToggleGapHolder(false);
 
-        foreach (GameObject tile_pos in tiledParts)
+        robotPart.transform.position = new Vector2(endPoints[1].x, robotPart.transform.position.y);
+
+        for (int i = patternLength - slotToFix; i < patternLength; i++)
         {
-            Vector3 position = tile_pos.GetComponent<PartTile>().GetFastenerPosition().position;
+            Vector3 position = tiledParts[i].GetComponent<PartTile>().GetFastenerPosition().position;
             Camera.main.GetComponent<ToolCamera>().CreateLoadingIcons(Camera.main.WorldToScreenPoint(position));
         }
 
@@ -1077,6 +1079,8 @@ public class LoToolMinigame : MonoBehaviour
         int totalCorrect = 0;
         int i = 0;
 
+        int j = 0;
+
         Vector3 newCameraPos = new Vector3(fastenerObj[0].transform.position.x, 0, Camera.main.transform.position.z);
 
         Camera.main.GetComponent<ToolCamera>().CameraTrigger(newCameraPos, speed);
@@ -1123,8 +1127,13 @@ public class LoToolMinigame : MonoBehaviour
             if (numberToDisplay[i] != generatedList[i] || fastenerCheckVal[i] != fastenerValues[i])
             {
                 tiledParts[i].GetComponent<PartTile>().SetIsWrong(false);
-                tiledParts[i].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetBrokenSprite();
-                tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(0.1f);
+
+                if (!tiledParts[i].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().CheckIsMissing())
+                {
+                    tiledParts[i].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetBrokenSprite();
+                }
+                    
+                tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(0f);
                 Debug.Log("Incorrect!!");
             }
             else
@@ -1142,13 +1151,15 @@ public class LoToolMinigame : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
 
-            Camera.main.GetComponent<ToolCamera>().DeleteLoadingIcons(i);
+            if (i >= patternLength-slotToFix)
+            {
+                Camera.main.GetComponent<ToolCamera>().DeleteLoadingIcons(j);
+                j++;
+            }
 
             fastenerObj[i].SetActive(false);
 
             i++;
-
-
         }
 
         /*
@@ -1186,12 +1197,22 @@ public class LoToolMinigame : MonoBehaviour
 
             yield return new WaitForSeconds(3f);
 
-            foreach (GameObject partTile in tiledParts)
+            for (int k=0; k<patternLength; k++)
             {
-                partTile.GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
-                partTile.GetComponent<PartTile>().SetIsWrong(false);
-                partTile.GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+                tiledParts[k].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
+                tiledParts[k].GetComponent<PartTile>().SetIsWrong(false);
+
+                if (numberToDisplay[k] > 0)
+                {
+                    tiledParts[k].GetComponent<PartTile>().SetFastenerPosition(-0.7f);
+                }
+                else
+                {
+                    tiledParts[k].GetComponent<PartTile>().SetFastenerPosition(0f);
+                }
+                    
             }
+
             Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
             //Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
             Camera.main.GetComponent<ToolCamera>().ToggleCanvas();

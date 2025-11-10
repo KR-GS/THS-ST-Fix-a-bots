@@ -151,6 +151,8 @@ public class ToolCamera : MonoBehaviour
         int latest_index = loading_icons.Count - 1;
 
         loading_icons[latest_index].transform.position = spawn_pos;
+
+        loading_icons[latest_index].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
     }
 
     public void DeleteLoadingIcons(int icon_to_delete)
