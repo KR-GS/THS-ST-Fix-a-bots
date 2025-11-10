@@ -202,6 +202,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 
     public void BackToMainMenu()
     {
+        mainPanel.SetActive(false);
         if (StaticData.isOnHigherOrderGame)
             //SceneManager.LoadScene("Stage_Select");
             LoadingScreenManager.Instance.SwitchtoScene(1);

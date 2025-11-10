@@ -599,6 +599,7 @@ public class SequenceGameManager : MonoBehaviour
             {
                 ResetAnims();
                 statusAnimator.SetBool("Idle_Trigger", true);
+                yield return new WaitForSeconds(0.5f);
                 Debug.Log("pressedNumbers Numbers = " + pressedNumbers);
                 Debug.Log("Current Sequence = " + currentSequence.Numbers);
 
