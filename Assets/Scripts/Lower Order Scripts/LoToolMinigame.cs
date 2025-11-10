@@ -1061,6 +1061,11 @@ public class LoToolMinigame : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        //Check's student's answers
+        StaticData.playerToolPattern = new List<int>(numberToDisplay);
+        Debug.Log($"Stored player's tool answer: [{string.Join(", ", StaticData.playerToolPattern)}]");
+
+
         while (i < patternLength)
         {
             /*
@@ -1168,6 +1173,8 @@ public class LoToolMinigame : MonoBehaviour
             Debug.Log("Added one penalty to tool score");
 
             ToggleGapHolder(true);
+
+
         }
 
         Camera.main.GetComponent<ToolCamera>().ClearLoadingIcons();

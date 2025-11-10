@@ -593,7 +593,9 @@ public class LoWireMinigame : MonoBehaviour
     {
         GameObject pliers = Instantiate(this.pliers);
         int j = 0;
-        foreach(int i in wireToEdit)
+        StaticData.playerWirePattern = new List<int>();
+
+        foreach (int i in wireToEdit)
         {
             if (wireSlots[i].CheckSlotStatus())
             {
@@ -602,11 +604,17 @@ public class LoWireMinigame : MonoBehaviour
                 {
                     Debug.Log("Value is Correct!");
 
+                    //StaticData.playerWirePattern.Add(wireSlots[i].GetWireSlotVal());
+
                     OverallUI.enabled = false;
 
                     ResultUI.enabled = true;
 
+
+
                     StaticData.isWireDone = true;
+
+                    Debug.Log("Where is the resultUI screen???");
 
                     if (DataPersistenceManager.Instance != null)
                     {
@@ -625,6 +633,8 @@ public class LoWireMinigame : MonoBehaviour
                     }
 
                     pliers.GetComponent<WirePliers>().GetWiresToCut(vfxList[j]);
+
+                    StaticData.playerWirePattern.Add(wireSlots[i].GetWireSlotVal());
 
                     Debug.Log("Value is Wrong!");
 

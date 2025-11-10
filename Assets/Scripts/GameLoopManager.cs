@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Data.SqlTypes;
 using System.Drawing;
+using static GameLoopManager;
+using System.Threading;
 
 public class GameLoopManager : MonoBehaviour, IDataPersistence
 {
@@ -36,6 +38,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] private int diff_Lowest = 1;
     [SerializeField] private int diff_Highest = 5;
+
+    private float sceneEnterTime;
+    private bool hasRecordedThisVisit = false;
 
     private int generatedDifference;
 
@@ -110,8 +115,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        Debug.Log("StaticData Tool value = " + StaticData.isToolDone);
-
         // DataPersistenceManager.Instance.SaveGame();
     }
 
@@ -153,6 +156,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             // Re-find and assign the new instance of the text
 
+            StartCoroutine(SaveMinigameRecordAfterLoad());
+
             GameObject dayTextObject = GameObject.Find("DayNumber");
             if (dayTextObject != null)
             {
@@ -172,30 +177,13 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             }
 
             GameObject moneyTextObject = GameObject.Find("Money_Text");
-            
 
-            if (ts != null)
-            {
-                if (om != null && om.GetCurrentOrder() != null)
-                {
-                    ts.StartTimer();
-                }
-                else
-                {
-                    Debug.Log("No active order. Timer not restarted.");
-                }
-            }
 
             dayNumber.gameObject.SetActive(true);
             calendar.gameObject.SetActive(true);
             tutorialButton.gameObject.SetActive(true);
 
             Debug.Log("[LOOK HERE] Pending orders count: " + om.pendingOrders.Count);
-
-            ts.timeLft -= StaticData.timeSpent;
-            ts.UpdateTimerDisp();
-            StaticData.timeSpent = 0;
-
 
             StartCoroutine(UpdateStationsNextFrame());
 
@@ -253,6 +241,74 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             station.SetStationVisibility();
         }
     }
+
+    private IEnumerator SaveMinigameRecordAfterLoad()
+    {
+        // Wait for all LoadData calls to finish
+        yield return new WaitForEndOfFrame();
+
+        SaveMinigameRecord();
+    }
+    private void SaveMinigameRecord()
+    {
+        /*
+        if (DataPersistenceManager.Instance == null)
+        {
+            Debug.LogWarning("Cannot save record - DataPersistenceManager or minigame type is null");
+            return;
+        }
+
+        List<int> correctPattern = new List<int>();
+        List<int> playerAnswer = new List<int>();
+        int level = StaticData.dayNo;
+        int wrongs = 0;
+
+        switch (StaticData.enteredStation)
+        {
+            case 0:
+                correctPattern = new List<int>(StaticData.toolPattern ?? new List<int>());
+                playerAnswer = new List<int>(StaticData.playerToolPattern ?? new List<int>());
+                wrongs = StaticData.pendingToolWrongs;
+                break;
+
+            case 1:
+                correctPattern = new List<int>(StaticData.paintPattern ?? new List<int>());
+                playerAnswer = new List<int>(StaticData.playerPaintPattern ?? new List<int>());
+                wrongs = StaticData.pendingPaintWrongs;
+                break;
+
+            case 2:
+                correctPattern = new List<int>(StaticData.wirePattern ?? new List<int>());
+                playerAnswer = new List<int>(StaticData.playerWirePattern ?? new List<int>());
+                wrongs = StaticData.pendingWireWrongs;
+                break;
+
+            default:
+                Debug.LogWarning("Where have you been? There's no soldering station!");
+                return;
+        }
+
+        StaticData.pendingGameRecord = new GameData.GameRecord(
+            correctPattern,
+            playerAnswer,
+            StaticData.timeSpent,
+            level,
+            wrongs,
+            StaticData.enteredStation,
+            StaticData.orderNumber
+        );
+
+        Debug.Log($"  Created pending {StaticData.enteredStation} GameRecord:");
+        Debug.Log($"  Day: {level}");
+        Debug.Log($"  Time spent: {StaticData.timeSpent:F2}s");
+        Debug.Log($"  Correct pattern: [{string.Join(", ", correctPattern)}]");
+        Debug.Log($"  Player answer: [{string.Join(", ", playerAnswer)}]");
+        */
+        // Trigger save through the proper pipeline
+        DataPersistenceManager.Instance.SaveGame();
+
+        StaticData.timeSpent = 0f; // Reset after applying
+    }
     public enum DifficultyLevel
     {
         tutorial,
@@ -282,7 +338,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
         StaticData.medValue = data.medValue;
         StaticData.dayNo = this.level;
-        
+        StaticData.orderNumber = data.orderNumber;
+
 
         if (dayNumber != null)
         {
@@ -450,6 +507,16 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.orderReceived = data.orderReceived;
         StaticData.isOrderChecked = data.isOrderChecked;
 
+        if (data.loGameHistory != null)
+        {
+            Debug.Log($"Loaded {data.loGameHistory.Count} game records from save file");
+        }
+        else
+        {
+            Debug.LogWarning("gameHistory is null in loaded data!");
+            data.loGameHistory = new List<GameData.GameRecord>();
+        }
+
         HandleSceneInitialization();
     }
 
@@ -499,6 +566,32 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.equippedPhilipsScrewdriver = StaticData.equippedPhilipsScrewdriver;
         data.equippedFlatScrewdriver = StaticData.equippedFlatScrewdriver;
         data.isFirstWS = StaticData.isFirstWS;
+        data.orderNumber = StaticData.orderNumber;
+
+        Debug.Log($"[SAVEDATA] Current gameHistory count: {data.loGameHistory?.Count ?? 0}");
+
+        if (StaticData.pendingGameRecord != null)
+        {
+            if (data.loGameHistory == null)
+            {
+                data.loGameHistory = new List<GameData.GameRecord>();
+                Debug.Log("Initialized gameHistory list");
+            }
+
+            data.loGameHistory.Add(StaticData.pendingGameRecord);
+            Debug.Log($"Added GameRecord to history. Total records: {data.loGameHistory.Count}");
+            Debug.Log($"[SAVEDATA]   Added NEW GameRecord to history. Total records: {data.loGameHistory.Count}");
+            Debug.Log($"[SAVEDATA]   - Day: {StaticData.pendingGameRecord.day}");
+            Debug.Log($"[SAVEDATA]   - Station: {StaticData.pendingGameRecord.station}");
+            Debug.Log($"[SAVEDATA]   - Time: {StaticData.pendingGameRecord.timeSpent:F2}s");
+
+            // Clear the pending record after adding
+            StaticData.pendingGameRecord = null;
+        }
+        else
+        {
+            Debug.Log("Do you exist mr. PendingGameRecord? Are you there???");
+        }
     }
 
 
@@ -1081,7 +1174,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             currentP2Pattern = GeneratePaintPatternArray(StaticData.paintpatternLength);
             StaticData.paint2Pattern = currentP2Pattern;
         }
-            
 
         StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
         StaticData.selectedStickerIndex = Random.Range(0, 3);
@@ -1097,9 +1189,6 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         currentWirePattern = GenerateWirePatternArray(StaticData.wirepatternLength);
         StaticData.wirePattern = currentWirePattern;
         StaticData.valuestoChange = Random.Range(2, 6);
-
-
-
 
     }
 
@@ -1128,6 +1217,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.orderReceived = false;
         level++;
         StaticData.dayNo = level;
+        StaticData.orderNumber = 1;
 
         if (StaticData.startOfDay == false)
         {

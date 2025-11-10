@@ -7,6 +7,29 @@ using UnityEngine;
 
 public class GameData
 {
+    [System.Serializable]
+    public class GameRecord
+    {
+        public List<int> correctPattern;
+        public List<int> playerAnswer;
+        public float timeSpent;
+        public int day;
+        public int mistakes;
+        public int station;
+        public int orderNo;
+
+        public GameRecord(List<int> correct, List<int> answer, float time, int dayNum, int wrongs, int minigame, int orderNum)
+        {
+            correctPattern = correct;
+            playerAnswer = answer;
+            timeSpent = time;
+            day = dayNum;
+            mistakes = wrongs;
+            station = minigame;
+            orderNo = orderNum;
+        }
+    }
+
     [Header("Save Settings")]
     public string language = "English";
 
@@ -134,6 +157,8 @@ public class GameData
 
     public int equippedWrench = 12; // 12-15
 
+    public List<GameRecord> loGameHistory;
+
     [Header("High Order Data")]
     public List<int> lives;
 
@@ -148,6 +173,12 @@ public class GameData
     public int stageDone;
 
     public bool isFirstWS;
+
+    public float timeSpent;
+
+    public int orderNumber;
+
+
 
     public GameData()
     {
@@ -214,7 +245,10 @@ public class GameData
         this.equippedFlatScrewdriver = 6; // 6-8
         this.equippedWrench = 9; // 9-11
         this.isFirstWS = true;
-}
+        this.timeSpent = 0f;
+        this.orderNumber = 1;
+        this.loGameHistory = new List<GameRecord>();
+    }
 
 
 }

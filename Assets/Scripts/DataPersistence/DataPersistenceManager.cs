@@ -149,6 +149,11 @@ public class DataPersistenceManager : MonoBehaviour
         dataHandler.Save(gameData);
     }
 
+
+    public float GetTimeLft()
+    {
+        return dataHandler.Load().time;
+    }
     public void OnApplicationQuit()
     {
         SaveGame();

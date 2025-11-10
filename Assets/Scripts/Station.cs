@@ -67,6 +67,7 @@ public class Station : MonoBehaviour
                     {
                         DataPersistenceManager.Instance.SaveGame();
                         glm.HideWorkshopElements();
+                        StaticData.enteredStation = 0;
                         //LoadingScreenManager.Instance.SwitchtoSceneMath(4);
                         LoadingScreenManager.Instance.SwitchtoSceneGear(4);
                         //SceneManager.LoadScene("LO_Tool_GUI");
@@ -83,6 +84,7 @@ public class Station : MonoBehaviour
                     {
                         DataPersistenceManager.Instance.SaveGame();
                         glm.HideWorkshopElements();
+                        StaticData.enteredStation = 1;
                         //LoadingScreenManager.Instance.SwitchtoSceneMath(5);
                         LoadingScreenManager.Instance.SwitchtoSceneGear(5);
                         //SceneManager.LoadScene("LO_Paint_GUI");
@@ -99,6 +101,7 @@ public class Station : MonoBehaviour
                     {
                         DataPersistenceManager.Instance.SaveGame();
                         glm.HideWorkshopElements();
+                        StaticData.enteredStation = 2;
                         //LoadingScreenManager.Instance.SwitchtoSceneMath(6);
                         LoadingScreenManager.Instance.SwitchtoSceneGear(6);
                         //SceneManager.LoadScene("LO_Wire");

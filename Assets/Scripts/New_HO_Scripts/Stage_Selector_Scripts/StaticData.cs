@@ -61,6 +61,10 @@ public class StaticData
     public static List<int> incorrectIndices = new List<int>();
     public static List<int> incorrectValues = new List<int>();
 
+    public static List<int> playerToolPattern;
+    public static List<int> playerPaintPattern;
+    public static List<int> playerWirePattern;
+
     public static List<Order> orderList = new List<Order>();
     public static List<Order> activeOrders = new List<Order>();
     public static Queue<Order> pendingOrders = new Queue<Order>();
@@ -91,6 +95,17 @@ public class StaticData
     public static bool isFirstHO;
 
     public static float timeSpent;
+    public static float minigameEnterTime;
+
+    public static int enteredStation; // 0 = tool, 1 = paint, 2 = wire
+
+    public static int orderNumber;
+
+    public static GameData.GameRecord pendingGameRecord = null;
+
+    public static int pendingToolWrongs = 0;
+    public static int pendingPaintWrongs = 0;
+    public static int pendingWireWrongs = 0;
 
 
     // SHOP EQUIPPING FLAGS

@@ -77,15 +77,46 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
             timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
+
+ 
     public void LoadData(GameData data)
     {
         timeLft = data.time;
-        UpdateTimerDisp();
+        //StaticData.timeSpent = data.timeSpent;
+
+        Debug.Log("I'm debugging to check time: " + timeLft.ToString() + " seconds left.");
+        Debug.Log("Checking what time is it!: " + StaticData.timeSpent.ToString() + " seconds spent.");
+
+        if (StaticData.timeSpent > 0)
+        {
+            if (timeLft == 0)
+            {
+                Debug.Log("Wait, why is the timer at 0s when applying time deduction?");
+            }
+
+            Debug.Log($"[TIMER] Applying pending deduction: {StaticData.timeSpent:F2}s");
+            Debug.Log($"[TIMER] Before: {timeLft:F2}s");
+
+            timeLft -= StaticData.timeSpent;
+
+            Debug.Log($"[TIMER] After: {timeLft:F2}s");
+
+            Debug.Log("Changing the time!");
+            UpdateTimerDisp();
+            Debug.Log("All done!");
+
+        }
+
     }
 
     public void SaveData(ref GameData data)
     {
         data.time = timeLft;
+        data.timeSpent = StaticData.timeSpent;
+
+        Debug.Log("Did the time save: " + data.time.ToString() + " seconds left.");
+        Debug.Log("Static data for timeSpent: " + StaticData.timeSpent.ToString() + " seconds spent.");
+        Debug.Log("You spent your free time here: " + data.timeSpent.ToString() + " seconds spent.");
     }
 
     /*

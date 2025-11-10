@@ -158,7 +158,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         newOrder.customername = customerList[namePicker];
         newOrder.robotname = robotList[namePicker];
 
-        /*
+        
+        //QA Data
+
         if (level >= 1)
         {
             float rand = Random.value;
@@ -166,17 +168,17 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = Random.value < 0.5f;
         }
-        */
-
         
-        if (level >= 1) // && level < 3
-        {
-            newOrder.needsTool = Random.value < 0.5f; //originally true, gonna QA
-            newOrder.needsPaint = Random.value < 0.5f; //originally false, gonna QA
-            newOrder.needsWire = Random.value < 0.5f; //originally false, gonna QA
-        }
 
         /*
+        if (level >= 1 && level < 3) // && level < 3
+        {
+            newOrder.needsTool = true; //originally true, gonna QA
+            newOrder.needsPaint = false; //originally false, gonna QA
+            newOrder.needsWire = false; //originally false, gonna QA
+        }
+
+        
         else if (level >= 3 && level < 6)
         {
             float rand = Random.value;
@@ -333,6 +335,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             {
                 Debug.Log("Yeah... you did complete tool!");
                 orderList[0].toolDone = true;
+                StaticData.orderNumber += 1;
                 ri.ToolIndicator.gameObject.SetActive(false);
                 if(toolHover == false)
                 {
