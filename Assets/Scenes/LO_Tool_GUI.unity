@@ -836,9 +836,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 719201786, guid: c0af73a4eb7141b4b84f823c629ac7a4, type: 3}
+  m_Sprite: {fileID: -1857027960, guid: 73396b2ba114ed842908d2cf044699a4, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1646,9 +1646,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1416456982, guid: c0af73a4eb7141b4b84f823c629ac7a4, type: 3}
+  m_Sprite: {fileID: -378699317, guid: 73396b2ba114ed842908d2cf044699a4, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1797,9 +1797,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1626939244, guid: c0af73a4eb7141b4b84f823c629ac7a4, type: 3}
+  m_Sprite: {fileID: -908999332, guid: 73396b2ba114ed842908d2cf044699a4, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2069,9 +2069,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1041124134, guid: c0af73a4eb7141b4b84f823c629ac7a4, type: 3}
+  m_Sprite: {fileID: -1577833141, guid: 73396b2ba114ed842908d2cf044699a4, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -4535,7 +4535,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1530918231
@@ -4558,8 +4558,8 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 60, y: 70}
-  m_Spacing: {x: 20, y: 0}
+  m_CellSize: {x: 80, y: 90}
+  m_Spacing: {x: 10, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 4
 --- !u!1 &1531231915
@@ -5822,7 +5822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1985247685
 MonoBehaviour:
   m_ObjectHideFlags: 0
