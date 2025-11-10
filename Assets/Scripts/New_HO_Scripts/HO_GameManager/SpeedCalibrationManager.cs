@@ -45,6 +45,10 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
     private bool isCycling = false, canTap = true;
     private int currentCycleIndex = 0;
 
+    [Header("Pause")]
+    public GameObject pauseMenu;
+    public Button pauseButton;
+
     private readonly float[] speedValues = { 2f, 1.5f, 1.2f, 1f, 0.75f };
     private readonly string[] speedLabels = { "Slowest", "Slow", "Average", "Fast", "Fastest" };
     private int currentSpeedIndex = 2; // Start at "Average"
@@ -82,6 +86,11 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             if (currentSpeedIndex > 0)
                 currentSpeedIndex--;
             ApplySpeedSetting();
+        });
+
+        pauseButton.onClick.AddListener(() =>
+        {
+            pauseMenu.SetActive(true);
         });
 
         // Next Stage button
