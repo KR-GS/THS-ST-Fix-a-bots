@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d1d5e1bc9fb5f124f9be2e2d9e1506c1
+guid: 3e2a64df157577e478cee550273760ce
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -106,30 +106,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_0
+      name: SPR_PattSpin__0
       rect:
         serializedVersion: 2
         x: 0
-        y: 3594
-        width: 3000
-        height: 1796
+        y: 1038
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec4ed300a8f7ce547b85cf246ba28158
-      internalID: -1654638071
+      spriteID: a168327b39530d2449a928d55663614c
+      internalID: 2035715808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_1
+      name: SPR_PattSpin__1
       rect:
         serializedVersion: 2
-        x: 3000
-        y: 3594
-        width: 3000
-        height: 1796
+        x: 1266
+        y: 1038
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef713a404fa58e54c8546291c5302767
-      internalID: 1851851122
+      spriteID: ca441baff7b79cb44889b599c1102d9c
+      internalID: 917039643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_2
+      name: SPR_PattSpin__2
       rect:
         serializedVersion: 2
-        x: 6000
-        y: 3594
-        width: 3000
-        height: 1796
+        x: 2532
+        y: 1038
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +169,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91ea2f6435951da43a615baa1fa146e6
-      internalID: 1618815848
+      spriteID: dc904da99c1169a41a93aa78de3d03f5
+      internalID: -521331360
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_3
+      name: SPR_PattSpin__3
       rect:
         serializedVersion: 2
-        x: 9000
-        y: 3594
-        width: 3000
-        height: 1796
+        x: 3798
+        y: 1038
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,20 +191,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3923d41622033104a9bdda74b2621d1c
-      internalID: -1059023644
+      spriteID: f480e02a683078342a69b2c909772230
+      internalID: 951378967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_4
+      name: SPR_PattSpin__4
       rect:
         serializedVersion: 2
-        x: 12000
-        y: 3594
-        width: 3000
-        height: 1796
+        x: 5064
+        y: 1038
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,130 +213,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f7c16aa892ed5f84198fcd6dd3f6045b
-      internalID: 559248410
+      spriteID: 7fde72506e898364ab696f20e20ad347
+      internalID: 844383289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1798
-        width: 3000
-        height: 1796
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0d7716c9a7b5c6c4ab7a8be9203dc9b6
-      internalID: -2087765894
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_6
-      rect:
-        serializedVersion: 2
-        x: 3000
-        y: 1798
-        width: 3000
-        height: 1796
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa2b5e8fcbb522f4db3b474f9fb6cc20
-      internalID: 1598957958
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_7
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 1798
-        width: 3000
-        height: 1796
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 72136a2312c28db4c8d32ffc6bad6a0b
-      internalID: 607027504
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_8
-      rect:
-        serializedVersion: 2
-        x: 9000
-        y: 1798
-        width: 3000
-        height: 1796
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 432f642c1d8c99749b24ec2835cd7eeb
-      internalID: 1966240635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_9
-      rect:
-        serializedVersion: 2
-        x: 12000
-        y: 1798
-        width: 3000
-        height: 1796
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 86ceac72d500a224c9fdf3056dad5cc4
-      internalID: 1792768255
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_10
+      name: SPR_PattSpin__5
       rect:
         serializedVersion: 2
         x: 0
-        y: 2
-        width: 3000
-        height: 1796
+        y: 0
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -358,20 +235,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c730da18788ecad4ea4f8d9f457cbef7
-      internalID: 660950073
+      spriteID: b9ca5baf20eb3004f916485e3dc4625c
+      internalID: -1579176771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_11
+      name: SPR_PattSpin__6
       rect:
         serializedVersion: 2
-        x: 3000
-        y: 2
-        width: 3000
-        height: 1796
+        x: 1266
+        y: 0
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -380,20 +257,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22d54c5144f388e4d994e20674f80939
-      internalID: 513736696
+      spriteID: f6492043bb9ebb741aa319cbb691e5a3
+      internalID: 1742860718
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_12
+      name: SPR_PattSpin__7
       rect:
         serializedVersion: 2
-        x: 6000
-        y: 2
-        width: 3000
-        height: 1796
+        x: 2532
+        y: 0
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -402,20 +279,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa01990a8e9111d4cadde04333e65d33
-      internalID: -864307803
+      spriteID: 184c3a23d7276fa4eae210e94318f4d8
+      internalID: 541054642
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_13
+      name: SPR_PattSpin__8
       rect:
         serializedVersion: 2
-        x: 9000
-        y: 2
-        width: 3000
-        height: 1796
+        x: 3798
+        y: 0
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -424,20 +301,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55fbed47c701eeb4cabc3f9d633e8bdc
-      internalID: -773324009
+      spriteID: d51840b43e87ed445bce4e8d28e1bcf8
+      internalID: 1549962105
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SPR_EndScreenTransition_222_14
+      name: SPR_PattSpin__9
       rect:
         serializedVersion: 2
-        x: 12000
-        y: 2
-        width: 3000
-        height: 1796
+        x: 5064
+        y: 0
+        width: 1266
+        height: 1038
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -446,8 +323,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9410ef4b2ae400d4ba63cf7afc9bfcf2
-      internalID: -577668273
+      spriteID: 74b85820236cece4e9849007c31f0bd1
+      internalID: -1956807117
       vertices: []
       indices: 
       edges: []
@@ -456,7 +333,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8d59237bfa19a6b4b92cc52b8a393b5b
+    spriteID: 0ff1e30510f0f4c4296811dfd29bfc24
     internalID: 0
     vertices: []
     indices: 
@@ -466,21 +343,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SPR_EndScreenTransition_222_0: -1654638071
-      SPR_EndScreenTransition_222_1: 1851851122
-      SPR_EndScreenTransition_222_10: 660950073
-      SPR_EndScreenTransition_222_11: 513736696
-      SPR_EndScreenTransition_222_12: -864307803
-      SPR_EndScreenTransition_222_13: -773324009
-      SPR_EndScreenTransition_222_14: -577668273
-      SPR_EndScreenTransition_222_2: 1618815848
-      SPR_EndScreenTransition_222_3: -1059023644
-      SPR_EndScreenTransition_222_4: 559248410
-      SPR_EndScreenTransition_222_5: -2087765894
-      SPR_EndScreenTransition_222_6: 1598957958
-      SPR_EndScreenTransition_222_7: 607027504
-      SPR_EndScreenTransition_222_8: 1966240635
-      SPR_EndScreenTransition_222_9: 1792768255
+      SPR_PattSpin__0: 2035715808
+      SPR_PattSpin__1: 917039643
+      SPR_PattSpin__2: -521331360
+      SPR_PattSpin__3: 951378967
+      SPR_PattSpin__4: 844383289
+      SPR_PattSpin__5: -1579176771
+      SPR_PattSpin__6: 1742860718
+      SPR_PattSpin__7: 541054642
+      SPR_PattSpin__8: 1549962105
+      SPR_PattSpin__9: -1956807117
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

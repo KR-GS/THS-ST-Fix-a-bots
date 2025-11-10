@@ -1348,6 +1348,8 @@ public class LoToolMinigame : MonoBehaviour
     {
         hint_btn.GetComponent<Hint>().ChangeSpriteOpen();
 
+        hint_btn.interactable = false;
+
         foreach (GameObject gap in gapHolder)
         {
             gap.GetComponent<GapHolder>().ShowText();
@@ -1359,8 +1361,6 @@ public class LoToolMinigame : MonoBehaviour
         {
             gap.GetComponent<GapHolder>().HideText();
         }
-
-        hint_btn.interactable = false;
 
         yield return new WaitForSeconds(15f);
 
