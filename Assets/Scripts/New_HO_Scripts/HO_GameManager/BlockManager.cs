@@ -280,20 +280,49 @@ public class BlockManager : MonoBehaviour
     {
         // Position the "n" block in the center of the formula building area
         RectTransform nRect = nBlock.GetComponent<RectTransform>();
-        
+
         // Find or create a formula building area
         GameObject coeffArea = GameObject.Find("CoeffArea");
         if (coeffArea == null)
         {
             coeffArea = new GameObject("CoeffArea");
             coeffArea.transform.SetParent(blockContainer.parent);
-            
+
             RectTransform areaRect = coeffArea.AddComponent<RectTransform>();
             areaRect.anchoredPosition = new Vector2(0, 100f); // Above the block container
             areaRect.sizeDelta = new Vector2(400f, 100f);
         }
-        
+
         nBlock.transform.SetParent(coeffArea.transform);
+    }
+    
+    public void EnsureBlocksWithinContainer()
+    {
+        if (blockContainer == null)
+        {
+            Debug.LogWarning("[EnsureBlocks] Block container not assigned!");
+            return;
+        }
+
+        RectTransform containerRect = blockContainer.GetComponent<RectTransform>();
+
+        foreach (FormulaBlock block in availableBlocks)
+        {
+            if (block == null) continue;
+            RectTransform rect = block.GetComponent<RectTransform>();
+
+            // Convert the block’s position to local coordinates relative to container
+            Vector2 localPos = rect.anchoredPosition;
+
+            float halfWidth = containerRect.rect.width / 2f;
+            float halfHeight = containerRect.rect.height / 2f;
+
+            // Clamp within container bounds
+            localPos.x = Mathf.Clamp(localPos.x, -halfWidth + rect.rect.width / 2f, halfWidth - rect.rect.width / 2f);
+            localPos.y = Mathf.Clamp(localPos.y, -halfHeight + rect.rect.height / 2f, halfHeight - rect.rect.height / 2f);
+
+            rect.anchoredPosition = localPos;
+        }
     }
 
     private void PositionSignBlock(FormulaBlock nBlock)

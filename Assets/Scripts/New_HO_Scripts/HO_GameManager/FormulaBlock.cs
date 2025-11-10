@@ -311,10 +311,11 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         {
             Debug.Log($"Trying to snap to nearest block: {nearestBlock.blockType} {nearestBlock.blockText.text}");
             TrySnapToNearestBlock(nearestBlock);
-        }   
-        
+        }
+
         // Try to snap the entire chain to a valid position
-        EnsureChainInBounds();
+        BlockManager manager = FindObjectOfType<BlockManager>();
+        manager.EnsureBlocksWithinContainer();
     }
 
     private void EndSingleDrag()
@@ -340,7 +341,8 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
         else
         {
-            EnsureBlockInReasonableContainer();
+            BlockManager manager = FindObjectOfType<BlockManager>();
+            manager.EnsureBlocksWithinContainer();
         }
     }
 
@@ -416,11 +418,16 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void EnsureBlockInReasonableContainer()
     {
-        if (transform.parent == canvas.transform)
-        {           
+        // If a single block isn't inside a valid container (e.g., canvas), reset it to (0,0)
+        if (transform.parent == null || transform.parent == canvas.transform)
+        {
+            transform.SetParent(canvas.transform);
+            rectTransform.anchoredPosition = Vector2.zero;
+            Debug.Log("Block was misplaced. Reset to (0,0) in canvas.");
             return;
         }
     }
+
 
     private void DisconnectFromParent()
     {
@@ -598,43 +605,39 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void EnsureChainInBounds()
     {
-        // Simple bounds checking - keep the chain within the canvas
-        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-        Vector2 canvasSize = canvasRect.sizeDelta;
-
+        // Get all connected blocks in this chain
         List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
 
-        // Find bounds of the entire chain
-        float minX = float.MaxValue, maxX = float.MinValue;
+        if (chainBlocks == null || chainBlocks.Count == 0)
+            return;
+
+        // Move the whole chain back to (0, 0) in the canvas if it's not inside a reasonable area
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+
+        // Check if any block is way out of bounds
+        bool outOfBounds = false;
         foreach (FormulaBlock block in chainBlocks)
         {
-            Vector3[] corners = new Vector3[4];
-            block.rectTransform.GetWorldCorners(corners);
-
-            for (int i = 0; i < 4; i++)
+            Vector2 pos = block.rectTransform.anchoredPosition;
+            if (Mathf.Abs(pos.x) > canvasRect.sizeDelta.x / 2f || Mathf.Abs(pos.y) > canvasRect.sizeDelta.y / 2f)
             {
-                Vector2 localPoint;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    canvasRect, corners[i], null, out localPoint);
-
-                minX = Mathf.Min(minX, localPoint.x);
-                maxX = Mathf.Max(maxX, localPoint.x);
+                outOfBounds = true;
+                break;
             }
         }
 
-        // Adjust position if out of bounds
-        float adjustment = 0;
-        if (minX < -canvasSize.x / 2)
-            adjustment = (-canvasSize.x / 2) - minX + 50f;
-        else if (maxX > canvasSize.x / 2)
-            adjustment = (canvasSize.x / 2) - maxX - 50f;
-
-        if (adjustment != 0)
+        if (outOfBounds)
         {
+            // Reset all blocks in the chain to be centered at (0,0)
+            Vector2 basePosition = Vector2.zero;
+
             foreach (FormulaBlock block in chainBlocks)
             {
-                block.rectTransform.anchoredPosition += new Vector2(adjustment, 0);
+                block.transform.SetParent(canvas.transform);
+                block.rectTransform.anchoredPosition = basePosition;
             }
+
+            Debug.Log("Chain was out of bounds. Reset to (0,0).");
         }
     }
 
@@ -669,7 +672,9 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         List<FormulaBlock> chainBlocks = GetAllConnectedBlocks();
         return chainBlocks.Find(b => b.blockType == BlockType.Variable);
     }
+    
 }
+
 
 
 

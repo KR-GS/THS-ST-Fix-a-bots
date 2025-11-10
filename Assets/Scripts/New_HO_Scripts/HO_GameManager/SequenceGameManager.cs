@@ -457,9 +457,13 @@ public class SequenceGameManager : MonoBehaviour
             }
 
             // Show feedback for cycle step
-            if(StaticData.stageNum <= 3)
+            if (StaticData.stageNum < 3)
             {
                 feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
+            }
+            else
+            {
+                feedbackText.text = "";
             }
             
             // Wait for cycleInterval seconds and listen for input 
@@ -522,14 +526,10 @@ public class SequenceGameManager : MonoBehaviour
                             // Hit animation based on expected swipe direction
                             if (expectedDirection == "Up" || expectedDirection == "Down")
                             {
-                                statusAnimator.SetBool("Anticipate_Vert_Trigger", true);
-                                statusAnimator.SetBool("Anticipate_Vert_Trigger", false);
                                 statusAnimator.SetBool("Hit_Vert_Trigger", true);
                             }
                             else
                             {
-                                statusAnimator.SetBool("Anticipate_Hori_Trigger", true);
-                                statusAnimator.SetBool("Anticipate_Hori_Trigger", false);
                                 statusAnimator.SetBool("Hit_Hori_Trigger", true);
                             }
                             soundEffectsManager.playHitSound();
