@@ -396,6 +396,7 @@ public class LoPaintMinigame : MonoBehaviour
         bool countCorrect = false;
         bool typeCorrect = false;
         StaticData.playerPaintPattern = new List<int>();
+        StaticData.playerPaint2Pattern = new List<int>();
 
 
         yield return new WaitForSeconds(1f);
@@ -410,7 +411,15 @@ public class LoPaintMinigame : MonoBehaviour
             {
                 Debug.Log("Adding data in player paint pattern!");
                 int playerCount = partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount(packUsed[j]);
-                StaticData.playerPaintPattern.Add(playerCount);
+                
+                if(j == 0)
+                {
+                    StaticData.playerPaintPattern.Add(playerCount);
+                }
+                else if (j == 1)
+                {
+                    StaticData.playerPaint2Pattern.Add(playerCount);
+                }
 
                 if (partSides[i].GetComponentInChildren<RobotPaintPart>().GetCurrentStickerSideCount(packUsed[j]) == numberPattern[j][i])
                 {

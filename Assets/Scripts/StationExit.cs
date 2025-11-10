@@ -17,6 +17,8 @@ public class StationExit : MonoBehaviour
 
     public List<int> correctPattern = new List<int>();
     public List<int> playerAnswer = new List<int>();
+    public List<int> paint2Patterning = new List<int>();
+    public List<int> answer2Painting = new List<int>();
     public int level = 0;
 
     [SerializeField] StationTimeManager getTime;
@@ -152,6 +154,8 @@ public class StationExit : MonoBehaviour
             case 1:
                 correctPattern = new List<int>(StaticData.paintPattern ?? new List<int>());
                 playerAnswer = new List<int>(StaticData.playerPaintPattern ?? new List<int>());
+                paint2Patterning = new List<int>(StaticData.paint2Pattern ?? new List<int>());
+                answer2Painting = new List<int>(StaticData.playerPaint2Pattern ?? new List<int>());
                 howManyWrongs = StaticData.pendingPaintWrongs;
                 break;
 
@@ -169,6 +173,8 @@ public class StationExit : MonoBehaviour
         StaticData.pendingGameRecord = new GameData.GameRecord(
             correctPattern,
             playerAnswer,
+            paint2Patterning,
+            answer2Painting,
             StaticData.timeSpent,
             StaticData.dayNo,
             howManyWrongs, // Capture NOW

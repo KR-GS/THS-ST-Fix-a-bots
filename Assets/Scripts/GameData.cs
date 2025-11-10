@@ -12,16 +12,20 @@ public class GameData
     {
         public List<int> correctPattern;
         public List<int> playerAnswer;
+        public List<int> paint2MedHard;
+        public List<int> answer2PaintingMedHard;
         public float timeSpent;
         public int day;
         public int mistakes;
         public int station;
         public int orderNo;
 
-        public GameRecord(List<int> correct, List<int> answer, float time, int dayNum, int wrongs, int minigame, int orderNum)
+        public GameRecord(List<int> correct, List<int> answer, List<int> paintMedHard, List<int> answer2PaintMedHard, float time, int dayNum, int wrongs, int minigame, int orderNum)
         {
             correctPattern = correct;
             playerAnswer = answer;
+            paint2MedHard = paintMedHard;
+            answer2PaintingMedHard = answer2PaintMedHard;
             timeSpent = time;
             day = dayNum;
             mistakes = wrongs;
