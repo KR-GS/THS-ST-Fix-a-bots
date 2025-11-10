@@ -8,7 +8,7 @@ public class TimePeriodButton : MonoBehaviour
     private RectTransform rectTransform;
     
     private TextMeshPro buttontext;
-    private float moveAmount = 80f;
+    private float moveAmount = 60f;
     private bool isInitialized = false;
     public int ButtonNumber;
     public bool isSelected = false;
