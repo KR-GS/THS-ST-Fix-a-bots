@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad82ce79a7aff2341bdc3afa8d8d7856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokenSprite: {fileID: 737612968, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  brokenSprite: {fileID: 412375383, guid: 9590b5e90e54451458c22a2d751eae67, type: 3}
   fixedSprite: {fileID: -1506010389, guid: a77917e5765d5794380f365276da33ec, type: 3}
   mainsprite: {fileID: 2334754928714609831}
 --- !u!1 &5441033258733591141

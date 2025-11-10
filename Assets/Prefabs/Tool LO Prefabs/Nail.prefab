@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad82ce79a7aff2341bdc3afa8d8d7856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokenSprite: {fileID: -876842769, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  brokenSprite: {fileID: 1424438087, guid: 60c294dc4d64cba4d82242c2d679b4ed, type: 3}
   fixedSprite: {fileID: -1948271735, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
   mainsprite: {fileID: 4762862878099755405}
 --- !u!1 &4229747512293052619
@@ -76,7 +76,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.41, z: 0}
-  m_LocalScale: {x: 0.48539072, y: 0.48258486, z: 0.3711}
+  m_LocalScale: {x: 0.43665484, y: 0.42379436, z: 0.3711}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7698653015851365593}
@@ -129,7 +129,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
+  m_DrawMode: 0
   m_Size: {x: 4.8308225, y: 5.4271264}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

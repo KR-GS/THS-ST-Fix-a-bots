@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad82ce79a7aff2341bdc3afa8d8d7856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokenSprite: {fileID: 1597143511, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
+  brokenSprite: {fileID: 443853292, guid: 3fd513aa149e19648bbe82e6ad44cda7, type: 3}
   fixedSprite: {fileID: 272432934, guid: b8e1be3e85f3d3844a18ac3dc030ea84, type: 3}
   mainsprite: {fileID: 5811078362170141790}
 --- !u!1 &5486189537628908141
@@ -163,7 +163,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.02, y: 0.32, z: 0}
-  m_LocalScale: {x: 0.47457224, y: 0.47457224, z: 0.47457224}
+  m_LocalScale: {x: 0.47457227, y: 0.4745722, z: 0.47457224}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7698653015851365593}
