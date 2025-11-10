@@ -213,7 +213,14 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             {
                 buttonLabel.color = new Color(0.2f, 0.2f, 0.2f);  // greyed out text for locked
             }
-        }
+
+            if (stageNum == StaticData.numStageDone)
+            {
+                // Stop any previous coroutine to prevent duplicates
+                StopCoroutine(nameof(PulseText));
+                StartCoroutine(PulseText(buttonLabel, buttonLabel.color));
+            }
+        } 
     }
 
     void ShowStageInfo(int stageNum)
@@ -250,16 +257,43 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         stageInfoPanel.SetActive(false);
         speedPanel.SetActive(false);
 
-        LoadStage(selectedStageNum);
+        DataPersistenceManager.Instance.LoadGame();
+        StaticData.cycleInterval = confirmedSpeed;
+        StaticData.cycleLeniency = confirmedSpeed - confirmedSpeed / 4;
+        StaticData.stageNum = selectedStageNum;
+
+        if (selectedStageNum == 0 && StaticData.numStageDone == 0)
+        {
+            Debug.Log("Loading Speed Calibration");
+            SceneManager.LoadScene("HO_SpeedCalibration");
+        }
+        else
+            LoadStage(selectedStageNum);
+    }
+
+    private IEnumerator PulseText(TMP_Text text, Color baseColor)
+    {
+        float pulseSpeed = 2f; 
+        float scaleAmount = 2f; 
+
+        Vector3 originalScale = text.transform.localScale;
+        while (true)
+        {
+            
+            float t = (Mathf.Sin(Time.time * pulseSpeed) + 1f) / 2f; 
+            text.transform.localScale = Vector3.Lerp(originalScale, originalScale * scaleAmount, t);
+
+            text.color = Color.Lerp(baseColor, Color.yellow, t * 0.3f);
+
+            yield return null;
+        }
     }
 
     public void LoadStage(int stageNum)
     {
-        DataPersistenceManager.Instance.LoadGame();
+        
         StaticData.stageNum = stageNum;
-        StaticData.cycleInterval = confirmedSpeed;
-        StaticData.cycleLeniency = confirmedSpeed - confirmedSpeed / 4;
-
+    
         Debug.Log("Loading Stage: " + StaticData.stageNum);
 
         if (stageNum <= 15)

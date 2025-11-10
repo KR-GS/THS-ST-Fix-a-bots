@@ -238,7 +238,7 @@ public class StaticData
         constant = new List<int>()
         {
             // SCENARIO 1
-            0, 0, 1, 2, 0, -1, -1, -1, 2, -3, 2, -2, -1, 2, -3,
+            1, 1, 1, 2, 2, -1, -1, -1, 2, -3, 2, -2, -1, 2, -3,
             // SCENARIO 2
             -3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3,
             // SCENARIO 3
@@ -260,9 +260,9 @@ public class StaticData
         prePressedCount = new List<int>()
         {
             // SCENARIO 1
-            3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 1, 2, 0, 0,
+            3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
             // SCENARIO 2
-            3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
             // SCENARIO 3
             3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1
         };
@@ -304,7 +304,7 @@ public class StaticData
         lockCoefficient = new List<bool>()
         {
             // SCENARIO 1
-            true, true, true, true, true, true, true, true, false, false, false, true, false, false, false,
+            false, false, true, true, true, true, true, true, false, false, false, true, false, false, false,
             // SCENARIO 2
             false, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
             // SCENARIO 3
@@ -315,7 +315,7 @@ public class StaticData
         lockConstant = new List<bool>()
         {
             // SCENARIO 1
-            true, true, true, false, false, false, false, false, true, true, true, false, true, false, false,
+            false, false, true, false, false, false, false, false, true, true, true, false, true, false, false,
             // SCENARIO 2
             false, true, true, false, false, false, true, false, false, false, false, true, false, false, false,
             // SCENARIO 3
@@ -347,11 +347,12 @@ public class StaticData
             //SCENARIO 3
             1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
         };
-
+        
+        // If the block colors change if they are right in the formula input screen
         stageFormulaHint = new List<bool>()
         {
             //SCENARIO 1
-            true, true, true, true, true, true, true, true, true, false, false, false, true, false, false,
+            true, true, true, true, true, true, true, true, false, false, false, false, false, false, false,
 
             //SCENARIO 2
             false, true, true, true, true, true, true, true, true, false, false, false, false, false, false,

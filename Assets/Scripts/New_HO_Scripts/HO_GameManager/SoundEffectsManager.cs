@@ -45,17 +45,14 @@ public class SoundEffectsManager : MonoBehaviour
 
     public void playHitSound()
     {
-        sfx.clip = hit;
-        sfx.Play();
+        sfx.PlayOneShot(hit);
     }
     public void playMissSound()
     {
-        sfx.clip = miss;
-        sfx.Play();
+        sfx.PlayOneShot(miss);
     }
     public void playIdleSound()
     {
-        sfx.clip = idle;
-        sfx.Play();
+        sfx.PlayOneShot(idle);
     }
 }

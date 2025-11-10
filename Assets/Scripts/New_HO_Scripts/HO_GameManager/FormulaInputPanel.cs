@@ -115,9 +115,52 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         {
             buttonsParent.SetActive(false);
             buttonsParent2.SetActive(true);
+            
+        // Change color to indicate correct placement
+            if (FormulaInputPanel.Instance != null && StaticData.stageFormulaHint[StaticData.stageNum])
+            {
+                var seq = targetSequence; // get the correct target
+                
+                nBlock.SetColor(Color.green);
+
+                if (nBlock.LeftConnectedBlock != null)
+                {
+                    // Check if coefficient matches
+                    if (int.Parse(nBlock.LeftConnectedBlock.blockText.text) == seq.Coefficient)
+                        nBlock.LeftConnectedBlock.SetColor(Color.green);
+                }
+                if (nBlock.RightConnectedBlock != null)
+                {
+                    // For sign, check if this symbol is the correct one
+                    string expectedSymbol = seq.Constant >= 0 ? "+" : "-";
+                    if (nBlock.RightConnectedBlock.blockText.text == expectedSymbol)
+                        nBlock.RightConnectedBlock.SetColor(Color.green);
+
+                    if (nBlock.RightConnectedBlock.RightConnectedBlock != null)
+                    {
+                        // Check if constant matches
+                        int absConstant = Mathf.Abs(seq.Constant);
+                        if (int.Parse(nBlock.RightConnectedBlock.RightConnectedBlock.blockText.text) == absConstant)
+                            nBlock.RightConnectedBlock.RightConnectedBlock.SetColor(Color.green);
+                    }
+                }
+            }
         }
         else
         {
+            if (nBlock.LeftConnectedBlock != null)
+            {
+                nBlock.LeftConnectedBlock.blockImage.color = nBlock.LeftConnectedBlock.blockColor;
+            }
+            if (nBlock.RightConnectedBlock != null)
+            {
+                nBlock.RightConnectedBlock.blockImage.color = nBlock.RightConnectedBlock.blockColor;
+
+                if (nBlock.RightConnectedBlock.RightConnectedBlock != null)
+                {
+                    nBlock.RightConnectedBlock.RightConnectedBlock.blockImage.color = nBlock.RightConnectedBlock.RightConnectedBlock.blockColor;  
+                }
+            }
             buttonsParent2.SetActive(false);
             buttonsParent.SetActive(true);
         }

@@ -285,23 +285,26 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             block.canvasGroup.blocksRaycasts = true;
         }
 
-        if (rightConnectedBlock.blockType == BlockType.Sign)
+        if (rightConnectedBlock != null)
         {
-            FormulaBlock signBlock = rightConnectedBlock;
-
-            // Only if the sign doesn't already have a constant attached
-            if (!signBlock.HasRightConnection && signBlock.rightSnapSlot != null)
+            if (rightConnectedBlock.blockType == BlockType.Sign)
             {
-                FormulaBlock nearestConstant = signBlock.FindNearestBlockWithFreeSnap();
+                FormulaBlock signBlock = rightConnectedBlock;
 
-                if (nearestConstant != null && nearestConstant.blockType == BlockType.Constant)
+                // Only if the sign doesn't already have a constant attached
+                if (!signBlock.HasRightConnection && signBlock.rightSnapSlot != null)
                 {
-                    Debug.Log($"Auto-snapping constant {nearestConstant.blockText.text} to sign block {signBlock.blockText.text}");
-                    signBlock.TrySnapToNearestBlock(nearestConstant);
+                    FormulaBlock nearestConstant = signBlock.FindNearestBlockWithFreeSnap();
+
+                    if (nearestConstant != null && nearestConstant.blockType == BlockType.Constant)
+                    {
+                        Debug.Log($"Auto-snapping constant {nearestConstant.blockText.text} to sign block {signBlock.blockText.text}");
+                        signBlock.TrySnapToNearestBlock(nearestConstant);
+                    }
                 }
             }
         }
-
+        
         FormulaBlock nearestBlock = FindNearestBlockWithFreeSnap();
 
         if (nearestBlock != null)

@@ -729,7 +729,7 @@ public class SequenceGameManager : MonoBehaviour
         }
 
         //Early swipes
-        else if (currentSequence.Numbers.Contains(buttons[currentCycleIndex].ButtonNumber + 1) && gotSwipeCorrect)
+        else if (currentSequence.Numbers.Contains(buttons[currentCycleIndex].ButtonNumber + 1) && gotSwipeCorrect && buttons[currentCycleIndex + 1].GetPreSelected() == false)
         {
             buttons[currentCycleIndex + 1].SetGreen();
             buttons[currentCycleIndex + 1].SetWasSelected(true);

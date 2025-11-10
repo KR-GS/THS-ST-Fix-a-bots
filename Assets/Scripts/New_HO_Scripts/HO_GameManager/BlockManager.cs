@@ -52,7 +52,7 @@ public class BlockManager : MonoBehaviour
         }
 
         //spawns signs
-        if (StaticData.lockConstant[StaticData.stageNum] == true)
+        if (StaticData.lockConstant[StaticData.stageNum] == true || StaticData.stageNum <= 8)
         {
             if (StaticData.constant[StaticData.stageNum] < 0)
             {
