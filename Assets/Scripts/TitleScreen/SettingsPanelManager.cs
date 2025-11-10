@@ -102,6 +102,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         else if (StaticData.isOnLowerOrder)
         {
             higherOrderButton.gameObject.SetActive(false);
+            lowerOrderButton.gameObject.SetActive(false);
         }
         // if on Higher order part
         else if (StaticData.isOnHigherOrder)

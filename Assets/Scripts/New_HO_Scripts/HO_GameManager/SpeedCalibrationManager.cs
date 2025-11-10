@@ -70,7 +70,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
 
     private void InitializeUI()
     {
-        feedbackText.text = "This game will be a rhythm game, please tap the screen to adjust to your preferred speed.";
+        feedbackText.text = "Rhythm game ang parteng ito, i-tap ang screen para i-adjust ang bilis ng laro.";
         UpdateSpeedText();
 
         // Speed adjustment buttons
@@ -96,7 +96,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
         // Next Stage button
         nextStageButton.onClick.AddListener(() =>
         {
-            feedbackText.text = "Loading next stage...";
+            feedbackText.text = "Goodluck!";
             DataPersistenceManager.Instance.SaveGame();
             SceneManager.LoadScene("HO_BotFightScene");
         });
@@ -144,9 +144,9 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             buttons[num - 1].SetPreSelected(true);
         }
 
-        feedbackText.text = "Welcome to the Speed Calibration! Please tap the arrow buttons to adjust the speed.";
+        feedbackText.text = "Welcome sa Speed Calibration! Pa-tap ng mga arrows para i-adjust ang speed.";
         yield return new WaitForSeconds(3f);
-        feedbackText.text = "You can change the speed at any time in the settings menu under Rhythm.";
+        feedbackText.text = "Maari ninyo ring ibahin ang bilis kahit kailan sa loob ng settings menu.";
         yield return new WaitForSeconds(3f);
         StartCoroutine(CycleButtons());
     }
@@ -199,7 +199,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                     buttons[num - 1].SetPreSelected(true);
                 }
                 
-                feedbackText.text = "Get ready!";
+                feedbackText.text = "Ito na!";
                 yield return new WaitForSeconds(2f);
                 ResetAnims();
             }
@@ -231,7 +231,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
             // Show feedback for cycle step
             if(StaticData.stageNum <= 3)
             {
-                feedbackText.text = inSequence ? $"Number {btnNumber} is part of the sequence." : $"Number {btnNumber} is NOT part of the sequence.";
+                feedbackText.text = inSequence ? $"{btnNumber} ay parte ng sequence." : $"{btnNumber} ay HINDI parte ng sequence.";
             }
             
             // Wait for cycleInterval seconds and listen for input 
@@ -313,7 +313,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                         // if the player misses, plays miss animation
                         if (timer > StaticData.cycleLeniency && !gotRight)
                         {
-                            feedbackText.text = "You missed!";
+                            feedbackText.text = "Hala! Hindi ka nakaswipe!";
                             ResetAnims();
 
                             // Miss animation based on expected swipe direction
@@ -493,7 +493,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
         {
             buttons[currentCycleIndex].SetRed();
             buttons[currentCycleIndex].toggleWrong();
-            feedbackText.text = $"Wrong swipe! {btnNumber} is not in the sequence.";
+            feedbackText.text = $"Maling swipe! {btnNumber} ay hindi parte ng sequence.";
             ResetAnims();
             statusAnimator.SetBool("Early_Trigger", true);
             soundEffectsManager.playMissSound();
@@ -513,7 +513,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                     pressedNumbers.Add(btnNumber);
                     buttons[currentCycleIndex].SetSelected(true);
 
-                    feedbackText.text = $"Correct swipe {direction} for {btnNumber}!";
+                    feedbackText.text = $"Tamang swipe swipe sa {btnNumber}!";
 
                     if (expected == "Up" || expected == "Down")
                     {
@@ -533,7 +533,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                 {
                     ResetAnims();
                     buttons[currentCycleIndex].SetHighlighted(true);
-                    feedbackText.text = $"Wrong swipe!";
+                    feedbackText.text = $"Maling swipe!";
 
                     if (expected == "Up" || expected == "Down")
                     {
