@@ -94,7 +94,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         {
             int stageNum = i;
             //Limits to 15 stages for now
-            if(stageNum < 15)
+            if(stageNum < 30)
             {
                 // LIMITS STUDENTS TO FIRST 15 STAGES
                 stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
@@ -137,23 +137,22 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         switch (index)
         {
             case 0:
-                leftButton.interactable = false;
                 leftButton.gameObject.SetActive(false);
-                rightButton.interactable = true;
                 rightButton.gameObject.SetActive(true);
+                rightButton.interactable = true;
                 levelMap1.gameObject.SetActive(true);
                 levelMap2.gameObject.SetActive(false);
                 levelMap3.gameObject.SetActive(false);
                 break;
             case 1:
-                leftButton.interactable = true;
                 leftButton.gameObject.SetActive(true);
-                rightButton.interactable = true;
-                rightButton.gameObject.SetActive(true);
+                leftButton.interactable = true;
+                rightButton.gameObject.SetActive(false);
                 levelMap1.gameObject.SetActive(false);
                 levelMap2.gameObject.SetActive(true);
                 levelMap3.gameObject.SetActive(false);
                 break;
+            /*
             case 2:
                 leftButton.interactable = true;
                 leftButton.gameObject.SetActive(true);
@@ -163,6 +162,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
                 levelMap2.gameObject.SetActive(false);
                 levelMap3.gameObject.SetActive(true);
                 break;
+            */
         }
     }
     
@@ -180,7 +180,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
         else if (StaticData.numStageDone < 30)
         {
-            int index = Mathf.Clamp(StaticData.numStageDone - 16, 0, levelMapSprites2.Length - 1);
+            int index = StaticData.numStageDone % 15;
 
             levelMap1.sprite = levelMapSprites[15];
             levelMap2.sprite = levelMapSprites2[index];
@@ -304,13 +304,13 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     
         Debug.Log("Loading Stage: " + StaticData.stageNum);
 
-        if (stageNum <= 15)
+        if (stageNum < 15)
         {
             // SceneManager.LoadScene("HO_BotTennisScene");
             //SceneManager.LoadScene("HO_BotFightScene");
             LoadingScreenManager.Instance.SwitchtoSceneMath(2);
         }
-        else if (stageNum <= 31)
+        else if (stageNum < 31)
         {
             //SceneManager.LoadScene("HO_BotTennisScene");
             LoadingScreenManager.Instance.SwitchtoSceneMath(3);

@@ -81,7 +81,7 @@ public class WorkshopTutorial : MonoBehaviour
                     glm.dayNumber.gameObject.SetActive(false);
                     break;
                 case 1:
-                    tutorialText.text = "Makikita mo kung ilang araw na ang nakalipas mula ng una kang nagbukas ng workshop…";
+                    tutorialText.text = "Makikita mo kung ilang araw na ang nakalipas mula ng una kang nagbukas ng workshop";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-358, 265);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-726, 207);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(-158, 218);
@@ -127,7 +127,7 @@ public class WorkshopTutorial : MonoBehaviour
                     TVDemo.sprite = TVSpriteNoOrder;
                     break;
                 case 4:
-                    tutorialText.text = "Tignan-tignan mo nalang kapag umilaw ‘yan ah, ibig sabihin noon ay may bago kang order.";
+                    tutorialText.text = "Tignan-tignan mo nalang kapag umilaw ï¿½yan ah, ibig sabihin noon ay may bago kang order.";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-209, 8);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-537, -50);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(31, -39);
