@@ -738,6 +738,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 707493499}
+        m_TargetAssemblyTypeName: LoPaintMinigame, Assembly-CSharp
+        m_MethodName: CloseTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &397965826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,6 +1378,26 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[0].description
       value: Ang ginagawa natin sa lugar na ito ay ang paglalagay ng stickers sa
         kada panig ng robots.
@@ -1415,6 +1447,34 @@ PrefabInstance:
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[6].description
       value: Maiikot mo ang mga robots kung pumindot ka dito.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 707493499}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CloseTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoPaintMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_Name
@@ -2117,6 +2177,7 @@ MonoBehaviour:
   checkUI: {fileID: 604964466}
   overviewUI: {fileID: 2018880989}
   notesUI: {fileID: 1847413831}
+  tutorialManager: {fileID: 456426593}
   correct_sprite: {fileID: 21300000, guid: 54ea72d062d2b514b8762b3c829572c4, type: 3}
   wrong_sprite: {fileID: 21300000, guid: d3b82f9ed35395f4cb625d292b0973f0, type: 3}
   correct_face: {fileID: 523513833, guid: 278f1adf57ba4ec4eb4682e531d15a22, type: 3}

@@ -369,6 +369,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1450728182}
+        m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
+        m_MethodName: OpenTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &40039571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4505,6 +4517,7 @@ MonoBehaviour:
   toolHolder: {fileID: 743482644}
   speed: 20
   hint_btn: {fileID: 461153416}
+  tutorialManager: {fileID: 1223521043119176791}
   patternLength: 0
   toolButtons:
   - {fileID: 1477890871}
@@ -6930,6 +6943,50 @@ PrefabInstance:
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[0].description
       value: "Ito, ito\u2026 ayan! Nandito ang mga tools natin"
       objectReference: {fileID: 0}
@@ -7023,6 +7080,34 @@ PrefabInstance:
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[11].description
       value: Kung nagkamali ka, gamitin mo ang button na ito.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1450728182}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CloseTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoToolMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_Name

@@ -15,6 +15,9 @@ public class Tool : MonoBehaviour
     private SpriteRenderer addOneSprite;
 
     [SerializeField]
+    private SpriteRenderer shadow;
+
+    [SerializeField]
     SpriteLibraryAsset[] tool_variants;
 
     [SerializeField]
@@ -48,11 +51,13 @@ public class Tool : MonoBehaviour
 
     public IEnumerator TriggerToolAnimation(PartTile fastener)
     {
+        shadow.enabled = false;
         GetComponentInChildren<ToolEvent>().SetCurrentFastener(fastener);
         GetComponent<Collider2D>().enabled = false;
         statusAnimator.SetTrigger("IsUsed");
         yield return new WaitForSeconds(1f);
         GetComponent<Collider2D>().enabled = true;
+        shadow.enabled = true;
     }
 
     public void SetHeightValue(float value)

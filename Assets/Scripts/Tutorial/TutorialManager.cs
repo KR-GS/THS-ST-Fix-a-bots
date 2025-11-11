@@ -17,6 +17,15 @@ public class TutorialManager : MonoBehaviour
     private RawImage tutorial_display;
 
     [SerializeField]
+    private Button done_Btn;
+
+    [SerializeField]
+    private Button left_Btn;
+
+    [SerializeField]
+    private Button right_Btn;
+
+    [SerializeField]
     private Tutorial[] tutorials;
 
     private int currentSlide = 0;
@@ -26,6 +35,8 @@ public class TutorialManager : MonoBehaviour
 
     public void OpenTutorial()
     {
+        done_Btn.gameObject.SetActive(false);
+
         tutorialUI.enabled = true;
 
         patt_sprite.sprite = tutorials[currentSlide].patt_sprite;
@@ -47,6 +58,18 @@ public class TutorialManager : MonoBehaviour
 
             tutorial_display.texture = tutorials[currentSlide].display;
         }
+
+        if(currentSlide >= tutorials.Length - 1)
+        {
+            done_Btn.gameObject.SetActive(true);
+            right_Btn.gameObject.SetActive(false);
+            left_Btn.gameObject.SetActive(true);
+        }
+        else
+        {
+            right_Btn.gameObject.SetActive(true);
+            left_Btn.gameObject.SetActive(true);
+        }
     }
 
     public void PlayPrevTutorial()
@@ -60,6 +83,17 @@ public class TutorialManager : MonoBehaviour
             description_TMP.text = tutorials[currentSlide].description;
 
             tutorial_display.texture = tutorials[currentSlide].display;
+        }
+
+        if (currentSlide <= 0)
+        {
+            right_Btn.gameObject.SetActive(true);
+            left_Btn.gameObject.SetActive(false);
+        }
+        else
+        {
+            right_Btn.gameObject.SetActive(true);
+            left_Btn.gameObject.SetActive(true);
         }
     }
 

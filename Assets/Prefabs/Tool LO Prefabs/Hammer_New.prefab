@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 4855399257155191099}
   - component: {fileID: 4888964184402180695}
   m_Layer: 0
-  m_Name: blue_hammer-01_1 (1)
+  m_Name: hammer_shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -628,6 +628,7 @@ MonoBehaviour:
   addTenPos: {fileID: 6140072312494091261}
   speed: 5
   addOneSprite: {fileID: 6780622076016619604}
+  shadow: {fileID: 4888964184402180695}
   tool_variants:
   - {fileID: 7108339969198208228, guid: a4f0d99db81400a4ab3238f269221fa2, type: 3}
   - {fileID: 7108339969198208228, guid: 067ee6bcc1a98cd459d5ef0af14c2fbd, type: 3}

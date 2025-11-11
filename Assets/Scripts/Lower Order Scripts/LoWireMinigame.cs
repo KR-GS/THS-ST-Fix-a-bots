@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System.Security.Cryptography.X509Certificates;
 
 
 public class LoWireMinigame : MonoBehaviour
@@ -21,6 +22,9 @@ public class LoWireMinigame : MonoBehaviour
 
     [SerializeField]
     private DifficultyManager difficultyManager;
+
+    [SerializeField]
+    private TutorialManager tutorialManager;
 
     [SerializeField]
     private Canvas ValueUI;
@@ -102,6 +106,10 @@ public class LoWireMinigame : MonoBehaviour
         Color btn_Blue = wireGenerator.GetBlue();
 
         Color btn_Yellow = wireGenerator.GetYellow();
+
+        GameObject pliers = Instantiate(this.pliers);
+
+        int wrong_count = 0;
 
         ResultUI.enabled = false;
 
@@ -232,7 +240,11 @@ public class LoWireMinigame : MonoBehaviour
                         child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
                     }
 
+                    pliers.GetComponent<WirePliers>().GetWiresToCut(extraVFX.transform);
+
                     vfxList.Add(extraVFX.transform);
+
+                    wrong_count++;
 
                     wireToEdit.Add(i);
                 }
@@ -256,6 +268,11 @@ public class LoWireMinigame : MonoBehaviour
 
                 wireToEdit.Add(i);
             }
+        }
+
+        if(wrong_count <= 0)
+        {
+            Destroy(pliers);
         }
 
         //generator.SetActive(isOpen);
@@ -283,6 +300,13 @@ public class LoWireMinigame : MonoBehaviour
             default:
                 hint_btn.gameObject.SetActive(false);
                 break;
+        }
+
+        if (StaticData.isFirstWire)
+        {
+            StaticData.isFirstWire = false;
+            OpenTutorial();
+            tutorialManager.OpenTutorial();
         }
     }
 
@@ -697,5 +721,15 @@ public class LoWireMinigame : MonoBehaviour
         hint_btn.interactable = true;
 
         hint_btn.GetComponent<Hint>().ChangeSpriteClose();
+    }
+
+    public void OpenTutorial()
+    {
+        OverallUI.enabled = false;
+    }
+
+    public void CloseTutorial()
+    {
+        OverallUI.enabled = true;
     }
 }

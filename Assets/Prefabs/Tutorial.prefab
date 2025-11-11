@@ -391,7 +391,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -241, y: -270}
+  m_AnchoredPosition: {x: -277, y: -292}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1479465320007151284
@@ -451,15 +451,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 47.5
+  m_fontSizeBase: 47.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -489,7 +489,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -39.84308, y: -9.73053, z: -770.02, w: -106.39853}
+  m_margin: {x: -17.952026, y: -9.73053, z: -831.7136, w: -106.39853}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1033,6 +1033,9 @@ MonoBehaviour:
   description_TMP: {fileID: 7402960722719320668}
   patt_sprite: {fileID: 108235348504391751}
   tutorial_display: {fileID: 206898416645459629}
+  done_Btn: {fileID: 6312699045616962224}
+  left_Btn: {fileID: 2799489048465192703}
+  right_Btn: {fileID: 1824248375680426699}
   tutorials:
   - patt_sprite: {fileID: 0}
     description: 

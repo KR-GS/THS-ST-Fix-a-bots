@@ -40,6 +40,9 @@ public class LoToolMinigame : MonoBehaviour
     [SerializeField]
     private Button hint_btn;
 
+    [SerializeField]
+    private TutorialManager tutorialManager;
+
     private GameObject[] counterHolder;
     private GameObject[] gapHolder;
     private List<int> generatedList = new List<int>();
@@ -59,8 +62,6 @@ public class LoToolMinigame : MonoBehaviour
     private int[] originalGaps;
     private bool isDragging = false;
     private bool isOnObject = false;
-
-    private bool tutorialOpen;
 
     private Vector2[] endPoints = new Vector2[2];
 
@@ -547,6 +548,13 @@ public class LoToolMinigame : MonoBehaviour
 
         Camera.main.GetComponent<ToolCamera>().OverheadCameraView();
         OverheadView();
+
+        if (StaticData.isFirstTool)
+        {
+            StaticData.isFirstTool = false;
+            OpenTutorial();
+            tutorialManager.OpenTutorial();
+        }
     }
 
     // Update is called once per frame
@@ -1396,13 +1404,28 @@ public class LoToolMinigame : MonoBehaviour
         hint_btn.GetComponent<Hint>().ChangeSpriteClose();
     }
 
-    private void OpenTutorial()
+    public void OpenTutorial()
     {
-        
+        Debug.Log("Disabling UI elements");
+        foreach (GameObject part in tiledParts)
+        {
+            part.layer = LayerMask.NameToLayer("Ignore Raycast");
+        }
+
+        Camera.main.GetComponent<ToolCamera>().DisableCanvas();
+
+        Camera.main.GetComponent<ToolCamera>().DisableNoteCanvas();
     }
 
-    private void CloseTutorial()
+    public void CloseTutorial()
     {
-        
+        foreach (GameObject part in tiledParts)
+        {
+            part.layer = LayerMask.NameToLayer("Default");
+        }
+
+        Camera.main.GetComponent<ToolCamera>().EnableCanvas();
+
+        Camera.main.GetComponent<ToolCamera>().EnableNoteCanvas();
     }
 }

@@ -19421,6 +19421,7 @@ MonoBehaviour:
   wireGeneratedPlace: {fileID: 128016261}
   patternManager: {fileID: 1048178151}
   difficultyManager: {fileID: 1485289376}
+  tutorialManager: {fileID: 1580688775}
   ValueUI: {fileID: 123622118}
   origWire: {fileID: 1340522263}
   wireSlots:
@@ -26426,6 +26427,54 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[11].display
+      value: 
+      objectReference: {fileID: 2800000, guid: ef1b31042184e274096f358d6231a185, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[0].description
       value: "Hala! Parang delikado sa lugar na ito ah\u2026"
       objectReference: {fileID: 0}
@@ -26523,6 +26572,34 @@ PrefabInstance:
       propertyPath: tutorials.Array.data[11].patt_sprite
       value: 
       objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1343552625}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: CloseTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoWireMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_Name
       value: Tutorial
@@ -26948,6 +27025,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1580688775}
         m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+        m_MethodName: OpenTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1343552625}
+        m_TargetAssemblyTypeName: LoWireMinigame, Assembly-CSharp
         m_MethodName: OpenTutorial
         m_Mode: 1
         m_Arguments:

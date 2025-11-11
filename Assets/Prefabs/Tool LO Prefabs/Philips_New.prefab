@@ -319,6 +319,7 @@ MonoBehaviour:
   addTenPos: {fileID: 3946121211638168379}
   speed: 5
   addOneSprite: {fileID: 5288575664091874991}
+  shadow: {fileID: 9120157358680479756}
   tool_variants:
   - {fileID: 7108339969198208228, guid: fe82ce9258874af4e94438c7e727fe02, type: 3}
   - {fileID: 7108339969198208228, guid: 761e2e36cabdd6941b97afa94ccaef0e, type: 3}
@@ -540,7 +541,7 @@ GameObject:
   - component: {fileID: 6235394103002150004}
   - component: {fileID: 9120157358680479756}
   m_Layer: 0
-  m_Name: green_phillips_with_fastener_spritesheet-01_5 (1)
+  m_Name: phillips_shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

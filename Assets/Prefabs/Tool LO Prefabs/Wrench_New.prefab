@@ -355,8 +355,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 831632037822161889}
-  - {fileID: 6187172548882568983}
   - {fileID: 37230000135171642}
+  - {fileID: 6187172548882568983}
   - {fileID: 6664037826146919661}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -375,6 +375,7 @@ MonoBehaviour:
   addTenPos: {fileID: 831632037822161889}
   speed: 5
   addOneSprite: {fileID: 6711473743953070170}
+  shadow: {fileID: 1698180921975911502}
   tool_variants:
   - {fileID: 7108339969198208228, guid: 417d07a4b266b1a4496cc0ea23ce4d0b, type: 3}
   - {fileID: 7108339969198208228, guid: 43efb5718d0037848b1bf17d33dd7185, type: 3}
@@ -440,7 +441,7 @@ GameObject:
   - component: {fileID: 37230000135171642}
   - component: {fileID: 1698180921975911502}
   m_Layer: 0
-  m_Name: Wrench_Spritesheet_0 (1)
+  m_Name: Wrench_shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

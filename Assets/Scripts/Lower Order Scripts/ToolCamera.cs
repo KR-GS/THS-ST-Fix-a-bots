@@ -129,9 +129,29 @@ public class ToolCamera : MonoBehaviour
         overViewCanvas.enabled = !overViewCanvas.enabled;
     }
 
+    public void EnableCanvas()
+    {
+        overViewCanvas.enabled = true;
+    }
+
+    public void DisableCanvas()
+    {
+        overViewCanvas.enabled = false;
+    }
+
     public void ToggleNoteCanvas()
     {
         notesCanvas.enabled = !notesCanvas.enabled;
+    }
+
+    public void EnableNoteCanvas()
+    {
+        notesCanvas.enabled = true;
+    }
+
+    public void DisableNoteCanvas()
+    {
+        notesCanvas.enabled = false;
     }
 
     public void ToggleCounterCanvas()

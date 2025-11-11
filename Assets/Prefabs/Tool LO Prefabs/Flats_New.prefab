@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 1481459036542188400}
   - component: {fileID: 911926931617157770}
   m_Layer: 0
-  m_Name: flathead_with_flat_fastener_spritesheet_1 (1)
+  m_Name: flathead_shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,6 +383,7 @@ MonoBehaviour:
   brokenSprite: {fileID: 1597143511, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
   fixedSprite: {fileID: 180500846, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
   mainsprite: {fileID: 0}
+  isMissing: 0
 --- !u!61 &6255570194853617872
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -444,6 +445,7 @@ MonoBehaviour:
   addTenPos: {fileID: 3692262696522878840}
   speed: 5
   addOneSprite: {fileID: 5214796533951179418}
+  shadow: {fileID: 911926931617157770}
   tool_variants:
   - {fileID: 7108339969198208228, guid: 3a8360fa8fdaf6145bc1ed2c1fdbfaac, type: 3}
   - {fileID: 7108339969198208228, guid: 2297d4ed0ce34994d837ace28b4276b7, type: 3}

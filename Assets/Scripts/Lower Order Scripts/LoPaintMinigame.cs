@@ -48,6 +48,9 @@ public class LoPaintMinigame : MonoBehaviour
     private Canvas notesUI;
 
     [SerializeField]
+    private TutorialManager tutorialManager;
+
+    [SerializeField]
     private Sprite correct_sprite;
 
     [SerializeField]
@@ -228,6 +231,14 @@ public class LoPaintMinigame : MonoBehaviour
         }
 
         Debug.Log(partSides[0].name);
+
+        if (StaticData.isFirstPaint)
+        {
+            StaticData.isFirstPaint = false;
+
+            tutorialManager.OpenTutorial();
+            OpenTutorial();
+        }
     }
 
     // Update is called once per frame
@@ -724,5 +735,19 @@ public class LoPaintMinigame : MonoBehaviour
         {
             button.interactable = true;
         }
+    }
+
+    public void OpenTutorial()
+    {
+        minimapManager.DisableMinimapPressing();
+
+        overviewUI.enabled = false;
+    }
+
+    public void CloseTutorial()
+    {
+        minimapManager.EnableMinimapPressing();
+
+        overviewUI.enabled = true;
     }
 }
