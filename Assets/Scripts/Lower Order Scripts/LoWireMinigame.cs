@@ -58,6 +58,8 @@ public class LoWireMinigame : MonoBehaviour
     [SerializeField]
     private Button hint_btn;
 
+    private bool tutorialOpen = false;
+
     /*
     [SerializeField]
     private WireGenerator wireGenerator;
@@ -527,9 +529,9 @@ public class LoWireMinigame : MonoBehaviour
 
         wirePliers.DisableCutting();
 
-        yield return null;
-
         wirePliers.GetComponent<BoxCollider2D>().enabled = false;
+
+        yield return new WaitForSeconds(0.5f);
 
         wirePliers.TriggerPlierMovement(current_Pos, current_Side);
 

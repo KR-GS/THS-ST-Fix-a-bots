@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,10 +126,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_0
       rect:
         serializedVersion: 2
-        x: 636
-        y: 5124
-        width: 7
-        height: 6
+        x: 0
+        y: 0
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_1
       rect:
         serializedVersion: 2
-        x: 1661
-        y: 5124
-        width: 8
-        height: 6
+        x: 1026
+        y: 0
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_2
       rect:
         serializedVersion: 2
-        x: 5764
-        y: 5124
-        width: 9
-        height: 6
+        x: 2052
+        y: 0
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_3
       rect:
         serializedVersion: 2
-        x: 648
-        y: 5114
-        width: 7
-        height: 5
+        x: 3078
+        y: 0
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_4
       rect:
         serializedVersion: 2
-        x: 1674
-        y: 5114
-        width: 7
-        height: 5
+        x: 4104
+        y: 0
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_5
       rect:
         serializedVersion: 2
-        x: 5779
-        y: 5114
-        width: 5
-        height: 5
+        x: 0
+        y: 1026
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_6
       rect:
         serializedVersion: 2
-        x: 670
-        y: 5099
-        width: 9
-        height: 8
+        x: 1026
+        y: 1026
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,10 +280,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_7
       rect:
         serializedVersion: 2
-        x: 684
-        y: 5100
-        width: 9
-        height: 7
+        x: 2052
+        y: 1026
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,10 +302,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_8
       rect:
         serializedVersion: 2
-        x: 693
-        y: 5105
-        width: 8
-        height: 8
+        x: 3078
+        y: 1026
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,10 +324,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_9
       rect:
         serializedVersion: 2
-        x: 1697
-        y: 5099
-        width: 8
-        height: 8
+        x: 4104
+        y: 1026
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,10 +346,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_10
       rect:
         serializedVersion: 2
-        x: 1710
-        y: 5099
-        width: 18
-        height: 14
+        x: 0
+        y: 2052
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,10 +368,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_11
       rect:
         serializedVersion: 2
-        x: 5800
-        y: 5099
-        width: 9
-        height: 8
+        x: 1026
+        y: 2052
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,10 +390,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_12
       rect:
         serializedVersion: 2
-        x: 5815
-        y: 5099
-        width: 8
-        height: 8
+        x: 2052
+        y: 2052
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -412,10 +412,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_13
       rect:
         serializedVersion: 2
-        x: 5824
-        y: 5105
-        width: 8
-        height: 8
+        x: 3078
+        y: 2052
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -434,10 +434,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_14
       rect:
         serializedVersion: 2
-        x: 2698
-        y: 5061
-        width: 8
-        height: 7
+        x: 4104
+        y: 2052
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -456,10 +456,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_15
       rect:
         serializedVersion: 2
-        x: 2717
-        y: 5049
-        width: 15
-        height: 13
+        x: 0
+        y: 3078
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -478,10 +478,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_16
       rect:
         serializedVersion: 2
-        x: 3791
-        y: 4974
-        width: 10
-        height: 9
+        x: 1026
+        y: 3078
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -500,10 +500,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_17
       rect:
         serializedVersion: 2
-        x: 3667
-        y: 4958
-        width: 101
-        height: 11
+        x: 2052
+        y: 3078
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -522,10 +522,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_18
       rect:
         serializedVersion: 2
-        x: 3774
-        y: 4965
-        width: 8
-        height: 7
+        x: 3078
+        y: 3078
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -544,10 +544,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_19
       rect:
         serializedVersion: 2
-        x: 4047
-        y: 4945
-        width: 21
-        height: 27
+        x: 4104
+        y: 3078
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -566,10 +566,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_20
       rect:
         serializedVersion: 2
-        x: 4769
-        y: 4921
-        width: 9
-        height: 9
+        x: 0
+        y: 4104
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -588,10 +588,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_21
       rect:
         serializedVersion: 2
-        x: 5072
-        y: 4891
-        width: 21
-        height: 36
+        x: 1026
+        y: 4104
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -610,10 +610,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_22
       rect:
         serializedVersion: 2
-        x: 104
-        y: 4561
-        width: 802
-        height: 267
+        x: 2052
+        y: 4104
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -632,10 +632,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_23
       rect:
         serializedVersion: 2
-        x: 1129
-        y: 4561
-        width: 805
-        height: 267
+        x: 3078
+        y: 4104
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -654,10 +654,10 @@ TextureImporter:
       name: Green_Wrench_Spritesheet_24
       rect:
         serializedVersion: 2
-        x: 2154
-        y: 4371
-        width: 805
-        height: 400
+        x: 4104
+        y: 4104
+        width: 1026
+        height: 1026
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -668,1018 +668,6 @@ TextureImporter:
       bones: []
       spriteID: 8f669f66626335446a42342e5791cece
       internalID: 539732853
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_25
-      rect:
-        serializedVersion: 2
-        x: 3182
-        y: 4371
-        width: 802
-        height: 274
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa734dc977e00a848a010ee4c9187ba5
-      internalID: -656100935
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_26
-      rect:
-        serializedVersion: 2
-        x: 5232
-        y: 4561
-        width: 805
-        height: 267
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac8d072c403c2b64c94aa9de7812f529
-      internalID: -2002508691
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_27
-      rect:
-        serializedVersion: 2
-        x: 741
-        y: 4371
-        width: 105
-        height: 138
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 614692a4a4b01e14b85ff1daba586859
-      internalID: -41954648
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_28
-      rect:
-        serializedVersion: 2
-        x: 1766
-        y: 4371
-        width: 105
-        height: 138
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fba8238c792e0bf48a5f0b800c66bd29
-      internalID: 235395852
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_29
-      rect:
-        serializedVersion: 2
-        x: 4207
-        y: 4371
-        width: 805
-        height: 183
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a495857923236f84688aaa90e558a50c
-      internalID: -2116856224
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_30
-      rect:
-        serializedVersion: 2
-        x: 5869
-        y: 4344
-        width: 108
-        height: 138
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe19c958ff58c1d459e8159d26347686
-      internalID: -302293753
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_31
-      rect:
-        serializedVersion: 2
-        x: 971
-        y: 3870
-        width: 16
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d922ae6f8c97a2545b2ff05888bac2a1
-      internalID: 1877909920
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_32
-      rect:
-        serializedVersion: 2
-        x: 1996
-        y: 3871
-        width: 18
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 90bb9e9f0140f4f41bcce8ea8fdffdf1
-      internalID: -500873304
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_33
-      rect:
-        serializedVersion: 2
-        x: 3023
-        y: 3871
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0de99a1e534724e4ab00a093eef2e669
-      internalID: 1765323761
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_34
-      rect:
-        serializedVersion: 2
-        x: 4049
-        y: 3871
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dfa3e1fa8e627bb4f999b7d659975a12
-      internalID: -1149329169
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_35
-      rect:
-        serializedVersion: 2
-        x: 5073
-        y: 3885
-        width: 17
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ef62f4d27b73105468a3a261aca1b616
-      internalID: -546071019
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_36
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 3344
-        width: 802
-        height: 177
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59df3388fbf075148b62e167a8767268
-      internalID: -1862955236
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_37
-      rect:
-        serializedVersion: 2
-        x: 1129
-        y: 3344
-        width: 805
-        height: 174
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 476c073c91d9a3e43bb7163f5e6d0295
-      internalID: -2105591033
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_38
-      rect:
-        serializedVersion: 2
-        x: 2154
-        y: 3344
-        width: 805
-        height: 171
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d6f9fa7e5320f3a4a85bcfce12d022d6
-      internalID: -74481425
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_39
-      rect:
-        serializedVersion: 2
-        x: 3182
-        y: 3344
-        width: 802
-        height: 171
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f75df393f82b6bb49b31d0351cdf7456
-      internalID: -1338769872
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_40
-      rect:
-        serializedVersion: 2
-        x: 4210
-        y: 3335
-        width: 811
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6f62f8bd7ad6ee84cbd382c5f0bbf873
-      internalID: -1039162262
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_41
-      rect:
-        serializedVersion: 2
-        x: 994
-        y: 2881
-        width: 14
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0d2056cb8deef35498139fc20b736d5f
-      internalID: 22342813
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_42
-      rect:
-        serializedVersion: 2
-        x: 2079
-        y: 2899
-        width: 13
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4bb77103f1567d542baf0e083231b897
-      internalID: -553077046
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_43
-      rect:
-        serializedVersion: 2
-        x: 3141
-        y: 2906
-        width: 12
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 49a8f97ddfa6502449970afe5996191e
-      internalID: -1683411608
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_44
-      rect:
-        serializedVersion: 2
-        x: 4120
-        y: 2891
-        width: 14
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 160e7ecae71189d4e80168a80dd57904
-      internalID: 718567413
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_45
-      rect:
-        serializedVersion: 2
-        x: 5086
-        y: 2860
-        width: 16
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5fa027bd95d9e1a438610f6b42393d4c
-      internalID: 483379243
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_46
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 2307
-        width: 748
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c892271262694cf45bafce04d9dec8e8
-      internalID: -269512570
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_47
-      rect:
-        serializedVersion: 2
-        x: 1342
-        y: 2301
-        width: 601
-        height: 293
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7ccd0239fee61614fa373e5964638836
-      internalID: -1779765239
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_48
-      rect:
-        serializedVersion: 2
-        x: 2448
-        y: 2292
-        width: 513
-        height: 321
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 375d34fbaadf9234181ca119b7bb7c0a
-      internalID: 1896286851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_49
-      rect:
-        serializedVersion: 2
-        x: 3374
-        y: 2292
-        width: 622
-        height: 294
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39f54c5cb4806d640a35fbc37bbf76ff
-      internalID: 1736928651
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_50
-      rect:
-        serializedVersion: 2
-        x: 4249
-        y: 2292
-        width: 778
-        height: 234
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 40eeb84354f566c4abc5af116b052b46
-      internalID: -838581267
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_51
-      rect:
-        serializedVersion: 2
-        x: 5074
-        y: 1866
-        width: 18
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eed8458aee5e4764a8319fe21d7ab744
-      internalID: 1586224187
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_52
-      rect:
-        serializedVersion: 2
-        x: 968
-        y: 1806
-        width: 18
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae4fa8eaf6b7ebd4bbf46c6999a84caa
-      internalID: -1736800909
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_53
-      rect:
-        serializedVersion: 2
-        x: 1996
-        y: 1797
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2be7c23431aaa6488e1124e3ecd9ee0
-      internalID: -1862922780
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_54
-      rect:
-        serializedVersion: 2
-        x: 3023
-        y: 1800
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2794af865209c714382ead3689f54c52
-      internalID: 687661368
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_55
-      rect:
-        serializedVersion: 2
-        x: 4049
-        y: 1820
-        width: 16
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e4da8020d22ded848bed3a2140eb0a35
-      internalID: 570883711
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_56
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 1267
-        width: 811
-        height: 177
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 946feb89e9b546e4b93fbc4648cf57e6
-      internalID: -1065049696
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_57
-      rect:
-        serializedVersion: 2
-        x: 1129
-        y: 1267
-        width: 805
-        height: 168
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 754f4d2d26184594bbd84729ea4922a4
-      internalID: -1226530344
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_58
-      rect:
-        serializedVersion: 2
-        x: 2154
-        y: 1267
-        width: 805
-        height: 177
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6cfb2356638aff948b7b365b7217e4db
-      internalID: 2006524615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_59
-      rect:
-        serializedVersion: 2
-        x: 3182
-        y: 1267
-        width: 802
-        height: 195
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 893d5825f404ea54e93a528c9ae9d606
-      internalID: -1172150344
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_60
-      rect:
-        serializedVersion: 2
-        x: 4207
-        y: 1267
-        width: 805
-        height: 270
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ba95ae59cdaf17448a4d54465738bbf5
-      internalID: -2063814778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_61
-      rect:
-        serializedVersion: 2
-        x: 971
-        y: 911
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4678f4cf7872077479d1b2b07b537271
-      internalID: -1064257449
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_62
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 0
-        width: 802
-        height: 620
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b59bd36b9fe619e48b73b995576cdb09
-      internalID: -12215445
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_63
-      rect:
-        serializedVersion: 2
-        x: 1129
-        y: 428
-        width: 805
-        height: 265
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 22abc9e48a24e5a48bf90a2275f16895
-      internalID: -1166020483
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_64
-      rect:
-        serializedVersion: 2
-        x: 2154
-        y: 458
-        width: 805
-        height: 267
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2df758c8fe62e4547ac94219009f4c56
-      internalID: 687993710
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_65
-      rect:
-        serializedVersion: 2
-        x: 3182
-        y: 458
-        width: 802
-        height: 268
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8f38eab1db778c34db09c6b9b1b26ca6
-      internalID: -59412169
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_66
-      rect:
-        serializedVersion: 2
-        x: 4207
-        y: 458
-        width: 805
-        height: 268
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63a89756b680e594584dc75cef58511e
-      internalID: -1783908806
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_67
-      rect:
-        serializedVersion: 2
-        x: 1662
-        y: 0
-        width: 212
-        height: 380
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fcd8e615c600af14bbf43fc6750e31a8
-      internalID: 909301999
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_68
-      rect:
-        serializedVersion: 2
-        x: 2791
-        y: 239
-        width: 108
-        height: 141
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3a125e3c1d8e7764ca1fb810f5b178c9
-      internalID: 655032661
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_69
-      rect:
-        serializedVersion: 2
-        x: 3816
-        y: 239
-        width: 108
-        height: 141
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 68ba7b537ff47c2419ef433355f89b55
-      internalID: 451192369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Green_Wrench_Spritesheet_70
-      rect:
-        serializedVersion: 2
-        x: 4844
-        y: 0
-        width: 928
-        height: 380
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cfbaff7deeef4fc458ead779dec9d27c
-      internalID: -1628981666
       vertices: []
       indices: 
       edges: []

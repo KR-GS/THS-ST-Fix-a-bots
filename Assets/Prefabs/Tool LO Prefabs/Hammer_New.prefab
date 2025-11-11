@@ -193,8 +193,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4855399257155191099}
   - component: {fileID: 4888964184402180695}
-  - component: {fileID: 1726312464886129750}
-  - component: {fileID: 6807453682972905400}
   m_Layer: 0
   m_Name: blue_hammer-01_1 (1)
   m_TagString: Untagged
@@ -272,41 +270,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1726312464886129750
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462896423589626682}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e28de6d133a91d24a8cc5764d6d0cfb3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6807453682972905400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462896423589626682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef0ed97342c742e4586f6b2934640652, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tool_Parent: {fileID: 7479428543669043893}
 --- !u!1 &1773364556429659803
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +566,7 @@ MonoBehaviour:
   brokenSprite: {fileID: -876842769, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
   fixedSprite: {fileID: -1948271735, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
   mainsprite: {fileID: 0}
+  isMissing: 0
 --- !u!61 &7871474277637938566
 BoxCollider2D:
   m_ObjectHideFlags: 0

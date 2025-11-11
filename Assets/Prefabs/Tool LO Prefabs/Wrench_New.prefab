@@ -375,7 +375,10 @@ MonoBehaviour:
   addTenPos: {fileID: 831632037822161889}
   speed: 5
   addOneSprite: {fileID: 6711473743953070170}
-  tool_variants: []
+  tool_variants:
+  - {fileID: 7108339969198208228, guid: 417d07a4b266b1a4496cc0ea23ce4d0b, type: 3}
+  - {fileID: 7108339969198208228, guid: 43efb5718d0037848b1bf17d33dd7185, type: 3}
+  - {fileID: 7108339969198208228, guid: 07b72d0fc50daa543a5bdb8e324e3b6e, type: 3}
   hit_variant:
   - {fileID: 106540639, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
   - {fileID: -737994578, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
@@ -436,10 +439,6 @@ GameObject:
   m_Component:
   - component: {fileID: 37230000135171642}
   - component: {fileID: 1698180921975911502}
-  - component: {fileID: 4052453245501175618}
-  - component: {fileID: 1784002003530371404}
-  - component: {fileID: 1317846948929292349}
-  - component: {fileID: 6046962072719961591}
   m_Layer: 0
   m_Name: Wrench_Spritesheet_0 (1)
   m_TagString: Untagged
@@ -517,71 +516,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4052453245501175618
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4109935063364541445}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 690a7dc32425a39468f334f2d1cdb931, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1784002003530371404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4109935063364541445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef0ed97342c742e4586f6b2934640652, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tool_Parent: {fileID: 8527417959123864140}
---- !u!114 &1317846948929292349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4109935063364541445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Library: []
-  m_SpriteLibraryAsset: {fileID: 0}
---- !u!114 &6046962072719961591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4109935063364541445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CategoryHash: 0
-  m_labelHash: 0
-  m_SpriteKey: 0
-  m_SpriteHash: 0
 --- !u!1 &4798441862607968425
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 0}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 417d07a4b266b1a4496cc0ea23ce4d0b, type: 3}
 --- !u!114 &2538325661285841323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,10 +668,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 0
-  m_labelHash: 0
+  m_CategoryHash: 4.3199346e-18
+  m_labelHash: 4.6469037e-35
   m_SpriteKey: 0
-  m_SpriteHash: 0
+  m_SpriteHash: 113279466
 --- !u!1 &6852929561629911140
 GameObject:
   m_ObjectHideFlags: 0

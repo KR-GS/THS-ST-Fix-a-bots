@@ -1201,7 +1201,11 @@ public class LoToolMinigame : MonoBehaviour
 
             for (int k=0; k<patternLength; k++)
             {
-                tiledParts[k].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
+                if (!tiledParts[k].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().CheckIsMissing())
+                {
+                    tiledParts[k].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
+                }
+                
                 tiledParts[k].GetComponent<PartTile>().SetIsWrong(false);
 
                 if (numberToDisplay[k] > 0)
@@ -1394,6 +1398,11 @@ public class LoToolMinigame : MonoBehaviour
 
     private void OpenTutorial()
     {
+        
+    }
 
+    private void CloseTutorial()
+    {
+        
     }
 }
