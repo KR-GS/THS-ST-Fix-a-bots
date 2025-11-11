@@ -194,6 +194,8 @@ public class RaycastInteractor : MonoBehaviour
             Debug.Log("Hiding order sheet panel.");
             orderSheetPanel.SetActive(false);
 
+            StaticData.lookAtOrder = false;
+
             Order savedOrder = om.GetActiveOrder();
 
             if (TVSprite != null && TVSprite.sprite == TVSpriteNO)
@@ -413,7 +415,7 @@ public class RaycastInteractor : MonoBehaviour
         glm.dayNumber.gameObject.SetActive(false);
         glm.calendar.gameObject.SetActive(false);
         glm.tutorialButton.gameObject.SetActive(false);
-    
+        StaticData.lookAtOrder = true;
 
         if (ToolIndicator != null) ToolIndicator.gameObject.SetActive(false);
         if (WireIndicator != null) WireIndicator.gameObject.SetActive(false);
