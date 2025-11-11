@@ -69,7 +69,7 @@ public class WorkshopTutorial : MonoBehaviour
             switch (index)
             {
                 case 0:
-                    tutorialText.text = "Welcome to your workshop! Let me tour you around!";
+                    tutorialText.text = "Welcome sa iyong workshop! Tara, ikot muna kita.";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-258, 42);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-586, -16);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(-18, -5);
@@ -81,7 +81,7 @@ public class WorkshopTutorial : MonoBehaviour
                     glm.dayNumber.gameObject.SetActive(false);
                     break;
                 case 1:
-                    tutorialText.text = "The calendar here shows how many days since you've first opened right here!";
+                    tutorialText.text = "Makikita mo kung ilang araw na ang nakalipas mula ng una kang nagbukas ng workshop…";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-358, 265);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-726, 207);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(-158, 218);
@@ -96,7 +96,7 @@ public class WorkshopTutorial : MonoBehaviour
                     break;
 
                 case 2:
-                    tutorialText.text = "Now this shows how much time you have left on the day.";
+                    tutorialText.text = "Ah! Pati na rin pala ang oras meron rin dito.";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-358, 265);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-726, 207);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(-158, 218);
@@ -112,7 +112,7 @@ public class WorkshopTutorial : MonoBehaviour
 
                     break;
                 case 3:
-                    tutorialText.text = "Tap on the T.V. over here to check for any orders you may have.";
+                    tutorialText.text = "Pindutin naman ang TV na ito para makita kung may mga bagong order ka dito.";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-209, 8);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-537, -50);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(31, -39);
@@ -127,7 +127,7 @@ public class WorkshopTutorial : MonoBehaviour
                     TVDemo.sprite = TVSpriteNoOrder;
                     break;
                 case 4:
-                    tutorialText.text = "Check it when it lights up for any new orders from customers!";
+                    tutorialText.text = "Tignan-tignan mo nalang kapag umilaw ‘yan ah, ibig sabihin noon ay may bago kang order.";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-209, 8);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-537, -50);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(31, -39);
@@ -143,7 +143,7 @@ public class WorkshopTutorial : MonoBehaviour
                     TVDemo.sprite = TVSpriteNO;
                     break;
                 case 5:
-                    tutorialText.text = "The order form here shows what jobs need to be done. Take note of the pictures on the right.";
+                    tutorialText.text = "Ang order form na ito ang nagsasabi kung anong mga trabaho ang kinakailangan mong matapos. Bigyan pansin mo nalang ang litrato na yan sa kanang bahagi.";
                     nextButton.gameObject.SetActive(true);
                     backButton.gameObject.SetActive(true);
                     closeButton.gameObject.SetActive(false);
@@ -160,7 +160,7 @@ public class WorkshopTutorial : MonoBehaviour
                     demoIndicator.gameObject.SetActive(false);
                     break;
                 case 6:
-                    tutorialText.text = "They appear on the stations the bots need fixing at!";
+                    tutorialText.text = "Lumalabas yan sa stations ng mga robot na kung saan may kailangan kang ayusin.";
                     toDolistDemo.gameObject.SetActive(false);
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-317, -266);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-645, -324);
@@ -179,7 +179,7 @@ public class WorkshopTutorial : MonoBehaviour
                     break;
 
                 case 7:
-                    tutorialText.text = "Look down! Once all jobs are done, you will get paid based on your speed.";
+                    tutorialText.text = "Sa baba mo! Kapag natapos lahat ng gagawin, babayarin ka base sa bilis mo!";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-258, 42);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-586, -16);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(-18, -5);
@@ -198,7 +198,7 @@ public class WorkshopTutorial : MonoBehaviour
                     break;
 
                 case 8:
-                    tutorialText.text = "That’s the tour! If you feel lost, don’t hesitate to ask me!";
+                    tutorialText.text = "At dito na muna tayo! Kung nalilito ka parin, wag ka mahiyang magtanong sa akin.";
                     tutorialText.rectTransform.anchoredPosition = new Vector2(-258, 42);
                     PATTSprite.rectTransform.anchoredPosition = new Vector2(-586, -16);
                     SpeechBubble.rectTransform.anchoredPosition = new Vector2(-18, -5);

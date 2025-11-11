@@ -89,6 +89,8 @@ public class StaticData
 
     public static Sprite lastTVSprite;
 
+    public static bool lookAtOrder = false;
+
     public static bool isFirstWS;
     public static bool isFirstPaint;
     public static bool isFirstTool;

@@ -14,7 +14,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     [SerializeField] private RaycastInteractor ri;
     [SerializeField] private GameLoopManager glm;
     [SerializeField] private TimerScript ts;
-    [SerializeField] private WorkshopTutorial wt;
+    [SerializeField] private TutorialManager tm;
     [SerializeField] private float notificationDuration = 2f;
     private Button button;
     public Button nextdayButton;
@@ -25,7 +25,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     public int prize;
     public bool isFinished = false;
     private bool sendNewOrder = false;
-
+    private bool wasRaycastingEnabled = true;
     public List<Order> orderList = new List<Order>();
     public List<Order> activeOrders = new List<Order>();
     public Queue<Order> pendingOrders = new Queue<Order>();
@@ -129,11 +129,68 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         if(StaticData.isFirstWS == true)
         {
-            wt.ResetTutorial();
-            //StaticData.isFirstWS = false;
+
+            OpenTutorial();
         }
     }
-   
+
+    public void OpenTutorial()
+    {
+        glm.HideWorkshopElements();
+        tm.OpenTutorial();
+        //ri.enabled = false;
+        Debug.Log("Raycasting disabled for tutorial");
+        ts.StopTimer();
+    }
+
+    public void CloseTutorial()
+    {
+        glm.ShowWorkshopElements();
+        //wasRaycastingEnabled = ri.enabled;
+        //ri.enabled = true;
+        StaticData.isFirstWS = false;
+
+        if (StaticData.startOfDay == true)
+        {
+            Debug.Log("Aiya, debugging is sad!");
+            ri.readyIndicator.gameObject.SetActive(true);
+            ri.readyText.gameObject.SetActive(true);
+        }
+        else if (StaticData.startOfDay == false)
+        {
+            Debug.Log("Ayo, will this work?");
+            ri.readyIndicator.gameObject.SetActive(false);
+            ri.readyText.gameObject.SetActive(false);
+            ts.StartTimer();
+        }
+
+
+        if (StaticData.lookAtOrder == true)
+        {
+            glm.HideWorkshopElements();
+        }
+
+        if (orderReceived)
+        {
+            Debug.Log("Welcome back after the tutorial! Let me reset things for you!");
+            Debug.Log("You have " + activeOrders.Count + " active orders and " + pendingOrders.Count + " pending orders.");
+            Debug.Log("Is the scheduler running? Here's the answer!" + isScheduleRunning);
+            if (activeOrders.Count == 0 && pendingOrders.Count > 0 && isScheduleRunning == true)
+            {
+                sendNewOrder = true;
+                isScheduleRunning = false;
+                didExit = false;
+                StartCoroutine(ScheduleNextOrder());
+                Debug.Log("Fixed. Now we wait!");
+            }
+        }
+
+        if (ts != null && ts.timer != null)
+        {
+            ts.timer.gameObject.SetActive(true); // hide
+        }
+    }
+
 
     public Order CreateNewOrder()
     {
@@ -222,7 +279,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     {
         activeOrders.Add(order);
     }
-
 
     public void StartOrderBatch()
     {

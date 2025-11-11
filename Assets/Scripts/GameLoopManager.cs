@@ -105,6 +105,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         pauseButton.onClick.AddListener(() =>
         {
             //rc.DisableRaycasting();
+            tutorialButton.gameObject.SetActive(false);
             pausePanel.SetActive(true);
             Time.timeScale = 0f; // Pause the game
         });
@@ -600,6 +601,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void ShowTutorialBot()
+    {
+        tutorialButton.gameObject.SetActive(true);
+    }
 
     private List<int> GeneratePatternArray(int patternLen) //This is for tool
     {
@@ -1399,6 +1404,11 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         ShowTV(true);
         tutorialButton.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(true);
+
+        if (ts != null && ts.timer != null)
+        {
+            ts.timer.gameObject.SetActive(false); // hide
+        }
     }
     public void CompleteLevel()
     {
