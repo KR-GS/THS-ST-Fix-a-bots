@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 [System.Serializable]
 public class Tutorial
@@ -10,4 +11,6 @@ public class Tutorial
     public string description;
 
     public Texture2D display;
+
+    public VideoClip display_video;
 }

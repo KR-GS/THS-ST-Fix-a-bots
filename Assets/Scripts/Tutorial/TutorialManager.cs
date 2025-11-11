@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class TutorialManager : MonoBehaviour
     private RawImage tutorial_display;
 
     [SerializeField]
+    private VideoPlayer tutorial_video;
+
+    [SerializeField]
     private Button done_Btn;
 
     [SerializeField]
@@ -24,6 +28,9 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField]
     private Button right_Btn;
+
+    [SerializeField]
+    private RenderTexture video_texture;
 
     [SerializeField]
     private Tutorial[] tutorials;
@@ -43,7 +50,22 @@ public class TutorialManager : MonoBehaviour
 
         description_TMP.text = tutorials[currentSlide].description;
 
-        tutorial_display.texture = tutorials[currentSlide].display;
+        if(tutorials[currentSlide].display != null)
+        {
+            Debug.Log("Hello from picture display");
+            //tutorial_video.clip = null;
+
+            tutorial_display.texture = tutorials[currentSlide].display;
+
+        }
+        else
+        {
+            Debug.Log("Hello from video display");
+            tutorial_video.clip = tutorials[currentSlide].display_video;
+
+            tutorial_display.texture = video_texture;
+        }
+            
 
         right_Btn.gameObject.SetActive(true);
         left_Btn.gameObject.SetActive(false);
@@ -61,7 +83,16 @@ public class TutorialManager : MonoBehaviour
 
             description_TMP.text = tutorials[currentSlide].description;
 
-            tutorial_display.texture = tutorials[currentSlide].display;
+            if (tutorials[currentSlide].display != null)
+            {
+                tutorial_display.texture = tutorials[currentSlide].display;
+            }
+            else
+            {
+                tutorial_video.clip = tutorials[currentSlide].display_video;
+
+                tutorial_display.texture = video_texture;
+            }
         }
 
         if(currentSlide >= tutorials.Length - 1)
@@ -87,7 +118,16 @@ public class TutorialManager : MonoBehaviour
 
             description_TMP.text = tutorials[currentSlide].description;
 
-            tutorial_display.texture = tutorials[currentSlide].display;
+            if (tutorials[currentSlide].display != null)
+            {
+                tutorial_display.texture = tutorials[currentSlide].display;
+            }
+            else
+            {
+                tutorial_video.clip = tutorials[currentSlide].display_video;
+
+                tutorial_display.texture = video_texture;
+            }
         }
 
         if (currentSlide <= 0)
