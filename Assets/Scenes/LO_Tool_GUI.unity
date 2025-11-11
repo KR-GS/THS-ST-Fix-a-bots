@@ -5350,6 +5350,7 @@ MonoBehaviour:
   notesCanvas: {fileID: 536181604}
   counterCanvas: {fileID: 1194906380}
   checkingCanvas: {fileID: 1985247687}
+  tutorialCanvas: {fileID: 1223521043119176792}
   correct_sprite: {fileID: 21300000, guid: 54ea72d062d2b514b8762b3c829572c4, type: 3}
   wrong_sprite: {fileID: 21300000, guid: d3b82f9ed35395f4cb625d292b0973f0, type: 3}
   loading_Prefab: {fileID: 630110251024977566, guid: b4db17b859d9bed4da396d8f735b2f0f, type: 3}
@@ -5938,7 +5939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1985247685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7001,6 +7002,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f382f7f90d8cde4dba8da72a8a7fd99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &1223521043119176792 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5425143837719108571, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+  m_PrefabInstance: {fileID: 1223521043119176790}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
