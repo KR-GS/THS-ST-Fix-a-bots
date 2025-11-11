@@ -330,28 +330,9 @@ public class WorkshopTutorial : MonoBehaviour
             ri.isOrderChecked = StaticData.isOrderChecked;
             Debug.Log("isOrderChecked status: " + ri.isOrderChecked);
 
-            if (!ri.isOrderChecked && savedOrder != null)
+            if (!ri.isOrderChecked)
             {
-                Debug.Log("Setting indicators active...");
-
-                if (savedOrder.needsTool)
-                {
-                    ri.ToolIndicator.gameObject.SetActive(true);
-                    Debug.Log("ToolIndicator enabled");
-                }
-                if (savedOrder.needsWire)
-                {
-                    ri.WireIndicator.gameObject.SetActive(true);
-                    Debug.Log("WireIndicator enabled");
-                }
-                if (savedOrder.needsPaint)
-                {
-                    ri.PaintIndicator.gameObject.SetActive(true);
-                    Debug.Log("PaintIndicator enabled");
-                }
-
-                ri.isOrderChecked = true;
-                StaticData.isOrderChecked = true;
+                Debug.Log("You still haven't checked your orders yet!");
             }
             else if (ri.isOrderChecked && savedOrder != null)
             {
