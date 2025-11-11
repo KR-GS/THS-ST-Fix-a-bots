@@ -35,9 +35,13 @@ public class WireGenerator : MonoBehaviour
 
     private int wire_count = 0;
 
+    private Vector3 default_pos;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        default_pos = originalWire.transform.localPosition;
+
         wireParent = new GameObject("New Wire " + wire_count);
 
         wireParent.transform.position = originalWire.transform.position;
@@ -223,7 +227,13 @@ public class WireGenerator : MonoBehaviour
 
         //copper_R.transform.localPosition = new Vector2(4.36f, 0);
 
-        generalWireScript.ReturnToRobot();
+        if (generateLocation.childCount > 0)
+        {
+            foreach(Transform child in generateLocation)
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
         //wireParent.transform.SetParent(new_wire.transform);
 
@@ -246,6 +256,8 @@ public class WireGenerator : MonoBehaviour
         color = Color.white;
 
         select_icon.SetActive(false);
+
+        generalWireScript.ReturnToRobot();
     }
 
     public void ResetValue(Slider slider)

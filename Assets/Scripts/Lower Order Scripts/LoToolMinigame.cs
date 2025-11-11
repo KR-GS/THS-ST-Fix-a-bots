@@ -60,6 +60,8 @@ public class LoToolMinigame : MonoBehaviour
     private bool isDragging = false;
     private bool isOnObject = false;
 
+    private bool tutorialOpen;
+
     private Vector2[] endPoints = new Vector2[2];
 
     private GameObject robotPart;
@@ -1388,5 +1390,10 @@ public class LoToolMinigame : MonoBehaviour
         hint_btn.interactable = true;
 
         hint_btn.GetComponent<Hint>().ChangeSpriteClose();
+    }
+
+    private void OpenTutorial()
+    {
+
     }
 }
