@@ -151,7 +151,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         {
             // General Settings
             case 0:
-                selectedLanguage = languageSelector.GetCurrentValue();
+                //selectedLanguage = languageSelector.GetCurrentValue();
 
                 if(selectedLanguage == "English")
                     LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
@@ -226,7 +226,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         {
             // General Settings
             case 0:
-                selectedLanguage = languageSelector.GetCurrentValue();
+                //selectedLanguage = languageSelector.GetCurrentValue();
                 masterVolumeValue = masterVolume.GetValue();
                 sfxVolumeValue = sfxVolume.GetValue();
                 musicVolumeValue = musicVolume.GetValue();
@@ -341,7 +341,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         }
 
         // Language
-        languageSelector = Instantiate(arrowSelectorPrefab, contentParent);
+        /*languageSelector = Instantiate(arrowSelectorPrefab, contentParent);
         switch (selectedLanguage)
         {
             case "English":
@@ -352,7 +352,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
                 languageSelector.Init("Language", new List<string> { "English", "Filipino" }, 1);
                 LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
                 break;
-        }
+        }*/
 
         // Volumes
         masterVolume = Instantiate(volumeSliderPrefab, contentParent);

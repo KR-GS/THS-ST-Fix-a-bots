@@ -178,7 +178,7 @@ public class SequenceGameManager : MonoBehaviour
         canTap = false;
         pausePanel.SetActive(true);
         pausePanel.transform.SetAsLastSibling();
-        panelText.text = "Sayang natalo ka! Isa pa?";
+        panelText.text = "Sayang naubusan ka ng buhay! Isa pa?";
     }
 
     private void RestartGame()
