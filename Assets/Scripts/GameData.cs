@@ -178,6 +178,14 @@ public class GameData
 
     public bool isFirstWS;
 
+    public bool isFirstTool;
+
+    public bool isFirstPaint;
+
+    public bool isFirstWire;
+
+    public bool isFirstHO;
+
     public float timeSpent;
 
     public int orderNumber;
@@ -249,6 +257,10 @@ public class GameData
         this.equippedFlatScrewdriver = 6; // 6-8
         this.equippedWrench = 9; // 9-11
         this.isFirstWS = true;
+        this.isFirstTool = true;
+        this.isFirstPaint = true;
+        this.isFirstWire = true;
+        this.isFirstHO = true;
         this.timeSpent = 0f;
         this.orderNumber = 1;
         this.loGameHistory = new List<GameRecord>();

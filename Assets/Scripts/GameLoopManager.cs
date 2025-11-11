@@ -423,6 +423,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         StaticData.equippedFlatScrewdriver = data.equippedFlatScrewdriver;
         StaticData.equippedWrench = data.equippedWrench;
         StaticData.isFirstWS = data.isFirstWS;
+        StaticData.isFirstTool = data.isFirstTool;
+        StaticData.isFirstPaint = data.isFirstPaint;
+        StaticData.isFirstWire = data.isFirstWire;
 
         Debug.Log("Tool wrongs: " + StaticData.toolWrong + ", Paint wrongs: " + StaticData.paintWrong + ", Wire wrongs: " + StaticData.wireWrong);
 
@@ -566,6 +569,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         data.equippedPhilipsScrewdriver = StaticData.equippedPhilipsScrewdriver;
         data.equippedFlatScrewdriver = StaticData.equippedFlatScrewdriver;
         data.isFirstWS = StaticData.isFirstWS;
+        data.isFirstTool = StaticData.isFirstTool;
+        data.isFirstPaint = StaticData.isFirstPaint;
+        data.isFirstWire = StaticData.isFirstWire;
         data.orderNumber = StaticData.orderNumber;
 
         Debug.Log($"[SAVEDATA] Current gameHistory count: {data.loGameHistory?.Count ?? 0}");
