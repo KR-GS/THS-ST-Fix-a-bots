@@ -30,6 +30,9 @@ public class LoWireMinigame : MonoBehaviour
     private Canvas ValueUI;
 
     [SerializeField]
+    private Canvas tutorialUI;
+
+    [SerializeField]
     private Wire origWire;
 
     [SerializeField]
@@ -485,6 +488,8 @@ public class LoWireMinigame : MonoBehaviour
         OverallUI.enabled = false;
 
         RobotUI.enabled = false;
+
+        tutorialUI.enabled = false;
 
         while (Vector2.Distance(tempObj.transform.position, origPos_Robot) > 0.01f)
         {

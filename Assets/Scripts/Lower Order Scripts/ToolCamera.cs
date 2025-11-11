@@ -31,6 +31,9 @@ public class ToolCamera : MonoBehaviour
     [SerializeField]
     private Canvas checkingCanvas;
 
+    [SerializeField]
+    private Canvas tutorialCanvas;
+
     [Header("Sprites")]
     [SerializeField]
     private Sprite correct_sprite;
@@ -70,6 +73,7 @@ public class ToolCamera : MonoBehaviour
         counterCanvas.enabled = true;
         overViewCanvas.enabled = false;
         notesCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
     }
 
     public void CameraTrigger(Vector3 firstFastenerPosition, float speed)
@@ -122,6 +126,7 @@ public class ToolCamera : MonoBehaviour
         overViewCanvas.enabled = false;
         zoomInCanvas.enabled = false;
         toolCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
     }
 
     public void ToggleCanvas()

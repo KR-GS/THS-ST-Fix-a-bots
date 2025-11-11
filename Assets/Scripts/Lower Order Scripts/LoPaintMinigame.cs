@@ -48,6 +48,9 @@ public class LoPaintMinigame : MonoBehaviour
     private Canvas notesUI;
 
     [SerializeField]
+    private Canvas tutorialUI;
+
+    [SerializeField]
     private TutorialManager tutorialManager;
 
     [SerializeField]
@@ -401,6 +404,7 @@ public class LoPaintMinigame : MonoBehaviour
         PaintMinimapManager mapSelect = FindAnyObjectByType<PaintMinimapManager>();
         overviewUI.enabled = false;
         notesUI.enabled = false;
+        tutorialUI.enabled = false;
         Debug.Log("Hello from checking");
         int correctAnsNo = 0;
         int correntTypeNo = 0;
