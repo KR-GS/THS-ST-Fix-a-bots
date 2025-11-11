@@ -453,9 +453,13 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         // Clear the parent reference
         parentBlock = null;
-        
+
         // Reset color on disconnect
         blockImage.color = blockColor; 
+
+        // Also reset colors of connected in the case of sign blocks
+        if(rightConnectedBlock != null)
+            rightConnectedBlock.blockImage.color = leftConnectedBlock.blockColor;
 
         // Notify about the disconnection
         FormulaInputPanel.Instance?.OnBlockDisconnected(this, previousParent);

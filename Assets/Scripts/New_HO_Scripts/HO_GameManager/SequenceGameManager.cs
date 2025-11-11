@@ -37,8 +37,11 @@ public class SequenceGameManager : MonoBehaviour
     public Animator statusAnimator;
 
     [Header("Swipe Direction Panel")]
-    public GameObject swipeDirectionPanel; 
+    public GameObject swipeDirectionPanel;
     public GameObject directionArrow;
+
+    [Header("Endscreen Animator")]
+    public EndScreenAnimator endScreenAnimator;
 
     [Header("Settings")]
     private int maxNumber = 25;
@@ -134,7 +137,7 @@ public class SequenceGameManager : MonoBehaviour
 
     void InitializeStageUi()
     {
-        //formulaText.gameObject.SetActive(isFormulaSeen);
+        formulaText.gameObject.SetActive(isFormulaSeen);
         isCycling = false;
 
         formulaPanel.gameObject.SetActive(false);
@@ -173,12 +176,24 @@ public class SequenceGameManager : MonoBehaviour
 
     void LostGame()
     {
-        Time.timeScale = 0;
         gameTimer.StopTimer();
         canTap = false;
+
+        endScreenAnimator.gameObject.SetActive(true);
+
+        StartCoroutine(LoadEndScreenAnimation());
+    }
+
+    private IEnumerator LoadEndScreenAnimation()
+    {
+        yield return new WaitForSeconds(2f);
+
         pausePanel.SetActive(true);
         pausePanel.transform.SetAsLastSibling();
-        panelText.text = "Sayang naubusan ka ng buhay! Isa pa?";
+        panelText.text = "Sayang naubusan ka ng buhay! Gusto mo bang ulitin ang stage?";
+
+        restartGameButton.gameObject.SetActive(true);
+        exitButton.gameObject.SetActive(true);
     }
 
     private void RestartGame()
@@ -394,8 +409,6 @@ public class SequenceGameManager : MonoBehaviour
         wasRestartButtonPressed = false;
         canTap = true;
         isCorrect = true;
-        ResetAnims();
-        statusAnimator.SetBool("Idle_Trigger", true);
         yield return null;
     }
 
@@ -423,10 +436,11 @@ public class SequenceGameManager : MonoBehaviour
 
             // Makes sure player has time to start
 
-            if (currentCycleIndex == 0)
+            if (currentCycleIndex <= 0)
             {
                 yield return new WaitForSeconds(1f);
                 ResetAnims();
+                statusAnimator.SetBool("Idle_Trigger", true);
             }
             
         
@@ -800,6 +814,8 @@ public class SequenceGameManager : MonoBehaviour
                 {
                     ResetAnims();
                     buttons[currentCycleIndex].SetHighlighted(true);
+                    buttons[currentCycleIndex].SetRed();
+                    buttons[currentCycleIndex].toggleWrong();
                     feedbackText.text = $"Maling swipe!";
 
                     if (expected == "Up" || expected == "Down")
@@ -920,7 +936,7 @@ public class SequenceGameManager : MonoBehaviour
             restartText.text = $"{stageData.GetNumRestarts()}";
         }
 
-        ResetAnims();
+        
         
         StartCoroutine(RestartCycle());
     }

@@ -85,10 +85,16 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         //Updates the background based on the number of stages completed
         UpdateLevelMapBackground();
 
+        for(int i = 0; i < 45; i++)
+        {
+            stageButtons[i].interactable = false;
+        }
+
         for (int i = 0; i < stageButtons.Length; i++)
         {
             int stageNum = i;
-            if(StaticData.numStageDone < 15)
+            //Limits to 15 stages for now
+            if(stageNum < 15)
             {
                 // LIMITS STUDENTS TO FIRST 15 STAGES
                 stageButtons[i].interactable = stageNum <= StaticData.numStageDone;
@@ -163,7 +169,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
     private void UpdateLevelMapBackground()
     {
-        if (StaticData.numStageDone <= 15)
+        if (StaticData.numStageDone < 15)
         {
             int index = Mathf.Clamp(StaticData.numStageDone, 0, levelMapSprites.Length - 1);
 
@@ -171,8 +177,8 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             levelMap2.sprite = levelMapSprites2[0];
             levelMap3.sprite = levelMapSprites3[0];
         }
-        
-        else if (StaticData.numStageDone <= 30)
+
+        else if (StaticData.numStageDone < 30)
         {
             int index = Mathf.Clamp(StaticData.numStageDone - 16, 0, levelMapSprites2.Length - 1);
 
@@ -180,13 +186,19 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             levelMap2.sprite = levelMapSprites2[index];
             levelMap3.sprite = levelMapSprites3[0];
         }
-        else
+        else if (StaticData.numStageDone < 45)
         {
-            int index = Mathf.Clamp(StaticData.numStageDone - 31, 0, levelMapSprites3.Length - 1);
+            int index = StaticData.numStageDone % 15;
 
             levelMap1.sprite = levelMapSprites[15];
             levelMap2.sprite = levelMapSprites2[15];
             levelMap3.sprite = levelMapSprites3[index];
+        }
+        else
+        {
+            levelMap1.sprite = levelMapSprites[15];
+            levelMap2.sprite = levelMapSprites2[15];
+            levelMap3.sprite = levelMapSprites3[15];
         }
 
 

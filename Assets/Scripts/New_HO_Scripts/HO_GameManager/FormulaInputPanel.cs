@@ -73,6 +73,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         Instance = this;
+        submitButton.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -113,35 +114,39 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         FormulaBlock nBlock = blockManager.FindBlock(BlockType.Variable, 0, "n");
         if (IsFormulaComplete(nBlock))
         {
+            submitButton.gameObject.SetActive(true);
             buttonsParent.SetActive(false);
             buttonsParent2.SetActive(true);
-            
-        // Change color to indicate correct placement
-            if (FormulaInputPanel.Instance != null && StaticData.stageFormulaHint[StaticData.stageNum])
+
+            // Change color to indicate correct placement, only show based on stage level
+            if (StaticData.stageFormulaHint[StaticData.stageNum])
             {
-                var seq = targetSequence; // get the correct target
-                
-                nBlock.SetColor(Color.green);
-
-                if (nBlock.LeftConnectedBlock != null)
+                if (FormulaInputPanel.Instance != null && StaticData.stageFormulaHint[StaticData.stageNum])
                 {
-                    // Check if coefficient matches
-                    if (int.Parse(nBlock.LeftConnectedBlock.blockText.text) == seq.Coefficient)
-                        nBlock.LeftConnectedBlock.SetColor(Color.green);
-                }
-                if (nBlock.RightConnectedBlock != null)
-                {
-                    // For sign, check if this symbol is the correct one
-                    string expectedSymbol = seq.Constant >= 0 ? "+" : "-";
-                    if (nBlock.RightConnectedBlock.blockText.text == expectedSymbol)
-                        nBlock.RightConnectedBlock.SetColor(Color.green);
+                    var seq = targetSequence; // get the correct target
 
-                    if (nBlock.RightConnectedBlock.RightConnectedBlock != null)
+                    nBlock.SetColor(Color.green);
+
+                    if (nBlock.LeftConnectedBlock != null)
                     {
-                        // Check if constant matches
-                        int absConstant = Mathf.Abs(seq.Constant);
-                        if (int.Parse(nBlock.RightConnectedBlock.RightConnectedBlock.blockText.text) == absConstant)
-                            nBlock.RightConnectedBlock.RightConnectedBlock.SetColor(Color.green);
+                        // Check if coefficient matches
+                        if (int.Parse(nBlock.LeftConnectedBlock.blockText.text) == seq.Coefficient)
+                            nBlock.LeftConnectedBlock.SetColor(Color.green);
+                    }
+                    if (nBlock.RightConnectedBlock != null)
+                    {
+                        // For sign, check if this symbol is the correct one
+                        string expectedSymbol = seq.Constant >= 0 ? "+" : "-";
+                        if (nBlock.RightConnectedBlock.blockText.text == expectedSymbol)
+                            nBlock.RightConnectedBlock.SetColor(Color.green);
+
+                        if (nBlock.RightConnectedBlock.RightConnectedBlock != null)
+                        {
+                            // Check if constant matches
+                            int absConstant = Mathf.Abs(seq.Constant);
+                            if (int.Parse(nBlock.RightConnectedBlock.RightConnectedBlock.blockText.text) == absConstant)
+                                nBlock.RightConnectedBlock.RightConnectedBlock.SetColor(Color.green);
+                        }
                     }
                 }
             }
@@ -158,13 +163,13 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
                 if (nBlock.RightConnectedBlock.RightConnectedBlock != null)
                 {
-                    nBlock.RightConnectedBlock.RightConnectedBlock.blockImage.color = nBlock.RightConnectedBlock.RightConnectedBlock.blockColor;  
+                    nBlock.RightConnectedBlock.RightConnectedBlock.blockImage.color = nBlock.RightConnectedBlock.RightConnectedBlock.blockColor;
                 }
             }
             buttonsParent2.SetActive(false);
             buttonsParent.SetActive(true);
+            submitButton.gameObject.SetActive(false);
         }
-
     }
 
     public void SetLockConstant(bool constant)
@@ -492,7 +497,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 
     private void LoadStageSelectScene()
     {
-        SceneManager.LoadScene("Stage_Select");
+        LoadingScreenManager.Instance.SwitchtoScene(1);
     }
 
     private void ValidateFormula()

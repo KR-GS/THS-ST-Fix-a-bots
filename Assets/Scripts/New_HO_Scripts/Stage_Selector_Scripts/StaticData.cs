@@ -255,11 +255,11 @@ public class StaticData
         prePressedCount = new List<int>()
         {
             // SCENARIO 1
-            3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2,
             // SCENARIO 2
             2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
             // SCENARIO 3
-            3, 2, 0, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1
+            3, 2, 2, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1
         };
 
         // Type of tutorial (NOT USED ANYMORE)
@@ -273,11 +273,11 @@ public class StaticData
             0, 1, 1, 2, 2, 0, 0, 3, 0, 3, 0, 0, 3, 0, 3
         };
 
-        // Is the formula helper seen (NOT USED ANYMORE BECAUSE OF NEW UI)
+        // Whether the formula can be seen at the top
         isFormulaSeen = new List<bool>()
         {
             // SCENARIO 1
-            true, true, true, false, false, false, false, false, false, false, false, false, false, false, false,
+            true, true, true, false, false, false, false, false, false, false, false, false, true, true, false,
             // SCENARIO 2
             false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
             // SCENARIO 3
@@ -299,7 +299,7 @@ public class StaticData
         lockCoefficient = new List<bool>()
         {
             // SCENARIO 1
-            false, false, true, true, true, true, true, true, false, false, false, true, false, false, false,
+            false, false, false, true, true, true, true, true, false, false, false, true, false, false, false,
             // SCENARIO 2
             false, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
             // SCENARIO 3
@@ -373,7 +373,7 @@ public class StaticData
         stageMaxConstantValue = new List<int>()
         {
             //SCENARIO 1
-            3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
+            5, 5, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
 
             //SCENARIO 2
             3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
@@ -382,7 +382,7 @@ public class StaticData
             3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
         };
 
-        // Whether the swipe hint has been seen for each stage
+        // Whether the swipe hint can been seen for each stage
         hintSeen = new List<bool>()
         {
             //SCENARIO 1

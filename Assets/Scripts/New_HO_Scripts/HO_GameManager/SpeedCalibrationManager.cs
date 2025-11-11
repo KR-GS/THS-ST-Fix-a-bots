@@ -94,9 +94,8 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
         // Next Stage button
         nextStageButton.onClick.AddListener(() =>
         {
-            feedbackText.text = "Goodluck!";
             DataPersistenceManager.Instance.SaveGame();
-            SceneManager.LoadScene("HO_BotFightScene");
+            LoadingScreenManager.Instance.SwitchtoScene(2);
         });
     }
 
@@ -143,9 +142,9 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
         }
 
         feedbackText.text = "Welcome sa Speed Calibration! Pa-tap ng mga arrows para i-adjust ang speed.";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         feedbackText.text = "Maari ninyo ring ibahin ang bilis kahit kailan sa loob ng settings menu.";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         StartCoroutine(CycleButtons());
     }
 
@@ -197,8 +196,8 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                     buttons[num - 1].SetPreSelected(true);
                 }
                 
-                feedbackText.text = "Ito na!";
-                yield return new WaitForSeconds(2f);
+                feedbackText.text = "Maghanda na!";
+                yield return new WaitForSeconds(3f);
                 ResetAnims();
             }
             
@@ -531,6 +530,8 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
                 {
                     ResetAnims();
                     buttons[currentCycleIndex].SetHighlighted(true);
+                    buttons[currentCycleIndex].SetRed();
+                    buttons[currentCycleIndex].toggleWrong();
                     feedbackText.text = $"Maling swipe!";
 
                     if (expected == "Up" || expected == "Down")
