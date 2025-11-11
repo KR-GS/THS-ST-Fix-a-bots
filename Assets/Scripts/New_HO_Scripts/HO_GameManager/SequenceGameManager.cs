@@ -23,6 +23,13 @@ public class SequenceGameManager : MonoBehaviour
     public HealthBar healthBar;
     public Sprite unpressedSprite;
 
+    [Header("Tutorial")]
+    public GameObject tutorialManager;
+    public GameObject tutorialManager2;
+
+    public TutorialManager tm;
+    public TutorialManager tm2;
+
     [Header("Restart Panel")]
     public GameObject pausePanel;
     public Button restartGameButton, exitButton;
@@ -62,7 +69,7 @@ public class SequenceGameManager : MonoBehaviour
     private int currentSwipeIndex = 0;
 
     private int passedPrePressed = 0;
-    private float minSwipeDistance = 10f; 
+    private float minSwipeDistance = 50f; 
 
     private HOStageData stageData;
     private Sequence currentSequence;
@@ -88,7 +95,7 @@ public class SequenceGameManager : MonoBehaviour
 
         foreach (RaycastResult result in raycastResults)
         {
-            if ((result.gameObject.GetComponent<Button>() != null || result.gameObject.GetComponent<Toggle>() != null) && !result.gameObject.GetComponent<TimePeriodButton>()) 
+            if ((result.gameObject.GetComponent<Button>() != null || result.gameObject.GetComponent<Toggle>() != null) && !result.gameObject.GetComponent<TimePeriodButton>() && !result.gameObject.GetComponent<TutorialManager>()) 
             {
                 return true;
             }
@@ -289,9 +296,15 @@ public class SequenceGameManager : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetMouseButtonDown(0) ||IsScreenTapped()) && !IsPointerOverInteractableUi() && isStart)
+        if ((Input.GetMouseButtonDown(0) || IsScreenTapped()) && !IsPointerOverInteractableUi() && isStart)
         {
             isStart = false;
+
+            if (StaticData.numStageDone == 0 && StaticData.stageNum == 0)
+            {
+                tm.OpenTutorial();
+            }
+            
             StartNewSequence();
             StartCoroutine(DelayedStartCycle());
         }
@@ -613,7 +626,6 @@ public class SequenceGameManager : MonoBehaviour
             {
                 ResetAnims();
                 statusAnimator.SetBool("Idle_Trigger", true);
-                yield return new WaitForSeconds(0.5f);
                 Debug.Log("pressedNumbers Numbers = " + pressedNumbers);
                 Debug.Log("Current Sequence = " + currentSequence.Numbers);
 
@@ -630,8 +642,11 @@ public class SequenceGameManager : MonoBehaviour
                 {
                     Debug.Log("Wrong Sequence");
                     feedbackText.text = "May mali sa sequence ata? Inuulit ang stage...";
+                    yield return new WaitForSeconds(2f);
                     ResetSequence();
                 }
+                
+                yield return new WaitForSeconds(0.5f);
             }
 
             currentCycleIndex = (currentCycleIndex + 1) % maxNumber;
@@ -990,6 +1005,13 @@ public class SequenceGameManager : MonoBehaviour
         // Show formula panel with current sequence
         statusAnimator.enabled = false;
         formulaPanel.gameObject.SetActive(true);
+        tutorialManager.SetActive(false);
+        tutorialManager2.SetActive(true);
         formulaPanel.ShowPanel(currentSequence, gameTimer, stageData, buttons2);
+
+        if(StaticData.numStageDone == 0 && stageNum == 0)
+        {
+            tm2.OpenTutorial();
+        }
     }
 }

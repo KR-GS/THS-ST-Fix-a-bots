@@ -44,6 +44,11 @@ public class TutorialManager : MonoBehaviour
         description_TMP.text = tutorials[currentSlide].description;
 
         tutorial_display.texture = tutorials[currentSlide].display;
+
+        right_Btn.gameObject.SetActive(true);
+        left_Btn.gameObject.SetActive(false);
+
+        Time.timeScale = 0;
     }
 
     public void PlayNextTutorial()
@@ -104,5 +109,7 @@ public class TutorialManager : MonoBehaviour
         currentSlide = 0;
 
         tutorialUI.enabled = false;
+
+        Time.timeScale = 1;
     }
 }

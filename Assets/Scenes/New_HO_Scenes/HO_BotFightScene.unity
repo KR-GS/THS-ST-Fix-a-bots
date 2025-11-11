@@ -536,6 +536,10 @@ MonoBehaviour:
   gameTimer: {fileID: 1920746572}
   healthBar: {fileID: 1611611418}
   unpressedSprite: {fileID: -136007251, guid: 25f9f8883b944524daacea2eea7d2904, type: 3}
+  tutorialManager: {fileID: 261653451}
+  tutorialManager2: {fileID: 836551819}
+  tm: {fileID: 261653453}
+  tm2: {fileID: 836551820}
   pausePanel: {fileID: 1048366947}
   restartGameButton: {fileID: 936322253}
   exitButton: {fileID: 411023656}
@@ -632,6 +636,8 @@ RectTransform:
   - {fileID: 1920746573}
   - {fileID: 1093428167}
   - {fileID: 719795847}
+  - {fileID: 261653452}
+  - {fileID: 836551821}
   - {fileID: 2133513647}
   - {fileID: 1048366943}
   - {fileID: 2059406082}
@@ -1127,6 +1133,313 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225488639}
   m_CullTransparentMesh: 1
+--- !u!1001 &261653450
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 110916368}
+    m_Modifications:
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 646
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 219
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 8ac45c155534a834eb5fde02a7902ea9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 4e1bd02666818d144ae4a931bebe8a60, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 0b254d990ffd4dd4aa9d0a363c947f24, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display
+      value: 
+      objectReference: {fileID: 2800000, guid: feb7c5c28bc12164e88bb8674bc8e892, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 60a605cf64352fd4fb3c6ae94172281a, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 60a605cf64352fd4fb3c6ae94172281a, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 374ab52bd1067594b8f4f84138f5093d, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 60a605cf64352fd4fb3c6ae94172281a, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 8ac45c155534a834eb5fde02a7902ea9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 9739a2eb5e66f2241b9c338cff8bd2a0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 9739a2eb5e66f2241b9c338cff8bd2a0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].description
+      value: "Hmmm\u2026 "
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].patt_sprite
+      value: 
+      objectReference: {fileID: 334238137, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].description
+      value: Madali lang naman pala.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].patt_sprite
+      value: 
+      objectReference: {fileID: -873549008, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].description
+      value: Hindi akma sa tamang bilang ang galaw ng robot na ito.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].patt_sprite
+      value: 
+      objectReference: {fileID: 334238137, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].description
+      value: Ayun oh! umiilag siya kahit wala namang sumusuntok.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].patt_sprite
+      value: 
+      objectReference: {fileID: -191697906, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].description
+      value: Tapos ayan, tunganga kapag may sumuntok.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].patt_sprite
+      value: 
+      objectReference: {fileID: -1021766463, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].description
+      value: Simple lang pala problema natin dito.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].patt_sprite
+      value: 
+      objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].description
+      value: Tulungan natin ang robot sa timing ng kanyang pag-galaw, magswipe sa
+        screen sa naaayong oras.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].patt_sprite
+      value: 
+      objectReference: {fileID: -1200635239, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].description
+      value: Mag ingat tayo. Kung mali ang timing mo mababawasan ang battery niya.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].patt_sprite
+      value: 
+      objectReference: {fileID: -1021766463, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].description
+      value: Kung gusto mong umulit, Pindutin mo lang ang restart button sa itaas.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].patt_sprite
+      value: 
+      objectReference: {fileID: -1200635239, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].description
+      value: Ok! Kaya mo na yan. Tulungan mo na ang kawawang robot na iyan.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].patt_sprite
+      value: 
+      objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].description
+      value: Kapag kailangan mo pa ng tulong, kulitin mo lang ako!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].patt_sprite
+      value: 
+      objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_Name
+      value: Tutorial_Rhythm
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+--- !u!1 &261653451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+  m_PrefabInstance: {fileID: 261653450}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &261653452 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+  m_PrefabInstance: {fileID: 261653450}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &261653453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+  m_PrefabInstance: {fileID: 261653450}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f382f7f90d8cde4dba8da72a8a7fd99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &286284061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2871,7 +3184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -180, y: -117}
+  m_AnchoredPosition: {x: -164, y: -148}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &734400029
@@ -3311,6 +3624,319 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileName: data.game
+--- !u!1001 &836551818
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 110916368}
+    m_Modifications:
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -892
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -380
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038326391909776892, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 37df34ec563ea174889c2a8f6c8a1194, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 37df34ec563ea174889c2a8f6c8a1194, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].display
+      value: 
+      objectReference: {fileID: 2800000, guid: c7a99f36d89edf3438738886e0af3dc5, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 66ca99a13ffb7dd43bcb7513469581a9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 66ca99a13ffb7dd43bcb7513469581a9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 66ca99a13ffb7dd43bcb7513469581a9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 374ab52bd1067594b8f4f84138f5093d, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 60a605cf64352fd4fb3c6ae94172281a, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 8ac45c155534a834eb5fde02a7902ea9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 9739a2eb5e66f2241b9c338cff8bd2a0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].display
+      value: 
+      objectReference: {fileID: 2800000, guid: 9739a2eb5e66f2241b9c338cff8bd2a0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].description
+      value: Oh my wires! Ang gulo naman nito.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].patt_sprite
+      value: 
+      objectReference: {fileID: -1021766463, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].description
+      value: Parang may mali sa thinking formula ng robot na ito. Dito oh.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].patt_sprite
+      value: 
+      objectReference: {fileID: -191697906, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].description
+      value: Pagdugtung-dugtungin mo ang mga puzzle piece para bumuo ng formula.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].patt_sprite
+      value: 
+      objectReference: {fileID: 1350074659, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].description
+      value: Kapag nakabit mo na ang lahat ng puzzle piece, liliwanag sa baba ang
+        sequence na ginawa mo.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].patt_sprite
+      value: 
+      objectReference: {fileID: -873549008, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].description
+      value: Siguraduhing parehas sa number line sa baba ang iyong magiging sagot.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].patt_sprite
+      value: 
+      objectReference: {fileID: 334238137, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].description
+      value: Alam kong bago ka palang, kaya kung kailangan mo ng tulong ko, pindutin
+        mo lang ako! Hehe.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].patt_sprite
+      value: 
+      objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].description
+      value: Tulungan natin ang robot sa timing ng kanyang pag-galaw, magswipe sa
+        screen sa naaayong oras.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].patt_sprite
+      value: 
+      objectReference: {fileID: -1200635239, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].description
+      value: Mag ingat tayo. Kung mali ang timing mo mababawasan ang battery niya.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].patt_sprite
+      value: 
+      objectReference: {fileID: -1021766463, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].description
+      value: Kung gusto mong umulit, Pindutin mo lang ang restart button sa itaas.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].patt_sprite
+      value: 
+      objectReference: {fileID: -1200635239, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].description
+      value: Ok! Kaya mo na yan. Tulungan mo na ang kawawang robot na iyan.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].patt_sprite
+      value: 
+      objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].description
+      value: Ok! Kaya mo na yan. Tulungan mo na ang kawawang robot na iyan.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].patt_sprite
+      value: 
+      objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_Name
+      value: Tutorial_Formula_Input
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+--- !u!1 &836551819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+  m_PrefabInstance: {fileID: 836551818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &836551820 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+  m_PrefabInstance: {fileID: 836551818}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f382f7f90d8cde4dba8da72a8a7fd99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &836551821 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1311856285269286795, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+  m_PrefabInstance: {fileID: 836551818}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &842840114
 GameObject:
   m_ObjectHideFlags: 0

@@ -211,9 +211,9 @@ public class StaticData
         maxNumber = new List<int>()
         {
             // SCENARIO 1
-            15, 15, 15, 15, 18, 18, 18, 20, 20, 20, 25, 25, 25, 25, 25,
+            15, 15, 15, 15, 18, 18, 18, 20, 20, 20, 20, 23, 23, 23, 23,
             // SCENARIO 2
-            25, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25,
+            25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
             // SCENARIO 3
             15, 15, 18, 20, 20, 20, 20, 25, 25, 25, 20, 20, 25, 25, 25
         };
@@ -224,7 +224,7 @@ public class StaticData
             // SCENARIO 1
             2, 2, 3, 3, 3, 3, 4, 3, 3, 4, 4, 3, 3, 4, 5,
             // SCENARIO 2
-            4, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5,
+            4, 3, 4, 3, 4, 5, 2, 3, 4, 5, 3, 2, 3, 4, 5,
             // SCENARIO 3
             2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5
         };
@@ -235,7 +235,7 @@ public class StaticData
             // SCENARIO 1
             1, 1, 1, 2, 2, -1, -1, -1, 2, -3, 2, -2, -1, 2, -3,
             // SCENARIO 2
-            -3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3,
+            19, 28, 14, 54, -4, 3, 20, -1, 5, -3, 9, 12, -15, 6, -3,
             // SCENARIO 3
             3, 1, 1, -1, -3, 2, -2, -1, 2, -3, 2, -2, -1, 2, -3
         };
@@ -257,7 +257,7 @@ public class StaticData
             // SCENARIO 1
             3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2,
             // SCENARIO 2
-            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 2, 0, 0, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2,
             // SCENARIO 3
             3, 2, 2, 3, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1, 1
         };
@@ -279,7 +279,7 @@ public class StaticData
             // SCENARIO 1
             true, true, true, false, false, false, false, false, false, false, false, false, true, true, false,
             // SCENARIO 2
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, true, true, false, false, false, false, false, true, true, false, false, false, false,
             // SCENARIO 3
             true, false, false, false, false, false, false, false, false, false, false, false, false, false, false
         };
@@ -301,7 +301,7 @@ public class StaticData
             // SCENARIO 1
             false, false, false, true, true, true, true, true, false, false, false, true, false, false, false,
             // SCENARIO 2
-            false, false, false, true, true, true, false, false, false, false, true, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
             // SCENARIO 3
             true, false, false, true, true, true, false, false, false, false, true, false, false, false, false
         };
@@ -310,9 +310,9 @@ public class StaticData
         lockConstant = new List<bool>()
         {
             // SCENARIO 1
-            false, false, true, false, false, false, false, false, true, true, true, false, true, false, false,
+            false, false, false, false, false, false, false, false, true, true, false, false, true, false, false,
             // SCENARIO 2
-            false, true, true, false, false, false, true, false, false, false, false, true, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
             // SCENARIO 3
             true, true, true, false, false, false, true, false, false, false, false, true, false, false, false
         };
@@ -321,10 +321,10 @@ public class StaticData
         stageRandomCoefficientCount = new List<int>()
         {
             // SCENARIO 1
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 2, 2, 2,
+            0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 2, 2, 2,
             
             // SCENARIO 2
-            2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
+            2, 3, 2,  3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3,
             
             //SCENARIO 3
             2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
@@ -337,7 +337,7 @@ public class StaticData
             3, 3, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
 
             //SCENARIO 2
-            1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
+            5, 5, 5, 4, 6, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5,
 
             //SCENARIO 3
             1, 2, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
@@ -347,7 +347,7 @@ public class StaticData
         stageFormulaHint = new List<bool>()
         {
             //SCENARIO 1
-            true, true, true, true, true, true, true, true, false, false, false, false, false, false, false,
+            true, true, true, true, true, true, false, false, false, false, false, false, false, false, false,
 
             //SCENARIO 2
             false, true, true, true, true, true, true, true, true, false, false, false, false, false, false,
@@ -360,10 +360,10 @@ public class StaticData
         stageRandomConstantCount = new List<int>()
         {
             //SCENARIO 1
-            0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 1, 2, 1, 2, 2,
+            0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 1, 2, 0, 2, 2,
 
             //SCENARIO 2
-            1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
+            3, 4, 3, 3, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4,
 
             //SCENARIO 3
             1, 2, 2, 3, 1, 2, 2, 2, 2, 3, 2, 2, 2, 2, 3,
@@ -376,7 +376,7 @@ public class StaticData
             5, 5, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
 
             //SCENARIO 2
-            3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,
+            19, 28, 14, 54, 8, 9, 20, 10, 12, 20, 9, 12, 15, 6, 12,
 
             //SCENARIO 3
             3, 3, 4, 4, 5, 5, 4, 3, 4, 4, 5, 4, 3, 4, 4,

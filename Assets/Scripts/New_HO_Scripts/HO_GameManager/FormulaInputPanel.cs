@@ -208,11 +208,11 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     public void StoreStageData()
     {
         //STAR GENERATION
-        if (stageData.GetNumLives() == 5 && stageData.GetElapsedTime() <= 60f && stageData.GetNumRestarts() == 0)
+        if (stageData.GetNumLives() == 5 && stageData.GetElapsedTime() <= 75f && stageData.GetNumRestarts() == 0 && stageStringAttempt.Length <= 5)
         {
             numStars = 3;
         }
-        else if (stageData.GetNumLives() >= 2 && stageData.GetElapsedTime() <= 120f && stageData.GetNumRestarts() <= 3)
+        else if (stageData.GetNumLives() >= 2 && stageData.GetElapsedTime() <= 150f && stageData.GetNumRestarts() <= 3)
         {
             numStars = 2;
         }
