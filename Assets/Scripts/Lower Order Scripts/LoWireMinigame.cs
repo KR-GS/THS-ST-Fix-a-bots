@@ -659,6 +659,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
     {
         GameObject pliers = Instantiate(this.pliers);
         int j = 0;
+        int wrong_Count = 0;
         StaticData.playerWirePattern = new List<int>();
 
         foreach (int i in wireToEdit)
@@ -672,33 +673,15 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
 
                     //StaticData.playerWirePattern.Add(wireSlots[i].GetWireSlotVal());
 
-                    OverallUI.enabled = false;
-
-                    ResultUI.enabled = true;
-
-
-
-                    StaticData.isWireDone = true;
-
-                    Debug.Log("Where is the resultUI screen???");
-
-                    StaticData.pendingGameRecord = new GameData.GameRecord(
-                        StaticData.wirePattern,
-                        StaticData.playerWirePattern,
-                        StaticData.paint2Pattern,
-                        new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
-                        StaticData.timeSpent,
-                        StaticData.dayNo,
-                        StaticData.wireWrong, // Capture NOW
-                        2,
-                        StaticData.orderNumber,
-                        1
-                    );
-
                     if (DataPersistenceManager.Instance != null)
                     {
                         DataPersistenceManager.Instance.SaveGame();
                         Debug.Log("Wire station completion saved to StaticData.");
+                    }
+
+                    foreach (Transform child in vfxList[j])
+                    {
+                        child.GetComponent<VfxSegment>().ToggleVFXAnimOff();
                     }
 
                     notesManager.ToggleNotes();
@@ -713,9 +696,11 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
 
                     pliers.GetComponent<WirePliers>().GetWiresToCut(vfxList[j]);
 
-                    StaticData.playerWirePattern.Add(wireSlots[i].GetWireSlotVal());
+                    StaticData.playerWirePattern.Add(wireSlots[j].GetWireSlotVal());
 
                     Debug.Log("Value is Wrong!");
+
+                    wrong_Count++;
 
                     StaticData.wireWrong += 1;
                     Debug.Log("Added one penalty to wire score");
@@ -732,15 +717,55 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                         StaticData.orderNumber,
                         1
                     );
-
-                    j++;
                 }
             }
+            else
+            {
+                wrong_Count++;
+
+                StaticData.wireWrong += 1;
+                Debug.Log("Added one penalty to wire score");
+
+                StaticData.pendingGameRecord = new GameData.GameRecord(
+                    StaticData.wirePattern,
+                    StaticData.playerWirePattern,
+                    StaticData.paint2Pattern,
+                    new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                    StaticData.timeSpent,
+                    StaticData.dayNo,
+                    StaticData.wireWrong, // Capture NOW
+                    2,
+                    StaticData.orderNumber,
+                    1
+                );
+            }
+            j++;
         }
 
-        if (j <= 0)
+        if (wrong_Count <= 0)
         {
             Destroy(pliers);
+
+            OverallUI.enabled = false;
+
+            ResultUI.enabled = true;
+
+            StaticData.isWireDone = true;
+
+            Debug.Log("Where is the resultUI screen???");
+
+            StaticData.pendingGameRecord = new GameData.GameRecord(
+                StaticData.wirePattern,
+                StaticData.playerWirePattern,
+                StaticData.paint2Pattern,
+                new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                StaticData.timeSpent,
+                StaticData.dayNo,
+                StaticData.wireWrong, // Capture NOW
+                2,
+                StaticData.orderNumber,
+                1
+            );
         }
     }
 
@@ -781,10 +806,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
     public void SaveData(ref GameData data)
     {
         data.isFirstWire = StaticData.isFirstWire;
-    }
-    public void LoadData(GameData data)
-    {
-        StaticData.isFirstWire = data.isFirstWire;
+
         if (StaticData.pendingGameRecord != null)
         {
             if (data.loGameHistory == null)
@@ -801,5 +823,10 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
         {
             Debug.Log("PendingGameRecord in Wiyur? Are you there???");
         }
+    }
+    public void LoadData(GameData data)
+    {
+        StaticData.isFirstWire = data.isFirstWire;
+        
     }
 }
