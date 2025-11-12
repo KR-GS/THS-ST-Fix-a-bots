@@ -14,7 +14,7 @@ public class SpeedCalibrationManager : MonoBehaviour, IDataPersistence
     private Vector2 swipeEndPos;
     private List<string> expectedSwipeSequence;
     private int currentSwipeIndex = 0;
-    private float minSwipeDistance = 10f; 
+    private float minSwipeDistance = 30f; 
 
     [Header("Swipe Direction Panel")]
     public GameObject swipeDirectionPanel; 

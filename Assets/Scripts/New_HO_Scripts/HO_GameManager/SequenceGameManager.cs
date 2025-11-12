@@ -69,7 +69,7 @@ public class SequenceGameManager : MonoBehaviour
     private int currentSwipeIndex = 0;
 
     private int passedPrePressed = 0;
-    private float minSwipeDistance = 50f; 
+    private float minSwipeDistance = 30f; 
 
     private HOStageData stageData;
     private Sequence currentSequence;

@@ -260,6 +260,7 @@ public class ShopManager : MonoBehaviour
         om.orderCompletePanel.SetActive(false);
         pause.gameObject.SetActive(false);
         glm.prizeText.gameObject.SetActive(false); // Hide the prize text
+        glm.prizeImej.gameObject.SetActive(false);
 
         if (ri.timeText != null)
         {
