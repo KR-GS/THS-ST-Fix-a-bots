@@ -545,17 +545,17 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
             checkUI.transform.Find("Button").gameObject.SetActive(false);
 
             StaticData.pendingGameRecord = new GameData.GameRecord(
-            StaticData.paintPattern,
-            StaticData.playerPaintPattern,
-            StaticData.paint2Pattern,
-            new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
-            StaticData.timeSpent,
-            StaticData.dayNo,
-            StaticData.paintWrong, // Capture NOW
-            1,
-            StaticData.orderNumber,
-            1
-        );
+                StaticData.paintPattern,
+                StaticData.playerPaintPattern,
+                StaticData.paint2Pattern,
+                new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                StaticData.timeSpent,
+                StaticData.dayNo,
+                StaticData.paintWrong, // Capture NOW
+                1,
+                StaticData.orderNumber,
+                1
+            );
 
             if (DataPersistenceManager.Instance != null)
             {
@@ -804,6 +804,22 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
     public void SaveData(ref GameData data)
     {
         data.isFirstPaint = StaticData.isFirstPaint;
+        if (StaticData.pendingGameRecord != null)
+        {
+            if (data.loGameHistory == null)
+            {
+                data.loGameHistory = new List<GameData.GameRecord>();
+                Debug.Log("Initialized gameHistory list");
+            }
+
+            data.loGameHistory.Add(StaticData.pendingGameRecord);
+            // Clear the pending record after adding
+            StaticData.pendingGameRecord = null;
+        }
+        else
+        {
+            Debug.Log("PendingGameRecord in pent? Are you there???");
+        }
     }
     public void LoadData(GameData data)
     {

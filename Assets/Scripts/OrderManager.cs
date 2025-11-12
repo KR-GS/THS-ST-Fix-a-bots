@@ -391,7 +391,6 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             {
                 Debug.Log("Yeah... you did complete tool!");
                 orderList[0].toolDone = true;
-                StaticData.orderNumber += 1;
                 ri.ToolIndicator.gameObject.SetActive(false);
                 if(toolHover == false)
                 {
@@ -482,6 +481,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         {
             Debug.Log("Order Complete!");
             ri.TVSprite.sprite = TVSpriteNoOrder;
+            StaticData.orderNumber += 1;
             orderList.RemoveAt(0);
             activeOrders.RemoveAt(0);
             StaticData.orderList = orderList;
@@ -506,7 +506,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             if (ts != null)
             {
                 glm.prizeText.gameObject.SetActive(true);
-                if (ts.timeLft > 0)
+                if (ts.timeLft < 900)
                 {
                     if(pendingOrders.Count > 0)
                     {

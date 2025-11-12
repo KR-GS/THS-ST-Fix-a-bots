@@ -1208,10 +1208,9 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
             StaticData.dayNo,
             StaticData.toolWrong, // Capture NOW
             0,
-            StaticData.orderNumber,
-            1
+            StaticData.orderNumber, 1
         );
-
+            Debug.Log("Sending data to pending game record)");
 
             Debug.Log("Tool station marked as done in StaticData." + StaticData.isToolDone);
 
@@ -1265,8 +1264,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
             StaticData.dayNo,
             StaticData.toolWrong, // Capture NOW
             0,
-            StaticData.orderNumber,
-            1
+            StaticData.orderNumber, 1
         );
 
         Debug.Log("Sending data to pending game record)");
@@ -1475,6 +1473,24 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
     {
         data.isFirstTool = StaticData.isFirstTool;
         Debug.Log("Saving isFirstTool as " + data.isFirstTool);
+
+        if (StaticData.pendingGameRecord != null)
+        {
+            if (data.loGameHistory == null)
+            {
+                data.loGameHistory = new List<GameData.GameRecord>();
+                Debug.Log("Initialized gameHistory list");
+            }
+
+            data.loGameHistory.Add(StaticData.pendingGameRecord);
+
+            // Clear the pending record after adding
+            StaticData.pendingGameRecord = null;
+        }
+        else
+        {
+            Debug.Log("PendingGameRecord in Tool? Are you there???");
+        }
     }
     
     public void LoadData(GameData data)

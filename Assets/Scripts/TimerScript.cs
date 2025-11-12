@@ -4,7 +4,7 @@ using TMPro;
 public class TimerScript : MonoBehaviour, IDataPersistence {
     //public static TimerScript instance;
 
-    public float timeAmt = 900f; //300 seconds -> 5 minutes
+    public float timeAmt = 0f; //300 seconds -> 5 minutes
     public float timeLft; //how much time you have left
 
     public TextMeshProUGUI timer; 
@@ -25,7 +25,7 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
     }
 
     public void StartTimer() {
-        if (!isRunning && timeLft <= 0)
+        if (!isRunning && timeLft >= 0)
         {
             timeLft = timeAmt;
         }
@@ -42,20 +42,14 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
 
     public void ResetTimer()
     {
-        timeLft = 900f;
+        timeLft = 0f;
     }
     public void Update()
     {
         if (!isRunning) return;
 
-        timeLft -= Time.deltaTime;
+        timeLft += Time.deltaTime;
 
-        if(timeLft <= 0)
-        {
-            timeLft = 0;
-            //isRunning = false;
-            //TimerFinished();
-        }
 
         UpdateTimerDisp();
     }
@@ -97,7 +91,7 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
             Debug.Log($"[TIMER] Applying pending deduction: {StaticData.timeSpent:F2}s");
             Debug.Log($"[TIMER] Before: {timeLft:F2}s");
 
-            timeLft -= StaticData.timeSpent;
+            timeLft += StaticData.timeSpent;
 
             Debug.Log($"[TIMER] After: {timeLft:F2}s");
 

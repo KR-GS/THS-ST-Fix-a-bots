@@ -774,5 +774,21 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         StaticData.isFirstWire = data.isFirstWire;
+        if (StaticData.pendingGameRecord != null)
+        {
+            if (data.loGameHistory == null)
+            {
+                data.loGameHistory = new List<GameData.GameRecord>();
+                Debug.Log("Initialized gameHistory list");
+            }
+
+            data.loGameHistory.Add(StaticData.pendingGameRecord);
+            // Clear the pending record after adding
+            StaticData.pendingGameRecord = null;
+        }
+        else
+        {
+            Debug.Log("PendingGameRecord in Wiyur? Are you there???");
+        }
     }
 }
