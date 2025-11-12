@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
 using System;
-using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 [System.Serializable]
 public class FormulaAttempt

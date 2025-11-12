@@ -684,7 +684,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                         child.GetComponent<VfxSegment>().ToggleVFXAnimOff();
                     }
 
-                    notesManager.ToggleNotes();
+                    
                 }
                 else
                 {
@@ -749,6 +749,8 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
             OverallUI.enabled = false;
 
             ResultUI.enabled = true;
+
+            notesManager.ToggleNotes();
 
             StaticData.isWireDone = true;
 
