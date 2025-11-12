@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System.Security.Cryptography.X509Certificates;
 
 
-public class LoWireMinigame : MonoBehaviour
+public class LoWireMinigame : MonoBehaviour, IDataPersistence
 {
     [SerializeField]
     private GameObject generator;
@@ -102,6 +102,8 @@ public class LoWireMinigame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DataPersistenceManager.Instance.LoadGame();
+
         WireGenerator wireGenerator = FindAnyObjectByType<WireGenerator>();
 
         Color btn_Red = wireGenerator.GetRed();
@@ -308,6 +310,7 @@ public class LoWireMinigame : MonoBehaviour
         if (StaticData.isFirstWire)
         {
             StaticData.isFirstWire = false;
+            DataPersistenceManager.Instance.SaveGame();
             OpenTutorial();
             tutorialManager.OpenTutorial();
         }
@@ -762,5 +765,14 @@ public class LoWireMinigame : MonoBehaviour
     public void CloseTutorial()
     {
         OverallUI.enabled = true;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.isFirstWire = StaticData.isFirstWire;
+    }
+    public void LoadData(GameData data)
+    {
+        StaticData.isFirstWire = data.isFirstWire;
     }
 }

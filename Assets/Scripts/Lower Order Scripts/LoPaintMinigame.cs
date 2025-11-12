@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class LoPaintMinigame : MonoBehaviour
+public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 {
     [SerializeField]
     private TextMeshProUGUI stickerTextCounter;
@@ -96,6 +96,7 @@ public class LoPaintMinigame : MonoBehaviour
 
     void Awake()
     {
+        DataPersistenceManager.Instance.LoadGame();
         Debug.Log("Awake called in LoPaintMinigame");
         partSides = new GameObject[numOfSides];
         Debug.Log("Initialized partSides array with size: " + numOfSides);
@@ -244,7 +245,7 @@ public class LoPaintMinigame : MonoBehaviour
         if (StaticData.isFirstPaint)
         {
             StaticData.isFirstPaint = false;
-
+            DataPersistenceManager.Instance.SaveGame();
             tutorialManager.OpenTutorial();
             OpenTutorial();
         }
@@ -798,5 +799,14 @@ public class LoPaintMinigame : MonoBehaviour
         minimapManager.EnableMinimapPressing();
 
         overviewUI.enabled = true;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.isFirstPaint = StaticData.isFirstPaint;
+    }
+    public void LoadData(GameData data)
+    {
+        StaticData.isFirstPaint = data.isFirstPaint;
     }
 }
