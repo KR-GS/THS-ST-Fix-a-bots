@@ -25,10 +25,7 @@ public class TimerScript : MonoBehaviour, IDataPersistence {
     }
 
     public void StartTimer() {
-        if (!isRunning && timeLft >= 0)
-        {
-            timeLft = timeAmt;
-        }
+       
 
         isRunning = true;
         UpdateTimerDisp();
