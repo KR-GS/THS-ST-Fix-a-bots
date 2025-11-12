@@ -634,6 +634,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         orderCompletePanel.SetActive(true);
         glm.prizeText.gameObject.SetActive(false);
+        glm.prizeImej.gameObject.SetActive(false);
         Debug.Log("[OrderManager] Showing panel: " + orderCompletePanel.name);
 
         totalaccumulatedText.text = "+" + prize.ToString();
