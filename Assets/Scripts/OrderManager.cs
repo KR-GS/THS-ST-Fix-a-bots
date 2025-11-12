@@ -38,6 +38,8 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     public Sprite TVSpriteNO;
     private Coroutine scheduleRoutine;
 
+
+
     private bool wireHover = false;
     private bool toolHover = false;
     private bool paintHover = false;
@@ -126,12 +128,51 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                 Debug.Log("Sending your next order!");
             }
         }
-
-        if(StaticData.isFirstWS == true)
+    }
+    public void Start()
+    {
+        if (StaticData.isFirstWS == true)
         {
-
-            OpenTutorial();
+            StartCoroutine(WaitForLoadingThenShowTutorial());
         }
+    }
+
+    private IEnumerator WaitForLoadingThenShowTutorial()
+    {
+        GameObject loadingScreen = null;
+
+        // Find the loading screen object (adjust the name to match your actual GameObject name)
+        loadingScreen = GameObject.Find("LoadingScreenMath"); // or whatever it's named
+
+        // If not found by name, you can search through all DontDestroyOnLoad objects
+        if (loadingScreen == null)
+        {
+            GameObject[] allObjects = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+            foreach (GameObject obj in allObjects)
+            {
+                if (obj.scene.name == null || obj.scene.name == "DontDestroyOnLoad")
+                {
+                    if (obj.name.Contains("Math") || obj.name.Contains("Loading")) // adjust to your naming
+                    {
+                        loadingScreen = obj;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (loadingScreen != null)
+        {
+            while (loadingScreen.activeSelf)
+            {
+                yield return null;
+            }
+        }
+
+        yield return new WaitForSeconds(0.3f);
+
+        OpenTutorial();
     }
 
     public void OpenTutorial()
@@ -506,12 +547,13 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             if (ts != null)
             {
                 glm.prizeText.gameObject.SetActive(true);
+                glm.prizeImej.gameObject.SetActive(true);
                 if (ts.timeLft < 900)
                 {
                     if(pendingOrders.Count > 0)
                     {
                         Debug.Log("Order completed on time! You receive full amount as payment!");
-                        glm.prizeText.text = "You earned +50 for finishing on time!";
+                        glm.prizeText.text = "+50";
                         prize += 50;
                         glm.money += 50;
                         StartCoroutine(HideNotificationAfterDelay());
@@ -528,7 +570,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
                     if(pendingOrders.Count > 0)
                     {
                         Debug.Log("Order completed late! You receive half amount as payment!");
-                        glm.prizeText.text = "You earned +25 for finishing late!";
+                        glm.prizeText.text = "+25";
                         prize += 25;
                         glm.money += 25;
                         StartCoroutine(HideNotificationAfterDelay());
@@ -562,6 +604,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     private IEnumerator HideNotificationAfterDelay()
     {
         yield return new WaitForSeconds(notificationDuration);
+        glm.prizeImej.gameObject.SetActive(false);
         glm.prizeText.gameObject.SetActive(false);
     }
 

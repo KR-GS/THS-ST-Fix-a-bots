@@ -80,6 +80,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public TextMeshProUGUI prizeText;
 
+    public Image prizeImej;
+
     private TimerScript timer;
 
     public Image calendar;
