@@ -64,7 +64,7 @@ public class LoadingScreenManager : MonoBehaviour
         ResetButtons();
         vanThink.sprite = vanThonk;
         pattspeak.sprite = pattSpoke;
-        prompt.text = "While waiting, let's help Van solve Math equations.";
+        prompt.text = "Habang naghihintay, tulungan natin si Van sumagot!";
         loadingscreenMath.SetActive(true);
         progressBar.value = 0;
         answered = false;
@@ -243,7 +243,7 @@ public class LoadingScreenManager : MonoBehaviour
             HighlightButton(buttonIndex, Color.green); // Correct answer
             vanThink.sprite = vanNice;
             pattspeak.sprite = pattNice;
-            prompt.text = "Well done.";
+            prompt.text = "Magaling!";
         }
         else
         {
@@ -251,7 +251,7 @@ public class LoadingScreenManager : MonoBehaviour
             HighlightButton(locAnswer, Color.green);      // Show correct answer
             vanThink.sprite = vanNotNice;
             pattspeak.sprite = pattNotNice;
-            prompt.text = "Try again next time.";
+            prompt.text = "Hala, sas susnod nalang...";
         }
     }
 
@@ -309,31 +309,31 @@ public class LoadingScreenManager : MonoBehaviour
         switch (tipIndex)
         {
             case 0:
-                tiptext.text = "TIP: Everything follows a pattern, don't forget that!";
+                tiptext.text = "TIP: Sumusunod ang lahat sa pattern, huwag mong kalimutan!";
                 break;
 
             case 1:
-                tiptext.text = "TIP: Counting is the main key in this game! Be careful in counting.";
+                tiptext.text = "TIP: Ang pagbibilang ay ang susi sa game. Focus ka sa pagbibilang!";
                 break;
 
             case 2:
-                tiptext.text = "TIP: New orders can't be received if you haven't finish the current one!";
+                tiptext.text = "TIP: Ang bagong orders ay hindi makukuha kapag hindi mo natapos ang luma.";
                 break;
 
             case 3:
-                tiptext.text = "TIP: P.A.T.T loves hiding your toolbox, make sure to check under the sofa!";
+                tiptext.text = "TIP: Mahilig itago ni P.A.T.T ang iyong toolbox, huwag mong kalimutan tumingin sa ilalim ng sofa!";
                 break;
 
             case 4:
-                tiptext.text = "TIP: You can use the sticky notes to keep track of lots of things!";
+                tiptext.text = "TIP: Pwede mo gamitin ang sticky notes para maalala mo ang mga bagay-bagay!";
                 break;
 
             case 5:
-                tiptext.text = "TIP: Don't forget your addition, subtraction and multiplication skills!";
+                tiptext.text = "TIP: Huwag mong kalimutan ang iyong skills sa addition, subtraction at multiplication!";
                 break;
 
             case 6:
-                tiptext.text = "TIP: Always stay hydrated. Drink water, especially that the days are hot!";
+                tiptext.text = "TIP: Huwag magpauhaw. Uminom ka ng tubig, lalo na maiinit ang mga araw!";
                 break;
         }
 
