@@ -1186,14 +1186,21 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             StaticData.paint2Pattern = currentP2Pattern;
         }
 
-        StaticData.selectedFastenerIndex = Random.Range(0, 3); //based on LoToolMinigame, array size is 4
-        StaticData.selectedStickerIndex = Random.Range(0, 3);
-        StaticData.selectedStickerIndexTwo = Random.Range(0, 3);
+        StaticData.selectedFastenerIndex = Random.Range(0, 4); //based on LoToolMinigame, array size is 4
+        StaticData.selectedStickerIndex = Random.Range(0, 4);
+        StaticData.selectedStickerIndexTwo = Random.Range(0, 4);
+
+        while(StaticData.selectedStickerIndexTwo == StaticData.selectedStickerIndex) // Ensure different indices
+        {
+            StaticData.selectedStickerIndexTwo = Random.Range(0, 4);
+        }
+
+    /*
         if (StaticData.selectedStickerIndex == StaticData.selectedFastenerIndex) // Ensure different indices
         {
             StaticData.selectedStickerIndex = (StaticData.selectedStickerIndex + 1) % 3; // Wrap around if same index
         }
-
+    */
 
         Debug.Log("Wire wire, pants on fire");
         ConfigureDifficulty(out incorrectVals, out missingVals, out noOfTypes, Minigame.wire);

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+//using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -179,7 +180,8 @@ public class StationExit : MonoBehaviour
             StaticData.dayNo,
             howManyWrongs, // Capture NOW
             StaticData.enteredStation,
-            StaticData.orderNumber
+            StaticData.orderNumber,
+            0
         );
 
         Debug.Log("Saving the time you spent with this amount: " + StaticData.timeSpent.ToString() + " seconds.");

@@ -20,7 +20,9 @@ public class GameData
         public int station;
         public int orderNo;
 
-        public GameRecord(List<int> correct, List<int> answer, List<int> paintMedHard, List<int> answer2PaintMedHard, float time, int dayNum, int wrongs, int minigame, int orderNum)
+        public int modeOfLog; // 0 for exiting station, 1 for checking station
+
+        public GameRecord(List<int> correct, List<int> answer, List<int> paintMedHard, List<int> answer2PaintMedHard, float time, int dayNum, int wrongs, int minigame, int orderNum, int checkie)
         {
             correctPattern = correct;
             playerAnswer = answer;
@@ -31,6 +33,7 @@ public class GameData
             mistakes = wrongs;
             station = minigame;
             orderNo = orderNum;
+            modeOfLog = checkie;
         }
     }
 

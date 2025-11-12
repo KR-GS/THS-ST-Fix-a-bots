@@ -25,7 +25,7 @@ public class HODifficultyManager : MonoBehaviour
             case 2:
                 StaticData.maxNumber[StaticData.stageNum] = Random.Range(18, 23); // Easy: max number between 18 and 22
                 StaticData.constant[StaticData.stageNum] = Random.Range(-5, 25); // Easy: constant between -4 and 24
-                StaticData.coefficient[StaticData.stageNum] = Random.Range(3, 5); // Easy: coefficient between 3 and 4
+                StaticData.coefficient[StaticData.stageNum] = Random.Range(3, 6); // Easy: coefficient between 3 and 4
                 StaticData.prePressedCount[StaticData.stageNum] = 2;
                 StaticData.isFormulaSeen[StaticData.stageNum] = false;
                 StaticData.isRandomSequence[StaticData.stageNum] = false;
@@ -40,9 +40,9 @@ public class HODifficultyManager : MonoBehaviour
             case 3:
                 StaticData.maxNumber[StaticData.stageNum] = Random.Range(18, 26); // Easy: max number between 18 and 25
                 StaticData.constant[StaticData.stageNum] = Random.Range(-20, 50); // Easy: constant between -4 and 49
-                StaticData.coefficient[StaticData.stageNum] = Random.Range(2, 5); // Easy: coefficient between 3 and 4
-                StaticData.prePressedCount[StaticData.stageNum] = 2;
-                StaticData.isFormulaSeen[StaticData.stageNum] = false;
+                StaticData.coefficient[StaticData.stageNum] = Random.Range(2, 7); // Easy: coefficient between 3 and 4
+                StaticData.prePressedCount[StaticData.stageNum] = 0;
+                StaticData.isFormulaSeen[StaticData.stageNum] = true;
                 StaticData.isRandomSequence[StaticData.stageNum] = false;
                 StaticData.lockCoefficient[StaticData.stageNum] = false;
                 StaticData.lockConstant[StaticData.stageNum] = false;

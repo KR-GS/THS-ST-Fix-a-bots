@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System.Security.Cryptography.X509Certificates;
 
 
-public class LoWireMinigame : MonoBehaviour
+public class LoWireMinigame : MonoBehaviour, IDataPersistence
 {
     [SerializeField]
     private GameObject generator;
@@ -102,6 +102,8 @@ public class LoWireMinigame : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DataPersistenceManager.Instance.LoadGame();
+
         WireGenerator wireGenerator = FindAnyObjectByType<WireGenerator>();
 
         Color btn_Red = wireGenerator.GetRed();
@@ -308,6 +310,7 @@ public class LoWireMinigame : MonoBehaviour
         if (StaticData.isFirstWire)
         {
             StaticData.isFirstWire = false;
+            DataPersistenceManager.Instance.SaveGame();
             OpenTutorial();
             tutorialManager.OpenTutorial();
         }
@@ -668,6 +671,19 @@ public class LoWireMinigame : MonoBehaviour
 
                     Debug.Log("Where is the resultUI screen???");
 
+                    StaticData.pendingGameRecord = new GameData.GameRecord(
+                        StaticData.wirePattern,
+                        StaticData.playerWirePattern,
+                        StaticData.paint2Pattern,
+                        new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                        StaticData.timeSpent,
+                        StaticData.dayNo,
+                        StaticData.wireWrong, // Capture NOW
+                        2,
+                        StaticData.orderNumber,
+                        1
+                    );
+
                     if (DataPersistenceManager.Instance != null)
                     {
                         DataPersistenceManager.Instance.SaveGame();
@@ -692,6 +708,19 @@ public class LoWireMinigame : MonoBehaviour
 
                     StaticData.wireWrong += 1;
                     Debug.Log("Added one penalty to wire score");
+
+                    StaticData.pendingGameRecord = new GameData.GameRecord(
+                        StaticData.wirePattern,
+                        StaticData.playerWirePattern,
+                        StaticData.paint2Pattern,
+                        new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                        StaticData.timeSpent,
+                        StaticData.dayNo,
+                        StaticData.wireWrong, // Capture NOW
+                        2,
+                        StaticData.orderNumber,
+                        1
+                    );
 
                     j++;
                 }
@@ -736,5 +765,14 @@ public class LoWireMinigame : MonoBehaviour
     public void CloseTutorial()
     {
         OverallUI.enabled = true;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.isFirstWire = StaticData.isFirstWire;
+    }
+    public void LoadData(GameData data)
+    {
+        StaticData.isFirstWire = data.isFirstWire;
     }
 }
