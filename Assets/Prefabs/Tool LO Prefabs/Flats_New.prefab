@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d7fdd809db7ab4cb9c03e370a44eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolType: flathead
   addTenPos: {fileID: 3692262696522878840}
   speed: 5
   addOneSprite: {fileID: 5214796533951179418}
@@ -454,6 +455,7 @@ MonoBehaviour:
   - {fileID: -1609588202, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
   - {fileID: 1539401349, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
   - {fileID: -460585262, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
+  soundEffectsManager: {fileID: 4880671318542695620, guid: 97f758d50ff23b54983737ef20ba71e7, type: 3}
 --- !u!1 &4095099604257356806
 GameObject:
   m_ObjectHideFlags: 0

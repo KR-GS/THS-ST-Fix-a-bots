@@ -27,7 +27,7 @@ public class DataPersistenceManager : MonoBehaviour
         }*/
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         dataPersistenceObjects = new List<IDataPersistence>();
         Debug.Log("Awake has been called, instance set");

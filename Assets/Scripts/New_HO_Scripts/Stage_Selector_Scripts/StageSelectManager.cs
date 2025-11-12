@@ -107,9 +107,9 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             });
         }
 
-        /*randButton.onClick.AddListener(() =>
-            LoadStage(5, 25, 1f, 0.6f, 0, false, false, false, false, 0, 0, true)
-        );*/
+        randButton.onClick.AddListener(() =>
+            LoadStage(31)
+        );
 
         yesButton.onClick.AddListener(ConfirmStageSelection);
         noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
@@ -143,6 +143,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
                 levelMap1.gameObject.SetActive(true);
                 levelMap2.gameObject.SetActive(false);
                 levelMap3.gameObject.SetActive(false);
+                randButton.gameObject.SetActive(false);
                 break;
             case 1:
                 leftButton.gameObject.SetActive(true);
@@ -151,8 +152,9 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
                 levelMap1.gameObject.SetActive(false);
                 levelMap2.gameObject.SetActive(true);
                 levelMap3.gameObject.SetActive(false);
+                randButton.gameObject.SetActive(false);
                 break;
-            /*
+            
             case 2:
                 leftButton.interactable = true;
                 leftButton.gameObject.SetActive(true);
@@ -160,9 +162,10 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
                 rightButton.gameObject.SetActive(false);
                 levelMap1.gameObject.SetActive(false);
                 levelMap2.gameObject.SetActive(false);
-                levelMap3.gameObject.SetActive(true);
+                randButton.gameObject.SetActive(true);
+                //levelMap3.gameObject.SetActive(true);
                 break;
-            */
+            
         }
     }
     
@@ -314,6 +317,11 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         {
             //SceneManager.LoadScene("HO_BotTennisScene");
             LoadingScreenManager.Instance.SwitchtoSceneMath(3);
+        }
+
+        else if (stageNum == 31)
+        {
+            LoadingScreenManager.Instance.SwitchtoSceneMath(Random.Range(2, 4));
         }
         /*
         else if (stageNum <= 45)

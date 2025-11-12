@@ -92,6 +92,10 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 
     private Vector2 pos_anim;
 
+    [Header("Sounds Effect Manager")]
+    [SerializeField]
+    private SoundEffectsManager soundEffectsManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Awake()
@@ -301,6 +305,8 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 
                             draggableObject.GetComponent<Sticker>().SetDefaultPos(newPos);
                             draggableObject.transform.position = newPos;
+
+                            soundEffectsManager.playStickerSounds();
                         }
                         else
                         {
@@ -377,6 +383,7 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 
     public IEnumerator TriggerStickerFall()
     {
+        soundEffectsManager.playFallingSounds();
         GameObject obj_to_delete = draggableObject;
         draggableObject.GetComponent<BoxCollider2D>().enabled = false;
         draggableObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;

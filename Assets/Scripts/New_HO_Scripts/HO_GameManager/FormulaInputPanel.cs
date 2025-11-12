@@ -92,7 +92,19 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         {
             continueButton.onClick.AddListener(() =>
             {
-                LoadStageSelectScene();
+                if (StaticData.stageNum < 31)
+                {
+                    Debug.Log("Loading Stage Select Scene");
+                    LoadStageSelectScene();
+                }
+                else
+                {
+                    Debug.Log("Loading Random Scene");
+                    System.Random rnd = new System.Random();
+                    int randNum = rnd.Next(2, 4);
+                    LoadingScreenManager.Instance.SwitchtoSceneMath(randNum);
+                }
+                
             });
         }
 

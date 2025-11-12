@@ -294,7 +294,7 @@ public class StaticData
             // SCENARIO 2
             false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
             // SCENARIO 3
-            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+            true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
         };
 
         // Whether the coefficient is locked or not (locked meaning already given and cannot be changed by the player)

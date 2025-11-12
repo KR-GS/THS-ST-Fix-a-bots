@@ -124,21 +124,24 @@ public class SequenceGameManager : MonoBehaviour
             Debug.Log("Random Sequence is true");
             var dm = new HODifficultyManager();
             dm.DifficultyPicker(Random.Range(1, 4));
+            prePressedCount = StaticData.prePressedCount[stageNum];
+            isFormulaSeen = StaticData.isFormulaSeen[stageNum];
+            formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum]);
+            formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum]);
+            expectedSwipeSequence = StaticData.stageSwipes[stageNum];    
         }
         else
         {
             maxNumber = StaticData.maxNumber[stageNum];
             Debug.Log("Max Number: " + StaticData.maxNumber[stageNum] + " for stage " + (StaticData.stageNum));
-            cycleInterval = StaticData.cycleInterval;
-            cycleLeniency = StaticData.cycleLeniency;
             prePressedCount = StaticData.prePressedCount[stageNum];
             isFormulaSeen = StaticData.isFormulaSeen[stageNum];
             formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum]);
             formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum]);
             expectedSwipeSequence = StaticData.stageSwipes[stageNum];            
         }
-
-
+        cycleInterval = StaticData.cycleInterval;
+        cycleLeniency = StaticData.cycleLeniency;
     }
     
     void InitializeRandomData()
@@ -294,7 +297,7 @@ public class SequenceGameManager : MonoBehaviour
     void Awake()
     {
         GetData();
-        sceneName= SceneManager.GetActiveScene().name;
+        sceneName = SceneManager.GetActiveScene().name;
         Debug.Log("Current scene: " + sceneName);
         Debug.Log("Stage Number: " + stageNum);
         Debug.Log("Number of stages done: " + StaticData.numStageDone);
@@ -302,7 +305,7 @@ public class SequenceGameManager : MonoBehaviour
         {
             Debug.Log("Stage Never Been done before, should have a new save");
         }
-        if (!StaticData.isRandomSequence[StaticData.stageNum])
+        if(!isRandomSequence)
         {
             InitilizeStageData();
         }
@@ -313,6 +316,7 @@ public class SequenceGameManager : MonoBehaviour
         
         InitializeStageUi();
         SetupButtons();
+        currentCycleIndex = 0;
         statusAnimator.SetBool("Idle_Trigger", true);
     }
 
@@ -367,7 +371,7 @@ public class SequenceGameManager : MonoBehaviour
         canTap = true;
         if (isRandomSequence)
         {
-            currentSequence = new Sequence(maxNumber);
+            currentSequence = new Sequence(maxNumber + StaticData.constant[stageNum], StaticData.coefficient[stageNum], StaticData.constant[stageNum]);
         }
         else
         {

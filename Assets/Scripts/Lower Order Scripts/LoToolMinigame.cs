@@ -84,6 +84,10 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
     [SerializeField]
     private int max_HitCount;
 
+    [Header("Sounds Effect Manager")]
+    [SerializeField]
+    private SoundEffectsManager soundEffectsManager;
+
     void Awake()
     {
         DataPersistenceManager.Instance.LoadGame();
@@ -786,6 +790,8 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
         }
 
         Debug.Log("Playing animation");
+
+        triggerToolSfx(currentTool.GetComponent<Tool>().getToolType());
         yield return StartCoroutine(tool.TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
     }
 
@@ -1430,7 +1436,32 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
             SetZoomedInTextCounter(currentInt);
         }
 
+        triggerToolSfx(currentTool.GetComponent<Tool>().getToolType());
         yield return StartCoroutine(currentTool.GetComponent<Tool>().TriggerToolAnimation(tiledParts[currentInt].GetComponent<PartTile>()));
+    }
+
+        public void triggerToolSfx(string toolType)
+    {
+        switch (toolType)
+        {
+            case "hammer":
+                soundEffectsManager.playHammerSounds();
+                break;
+            case "phillips":
+                soundEffectsManager.playPhillipsSounds();
+                break;
+            case "flathead":
+                soundEffectsManager.playFlatsSounds();
+                break;
+            case "wrench":
+                soundEffectsManager.playWrenchSounds();
+                break;
+            default:
+                soundEffectsManager.playStickerSounds();
+                break;
+
+        }
+
     }
 
     public void ShowHints()

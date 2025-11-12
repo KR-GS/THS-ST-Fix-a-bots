@@ -179,3 +179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d7fdd809db7ab4cb9c03e370a44eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolType: hammer
+  addTenPos: {fileID: 0}
+  speed: 0
+  addOneSprite: {fileID: 0}
+  shadow: {fileID: 0}
+  tool_variants: []
+  hit_variant: []
+  soundEffectsManager: {fileID: 0}

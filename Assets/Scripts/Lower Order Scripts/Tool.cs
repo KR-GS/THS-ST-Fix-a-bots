@@ -6,6 +6,9 @@ using UnityEngine.U2D.Animation;
 public class Tool : MonoBehaviour
 {
     [SerializeField]
+    private string toolType;
+
+    [SerializeField]
     private Transform addTenPos;
 
     [SerializeField]
@@ -26,6 +29,7 @@ public class Tool : MonoBehaviour
     private SpriteLibrary tool_sprites;
     private Animator statusAnimator;
     private AnimationClip[] clips;
+
     
     void Awake()
     {
@@ -49,6 +53,11 @@ public class Tool : MonoBehaviour
         }
     }
 
+    public string getToolType()
+    {
+        return toolType;
+    }
+
     public IEnumerator TriggerToolAnimation(PartTile fastener)
     {
         shadow.enabled = false;
@@ -61,6 +70,7 @@ public class Tool : MonoBehaviour
         Debug.Log("Bug Check");
         shadow.enabled = true;
     }
+    
 
     public void SetHeightValue(float value)
     {

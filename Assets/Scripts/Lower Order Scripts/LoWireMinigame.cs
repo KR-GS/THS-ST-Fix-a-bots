@@ -98,6 +98,9 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
     [SerializeField]
     private Vector3 origPos_Robot;
 
+    [Header("Sounds Effect Manager")]
+    [SerializeField]
+    private SoundEffectsManager soundEffectsManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -252,6 +255,8 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                     wrong_count++;
 
                     wireToEdit.Add(i);
+
+                    soundEffectsManager.playStaticSounds();
                 }
             }
             else
@@ -569,6 +574,8 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
 
         wirePliers.TriggerCuttingAnim();
 
+        soundEffectsManager.playSnipSounds();
+
         yield return new WaitForSeconds(1f);
 
         wirePliers.StopParticleEmission();
@@ -591,9 +598,13 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
 
         wirePliers.TriggerCuttingAnim();
 
+        soundEffectsManager.playSnipSounds();
+
         yield return new WaitForSeconds(1f);
 
         wirePliers.StopParticleEmission();
+
+        soundEffectsManager.stopStaticSounds();
 
         //yield return StartCoroutine(pliers.GetComponent<WirePliers>().TriggerPlierMovement(true, 5));
 

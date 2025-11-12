@@ -10,10 +10,24 @@ public class SoundEffectsManager : MonoBehaviour
     public AudioSource music;
     public AudioSource sfx;
 
-    [Header("AudioClips")]
+    [Header("SFX Clips")]
     public AudioClip idle;
     public AudioClip miss;
     public AudioClip hit;
+
+    public AudioClip falling;
+    public AudioClip flats;
+    public AudioClip hammer;
+    public AudioClip phillips;
+    public AudioClip snip;
+    public AudioClip staticElectric;
+    public AudioClip stickerPop;
+    public AudioClip swing;
+    public AudioClip tennis;
+    public AudioClip wrench;
+
+
+    [Header("BGM Clips")]
     public AudioClip higherOrderBGM;
     public AudioClip lowerOrderBGM;
 
@@ -42,7 +56,6 @@ public class SoundEffectsManager : MonoBehaviour
     {
         sfx.PlayOneShot(clip);
     }
-
     public void playHitSound()
     {
         sfx.PlayOneShot(hit);
@@ -54,5 +67,58 @@ public class SoundEffectsManager : MonoBehaviour
     public void playIdleSound()
     {
         sfx.PlayOneShot(idle);
+    }
+    public void playFallingSounds()
+    {
+        sfx.PlayOneShot(falling);
+    }
+    public void playFlatsSounds()
+    {
+        sfx.PlayOneShot(flats);
+    }
+    public void playHammerSounds()
+    {
+        sfx.PlayOneShot(hammer);
+    }
+    public void playPhillipsSounds()
+    {
+        sfx.PlayOneShot(phillips);
+    }
+    public void playSnipSounds()
+    {
+        sfx.PlayOneShot(snip);
+    }
+    public void playStaticSounds()
+    {
+        sfx.clip = staticElectric;
+        sfx.loop = true;
+        sfx.Play();
+    }
+
+    public void stopStaticSounds()
+    {
+        sfx.clip = staticElectric;
+        sfx.loop = false;
+        sfx.Stop();
+    }
+
+    public void playStickerSounds()
+    {
+        sfx.PlayOneShot(stickerPop);
+    }
+
+    public void playTennisSounds()
+    {
+        sfx.PlayOneShot(tennis);
+    }
+
+    public void playSwingSounds()
+    {
+        sfx.PlayOneShot(swing);
+    }
+
+    public void playWrenchSounds()
+    {
+        sfx.PlayOneShot(wrench);
     }
 }

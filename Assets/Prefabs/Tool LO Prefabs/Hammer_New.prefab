@@ -625,6 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d7fdd809db7ab4cb9c03e370a44eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolType: hammer
   addTenPos: {fileID: 6140072312494091261}
   speed: 5
   addOneSprite: {fileID: 6780622076016619604}
@@ -637,6 +638,7 @@ MonoBehaviour:
   - {fileID: -1484256439, guid: 5994ac87b33d72c40a71470737cfde35, type: 3}
   - {fileID: 1921640391, guid: 5994ac87b33d72c40a71470737cfde35, type: 3}
   - {fileID: -1555905013, guid: 5994ac87b33d72c40a71470737cfde35, type: 3}
+  soundEffectsManager: {fileID: 4880671318542695620, guid: 97f758d50ff23b54983737ef20ba71e7, type: 3}
 --- !u!1 &4469449655051312734
 GameObject:
   m_ObjectHideFlags: 0
