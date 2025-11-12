@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 using Unity.VisualScripting;
 
 [System.Serializable]
@@ -617,9 +618,9 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         }
 
         // Update stats
-        livesText.text = $"{StaticData.stageLives[StaticData.stageNum]}";
-        restartsText.text = $"{StaticData.stageRestarts[StaticData.stageNum]}";
-        timeText.text = $"{Mathf.Round(StaticData.stageTime[StaticData.stageNum] * 100) / 100.0}s";
+        livesText.text = $"{stageData.GetNumLives()}";
+        restartsText.text = $"{stageData.GetNumLives()}";
+        timeText.text = $"{Math.Round(stageData.GetElapsedTime(),2)}s";
 
         // Pop in stats one by one
         yield return StartCoroutine(PopElement(livesTextObj));
@@ -632,7 +633,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         yield return StartCoroutine(PopElement(timeTextHolder));
 
         // Update stars
-        int stars = StaticData.stageStars[StaticData.stageNum];
+        int stars = numStars;
         star1.GetComponent<Image>().sprite = stars >= 1 ? fullStarSprite : emptyStarSprite;
         star2.GetComponent<Image>().sprite = stars >= 2 ? fullStarSprite : emptyStarSprite;
         star3.GetComponent<Image>().sprite = stars >= 3 ? fullStarSprite : emptyStarSprite;

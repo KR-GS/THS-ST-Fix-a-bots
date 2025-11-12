@@ -23,10 +23,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/New_HO_Scenes/HO_BotFightScene.unity
     guid: df4a6c3eee62b9d40b7c3b609f5e9a99
+  - enabled: 1
+    path: Assets/Scenes/New_HO_Scenes/HO_BotTennisSceneNew.unity
+    guid: e1a59105c164a6c4490cd1f9f317fe64
   - enabled: 0
     path: Assets/Scenes/LO_Stage_Select.unity
     guid: 686c6b6cfbda4fe49b022d3b6f6b7085
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/New_HO_Scenes/HO_BotTennisScene.unity
     guid: d0e672289641fdc40b413007a02fa5e9
   - enabled: 0
