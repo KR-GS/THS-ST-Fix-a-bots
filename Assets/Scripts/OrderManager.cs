@@ -215,7 +215,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         newOrder.customername = customerList[namePicker];
         newOrder.robotname = robotList[namePicker];
 
-        
+        /*
         //QA Data
 
         if (level >= 1)
@@ -225,9 +225,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = Random.value < 0.5f;
         }
-        
+        */
 
-        /*
+        
         if (level >= 1 && level < 3) // && level < 3
         {
             newOrder.needsTool = true; //originally true, gonna QA
@@ -252,7 +252,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
             newOrder.needsPaint = Random.value < 0.5f;
             newOrder.needsWire = Random.value < 0.5f;
         }
-        */
+        
 
         // Ensure at least one requirement
         if (!newOrder.needsTool && !newOrder.needsPaint && !newOrder.needsWire)
@@ -622,7 +622,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     {
         if (orderCompletePanel == null)
         {
-            Debug.LogWarning("[OrderManager] Order Complete Panel not assigned — nothing to hide.");
+            Debug.LogWarning("[OrderManager] Order Complete Panel not assigned ï¿½ nothing to hide.");
             return;
         }
 

@@ -96,7 +96,9 @@ public class LoPaintMinigame : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log("Awake called in LoPaintMinigame");
         partSides = new GameObject[numOfSides];
+        Debug.Log("Initialized partSides array with size: " + numOfSides);
     }
     void Start()
     {
@@ -147,6 +149,8 @@ public class LoPaintMinigame : MonoBehaviour
 
                 numberPattern.Add(StaticData.paintPattern.ToArray());
                 numberPattern.Add(StaticData.paint2Pattern.ToArray());
+                
+                Debug.Log("Number Patterns after adding from StaticData: " + numberPattern);
 
                 int j = 0;
                 while (j < 2)
@@ -175,6 +179,8 @@ public class LoPaintMinigame : MonoBehaviour
                         j++;
                     }
                 }
+
+                Debug.Log("Assignment done");
             }
         }
         else
@@ -242,6 +248,7 @@ public class LoPaintMinigame : MonoBehaviour
             tutorialManager.OpenTutorial();
             OpenTutorial();
         }
+        Debug.Log("Reached End of Start()");
     }
 
     // Update is called once per frame
@@ -504,6 +511,25 @@ public class LoPaintMinigame : MonoBehaviour
             }
             */
 
+            StaticData.pendingGameRecord = new GameData.GameRecord(
+            StaticData.paintPattern,
+            StaticData.playerPaintPattern,
+            StaticData.paint2Pattern,
+            new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+            StaticData.timeSpent,
+            StaticData.dayNo,
+            StaticData.paintWrong, // Capture NOW
+            1,
+            StaticData.orderNumber,
+            1
+        );
+
+            if (DataPersistenceManager.Instance != null)
+            {
+                DataPersistenceManager.Instance.SaveGame();
+                Debug.Log("Paint station completion saved to StaticData.");
+            }
+
             checkUI.transform.Find("Result Image").GetComponent<Image>().sprite = correct_sprite;
             checkUI.transform.Find("Button").gameObject.SetActive(true);
         }
@@ -516,6 +542,25 @@ public class LoPaintMinigame : MonoBehaviour
             Debug.Log("Added one penalty to paint score");
             checkUI.transform.Find("Result Image").GetComponent<Image>().sprite = wrong_sprite;
             checkUI.transform.Find("Button").gameObject.SetActive(false);
+
+            StaticData.pendingGameRecord = new GameData.GameRecord(
+            StaticData.paintPattern,
+            StaticData.playerPaintPattern,
+            StaticData.paint2Pattern,
+            new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+            StaticData.timeSpent,
+            StaticData.dayNo,
+            StaticData.paintWrong, // Capture NOW
+            1,
+            StaticData.orderNumber,
+            1
+        );
+
+            if (DataPersistenceManager.Instance != null)
+            {
+                DataPersistenceManager.Instance.SaveGame();
+                Debug.Log("Paint station completion saved to StaticData.");
+            }
 
             yield return new WaitForSeconds(2f);
 

@@ -56,7 +56,9 @@ public class Tool : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         statusAnimator.SetTrigger("IsUsed");
         yield return new WaitForSeconds(1f);
+        Debug.Log("Tool Animation Complete");
         GetComponent<Collider2D>().enabled = true;
+        Debug.Log("Bug Check");
         shadow.enabled = true;
     }
 

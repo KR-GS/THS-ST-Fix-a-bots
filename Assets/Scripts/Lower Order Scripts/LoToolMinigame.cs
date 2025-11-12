@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LoToolMinigame : MonoBehaviour
+public class LoToolMinigame : MonoBehaviour, IDataPersistence
 {
     [Header("Minigame Managers")]
 
@@ -85,6 +85,7 @@ public class LoToolMinigame : MonoBehaviour
 
     void Awake()
     {
+        DataPersistenceManager.Instance.LoadGame();
         fastenerList = FindObjectsByType<FastenerBtn>(FindObjectsSortMode.None);
         int index;
         FastenerBtn temp;
@@ -551,9 +552,15 @@ public class LoToolMinigame : MonoBehaviour
 
         if (StaticData.isFirstTool)
         {
+            Debug.Log("First time opening tutorial " + StaticData.isFirstTool);
             StaticData.isFirstTool = false;
             OpenTutorial();
             tutorialManager.OpenTutorial();
+            DataPersistenceManager.Instance.SaveGame();
+        }
+        else
+        {
+            Debug.Log("Not first time opening tutorial " + StaticData.isFirstTool);
         }
     }
 
@@ -1192,6 +1199,20 @@ public class LoToolMinigame : MonoBehaviour
 
             StaticData.isToolDone = true;
 
+            StaticData.pendingGameRecord = new GameData.GameRecord(
+            StaticData.toolPattern,
+            StaticData.playerToolPattern,
+            StaticData.paint2Pattern,
+            new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+            StaticData.timeSpent,
+            StaticData.dayNo,
+            StaticData.toolWrong, // Capture NOW
+            0,
+            StaticData.orderNumber,
+            1
+        );
+
+
             Debug.Log("Tool station marked as done in StaticData." + StaticData.isToolDone);
 
             if (DataPersistenceManager.Instance != null)
@@ -1207,13 +1228,13 @@ public class LoToolMinigame : MonoBehaviour
 
             yield return new WaitForSeconds(3f);
 
-            for (int k=0; k<patternLength; k++)
+            for (int k = 0; k < patternLength; k++)
             {
                 if (!tiledParts[k].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().CheckIsMissing())
                 {
                     tiledParts[k].GetComponent<PartTile>().GetFastenerPosition().GetComponentInChildren<Fastener>().SetFixedSprite();
                 }
-                
+
                 tiledParts[k].GetComponent<PartTile>().SetIsWrong(false);
 
                 if (numberToDisplay[k] > 0)
@@ -1224,7 +1245,7 @@ public class LoToolMinigame : MonoBehaviour
                 {
                     tiledParts[k].GetComponent<PartTile>().SetFastenerPosition(0f);
                 }
-                    
+
             }
 
             Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
@@ -1234,6 +1255,27 @@ public class LoToolMinigame : MonoBehaviour
 
             StaticData.toolWrong += 1;
             Debug.Log("Added one penalty to tool score");
+
+            StaticData.pendingGameRecord = new GameData.GameRecord(
+            StaticData.toolPattern,
+            StaticData.playerToolPattern,
+            StaticData.paint2Pattern,
+            new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+            StaticData.timeSpent,
+            StaticData.dayNo,
+            StaticData.toolWrong, // Capture NOW
+            0,
+            StaticData.orderNumber,
+            1
+        );
+
+        Debug.Log("Sending data to pending game record)");
+
+            if (DataPersistenceManager.Instance != null)
+            {
+                DataPersistenceManager.Instance.SaveGame();
+                Debug.Log("Tool station completion saved to StaticData.");
+            }
 
             ToggleGapHolder(true);
 
@@ -1427,5 +1469,17 @@ public class LoToolMinigame : MonoBehaviour
         Camera.main.GetComponent<ToolCamera>().EnableCanvas();
 
         Camera.main.GetComponent<ToolCamera>().EnableNoteCanvas();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.isFirstTool = StaticData.isFirstTool;
+        Debug.Log("Saving isFirstTool as " + data.isFirstTool);
+    }
+    
+    public void LoadData(GameData data)
+    {
+        Debug.Log("Loading isFirstTool from data as " + data.isFirstTool);
+        StaticData.isFirstTool = data.isFirstTool;
     }
 }

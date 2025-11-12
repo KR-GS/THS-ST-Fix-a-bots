@@ -118,18 +118,37 @@ public class SequenceGameManager : MonoBehaviour
     void GetData()
     {
         stageNum = StaticData.stageNum;
-        maxNumber = StaticData.maxNumber[stageNum];
-        Debug.Log("Max Number: " + StaticData.maxNumber[stageNum] + " for stage " + (StaticData.stageNum));
-        cycleInterval = StaticData.cycleInterval;
-        cycleLeniency = StaticData.cycleLeniency;
-        prePressedCount = StaticData.prePressedCount[stageNum];
-        isFormulaSeen = StaticData.isFormulaSeen[stageNum];
         isRandomSequence = StaticData.isRandomSequence[stageNum];
-        stageNum = StaticData.stageNum;
-        formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum]);
-        formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum]);
-        expectedSwipeSequence = StaticData.stageSwipes[stageNum];
-        
+        if (isRandomSequence)
+        {
+            Debug.Log("Random Sequence is true");
+            var dm = new HODifficultyManager();
+            dm.DifficultyPicker(Random.Range(1, 4));
+        }
+        else
+        {
+            maxNumber = StaticData.maxNumber[stageNum];
+            Debug.Log("Max Number: " + StaticData.maxNumber[stageNum] + " for stage " + (StaticData.stageNum));
+            cycleInterval = StaticData.cycleInterval;
+            cycleLeniency = StaticData.cycleLeniency;
+            prePressedCount = StaticData.prePressedCount[stageNum];
+            isFormulaSeen = StaticData.isFormulaSeen[stageNum];
+            formulaInputPanel.SetLockCoefficient(StaticData.lockCoefficient[stageNum]);
+            formulaInputPanel.SetLockConstant(StaticData.lockConstant[stageNum]);
+            expectedSwipeSequence = StaticData.stageSwipes[stageNum];            
+        }
+
+
+    }
+    
+    void InitializeRandomData()
+    {
+        stageData = new HOStageData();
+        stageData.SetStageNum(StaticData.stageNum);
+        stageData.SetNumRestarts(StaticData.stageRestarts[stageNum]);
+        stageData.SetElapsedTime(StaticData.stageTime[stageNum]);
+        stageData.SetNumLives(StaticData.stageLives[stageNum]);
+        Time.timeScale = 1;
     }
 
     void InitilizeStageData()
@@ -279,11 +298,19 @@ public class SequenceGameManager : MonoBehaviour
         Debug.Log("Current scene: " + sceneName);
         Debug.Log("Stage Number: " + stageNum);
         Debug.Log("Number of stages done: " + StaticData.numStageDone);
-        if(StaticData.numStageDone <= stageNum)
+        if (StaticData.numStageDone <= stageNum)
         {
             Debug.Log("Stage Never Been done before, should have a new save");
         }
-        InitilizeStageData();
+        if (!StaticData.isRandomSequence[StaticData.stageNum])
+        {
+            InitilizeStageData();
+        }
+        else
+        {
+            InitializeRandomData();
+        }
+        
         InitializeStageUi();
         SetupButtons();
         statusAnimator.SetBool("Idle_Trigger", true);

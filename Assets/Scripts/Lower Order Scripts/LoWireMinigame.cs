@@ -668,6 +668,19 @@ public class LoWireMinigame : MonoBehaviour
 
                     Debug.Log("Where is the resultUI screen???");
 
+                    StaticData.pendingGameRecord = new GameData.GameRecord(
+                        StaticData.wirePattern,
+                        StaticData.playerWirePattern,
+                        StaticData.paint2Pattern,
+                        new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                        StaticData.timeSpent,
+                        StaticData.dayNo,
+                        StaticData.wireWrong, // Capture NOW
+                        2,
+                        StaticData.orderNumber,
+                        1
+                    );
+
                     if (DataPersistenceManager.Instance != null)
                     {
                         DataPersistenceManager.Instance.SaveGame();
@@ -692,6 +705,19 @@ public class LoWireMinigame : MonoBehaviour
 
                     StaticData.wireWrong += 1;
                     Debug.Log("Added one penalty to wire score");
+
+                    StaticData.pendingGameRecord = new GameData.GameRecord(
+                        StaticData.wirePattern,
+                        StaticData.playerWirePattern,
+                        StaticData.paint2Pattern,
+                        new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                        StaticData.timeSpent,
+                        StaticData.dayNo,
+                        StaticData.wireWrong, // Capture NOW
+                        2,
+                        StaticData.orderNumber,
+                        1
+                    );
 
                     j++;
                 }
