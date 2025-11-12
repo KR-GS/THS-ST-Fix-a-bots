@@ -238,7 +238,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                     GameObject extraVFX = new GameObject();
 
                     extraVFX = Instantiate(sparks_vfx.gameObject, robot_part.transform);
-
+                    
                     extraVFX.transform.position = wireSlots[i].transform.position;
 
                     extraVFX.GetComponent<VFXManager>().SetSlotNumber(i);
@@ -255,8 +255,6 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                     wrong_count++;
 
                     wireToEdit.Add(i);
-
-                    soundEffectsManager.playStaticSounds();
                 }
             }
             else
@@ -547,6 +545,8 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
 
         RobotUI.enabled = true;
 
+        //tutorialUI.enabled = true;
+
         generator.transform.SetParent(null);
 
         robot_part.transform.SetParent(null);
@@ -622,6 +622,8 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
         */
 
         yield return new WaitForSeconds(0.5f);
+
+        soundEffectsManager.playFallingSounds();
 
         Transform wireObj = wireSlots[currentSegment.GetComponent<VFXManager>().GetSlotNumber()].transform.parent.GetComponentInChildren<Wire>().transform;
         wireObj.transform.position = new Vector3(wireObj.position.x, wireObj.position.y, -0.1f);

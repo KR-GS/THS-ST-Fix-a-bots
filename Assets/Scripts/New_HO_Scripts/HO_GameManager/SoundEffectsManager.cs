@@ -103,9 +103,7 @@ public class SoundEffectsManager : MonoBehaviour
     }
     public void playStaticSounds()
     {
-        sfx.clip = staticElectric;
-        sfx.loop = true;
-        sfx.Play();
+        sfx.PlayOneShot(staticElectric);
     }
 
     public void stopStaticSounds()

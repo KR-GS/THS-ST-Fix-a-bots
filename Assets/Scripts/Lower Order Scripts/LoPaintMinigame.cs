@@ -279,6 +279,7 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
                     if (draggableObject.GetComponent<Sticker>().IsOnPart())
                     {
                         dragging = false;
+                        soundEffectsManager.playStickerSounds();
                         if (draggableObject.GetComponent<Sticker>().IsADefault())
                         {
                             Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
@@ -305,8 +306,6 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 
                             draggableObject.GetComponent<Sticker>().SetDefaultPos(newPos);
                             draggableObject.transform.position = newPos;
-
-                            soundEffectsManager.playStickerSounds();
                         }
                         else
                         {
