@@ -55,7 +55,7 @@ public class Tool : MonoBehaviour
         GetComponentInChildren<ToolEvent>().SetCurrentFastener(fastener);
         GetComponent<Collider2D>().enabled = false;
         statusAnimator.SetTrigger("IsUsed");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
         Debug.Log("Tool Animation Complete");
         GetComponent<Collider2D>().enabled = true;
         Debug.Log("Bug Check");
@@ -85,5 +85,10 @@ public class Tool : MonoBehaviour
             transform.localPosition = Vector2.MoveTowards(transform.localPosition, position, speed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    public void StopAnimation()
+    {
+        statusAnimator.enabled = false;
     }
 }

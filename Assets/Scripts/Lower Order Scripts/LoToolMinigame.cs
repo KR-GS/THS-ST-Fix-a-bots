@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -699,6 +700,8 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
                     {
                         currentInt = i;
                     }
+
+                    tiledParts[i].GetComponent<BoxCollider2D>().enabled = false;
                 }
 
                 foreach(GameObject part in tiledParts)
@@ -710,6 +713,8 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
                 ToggleGapHolder(false);
 
                 robotPart.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+                robotPart.GetComponent<BoxCollider2D>().enabled = false;
 
                 CheckIfEditable();
 
@@ -816,6 +821,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
             if (currentTool != null)
             {
+                currentTool.GetComponent<Tool>().StopAnimation();
                 Destroy(currentTool);
 
                 tiledParts[currentInt + 1].GetComponent<PartTile>().GetFastenerPosition().gameObject.SetActive(true);
@@ -839,6 +845,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
             if (currentTool != null)
             {
+                currentTool.GetComponent<Tool>().StopAnimation();
                 Destroy(currentTool);
                 tiledParts[currentInt - 1].GetComponent<PartTile>().GetFastenerPosition().gameObject.SetActive(true);
 
@@ -906,6 +913,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
         if (currentTool != null)
         {
+            currentTool.GetComponent<Tool>().StopAnimation();
             Destroy(currentTool);
         }
 
@@ -955,7 +963,8 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
         if (currentTool != null)
         {
-            Destroy(currentTool);
+            currentTool.GetComponent<Tool>().StopAnimation();
+                Destroy(currentTool);
             tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition().gameObject.SetActive(true);
         }
 
@@ -966,6 +975,8 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
             part.layer = LayerMask.NameToLayer("Default");
 
             part.GetComponent<PartTile>().SetFastenerSize(false);
+
+            part.GetComponent<BoxCollider2D>().enabled = true;
         }
 
         ToggleOverviewCounters(true);
@@ -974,7 +985,15 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
         robotPart.layer = LayerMask.NameToLayer("Default");
 
+        robotPart.GetComponent<BoxCollider2D>().enabled = true;
+    }
 
+    public IEnumerator RemoveTool()
+    {
+        currentTool.SetActive(false);
+        currentTool.GetComponent<Tool>().StopAnimation();
+        yield return new WaitForSeconds(1f);
+        Destroy(currentTool);
     }
 
     public void UndoHitCounts()
@@ -983,7 +1002,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
         if (currentTool != null)
         {
-            Destroy(currentTool);
+            StartCoroutine(RemoveTool());
         }
 
         /*
