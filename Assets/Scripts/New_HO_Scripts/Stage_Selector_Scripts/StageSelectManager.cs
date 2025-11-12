@@ -7,6 +7,7 @@ using System.Collections;
 
 public class StageSelectManager : MonoBehaviour, IDataPersistence
 {
+    public SoundEffectsManager soundEffectsManager;
     public Button[] stageButtons;
     public Button randButton;
 
@@ -47,6 +48,9 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
     private void Awake()
     {
+        StaticData.isOnHigherOrder = true;
+        StaticData.isOnHigherOrderGame = false;
+        StaticData.isOnLowerOrder = false;
         if (currentLevelMap > 0)
         {
             leftButton.interactable = true;
@@ -61,9 +65,6 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
 
     IEnumerator Start()
     {
-        StaticData.isOnHigherOrder = true;
-        StaticData.isOnHigherOrderGame = false;
-        StaticData.isOnLowerOrder = false;
 
         Debug.Log("Num Stage Done: " + StaticData.numStageDone);
         yield return null;
@@ -102,29 +103,38 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
             
             stageButtons[i].onClick.AddListener(() =>
             {
-                 // Use the latest confirmed speed
+                // Use the latest confirmed speed
                 ShowStageInfo(stageNum);
+                soundEffectsManager.playStickerSounds();
             });
         }
 
         randButton.onClick.AddListener(() =>
             LoadStage(31)
+            
         );
 
         yesButton.onClick.AddListener(ConfirmStageSelection);
         noButton.onClick.AddListener(() => stageInfoPanel.SetActive(false));
-        confirmSpeedPanelButton.onClick.AddListener(() => settingsPanel.SetActive(true));
+        
+        confirmSpeedPanelButton.onClick.AddListener(() =>
+        {
+            settingsPanel.SetActive(true);
+            soundEffectsManager.playStickerSounds();
+        });
 
         leftButton.onClick.AddListener(() =>
         {
             currentLevelMap--;
             changeLevelMap(currentLevelMap);
+            soundEffectsManager.playStickerSounds();
         });
 
         rightButton.onClick.AddListener(() =>
         {
             currentLevelMap++;
             changeLevelMap(currentLevelMap);
+            soundEffectsManager.playStickerSounds();
         });
 
         //increaseButton.onClick.AddListener(IncreaseSpeed);

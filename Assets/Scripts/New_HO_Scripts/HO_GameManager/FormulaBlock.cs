@@ -51,6 +51,9 @@ public class FormulaResult
 
 public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField]
+    private SoundEffectsManager soundEffectsManager;
+
     [Header("Block Settings")]
     public BlockType blockType;
     public int value;
@@ -97,6 +100,8 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
+        GameObject SEM = GameObject.Find("Sound_Effect_Manager");
+        soundEffectsManager = SEM.GetComponent<SoundEffectsManager>();
 
         if (canvasGroup == null)
         {
@@ -521,6 +526,8 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         // Notify the formula panel
         FormulaInputPanel.Instance?.OnBlockConnected(this, targetBlock, slot.GetPosition());
+
+        soundEffectsManager.playStickerSounds();
 
         // Update positions of all blocks in chain
         UpdateChainPositions();

@@ -15,6 +15,8 @@ public class SoundEffectsManager : MonoBehaviour
     public AudioClip miss;
     public AudioClip hit;
 
+    public AudioClip happy;
+
     public AudioClip falling;
     public AudioClip flats;
     public AudioClip hammer;
@@ -30,6 +32,7 @@ public class SoundEffectsManager : MonoBehaviour
     [Header("BGM Clips")]
     public AudioClip higherOrderBGM;
     public AudioClip lowerOrderBGM;
+    public AudioClip titleScreenBGM;
 
     private void Start()
     {
@@ -47,6 +50,10 @@ public class SoundEffectsManager : MonoBehaviour
         {
             music.clip = lowerOrderBGM;
         }
+        else
+        {
+            music.clip = titleScreenBGM;
+        }
         music.loop = true;
         music.Play();
     }
@@ -60,6 +67,12 @@ public class SoundEffectsManager : MonoBehaviour
     {
         sfx.PlayOneShot(hit);
     }
+
+    public void playHappy()
+    {
+        sfx.PlayOneShot(happy);
+    }
+
     public void playMissSound()
     {
         sfx.PlayOneShot(miss);

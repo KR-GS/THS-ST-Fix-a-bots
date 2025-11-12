@@ -6,6 +6,9 @@ using UnityEngine.Video;
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField]
+    private SoundEffectsManager soundEffectsManager;
+
+    [SerializeField]
     private Canvas tutorialUI;
 
     [SerializeField]
@@ -40,8 +43,15 @@ public class TutorialManager : MonoBehaviour
     private bool tutorialComplete = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    private void Awake()
+    {
+        GameObject SEM = GameObject.Find("Sound_Effect_Manager");
+        soundEffectsManager = SEM.GetComponent<SoundEffectsManager>();
+    }
+
     public void OpenTutorial()
     {
+        soundEffectsManager.playHitSound();
         done_Btn.gameObject.SetActive(false);
 
         tutorialUI.enabled = true;
