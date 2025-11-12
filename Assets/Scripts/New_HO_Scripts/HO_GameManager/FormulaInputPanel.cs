@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
 using System;
-using Unity.VisualScripting;
 
 [System.Serializable]
 public class FormulaAttempt

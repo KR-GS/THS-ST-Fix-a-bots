@@ -385,7 +385,7 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
     {
         soundEffectsManager.playFallingSounds();
         GameObject obj_to_delete = draggableObject;
-        draggableObject.GetComponent<BoxCollider2D>().enabled = false;
+        draggableObject.GetComponent<Collider2D>().enabled = false;
         draggableObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         yield return new WaitForSeconds(2f);
         Debug.Log("Deleting obj");
