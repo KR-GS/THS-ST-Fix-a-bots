@@ -226,7 +226,7 @@ public class StaticData
             // SCENARIO 1
             2, 2, 3, 3, 3, 3, 4, 3, 3, 4, 4, 3, 3, 4, 5,
             // SCENARIO 2
-            4, 3, 4, 3, 4, 5, 2, 3, 4, 5, 3, 2, 3, 4, 5,
+            4, 3, 2, 3, 4, 5, 2, 3, 4, 5, 3, 2, 3, 4, 5,
             // SCENARIO 3
             2, 3, 4, 3, 4, 3, 3, 3, 4, 5, 3, 3, 3, 4, 5
         };
@@ -235,7 +235,7 @@ public class StaticData
         constant = new List<int>()
         {
             // SCENARIO 1
-            1, 1, 1, 2, 2, -1, -1, -1, 2, -3, 2, -2, -1, 2, -3,
+            1, 1, 1, 2, 2, -1, -2, -1, 2, -3, 2, -2, -1, 2, -3,
             // SCENARIO 2
             19, 28, 14, 54, -4, 3, 20, -1, 5, -3, 9, 12, -15, 6, -3,
             // SCENARIO 3
@@ -323,20 +323,20 @@ public class StaticData
         stageRandomCoefficientCount = new List<int>()
         {
             // SCENARIO 1
-            0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0, 2, 2, 2,
+            0, 2, 2, 2, 0, 0, 0, 0, 2, 2, 1, 3, 3, 3, 3,
             
             // SCENARIO 2
-            2, 3, 2,  3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3,
+            3, 3, 3, 3, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3,
             
             //SCENARIO 3
-            2, 3, 2,  1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
+            2, 3, 2, 1, 2, 1, 2, 3, 3, 2, 1, 2, 3, 3, 2,
         };
 
         // The maximum value that the distraction coefficient can take in the formula input screen
         stageMaxCoefficientValue = new List<int>()
         {
             //SCENARIO 1
-            3, 3, 3, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
+            4, 4, 4, 4, 3, 5, 3, 4, 3, 4, 5, 3, 4, 3, 4,
 
             //SCENARIO 2
             5, 5, 5, 4, 6, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5,
@@ -349,10 +349,10 @@ public class StaticData
         stageFormulaHint = new List<bool>()
         {
             //SCENARIO 1
-            true, true, true, true, true, true, false, false, false, false, false, false, false, false, false,
+            true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
 
             //SCENARIO 2
-            false, true, true, true, true, true, true, true, true, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
 
             //SCENARIO 3
             true, true, true, true, true, true, true, true, true, false, false, false, false, false, false

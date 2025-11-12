@@ -143,6 +143,8 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
             OnExitSettings();
             Time.timeScale = 1;
         });
+
+        lowerOrderButton.gameObject.SetActive(false);
     }
 
     public void SaveSettings()

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 [System.Serializable]
 public class FormulaAttempt
@@ -132,12 +131,13 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
         if (IsFormulaComplete(nBlock))
         {
             submitButton.gameObject.SetActive(true);
-            buttonsParent.SetActive(false);
-            buttonsParent2.SetActive(true);
+            
 
             // Change color to indicate correct placement, only show based on stage level
             if (StaticData.stageFormulaHint[StaticData.stageNum])
             {
+                buttonsParent.SetActive(false);
+                buttonsParent2.SetActive(true);
                 if (FormulaInputPanel.Instance != null && StaticData.stageFormulaHint[StaticData.stageNum])
                 {
                     var seq = targetSequence; // get the correct target
