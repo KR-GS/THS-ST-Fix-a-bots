@@ -5286,7 +5286,7 @@ PrefabInstance:
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[7].display_video
       value: 
-      objectReference: {fileID: 32900000, guid: 296b69e96531ed94083ad46c0ca7724e, type: 3}
+      objectReference: {fileID: 32900000, guid: d74e2d155163bb14fa651de0f508427e, type: 3}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[8].display_video
       value: 
