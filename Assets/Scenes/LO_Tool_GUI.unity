@@ -7003,6 +7003,42 @@ PrefabInstance:
       propertyPath: tutorials.Array.data[11].description
       value: Kung nagkamali ka, gamitin mo ang button na ito.
       objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[0].display_video
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: bd6c3e6b542f5a94caed67847f4e8030, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 4b1482843799d3643a97b25996b7207f, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 15ad2bc474c0e104ca38fbba6bb29fcd, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 1c38d6531e0ae584bb7f73ef8bd7b5b7, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[5].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: ce091dd9d525e8d48b8d890077ccb7d5, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 2fe17fc1588e2d04f9fac6213ff55cea, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[7].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 3a9da9cfea9ad944bbaf0df2cd7149b9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 0ae2de73af97a0d4aaa43e47e6e4b45a, type: 3}
     - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2

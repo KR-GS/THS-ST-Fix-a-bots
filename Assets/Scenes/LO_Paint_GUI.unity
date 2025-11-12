@@ -1292,7 +1292,23 @@ PrefabInstance:
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[0].display_video
       value: 
-      objectReference: {fileID: 32900000, guid: 911e4fd58a75b9046af3c384473b0dd0, type: 3}
+      objectReference: {fileID: 32900000, guid: 7fe718b29316aea4c8c00415dd493f85, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[1].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: d5c2ec2f0fdc1d24d8f223cc95f54aa3, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[2].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 88351029717ba9d4aa0f53a64333dbe9, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 8957288283adca444a31aa0d3834e2ed, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[4].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: e03dd529384374d499780dc6833171f2, type: 3}
     - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2

@@ -5272,9 +5272,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 32900000, guid: 920a2c17efa21ce448cf18e50423d306, type: 3}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[3].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 854022ddad1bcda44ac185c7790e7b9c, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[4].display_video
       value: 
       objectReference: {fileID: 32900000, guid: 854022ddad1bcda44ac185c7790e7b9c, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[6].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 2e48f867e08003b45867b4048d3f7397, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[8].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 649a1e7dad2e65d4ea2fb119a72db6cd, type: 3}
     - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
