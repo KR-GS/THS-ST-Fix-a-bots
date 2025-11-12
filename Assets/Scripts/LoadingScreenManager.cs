@@ -251,7 +251,7 @@ public class LoadingScreenManager : MonoBehaviour
             HighlightButton(locAnswer, Color.green);      // Show correct answer
             vanThink.sprite = vanNotNice;
             pattspeak.sprite = pattNotNice;
-            prompt.text = "Hala, sas susnod nalang...";
+            prompt.text = "Hala, sa susnod nalang...";
         }
     }
 

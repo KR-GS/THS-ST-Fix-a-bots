@@ -1216,19 +1216,19 @@ PrefabInstance:
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[1].display
       value: 
-      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[2].display
       value: 
-      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[3].display
       value: 
-      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[4].display
       value: 
-      objectReference: {fileID: 2800000, guid: 0e2cdf43e88c20342a17defb52570cbd, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.data[0].description
       value: Ang ginagawa natin sa lugar na ito ay ang paglalagay ng stickers sa
