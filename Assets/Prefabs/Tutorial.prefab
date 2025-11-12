@@ -1303,6 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f382f7f90d8cde4dba8da72a8a7fd99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffectsManager: {fileID: 0}
   tutorialUI: {fileID: 6598396151092405417}
   description_TMP: {fileID: 7402960722719320668}
   patt_sprite: {fileID: 108235348504391751}

@@ -17,6 +17,9 @@ public class WirePliers : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [SerializeField]
+    SoundEffectsManager soundEffectsManager;
+
     private bool onPart = false;
 
     private int slotNo = -1;
@@ -32,6 +35,10 @@ public class WirePliers : MonoBehaviour
     void Awake()
     {
         origPos = transform.position;
+
+        GameObject SEM = GameObject.Find("Sound_Effect_Manager");
+        soundEffectsManager = SEM.GetComponent<SoundEffectsManager>();
+
     }
 
     void Update()
@@ -166,6 +173,8 @@ public class WirePliers : MonoBehaviour
             partToCut = segments[0];
             TriggerPlierMovement(segments[0].transform.position, 0);
 
+            soundEffectsManager.playStaticSounds();
+
             yield return new WaitForSeconds(3f);
 
             //partToCut = positionsToCutAt[current_Index].GetComponent<VFXManager>().GetSegment(1);
@@ -174,6 +183,7 @@ public class WirePliers : MonoBehaviour
             TriggerPlierMovement(segments[1].transform.position, 1);
 
             yield return new WaitForSeconds(3f);
+            soundEffectsManager.playStaticSounds();
 
             current_Index++;
 

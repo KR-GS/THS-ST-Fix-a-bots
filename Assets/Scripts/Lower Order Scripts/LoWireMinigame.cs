@@ -98,6 +98,8 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
     [SerializeField]
     private Vector3 origPos_Robot;
 
+    private GameObject plierObj;
+
     [Header("Sounds Effect Manager")]
     [SerializeField]
     private SoundEffectsManager soundEffectsManager;
@@ -545,7 +547,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
 
         RobotUI.enabled = true;
 
-        //tutorialUI.enabled = true;
+        tutorialUI.enabled = true;
 
         generator.transform.SetParent(null);
 
@@ -659,10 +661,15 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
 
     public void CheckWire()
     {
-        GameObject pliers = Instantiate(this.pliers);
         int j = 0;
         int wrong_Count = 0;
         StaticData.playerWirePattern = new List<int>();
+        int emptyslot = 0;
+
+        if (plierObj == null)
+        {
+            plierObj = Instantiate(this.pliers);
+        }
 
         foreach (int i in wireToEdit)
         {
@@ -686,7 +693,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                         child.GetComponent<VfxSegment>().ToggleVFXAnimOff();
                     }
 
-                    
+
                 }
                 else
                 {
@@ -696,7 +703,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                         child.GetComponent<VfxSegment>().ToggleVFXAnimOn();
                     }
 
-                    pliers.GetComponent<WirePliers>().GetWiresToCut(vfxList[j]);
+                    plierObj.GetComponent<WirePliers>().GetWiresToCut(vfxList[j]);
 
                     StaticData.playerWirePattern.Add(wireSlots[j].GetWireSlotVal());
 
@@ -723,7 +730,7 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
             }
             else
             {
-                wrong_Count++;
+                emptyslot++;
 
                 StaticData.wireWrong += 1;
                 Debug.Log("Added one penalty to wire score");
@@ -744,32 +751,39 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
             j++;
         }
 
-        if (wrong_Count <= 0)
+        if (emptyslot == wireToEdit.Count)
         {
-            Destroy(pliers);
+            Destroy(plierObj);
+        }
+        else
+        {
+            if (wrong_Count <= 0)
+            {
+                Destroy(plierObj);
 
-            OverallUI.enabled = false;
+                OverallUI.enabled = false;
 
-            ResultUI.enabled = true;
+                ResultUI.enabled = true;
 
-            notesManager.ToggleNotes();
+                notesManager.ToggleNotes();
 
-            StaticData.isWireDone = true;
+                StaticData.isWireDone = true;
 
-            Debug.Log("Where is the resultUI screen???");
+                Debug.Log("Where is the resultUI screen???");
 
-            StaticData.pendingGameRecord = new GameData.GameRecord(
-                StaticData.wirePattern,
-                StaticData.playerWirePattern,
-                StaticData.paint2Pattern,
-                new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
-                StaticData.timeSpent,
-                StaticData.dayNo,
-                StaticData.wireWrong, // Capture NOW
-                2,
-                StaticData.orderNumber,
-                1
-            );
+                StaticData.pendingGameRecord = new GameData.GameRecord(
+                    StaticData.wirePattern,
+                    StaticData.playerWirePattern,
+                    StaticData.paint2Pattern,
+                    new List<int>(StaticData.playerPaint2Pattern ?? new List<int>()),
+                    StaticData.timeSpent,
+                    StaticData.dayNo,
+                    StaticData.wireWrong, // Capture NOW
+                    2,
+                    StaticData.orderNumber,
+                    1
+                );
+            }
         }
     }
 

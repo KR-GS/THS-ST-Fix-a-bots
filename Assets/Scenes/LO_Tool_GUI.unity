@@ -7039,6 +7039,14 @@ PrefabInstance:
       propertyPath: tutorials.Array.data[8].display_video
       value: 
       objectReference: {fileID: 32900000, guid: 0ae2de73af97a0d4aaa43e47e6e4b45a, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[9].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: e3a9747431ded93428a636db1246059c, type: 3}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: tutorials.Array.data[10].display_video
+      value: 
+      objectReference: {fileID: 32900000, guid: 309ce0525a25bb24c873a00055bb6ceb, type: 3}
     - target: {fileID: 6312699045616962224, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
