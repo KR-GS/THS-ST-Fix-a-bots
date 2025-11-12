@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using Unity.VisualScripting;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 [System.Serializable]
 public class FormulaAttempt
@@ -24,7 +25,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
 {
     public static FormulaInputPanel Instance;
 
-    [Header("DynamicReevaler")]
+    [Header("DynamicRevaler")]
     public Button revealDynamic;
     public GameObject buttonsParent;
     public GameObject buttonsParent2;
@@ -55,6 +56,9 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
     public TMP_Text livesText, restartsText, timeText;
     public GameObject star1, star2, star3;
     public Sprite fullStarSprite, emptyStarSprite;
+
+    [Header("Sounds Effect Manager")]
+    public SoundEffectsManager soundEffectsManager;
 
     private int i = 0;
     private Sequence targetSequence;
@@ -586,6 +590,7 @@ public class FormulaInputPanel : MonoBehaviour, IDataPersistence
                 endScreenAnimator.gameObject.SetActive(true);
                 endScreenAnimator.transform.SetAsLastSibling();
 
+                soundEffectsManager.playHappy();
                 StartCoroutine(LoadEndScreenAnimation());
 
                 //continuePanel.SetActive(true);

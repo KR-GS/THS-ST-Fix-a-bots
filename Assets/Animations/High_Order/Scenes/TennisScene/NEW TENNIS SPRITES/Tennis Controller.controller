@@ -648,19 +648,19 @@ AnimatorStateMachine:
     m_Position: {x: -30, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2182518269137900110}
-    m_Position: {x: -360, y: 280, z: 0}
+    m_Position: {x: -400, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7507761128481998861}
-    m_Position: {x: 330, y: 350, z: 0}
+    m_Position: {x: 370, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5992075583158360205}
     m_Position: {x: 350, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7748868650948450882}
-    m_Position: {x: -360, y: 380, z: 0}
+    m_Position: {x: -400, y: 390, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8988510544699733116}
-    m_Position: {x: 140, y: 480, z: 0}
+    m_Position: {x: 120, y: 480, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8018747498464828284}
     m_Position: {x: -140, y: 470, z: 0}
@@ -918,7 +918,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Hit_Hori_Trigger
+    m_ConditionEvent: Anticipate_Hori_Trigger
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2182518269137900110}

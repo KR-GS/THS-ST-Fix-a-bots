@@ -585,12 +585,21 @@ public class SequenceGameManager : MonoBehaviour
                             if (expectedDirection == "Up" || expectedDirection == "Down")
                             {
                                 statusAnimator.SetBool("Hit_Vert_Trigger", true);
+                                soundEffectsManager.playHitSound();
                             }
                             else
                             {
+                                if (sceneName == "HO_BotFightScene")
+                                {
+                                    soundEffectsManager.playMissSound();
+                                }
+                                else
+                                {
+                                    soundEffectsManager.playHitSound();
+                                }
                                 statusAnimator.SetBool("Hit_Hori_Trigger", true);
                             }
-                            soundEffectsManager.playHitSound();
+                            
                             // Hide panel when auto-completing pre-selected
                             swipeDirectionPanel.SetActive(false);
                             hasNotClicked = false;
@@ -607,16 +616,36 @@ public class SequenceGameManager : MonoBehaviour
 
                             if (expectedDirection == "Up" || expectedDirection == "Down")
                             {
-                                statusAnimator.SetBool("Wrong_Trigger", true);
+                                if (sceneName == "HO_BotFightScene")
+                                {
+                                    soundEffectsManager.playMissSound();
+                                    statusAnimator.SetBool("Wrong_Trigger", true);
+                                }
+                                else
+                                {
+                                    soundEffectsManager.playSwingSounds();
+                                    statusAnimator.SetBool("Early_Trigger", true);
+                                }
+                                
                             }
                             else
                             {
-                                statusAnimator.SetBool("Early_Trigger", true);
+
+
+                                if (sceneName == "HO_BotTennisSceneNew")
+                                {
+                                    soundEffectsManager.playMissSound();
+                                    statusAnimator.SetBool("Wrong_Trigger", true);
+                                }
+                                else
+                                {
+                                    statusAnimator.SetBool("Early_Trigger", true);
+                                    soundEffectsManager.playSwingSounds();
+                                }
                             }
                             
                             buttons[currentCycleIndex].SetRed();
                             buttons[currentCycleIndex].toggleWrong();
-                            soundEffectsManager.playMissSound();
                             isCorrect = false;
                             currentSwipeIndex++;
                             // Hide panel on miss
@@ -813,8 +842,15 @@ public class SequenceGameManager : MonoBehaviour
             feedbackText.text = $"Maling swipes! {btnNumber} ay hindi nasa sequence.";
             ResetAnims();
             statusAnimator.SetBool("Early_Trigger", true);
-            soundEffectsManager.playMissSound();
-            isCorrect = false;
+            if (sceneName == "HO_Botfight")
+            {
+                soundEffectsManager.playMissSound();
+            }
+            else
+            {
+                soundEffectsManager.playSwingSounds();
+            }
+                isCorrect = false;
 
             //Only decrease health if stage not finished
             if (!isStageFinished)
@@ -843,13 +879,31 @@ public class SequenceGameManager : MonoBehaviour
 
                     if (expected == "Up" || expected == "Down")
                     {
-                        statusAnimator.SetBool("Hit_Vert_Trigger", true);
+                        if (sceneName == "HO_BotFightScene")
+                        {
+                            statusAnimator.SetBool("Hit_Vert_Trigger", true);
+                            soundEffectsManager.playHitSound();
+                        }
+                        else
+                        {
+                            statusAnimator.SetBool("Hit_Vert_Trigger", true);     
+                            soundEffectsManager.playHitSound();                       
+                        }
+                        
                     }
                     else if (expected == "Left" || expected == "Right")
                     {
+                        if (sceneName == "HO_BotFightScene")
+                        {
+                            soundEffectsManager.playMissSound();
+                        }
+                        else
+                        {
+                            soundEffectsManager.playHitSound();
+                        }
                         statusAnimator.SetBool("Hit_Hori_Trigger", true);
                     }
-                    soundEffectsManager.playHitSound();
+                    
                     Debug.Log("SFX and animation should have played");
                     gotRight = true;
                     currentSwipeIndex++;
@@ -866,13 +920,32 @@ public class SequenceGameManager : MonoBehaviour
 
                     if (expected == "Up" || expected == "Down")
                     {
-                        statusAnimator.SetBool("Wrong_Trigger", true);
+                        if (sceneName == "HO_BotFightScene")
+                        {
+                            statusAnimator.SetBool("Wrong_Trigger", true);
+                            soundEffectsManager.playMissSound();
+                        }
+                        else
+                        {
+                            statusAnimator.SetBool("Early_Trigger", true);
+                            soundEffectsManager.playSwingSounds();
+                        }
+                        
                     }
                     else if (expected == "Left" || expected == "Right")
                     {
-                        statusAnimator.SetBool("Early_Trigger", true);
+                        if (sceneName == "HO_BotFightScene")
+                        {
+                            statusAnimator.SetBool("Early_Trigger", true);
+                            soundEffectsManager.playSwingSounds();
+                        }
+                        else
+                        {
+                            statusAnimator.SetBool("Early_Trigger", true);
+                            soundEffectsManager.playSwingSounds();
+                        }
                     }
-                    soundEffectsManager.playMissSound();
+                    
                     isCorrect = false;
                     currentSwipeIndex++;
 
