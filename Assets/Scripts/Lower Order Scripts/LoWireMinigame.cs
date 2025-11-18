@@ -821,6 +821,22 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
         OverallUI.enabled = true;
     }
 
+    public void NotesOpen()
+    {
+        OverallUI.enabled = false;
+        tutorialUI.enabled = false;
+        //GeneratorUI.enabled = false;
+        RobotUI.enabled = false;
+    }
+
+    public void NotesClose()
+    {
+        OverallUI.enabled = true;
+        tutorialUI.enabled = true;
+        //GeneratorUI.enabled = true;
+        RobotUI.enabled = true;
+    }
+
     public void SaveData(ref GameData data)
     {
         data.isFirstWire = StaticData.isFirstWire;

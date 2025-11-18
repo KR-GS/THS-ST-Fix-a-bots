@@ -8779,6 +8779,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1343552625}
+        m_TargetAssemblyTypeName: LoWireMinigame, Assembly-CSharp
+        m_MethodName: NotesOpen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1046443110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19345,6 +19357,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1343552625}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NotesClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoWireMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7585994262349667129, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_Name
       value: Notes
@@ -19352,6 +19404,34 @@ PrefabInstance:
     - target: {fileID: 7862403654329826680, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_Transition
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1343552625}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NotesClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoWireMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9042696522003080121, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_RenderMode

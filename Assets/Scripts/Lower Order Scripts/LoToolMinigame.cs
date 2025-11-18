@@ -1384,13 +1384,26 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void ToggleCollider()
+    public void ToggleColliderOn()
     {
-        Camera.main.GetComponent<ToolCamera>().ToggleCanvas();
+        //Camera.main.GetComponent<ToolCamera>().DisableCanvas();
         foreach (GameObject part in tiledParts)
         {
-            part.GetComponent<BoxCollider2D>().enabled = !part.GetComponent<BoxCollider2D>().enabled;
+            part.GetComponent<BoxCollider2D>().enabled = true;
         }
+
+        robotPart.GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    public void ToggleColliderOff()
+    {
+        //Camera.main.GetComponent<ToolCamera>().DisableCanvas();
+        foreach (GameObject part in tiledParts)
+        {
+            part.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        robotPart.GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public void AddTenEvent()

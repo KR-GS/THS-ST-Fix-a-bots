@@ -807,6 +807,22 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
         overviewUI.enabled = true;
     }
 
+    public void NotesOpen()
+    {
+        minimapManager.DisableMinimapPressing();
+
+        overviewUI.enabled = false;
+        tutorialUI.enabled = false;
+    }
+
+    public void NotesClose()
+    {
+        minimapManager.EnableMinimapPressing();
+
+        overviewUI.enabled = true;
+        tutorialUI.enabled = true;
+    }
+
     public void SaveData(ref GameData data)
     {
         data.isFirstPaint = StaticData.isFirstPaint;

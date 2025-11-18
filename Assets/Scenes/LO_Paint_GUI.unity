@@ -3305,9 +3305,77 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 707493499}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NotesClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoPaintMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7585994262349667129, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_Name
       value: Notes
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 707493499}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NotesClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LoPaintMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5006,6 +5074,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 707493499}
+        m_TargetAssemblyTypeName: LoPaintMinigame, Assembly-CSharp
+        m_MethodName: NotesOpen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2133892563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5028,7 +5108,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 1171746563, guid: 53a556bae3f0a8c47989be1c9eb3eba9, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

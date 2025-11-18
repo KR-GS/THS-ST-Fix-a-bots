@@ -189,4 +189,16 @@ public class ToolCamera : MonoBehaviour
     {
         loading_icons.Clear();
     }
+
+    public void NotesOpen()
+    {
+        overViewCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
+    }
+
+    public void NotesClose()
+    {
+        overViewCanvas.enabled = true;
+        tutorialCanvas.enabled = true;
+    }
 }
