@@ -254,6 +254,9 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
             OpenTutorial();
         }
         Debug.Log("Reached End of Start()");
+
+        moveSidesBtn[1].gameObject.SetActive(false);
+        moveBtn[0].gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -588,6 +591,17 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
         {
             StartCoroutine(RightChange());
         }
+
+        if (currentSide >= 5)
+        {
+            moveSidesBtn[0].gameObject.SetActive(false);
+            moveSidesBtn[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            moveSidesBtn[0].gameObject.SetActive(true);
+            moveSidesBtn[1].gameObject.SetActive(true);
+        }
     }
 
     public void ChangeSideLeft()
@@ -595,6 +609,17 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
         if (currentSide > 0)
         {
             StartCoroutine(LeftChange());
+        }
+
+        if (currentSide <= 0)
+        {
+            moveSidesBtn[0].gameObject.SetActive(true);
+            moveSidesBtn[1].gameObject.SetActive(false);
+        }
+        else
+        {
+            moveSidesBtn[0].gameObject.SetActive(true);
+            moveSidesBtn[1].gameObject.SetActive(true);
         }
     }
 
@@ -655,6 +680,8 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
         {
             btn.enabled = true;
         }
+
+        
     }
 
     private IEnumerator LeftChange()
@@ -712,6 +739,8 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
         {
             btn.enabled = true;
         }
+
+        
     }
 
     public void ChangeSide(int val)
@@ -728,6 +757,22 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
         {
             defaultObj.GetChild(i).GetComponent<Sticker>().SetDefaultPos(Vector3.zero);
         }
+
+        if (currentSide >= 5)
+        {
+            moveSidesBtn[0].gameObject.SetActive(false);
+            moveSidesBtn[1].gameObject.SetActive(true);
+        }
+        else if(currentSide <= 0)
+        {
+            moveSidesBtn[0].gameObject.SetActive(true);
+            moveSidesBtn[1].gameObject.SetActive(false);
+        }
+        else
+        {
+            moveSidesBtn[0].gameObject.SetActive(true);
+            moveSidesBtn[1].gameObject.SetActive(true);
+        }
     }
 
     public void ChangeStickerUp()
@@ -741,6 +786,17 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
             //stickerPacks[currentStickerPack].transform.position = newPos;
             StartCoroutine(TriggerPackChange(1));
         }
+
+        if (currentStickerPack <= 0)
+        {
+            moveBtn[0].gameObject.SetActive(false);
+            moveBtn[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            moveBtn[0].gameObject.SetActive(true);
+            moveBtn[1].gameObject.SetActive(true);
+        }
     }
 
     public void ChangeStickerDown()
@@ -751,6 +807,17 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
             //stickerPacks[currentStickerPack - 1].transform.position = stickerPacks[currentStickerPack].transform.position;
             //stickerPacks[currentStickerPack].transform.position = newPos;
             StartCoroutine(TriggerPackChange(-1));
+        }
+
+        if (currentStickerPack >= stickerPacks.Length - 1)
+        {
+            moveBtn[0].gameObject.SetActive(true);
+            moveBtn[1].gameObject.SetActive(false);
+        }
+        else
+        {
+            moveBtn[0].gameObject.SetActive(true);
+            moveBtn[1].gameObject.SetActive(true);
         }
     }
 
