@@ -79,6 +79,8 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private CanvasGroup canvasGroup;
     private Vector3 originalPosition;
     private Transform originalParent;
+    private Transform dragLayer;
+
     private bool isDragging = false;
     private bool isLocked = false;
 
@@ -97,6 +99,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     private void Awake()
     {
+        dragLayer = GameObject.Find("HO_Rule_Input_Panel").transform;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
@@ -229,7 +232,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
 
         // Move entire chain to top layer
-        transform.SetParent(canvas.transform);
+        transform.SetParent(dragLayer);
         transform.SetAsLastSibling();
     }
 
@@ -241,7 +244,7 @@ public class FormulaBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
 
-        transform.SetParent(canvas.transform);
+        transform.SetParent(dragLayer);
         transform.SetAsLastSibling();
     }
 

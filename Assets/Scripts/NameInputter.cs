@@ -7,7 +7,7 @@ using TMPro;
 
 
 
-public class NameInputter : MonoBehaviour
+public class NameInputter : MonoBehaviour , IDataPersistence
 {
     public GameObject nameInputter;
     public TMP_InputField nameField;
@@ -24,6 +24,7 @@ public class NameInputter : MonoBehaviour
         {
             Debug.LogWarning("Name Inputting Object not assigned!");
         }
+        
     }
 
     public void AskName()
@@ -42,7 +43,27 @@ public class NameInputter : MonoBehaviour
             StaticData.ho_name = nameField.text;
         }
 
+        DataPersistenceManager.Instance.SaveGame();
+
         nameInputter.SetActive(false);
+    }
+
+        public void LoadData(GameData data)
+    {
+
+    }
+
+    //TODO: Add things to be saved here
+    public void SaveData(ref GameData data)
+    {
+        if(SceneManager.GetActiveScene().name == "LO_WS2D")
+        {
+            data.lo_name = StaticData.lo_name;
+        }
+        else if (SceneManager.GetActiveScene().name == "Stage_Select")
+        {
+            data.ho_name = StaticData.ho_name;
+        }
     }
     
 }

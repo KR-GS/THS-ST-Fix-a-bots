@@ -80,6 +80,8 @@ public class TutorialManager : MonoBehaviour
         right_Btn.gameObject.SetActive(true);
         left_Btn.gameObject.SetActive(false);
 
+        transform.SetAsLastSibling();
+
         Time.timeScale = 0;
     }
 
