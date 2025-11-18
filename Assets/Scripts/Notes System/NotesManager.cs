@@ -102,7 +102,7 @@ public class NotesManager : MonoBehaviour
 
         noteObject = Instantiate(notesObj, notesUI.transform);
 
-        noteObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        noteObject.transform.localScale = notesSize;
 
         noteObject.AddComponent<Note>();
 

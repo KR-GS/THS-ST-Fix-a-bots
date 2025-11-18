@@ -4332,7 +4332,19 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1450728182}
         m_TargetAssemblyTypeName: LoToolMinigame, Assembly-CSharp
-        m_MethodName: ToggleCollider
+        m_MethodName: ToggleColliderOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1742507110}
+        m_TargetAssemblyTypeName: ToolCamera, Assembly-CSharp
+        m_MethodName: NotesOpen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4364,7 +4376,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: -1629133128, guid: 53a556bae3f0a8c47989be1c9eb3eba9, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -5738,6 +5750,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1742507110}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1450728182}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NotesClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ToggleColliderOn
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ToolCamera, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: LoToolMinigame, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533174793785810586, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021587093313576861, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: notesSize.z
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 6601697706049367235, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
@@ -5748,10 +5824,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
@@ -5759,19 +5839,39 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1450728182}
     - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1742507110}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ToggleCollider
+      value: ToggleColliderOn
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: NotesClose
       objectReference: {fileID: 0}
     - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: LoToolMinigame, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: ToolCamera, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8666849060710121344, guid: ce1aeb1d1c1909b43a58aa500e254f3d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
