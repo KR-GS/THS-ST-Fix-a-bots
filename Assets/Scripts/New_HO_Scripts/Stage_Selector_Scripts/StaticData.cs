@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class StaticData
 {
+    // NAME FIELDS
+    public static string lo_name;
+    public static string ho_name;
+
     // USED TO SEE WHICH SCENE IT IS
     public static bool isOnLowerOrder;
     public static bool isOnLowerOrderGame;

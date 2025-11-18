@@ -329,6 +329,9 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        StaticData.lo_name = data.lo_name;
+        StaticData.ho_name = data.ho_name;
+
         this.level = data.level;
         this.money = data.money;
         //this.isPatternStarted = data.isPatternStarted;
@@ -528,6 +531,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
+        data.lo_name = StaticData.lo_name;
+        data.ho_name = StaticData.ho_name;
         data.level = this.level;
         data.money = this.money;
         data.medValue = StaticData.medValue;
