@@ -974,7 +974,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
         if (currentTool != null)
         {
             currentTool.GetComponent<Tool>().StopAnimation();
-                Destroy(currentTool);
+            Destroy(currentTool);
             tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition().gameObject.SetActive(true);
         }
 
@@ -1002,7 +1002,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
     {
         currentTool.SetActive(false);
         currentTool.GetComponent<Tool>().StopAnimation();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Destroy(currentTool);
     }
 
@@ -1143,11 +1143,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
         Camera.main.GetComponent<ToolCamera>().CameraTrigger(newCameraPos, speed);
 
-        Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
-
-        //Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
-
-        Camera.main.GetComponent<ToolCamera>().ToggleCanvas();
+        Camera.main.GetComponent<ToolCamera>().TriggerCheckingCanvas();
 
         yield return new WaitForSeconds(1f);
 
@@ -1288,9 +1284,11 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
             }
 
-            Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
+            //Camera.main.GetComponent<ToolCamera>().ToggleNoteCanvas();
             //Camera.main.GetComponent<ToolCamera>().ToggleCounterCanvas();
-            Camera.main.GetComponent<ToolCamera>().ToggleCanvas();
+            //Camera.main.GetComponent<ToolCamera>().ToggleCanvas();
+
+            Camera.main.GetComponent<ToolCamera>().DoneCheckingCanvas();
             Camera.main.GetComponent<ToolCamera>().ToggleCheckingCanvas();
 
             StaticData.toolWrong += 1;

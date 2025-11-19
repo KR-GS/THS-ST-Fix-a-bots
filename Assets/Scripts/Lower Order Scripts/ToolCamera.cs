@@ -61,6 +61,7 @@ public class ToolCamera : MonoBehaviour
         notesCanvas.enabled = true;
         counterCanvas.enabled = false;
         checkingCanvas.enabled = false;
+        tutorialCanvas.enabled = true;
     }
 
     public void FocusedCameraView(float partPosition)
@@ -127,6 +128,25 @@ public class ToolCamera : MonoBehaviour
         zoomInCanvas.enabled = false;
         toolCanvas.enabled = false;
         tutorialCanvas.enabled = false;
+    }
+
+    public void TriggerCheckingCanvas()
+    {
+        checkingCanvas.enabled = true;
+        notesCanvas.enabled = false;
+        overViewCanvas.enabled = false;
+        //zoomInCanvas.enabled = false;
+        //toolCanvas.enabled = false;
+        tutorialCanvas.enabled = false;
+    }
+
+    public void DoneCheckingCanvas()
+    {
+        notesCanvas.enabled = true;
+        overViewCanvas.enabled = true;
+        //zoomInCanvas.enabled = false;
+        //toolCanvas.enabled = false;
+        tutorialCanvas.enabled = true;
     }
 
     public void ToggleCanvas()
