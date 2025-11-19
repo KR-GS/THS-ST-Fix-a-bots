@@ -90,10 +90,17 @@ public class BlockManager : MonoBehaviour
         int randomConstantCount = StaticData.stageRandomConstantCount[stage];
         int maxConstantValue = StaticData.stageMaxConstantValue[stage];
 
+        int maxAttempts = 0;
+
         // Create random coefficient blocks
         for (int i = 0; i < randomCoefficientCount; i++)
         {
             int randomValue = Random.Range(1, maxCoefficientValue + 1);
+            while(randomValue == StaticData.coefficient[StaticData.stageNum] && maxAttempts < 10)
+            {
+                randomValue = Random.Range(1, maxCoefficientValue + 1);
+                maxAttempts++;
+            }
             CreateRandomBlock(BlockType.Coefficient, randomValue, "", coefficientColor);
         }
 
@@ -101,6 +108,11 @@ public class BlockManager : MonoBehaviour
         for (int i = 0; i < randomConstantCount; i++)
         {
             int randomValue = Random.Range(0, maxConstantValue + 1);
+            while(randomValue == StaticData.constant[StaticData.stageNum] && maxAttempts < 10)
+            {
+                randomValue = Random.Range(1, maxCoefficientValue + 1);
+                maxAttempts++;
+            }
             CreateRandomBlock(BlockType.Constant, randomValue, "", constantColor);
         }
 
