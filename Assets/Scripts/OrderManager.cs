@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     [SerializeField] private GameLoopManager glm;
     [SerializeField] private TimerScript ts;
     [SerializeField] private TutorialManager tm;
+    [SerializeField] private NameInputter ni;
     [SerializeField] private float notificationDuration = 2f;
     private Button button;
     public Button nextdayButton;
@@ -132,7 +134,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
     public void Start()
     {
         if (StaticData.isFirstWS == true)
-        {
+        {            
             StartCoroutine(WaitForLoadingThenShowTutorial());
         }
     }
@@ -172,7 +174,9 @@ public class OrderManager : MonoBehaviour, IDataPersistence
 
         yield return new WaitForSeconds(0.3f);
 
-        OpenTutorial();
+        glm.HideWorkshopElements();
+
+        ni.AskName();
     }
 
     public void OpenTutorial()

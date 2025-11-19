@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 
 public class StageSelectManager : MonoBehaviour, IDataPersistence
@@ -40,6 +41,10 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     public Sprite fullStarSprite;
     public Sprite emptyStarSprite;
     private float confirmedSpeed = 1f;
+
+    [Header("Name_inputter")]
+    [SerializeField]
+    private NameInputter nameInputter;
 
     private int currentLevelMap = 0;
 
@@ -140,6 +145,11 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         //increaseButton.onClick.AddListener(IncreaseSpeed);
         //decreaseButton.onClick.AddListener(DecreaseSpeed);
         //confirmSpeedButton.onClick.AddListener(ConfirmSpeed);
+        if(StaticData.ho_name == "")
+        {
+            nameInputter.AskName();
+        }
+        
     }
 
     private void changeLevelMap(int index)
@@ -344,6 +354,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         confirmedSpeed = data.stageSpeed;
+        StaticData.ho_name = data.ho_name;
         Debug.Log("[StageDataLoader] Data loaded into StaticData");
     }
 

@@ -32,8 +32,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3411504424545332726}
-  - {fileID: 8794092082886190628}
   - {fileID: 6360326745849402017}
+  - {fileID: 8794092082886190628}
   - {fileID: 908848346750872789}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,6 +96,7 @@ MonoBehaviour:
   valueText: {fileID: 7770652633802186919}
   leftButton: {fileID: 5681499406507194808}
   rightButton: {fileID: 3379734473716438748}
+  valueString: 
   options: []
 --- !u!1 &1274829547094830363
 GameObject:
@@ -261,14 +262,14 @@ RectTransform:
   m_GameObject: {fileID: 1419638683027457583}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.90999997, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1371323720241047807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 600, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &142762384389468047
@@ -340,7 +341,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     m_PressedSprite: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
-    m_SelectedSprite: {fileID: 640286039, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -381,7 +382,7 @@ RectTransform:
   m_GameObject: {fileID: 4941195432642979432}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.776, y: 0.90999997, z: 0.776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1371323720241047807}
@@ -460,7 +461,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
     m_PressedSprite: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
-    m_SelectedSprite: {fileID: -1811069089, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal

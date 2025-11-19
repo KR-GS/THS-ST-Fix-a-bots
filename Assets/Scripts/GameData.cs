@@ -42,6 +42,12 @@ public class GameData
 
     public float stageSpeed = 1f;
 
+    [Header("Names")]
+
+    public string lo_name;
+
+    public string ho_name;
+
 
     [Header("Lower Order Data")]
     public int level;
@@ -197,6 +203,8 @@ public class GameData
 
     public GameData()
     {
+        this.lo_name = "";
+        this.ho_name = "";
         this.level = 1;
         this.savedOrders = new List<Order>();
         this.currentOrderIndex = -1;
