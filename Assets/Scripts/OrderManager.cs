@@ -177,6 +177,13 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         glm.HideWorkshopElements();
 
         ni.AskName();
+
+        while (!ni.isNameFinished)
+        {
+            yield return null; 
+        }
+
+        OpenTutorial();
     }
 
     public void OpenTutorial()
@@ -647,6 +654,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         glm.tutorialButton.gameObject.SetActive(false);
         glm.dayNumber.gameObject.SetActive(false);
         glm.calendar.gameObject.SetActive(false);
+        glm.clock.gameObject.SetActive(false);
         glm.shopButton.gameObject.SetActive(true);
 
         if (nextdayButton != null)
@@ -684,6 +692,7 @@ public class OrderManager : MonoBehaviour, IDataPersistence
         //completeText.gameObject.SetActive(false);
         glm.dayNumber.gameObject.SetActive(true);
         glm.calendar.gameObject.SetActive(true);
+        glm.clock.gameObject.SetActive(true);
         glm.tutorialButton.gameObject.SetActive(true);
         glm.shopButton.gameObject.SetActive(false);
 

@@ -82,6 +82,16 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public Image prizeImej;
 
+    public Image clock;
+
+    public Sprite morningSprite;
+
+    public Sprite afternoonSprite;
+
+    public Sprite eveningSprite;
+
+    public Sprite nightSprite;
+
     private TimerScript timer;
 
     public Image calendar;
@@ -185,6 +195,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
             dayNumber.gameObject.SetActive(true);
             calendar.gameObject.SetActive(true);
             tutorialButton.gameObject.SetActive(true);
+            clock.gameObject.SetActive(true);
 
             Debug.Log("[LOOK HERE] Pending orders count: " + om.pendingOrders.Count);
 
@@ -195,6 +206,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         {
             if (dayNumber != null) dayNumber.gameObject.SetActive(false);
             if (calendar != null) calendar.gameObject.SetActive(false);
+            if (clock != null) clock.gameObject.SetActive(false);
             ri.readyIndicator.gameObject.SetActive(false);
             ri.readyText.gameObject.SetActive(false);
             ShowTV(false);
@@ -329,8 +341,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        StaticData.lo_name = data.lo_name;
-        StaticData.ho_name = data.ho_name;
+        StaticData.lo_firstname = data.lo_firstname;
+        StaticData.ho_firstname = data.ho_firstname;
+        StaticData.lo_lastname = data.lo_lastname;
+        StaticData.ho_lastname = data.ho_lastname;
 
         this.level = data.level;
         this.money = data.money;
@@ -531,8 +545,10 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        data.lo_name = StaticData.lo_name;
-        data.ho_name = StaticData.ho_name;
+        data.lo_firstname = StaticData.lo_firstname;
+        data.ho_firstname = StaticData.ho_firstname;
+        data.lo_lastname = StaticData.lo_lastname;
+        data.ho_lastname = StaticData.ho_lastname;
         data.level = this.level;
         data.money = this.money;
         data.medValue = StaticData.medValue;
@@ -1217,6 +1233,26 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
 
     }
 
+    private void Update()
+    {
+        if(ts.timeLft >= 0 && ts.timeLft < 301)
+        {
+            clock.sprite = morningSprite;
+        }
+        else if (ts.timeLft >= 301 && ts.timeLft < 601)
+        {
+            clock.sprite = afternoonSprite;
+        }
+        else if (ts.timeLft >= 601 && ts.timeLft < 901)
+        {
+            clock.sprite = eveningSprite;
+        }
+        else if (ts.timeLft >= 901)
+        {
+            clock.sprite = nightSprite;
+        }
+    }
+
     public void ShowTV(bool response)
     {
         if (response == false)
@@ -1243,6 +1279,8 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         level++;
         StaticData.dayNo = level;
         StaticData.orderNumber = 1;
+
+        clock.sprite = morningSprite;
 
         if (StaticData.startOfDay == false)
         {
@@ -1340,6 +1378,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
     {
         if (dayNumber != null) dayNumber.gameObject.SetActive(false);
         if (calendar != null) calendar.gameObject.SetActive(false);
+        if (clock != null) clock.gameObject.SetActive(false);
         ri.readyIndicator.gameObject.SetActive(false);
         ri.readyText.gameObject.SetActive(false);
         tutorialButton.gameObject.SetActive(false);
@@ -1418,6 +1457,7 @@ public class GameLoopManager : MonoBehaviour, IDataPersistence
         ShowTV(true);
         tutorialButton.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(true);
+        clock.gameObject.SetActive(true);
 
         if (ts != null && ts.timer != null)
         {

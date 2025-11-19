@@ -4,8 +4,10 @@ using UnityEngine;
 public class StaticData
 {
     // NAME FIELDS
-    public static string lo_name;
-    public static string ho_name;
+    public static string lo_firstname;
+    public static string lo_lastname;
+    public static string ho_firstname;
+    public static string ho_lastname;
 
     // USED TO SEE WHICH SCENE IT IS
     public static bool isOnLowerOrder;

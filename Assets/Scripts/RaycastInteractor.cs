@@ -93,6 +93,7 @@ public class RaycastInteractor : MonoBehaviour
 
             glm.dayNumber.gameObject.SetActive(true);
             glm.calendar.gameObject.SetActive(true);
+            glm.clock.gameObject.SetActive(true);
             glm.tutorialButton.gameObject.SetActive(true);
             //glm.ordersOnboard.gameObject.SetActive(true);
             glm.ShowTV(true);
@@ -209,6 +210,7 @@ public class RaycastInteractor : MonoBehaviour
 
             glm.dayNumber.gameObject.SetActive(true);
             glm.calendar.gameObject.SetActive(true);
+            glm.clock.gameObject.SetActive(true);
             glm.tutorialButton.gameObject.SetActive(true);
             //glm.ordersOnboard.gameObject.SetActive(true);
             //glm.shopButton.gameObject.SetActive(true);
@@ -414,6 +416,7 @@ public class RaycastInteractor : MonoBehaviour
         orderSheetPanel.gameObject.SetActive(true);
         glm.dayNumber.gameObject.SetActive(false);
         glm.calendar.gameObject.SetActive(false);
+        glm.clock.gameObject.SetActive(false);
         glm.tutorialButton.gameObject.SetActive(false);
         StaticData.lookAtOrder = true;
 

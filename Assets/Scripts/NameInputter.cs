@@ -10,14 +10,16 @@ using TMPro;
 public class NameInputter : MonoBehaviour , IDataPersistence
 {
     public GameObject nameInputter;
-    public TMP_InputField nameField;
+    public TMP_InputField firstnameField;
+    public TMP_InputField lastnameField;
 
+    [HideInInspector] public bool isNameFinished = false;
 
     private void Awake()
     {
         if (nameInputter != null)
         {
-
+            isNameFinished = false;
             nameInputter.SetActive(false);
         }
         else
@@ -36,16 +38,35 @@ public class NameInputter : MonoBehaviour , IDataPersistence
     {
         if(SceneManager.GetActiveScene().name == "LO_WS2D")
         {
-            StaticData.lo_name = nameField.text;
+            if (!string.IsNullOrWhiteSpace(firstnameField.text) && !string.IsNullOrWhiteSpace(lastnameField.text))
+            {
+                StaticData.lo_firstname = firstnameField.text;
+                StaticData.lo_lastname = lastnameField.text;
+                DataPersistenceManager.Instance.SaveGame();
+                nameInputter.SetActive(false);
+                isNameFinished = true;
+            }
+            else
+            {
+                Debug.Log("Both entries should have names");
+            }
         }
         else if (SceneManager.GetActiveScene().name == "Stage_Select")
         {
-            StaticData.ho_name = nameField.text;
+            if (!string.IsNullOrWhiteSpace(firstnameField.text) && !string.IsNullOrWhiteSpace(lastnameField.text))
+            {
+                StaticData.ho_firstname = firstnameField.text;
+                StaticData.ho_lastname = lastnameField.text;
+                DataPersistenceManager.Instance.SaveGame();
+                nameInputter.SetActive(false);
+                isNameFinished = true;
+            }
+            else
+            {
+                Debug.Log("Both entries should have names");
+            }
         }
 
-        DataPersistenceManager.Instance.SaveGame();
-
-        nameInputter.SetActive(false);
     }
 
         public void LoadData(GameData data)
@@ -58,11 +79,13 @@ public class NameInputter : MonoBehaviour , IDataPersistence
     {
         if(SceneManager.GetActiveScene().name == "LO_WS2D")
         {
-            data.lo_name = StaticData.lo_name;
+            data.lo_firstname = StaticData.lo_firstname;
+            data.lo_lastname = StaticData.lo_lastname;
         }
         else if (SceneManager.GetActiveScene().name == "Stage_Select")
         {
-            data.ho_name = StaticData.ho_name;
+            data.ho_firstname = StaticData.ho_firstname;
+            data.ho_lastname = StaticData.ho_lastname;
         }
     }
     

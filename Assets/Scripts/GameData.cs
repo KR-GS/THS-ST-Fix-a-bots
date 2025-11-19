@@ -44,9 +44,13 @@ public class GameData
 
     [Header("Names")]
 
-    public string lo_name;
+    public string lo_firstname;
 
-    public string ho_name;
+    public string lo_lastname;
+
+    public string ho_firstname;
+
+    public string ho_lastname;
 
 
     [Header("Lower Order Data")]
@@ -203,8 +207,10 @@ public class GameData
 
     public GameData()
     {
-        this.lo_name = "";
-        this.ho_name = "";
+        this.lo_firstname = "";
+        this.ho_firstname = "";
+        this.lo_lastname = "";
+        this.ho_lastname = "";
         this.level = 1;
         this.savedOrders = new List<Order>();
         this.currentOrderIndex = -1;

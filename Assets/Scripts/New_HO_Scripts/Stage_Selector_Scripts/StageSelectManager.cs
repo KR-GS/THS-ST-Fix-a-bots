@@ -144,7 +144,7 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
         //increaseButton.onClick.AddListener(IncreaseSpeed);
         //decreaseButton.onClick.AddListener(DecreaseSpeed);
         //confirmSpeedButton.onClick.AddListener(ConfirmSpeed);
-        if(StaticData.ho_name == "")
+        if(StaticData.ho_firstname == "" && StaticData.ho_lastname == "")
         {
             nameInputter.AskName();
         }
@@ -353,7 +353,8 @@ public class StageSelectManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         confirmedSpeed = data.stageSpeed;
-        StaticData.ho_name = data.ho_name;
+        StaticData.ho_firstname = data.ho_firstname;
+        StaticData.ho_lastname = data.ho_lastname;
         Debug.Log("[StageDataLoader] Data loaded into StaticData");
     }
 
