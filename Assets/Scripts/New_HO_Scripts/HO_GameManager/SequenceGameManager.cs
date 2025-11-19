@@ -485,6 +485,7 @@ public class SequenceGameManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 ResetAnims();
                 statusAnimator.SetBool("Idle_Trigger", true);
+                restartStageButton.enabled = true;
             }
             
         
@@ -684,6 +685,7 @@ public class SequenceGameManager : MonoBehaviour
             // After cycle of 25 buttons, check if sequence complete
             if (currentCycleIndex == maxNumber - 1)
             {
+                restartStageButton.enabled = false;
                 ResetAnims();
                 statusAnimator.SetBool("Idle_Trigger", true);
                 Debug.Log("pressedNumbers Numbers = " + pressedNumbers);

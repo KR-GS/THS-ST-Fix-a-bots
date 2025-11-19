@@ -1275,12 +1275,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2745203603349764934, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2982107436025993019, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: soundEffectsManager
+      value: 
+      objectReference: {fileID: 858893738}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.size
       value: 11
@@ -1418,6 +1422,10 @@ PrefabInstance:
       propertyPath: tutorials.Array.data[10].patt_sprite
       value: 
       objectReference: {fileID: -1688996932, guid: 85d90d3e6b9d31e429f5b308c52d7fb0, type: 3}
+    - target: {fileID: 6598396151092405417, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7110576732285382873, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: m_Name
       value: Tutorial_Rhythm
@@ -3777,6 +3785,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
+      propertyPath: soundEffectsManager
+      value: 
+      objectReference: {fileID: 858893738}
     - target: {fileID: 5754954880426950367, guid: 6b09a4ed02dd1324dbec322fea97976a, type: 3}
       propertyPath: tutorials.Array.size
       value: 6
