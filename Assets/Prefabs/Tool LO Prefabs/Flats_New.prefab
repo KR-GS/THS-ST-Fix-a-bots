@@ -339,7 +339,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7698653015851365593}
-  - component: {fileID: -8005613708562312381}
   - component: {fileID: 6255570194853617872}
   - component: {fileID: 7096879334375596797}
   m_Layer: 0
@@ -368,22 +367,6 @@ Transform:
   - {fileID: 4557869824944641169}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8005613708562312381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3200441463033314186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad82ce79a7aff2341bdc3afa8d8d7856, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brokenSprite: {fileID: 1597143511, guid: 81794fb9b1c009e4e8982f053b1ecd9f, type: 3}
-  fixedSprite: {fileID: 180500846, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
-  mainsprite: {fileID: 0}
-  isMissing: 0
 --- !u!61 &6255570194853617872
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -455,7 +438,6 @@ MonoBehaviour:
   - {fileID: -1609588202, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
   - {fileID: 1539401349, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
   - {fileID: -460585262, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
-  soundEffectsManager: {fileID: 4880671318542695620, guid: 97f758d50ff23b54983737ef20ba71e7, type: 3}
 --- !u!1 &4095099604257356806
 GameObject:
   m_ObjectHideFlags: 0
