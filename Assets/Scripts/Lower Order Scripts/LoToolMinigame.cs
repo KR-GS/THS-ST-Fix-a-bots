@@ -414,6 +414,8 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
                 Debug.Log("Adding Fastener " + i);
                 fastenerValues[i] = randFastenerVal + 1;
+
+                tiledParts[i].GetComponent<PartTile>().SetDefaultSize(fastenerList[randFastenerVal].GetComponent<FastenerBtn>().GetFastenerSprite().transform.localScale);
             }
             else
             {
@@ -426,7 +428,11 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
                     Instantiate(randMissing_Prefab, tiledParts[i].GetComponent<PartTile>().GetFastenerPosition());
                 }
 
+                tiledParts[i].GetComponent<PartTile>().SetDefaultSize(randMissing_Prefab.transform.localScale);
+
                 tiledParts[i].GetComponent<PartTile>().SetFastenerPosition(0f);
+
+
 
                 Debug.Log("Adding Missing Fastener");
             }
@@ -893,7 +899,7 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
             Instantiate(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite(), holder);
 
-            //tiledParts[currentInt].GetComponent<PartTile>().SetDefaultSize(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite().transform.localScale);
+            tiledParts[currentInt].GetComponent<PartTile>().SetDefaultSize(fastenerBtn.GetComponent<FastenerBtn>().GetFastenerSprite().transform.localScale);
 
             //holder.GetChild(0).localPosition = new Vector2(0, 0);
 
@@ -1049,6 +1055,8 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
                 Instantiate(randMissing_Prefab, tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
             }
 
+            tiledParts[currentInt].GetComponent<PartTile>().SetDefaultSize(randMissing_Prefab.transform.localScale);
+
             //Instantiate(fastenerList[fastenerCheckVal[currentInt] - 1].GetMissingPrefab(), tiledParts[currentInt].GetComponent<PartTile>().GetFastenerPosition());
 
             if (holder.childCount > 0)
@@ -1068,6 +1076,11 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
     private IEnumerator ResetHitCoroutine()
     {
+        foreach(FastenerBtn fastener in fastenerList)
+        {
+            fastener.GetComponent<Button>().enabled = false;
+        }
+
         foreach (Transform child in fastenerObj[currentInt].transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -1097,6 +1110,11 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
             SetZoomedInTextCounter(currentInt);
             fastenerObj[currentInt].SetActive(false);
             textCounter.gameObject.SetActive(true);
+        }
+
+        foreach (FastenerBtn fastener in fastenerList)
+        {
+            fastener.GetComponent<Button>().enabled = true;
         }
     }
 

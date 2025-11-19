@@ -33,7 +33,7 @@ public class PartTile : MonoBehaviour
 
         fastenerHolder.GetChild(0).localPosition = position;
 
-        default_size = fastenerHolder.GetChild(0).localScale;
+        //default_size = fastenerHolder.GetChild(0).localScale;
 
         /*
         while (Vector3.Distance(fastenerHolder.GetChild(0).localPosition, position)>0.01)

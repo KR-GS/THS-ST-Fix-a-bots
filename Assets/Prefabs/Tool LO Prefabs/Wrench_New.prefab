@@ -385,7 +385,6 @@ MonoBehaviour:
   - {fileID: 106540639, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
   - {fileID: -737994578, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
   - {fileID: 713879336, guid: 090b15ebf5cae6b4e93d4e8b239cdd74, type: 3}
-  soundEffectsManager: {fileID: 4880671318542695620, guid: 97f758d50ff23b54983737ef20ba71e7, type: 3}
 --- !u!61 &870957739703739012
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -700,7 +699,7 @@ Transform:
   m_GameObject: {fileID: 6852929561629911140}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.66, y: 4.37, z: 0}
+  m_LocalPosition: {x: -6.38, y: 4.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
