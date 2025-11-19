@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 
 public class StageSelectManager : MonoBehaviour, IDataPersistence
