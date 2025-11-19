@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brokenSprite: {fileID: 1424438087, guid: 60c294dc4d64cba4d82242c2d679b4ed, type: 3}
-  fixedSprite: {fileID: -1948271735, guid: a23cb9bcd5f2388439a7897143f5d4e7, type: 3}
+  fixedSprite: {fileID: -188688984, guid: 3bb6a33ab8a13ed41a5045c7a6c21d5b, type: 3}
   mainsprite: {fileID: 4762862878099755405}
+  isMissing: 0
 --- !u!1 &4229747512293052619
 GameObject:
   m_ObjectHideFlags: 0

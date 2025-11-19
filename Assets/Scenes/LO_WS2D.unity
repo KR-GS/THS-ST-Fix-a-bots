@@ -2075,15 +2075,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Customer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
-  m_sharedMaterial: {fileID: -262727986562645402, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
+  m_sharedMaterial: {fileID: -262727986562645402, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288239104
-  m_fontColor: {r: 0, g: 0.33882347, b: 0.5999999, a: 1}
+    rgba: 4286398233
+  m_fontColor: {r: 0.098039225, g: 0.24705884, b: 0.4901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2106,11 +2106,11 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2999,7 +2999,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 159608632, guid: af215e60aaac26f4a867dd26a7cd8a1e, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3857,8 +3857,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
-  m_sharedMaterial: {fileID: -262727986562645402, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dafff570592a3f7498caa32bb7cd7582, type: 2}
+  m_sharedMaterial: {fileID: -262727986562645402, guid: dafff570592a3f7498caa32bb7cd7582, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6086,15 +6086,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Robot
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
-  m_sharedMaterial: {fileID: -262727986562645402, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
+  m_sharedMaterial: {fileID: -262727986562645402, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286203136
-  m_fontColor: {r: 0, g: 0.27063262, b: 0.4792453, a: 1}
+    rgba: 4286201368
+  m_fontColor: {r: 0.09411766, g: 0.24313727, b: 0.4784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6117,11 +6117,11 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -6681,15 +6681,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: John Doe
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
-  m_sharedMaterial: {fileID: -262727986562645402, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
+  m_sharedMaterial: {fileID: -262727986562645402, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288107776
-  m_fontColor: {r: 0, g: 0.33456162, b: 0.5924529, a: 1}
+    rgba: 4286398233
+  m_fontColor: {r: 0.098039225, g: 0.24705884, b: 0.4901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7035,7 +7035,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000005949156, y: 146}
-  m_SizeDelta: {x: 1300, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1675628992
 MonoBehaviour:
@@ -7669,15 +7669,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Doe Bot
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
-  m_sharedMaterial: {fileID: -262727986562645402, guid: 1a356ddfb6c3a0249bc3d232bfab2c92, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
+  m_sharedMaterial: {fileID: -262727986562645402, guid: 962b751af02348f4f92a96fd31ed8656, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287451136
-  m_fontColor: {r: 0, g: 0.31325194, b: 0.554717, a: 1}
+    rgba: 4286201368
+  m_fontColor: {r: 0.09411766, g: 0.24313727, b: 0.4784314, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
