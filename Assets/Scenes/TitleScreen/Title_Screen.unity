@@ -389,11 +389,15 @@ PrefabInstance:
     - target: {fileID: 3000993537103380818, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
       propertyPath: m_SpriteState.m_PressedSprite
       value: 
-      objectReference: {fileID: -100928223, guid: 203f7b31a3063ef4b9c7c0ea87e04e7e, type: 3}
+      objectReference: {fileID: 1452330855, guid: 9a2ce5fa8a5248b4ab3090b9dcb67305, type: 3}
+    - target: {fileID: 3000993537103380818, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 1452330855, guid: 9a2ce5fa8a5248b4ab3090b9dcb67305, type: 3}
     - target: {fileID: 3000993537103380818, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
       propertyPath: m_SpriteState.m_HighlightedSprite
       value: 
-      objectReference: {fileID: -100928223, guid: 203f7b31a3063ef4b9c7c0ea87e04e7e, type: 3}
+      objectReference: {fileID: 1452330855, guid: 9a2ce5fa8a5248b4ab3090b9dcb67305, type: 3}
     - target: {fileID: 3685260403966011583, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
       propertyPath: m_Name
       value: LOButton
