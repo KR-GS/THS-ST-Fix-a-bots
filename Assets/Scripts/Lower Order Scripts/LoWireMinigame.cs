@@ -378,6 +378,60 @@ public class LoWireMinigame : MonoBehaviour, IDataPersistence
                     }
                 }
             }
+        }else if (Input.anyKey || Input.GetMouseButtonUp(0))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
+                {
+                    Debug.Log("Hello World");
+                    HandleClickEvent(Input.mousePosition);
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                if (isDragging)
+                {
+                    //Debug.Log(wireToAdd.GetComponent<Wire>().GetNewNearbyPos());
+                    if (item_dragged == 1)
+                    {
+                        if (wireToAdd.GetComponent<Wire>().CheckOnSlot())
+                        {
+
+                            wireToAdd.transform.SetParent(wireToAdd.GetComponent<Wire>().GetNewNearbyPos().parent);
+
+                            wireToAdd.transform.position = wireToAdd.GetComponent<Wire>().GetNewNearbyPos().position;
+
+                            //wireToAdd.GetComponent<Wire>().SetSlotStatus();
+                        }
+                        else
+                        {
+                            wireToAdd.GetComponent<Wire>().SetNewWirePos(wireGeneratedPlace);
+
+                            wireToAdd.transform.position = wireGeneratedPlace.position;
+
+                            wireToAdd.transform.SetParent(wireGeneratedPlace);
+                        }
+
+                        wireToAdd = null;
+                    }
+
+                    item_dragged = 0;
+
+                    isDragging = false;
+                }
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                if (isDragging)
+                {
+                    if (item_dragged == 1)
+                    {
+                        Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        wireToAdd.transform.position = new Vector2(touchPos.x, touchPos.y);
+                    }
+                }
+            }
         }
     }
 

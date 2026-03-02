@@ -347,6 +347,94 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
                 }
             }
         }
+        else if (Input.anyKey || Input.GetMouseButtonUp(0))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    if (!dragging)
+                    {
+                        HandleClickEvent(Input.mousePosition);
+                    }
+                }
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                if (dragging)
+                {
+                    Vector2 cameraPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector3 touchPos = new Vector3(cameraPoint.x, cameraPoint.y, -0.1f);
+                    draggableObject.transform.position = touchPos;
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                Debug.Log("Mouse Up detected");
+                if (dragging)
+                {
+                    draggableObject.GetComponent<Sticker>().ResetColor();
+                    if (draggableObject.GetComponent<Sticker>().IsOnPart())
+                    {
+                        dragging = false;
+                        soundEffectsManager.playStickerSounds();
+                        if (draggableObject.GetComponent<Sticker>().IsADefault())
+                        {
+                            Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            Debug.Log(currentSide);
+                            if (touchPos.x > partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_RightVal() + 0.5f)
+                            {
+                                touchPos.x = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_RightVal();
+                            }
+                            else if (touchPos.x < partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_LeftVal() - 0.5f)
+                            {
+                                touchPos.x = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_LeftVal();
+                            }
+
+                            if (touchPos.y > partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_UpVal() + 0.5f)
+                            {
+                                touchPos.y = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_UpVal();
+                            }
+                            else if (touchPos.y < partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_DownVal() - 0.5f)
+                            {
+                                touchPos.y = partSides[currentSide].GetComponentInChildren<RobotPaintPart>().Base_DownVal();
+                            }
+
+                            Vector3 newPos = new Vector3(touchPos.x, touchPos.y, 0);
+
+                            draggableObject.GetComponent<Sticker>().SetDefaultPos(newPos);
+                            draggableObject.transform.position = newPos;
+                        }
+                        else
+                        {
+                            if (draggableObject.GetComponent<Sticker>().GetPartOn() < 5)
+                            {
+                                StartCoroutine(TriggerStickerFall());
+                                dragging = false;
+                            }
+                        }
+
+                        draggableObject = null;
+                    }
+                    else
+                    {
+                        if (!draggableObject.GetComponent<Sticker>().IsADefault())
+                        {
+                            Destroy(draggableObject);
+                            dragging = false;
+                        }
+                        else
+                        {
+                            draggableObject.transform.position = draggableObject.GetComponent<Sticker>().GetDefaultPos();
+                            draggableObject = null;
+                            dragging = false;
+                        }
+                    }
+                }
+            }
+        }
 
         //stickerTextCounter.text = roboPart.GetCurrentStickerSideCount().ToString();
     }

@@ -288,7 +288,7 @@ public class RaycastInteractor : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
             if (IsPointerOverUI(Input.GetTouch(0).position))
             {
@@ -352,6 +352,76 @@ public class RaycastInteractor : MonoBehaviour
                     }
                 }
                 
+            }
+            else
+            {
+                Debug.Log("2D Point detection did not hit anything.");
+            }
+        }
+        else if ((Input.anyKey && Input.GetMouseButtonDown(0)))
+        {
+            if (IsPointerOverUI(Input.mousePosition))
+            {
+                Debug.Log("Pressing the button!");
+                return;
+            }
+
+            Vector2 touchPosition = Input.mousePosition;
+
+            // Convert screen position to world position for 2D
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(touchPosition);
+            worldPosition.z = 0f; // Ensure Z is 0 for 2D
+
+            // For 2D, we typically use OverlapPoint instead of raycast for touch detection
+            Vector2 worldPoint = new Vector2(worldPosition.x, worldPosition.y);
+
+            // Use OverlapPoint to detect what's at the touch position
+            Collider2D hitCollider = Physics2D.OverlapPoint(worldPoint);
+
+            if (hitCollider != null)
+            {
+                Debug.Log("2D Point detection hit: " + hitCollider.name);
+
+                Station station = hitCollider.GetComponent<Station>();
+                if (station != null)
+                {
+                    Debug.Log("Station found: " + station.name);
+                    station.Interact();
+                    return;
+                }
+
+                // TV interaction
+                if (hitCollider.CompareTag("TV"))
+                {
+                    if (!StaticData.orderReceived)
+                    {
+                        om.StartOrderBatch();
+                        ts.timer.gameObject.SetActive(true);
+
+                        if (readyIndicator != null && readyText != null)
+                        {
+                            if (StaticData.startOfDay == true)
+                            {
+                                Debug.Log("Ready indicator status before TV: " + StaticData.startOfDay);
+                                readyIndicator.gameObject.SetActive(false);
+                                readyText.gameObject.SetActive(false);
+                                StaticData.startOfDay = false;
+                                Debug.Log("Ready indicator status after TV: " + StaticData.startOfDay);
+                                StaticData.orderReceived = true;
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("You have unfinished orders!");
+                        if (om.currentOrder != null)
+                        {
+                            ShowOrderUI();
+                        }
+                    }
+                }
+
             }
             else
             {

@@ -85,6 +85,31 @@ public class WireGenerator : MonoBehaviour
                 }
             }
             */
+        }else if (Input.anyKey)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                HandleClickEvent(Input.mousePosition);
+            }
+            /*
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                if (isDragging)
+                {
+                    color = null;
+                    isDragging = false;
+                    //Destroy(color);
+                }
+            }
+            else
+            {
+                if (isDragging)
+                {
+                    Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                    color.transform.position = new Vector2(touchPos.x, touchPos.y);
+                }
+            }
+            */
         }
     }
 

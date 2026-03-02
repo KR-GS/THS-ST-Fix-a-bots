@@ -580,9 +580,9 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
-                if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
+                if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent(Input.GetTouch(0).position))
                 {
-                    HandleDragEvent();
+                    HandleDragEvent(Input.GetTouch(0).position);
                 }
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Moved)
@@ -604,9 +604,9 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
             {
                 if (!isDragging)
                 {
-                    if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent())
+                    if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent(Input.GetTouch(0).position))
                     {
-                        HandleClickEvent();
+                        HandleClickEvent(Input.GetTouch(0).position);
                     }
                 }
                 else
@@ -627,13 +627,64 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
 
             }
         }
+        else if (Input.anyKey || Input.GetMouseButtonUp(0))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent(Input.mousePosition))
+                {
+                    HandleDragEvent(Input.mousePosition);
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                if (!isDragging)
+                {
+                    if (!EventSystem.current.IsPointerOverGameObject() || HandleUIClickEvent(Input.mousePosition))
+                    {
+                        HandleClickEvent(Input.mousePosition);
+                    }
+                }
+                else
+                {
+                    if (tiledParts[2].transform.position.x > 0)
+                    {
+                        Debug.Log("Limit reached");
+
+                        robotPart.transform.position = new Vector2(endPoints[0].x, robotPart.transform.position.y);
+                    }
+                    else if (tiledParts[tiledParts.Length - 2].transform.position.x < 0)
+                    {
+                        robotPart.transform.position = new Vector2(endPoints[1].x, robotPart.transform.position.y);
+                    }
+                    isDragging = false;
+                    isOnObject = false;
+                }
+
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                if (isOnObject)
+                {
+                    Debug.Log("Dragging Object");
+
+                    isDragging = true;
+
+                    Vector2 newPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                    //draggingObj.position = new Vector3(newPos.x + offset.x, draggingObj.position.y, draggingObj.position.z);
+
+                    robotPart.transform.position = new Vector2(newPos.x + offset.x, robotPart.transform.position.y);
+                }
+            }
+        }
 
     }
 
-    private bool HandleUIClickEvent()
+    private bool HandleUIClickEvent(Vector3 postion)
     {
         PointerEventData pointer = new PointerEventData(EventSystem.current);
-        pointer.position = Input.GetTouch(0).position;
+        pointer.position = postion;
 
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointer, raycastResults);
@@ -658,23 +709,23 @@ public class LoToolMinigame : MonoBehaviour, IDataPersistence
         return false;
     }
 
-    private void HandleDragEvent()
+    private void HandleDragEvent(Vector3 position)
     {
-        RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
+        RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(position), Vector2.zero);
         if (rayHit.collider != null)
         {
             if (rayHit.transform.name == "Complete Part")
             {
-                offset = robotPart.transform.position - Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                offset = robotPart.transform.position - Camera.main.ScreenToWorldPoint(position);
                 isOnObject = true;
                 Debug.Log("Interacting with draggable object");
             }
         }
     }
 
-    private void HandleClickEvent()
+    private void HandleClickEvent(Vector3 position)
     {
-        RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
+        RaycastHit2D rayHit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(position), Vector2.zero);
         if (rayHit.collider != null)
         {
             if (rayHit.transform.gameObject.TryGetComponent(out Tool tool))
