@@ -38,7 +38,7 @@ public class NotesManager : MonoBehaviour
             {
                 if (!isDragging)
                 {
-                    HandleClickEvent();
+                    HandleClickEvent(Input.GetTouch(0).position);
                 }
             }
             else if(Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -58,12 +58,38 @@ public class NotesManager : MonoBehaviour
                 }
             }
         }
+        else if (Input.anyKey || Input.GetMouseButtonUp(0))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!isDragging)
+                {
+                    HandleClickEvent(Input.mousePosition);
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                if (isDragging)
+                {
+                    isDragging = false;
+                }
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                if (isDragging)
+                {
+                    Vector2 touchPos = Input.mousePosition;
+
+                    noteToDrag.transform.position = new Vector2(touchPos.x, touchPos.y);
+                }
+            }
+        }
     }
 
-    private void HandleClickEvent() 
+    private void HandleClickEvent(Vector3 position) 
     {
         PointerEventData pointer = new PointerEventData(EventSystem.current);
-        pointer.position = Input.GetTouch(0).position;
+        pointer.position = position;
 
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointer, raycastResults);
