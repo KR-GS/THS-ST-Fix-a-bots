@@ -94,12 +94,14 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         lowerOrderButton.gameObject.SetActive(true);
         higherOrderButton.gameObject.SetActive(true);
         //If on title screen
+        /*
         if (!StaticData.isOnHigherOrder && !StaticData.isOnLowerOrder)
         {
             mainMenuButton.gameObject.SetActive(false);
         }
+        */
         //if on Lower order part
-        else if (StaticData.isOnLowerOrder)
+        /*else*/ if (StaticData.isOnLowerOrder)
         {
             higherOrderButton.gameObject.SetActive(false);
             lowerOrderButton.gameObject.SetActive(false);
@@ -127,11 +129,16 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
             ChangeSettingsState();
             ShowLOSettings();
         });
-        mainMenuButton.onClick.AddListener(() =>
+
+        if (StaticData.isOnHigherOrder || StaticData.isOnLowerOrder)
         {
-            BackToMainMenu();
-            Time.timeScale = 1;
-        });
+            mainMenuButton.onClick.AddListener(() =>
+            {
+                BackToMainMenu();
+                Time.timeScale = 1;
+            });
+        }
+        
 
         confirmButton.onClick.AddListener(() =>
         {
