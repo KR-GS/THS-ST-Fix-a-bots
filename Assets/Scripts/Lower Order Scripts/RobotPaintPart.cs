@@ -18,6 +18,8 @@ public class RobotPaintPart : MonoBehaviour
 
     private List<int> sideVal = new List<int>();
 
+    private bool isMoving = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*
     void Awake()
@@ -192,5 +194,21 @@ public class RobotPaintPart : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void SetCollidersOfStickers(bool status)
+    {
+        
+        foreach (Transform child in defaultObj.transform)
+        {
+            child.GetComponent<Rigidbody2D>().simulated = status;
+            //child.GetComponent<Sticker>().enabled = status;
+        }
+
+        foreach (Transform child in testObject.transform)
+        {
+            child.GetComponent<Rigidbody2D>().simulated = status;
+            //child.GetComponent<Sticker>().enabled = status;
+        }
     }
 }

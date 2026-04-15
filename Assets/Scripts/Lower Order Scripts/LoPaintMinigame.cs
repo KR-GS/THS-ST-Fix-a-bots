@@ -454,13 +454,17 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
                 }
                 else
                 {
-                    draggableObject = Instantiate(sticker.transform.gameObject);
+                    if (!sticker.IsADuplicate())
+                    {
+                        draggableObject = Instantiate(sticker.transform.gameObject);
 
-                    draggableObject.layer = LayerMask.NameToLayer("Default");
-                    draggableObject.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(position).x, Camera.main.ScreenToWorldPoint(position).y, -0.1f);
-                    draggableObject.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
-                    draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();
-                    Debug.Log(draggableObject.GetComponent<Sticker>().IsADuplicate());
+                        draggableObject.layer = LayerMask.NameToLayer("Default");
+                        draggableObject.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(position).x, Camera.main.ScreenToWorldPoint(position).y, -0.1f);
+                        draggableObject.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+                        draggableObject.GetComponent<Sticker>().ToggleIsADuplicate();
+                        Debug.Log(draggableObject.GetComponent<Sticker>().IsADuplicate());
+                    }
+                        
                     
                 }
 
@@ -727,7 +731,11 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 
         partSides[prevSide].GetComponentInChildren<BoxCollider2D>().enabled = false;
 
+        partSides[prevSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(false);
+
         partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = false;
+
+        partSides[currentSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(true);
 
         foreach (Button btn in moveSidesBtn)
         {
@@ -760,6 +768,10 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 
         partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = true;
 
+        partSides[prevSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(true);
+
+        partSides[currentSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(true);
+
         yield return new WaitForSeconds(0.5f);
 
         minimapManager.EnableMinimapPressing();
@@ -790,7 +802,11 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
 
         partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = false;
 
-        foreach(Button btn in moveSidesBtn)
+        partSides[prevSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(false);
+
+        partSides[currentSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(false);
+
+        foreach (Button btn in moveSidesBtn)
         {
             btn.enabled = false;
         }
@@ -822,6 +838,10 @@ public class LoPaintMinigame : MonoBehaviour, IDataPersistence
         partSides[prevSide].GetComponentInChildren<BoxCollider2D>().enabled = true;
 
         partSides[currentSide].GetComponentInChildren<BoxCollider2D>().enabled = true;
+
+        partSides[prevSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(true);
+
+        partSides[currentSide].GetComponentInChildren<RobotPaintPart>().SetCollidersOfStickers(true);
 
         foreach (Button btn in moveSidesBtn)
         {

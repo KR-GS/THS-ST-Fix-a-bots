@@ -48,6 +48,11 @@ public class Sticker : MonoBehaviour
         Debug.Log(onPart);   
     }
 
+    public void KeepOnPart()
+    {
+        onPart = true;
+    }
+
     public void ToggleIsADuplicate()
     {
         isDuplicate = !isDuplicate;
