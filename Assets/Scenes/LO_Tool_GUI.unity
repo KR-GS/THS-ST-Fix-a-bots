@@ -3410,7 +3410,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: dd7baae79c7fb0c41aa8138957649e9f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3430,12 +3430,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1069768722}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.4, z: 6.3}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.4, z: 16.3}
   m_LocalScale: {x: 2.476662, y: 2.476662, z: 2.476662}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1742507108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1136556791
 GameObject:
@@ -5287,6 +5287,7 @@ GameObject:
   - component: {fileID: 1742507106}
   - component: {fileID: 1742507109}
   - component: {fileID: 1742507110}
+  - component: {fileID: 1742507111}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5365,7 +5366,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1069768725}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1742507109
@@ -5435,6 +5437,19 @@ MonoBehaviour:
   correct_sprite: {fileID: 21300000, guid: 54ea72d062d2b514b8762b3c829572c4, type: 3}
   wrong_sprite: {fileID: 21300000, guid: d3b82f9ed35395f4cb625d292b0973f0, type: 3}
   loading_Prefab: {fileID: 630110251024977566, guid: b4db17b859d9bed4da396d8f735b2f0f, type: 3}
+--- !u!114 &1742507111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742507105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3b2f482c22c0e54aa3be479ad9b67be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bg: {fileID: 1069768725}
 --- !u!1 &1813378006
 GameObject:
   m_ObjectHideFlags: 0
@@ -7252,6 +7267,5 @@ SceneRoots:
   - {fileID: 223477260}
   - {fileID: 1640689924}
   - {fileID: 1866970316}
-  - {fileID: 1069768725}
   - {fileID: 1985247688}
   - {fileID: 818232280}

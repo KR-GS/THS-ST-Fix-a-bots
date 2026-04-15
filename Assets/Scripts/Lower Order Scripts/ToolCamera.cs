@@ -53,8 +53,12 @@ public class ToolCamera : MonoBehaviour
         originalPosition = transform.position;
         originalSize = GetComponent<Camera>().orthographicSize;
 
+
+
         transform.position = new Vector3(0, 1.25f, transform.position.z);
         GetComponent<Camera>().orthographicSize = 17;
+
+        GetComponent<Parallax>().SetDefaultPosition();
         zoomInCanvas.enabled = false;
         toolCanvas.enabled = false;
         overViewCanvas.enabled = true;
@@ -69,6 +73,7 @@ public class ToolCamera : MonoBehaviour
         transform.position = new Vector3(partPosition, originalPosition.y, originalPosition.z);
         GetComponent<Camera>().orthographicSize = originalSize;
 
+        GetComponent<Parallax>().SetZoomPosition();
         zoomInCanvas.enabled = true;
         toolCanvas.enabled = true;
         counterCanvas.enabled = true;
@@ -97,6 +102,7 @@ public class ToolCamera : MonoBehaviour
 
     public IEnumerator SubmitCameraZoom()
     {
+        
         while (GetComponent<Camera>().orthographicSize > originalSize)
         {
             GetComponent<Camera>().orthographicSize--;
