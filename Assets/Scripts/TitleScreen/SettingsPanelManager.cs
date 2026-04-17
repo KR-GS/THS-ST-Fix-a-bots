@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
-using UnityEngine.Localization.Settings;
+//using UnityEngine.Localization.Settings;
 
 public class SettingsPanelManager : MonoBehaviour, IDataPersistence
 {
@@ -162,10 +162,12 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
             case 0:
                 //selectedLanguage = languageSelector.GetCurrentValue();
 
+                /*
                 if(selectedLanguage == "English")
                     LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
                 else if(selectedLanguage == "Filipino")
                     LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[1];
+                */
 
                 masterVolumeValue = masterVolume.GetValue();
                 sfxVolumeValue = sfxVolume.GetValue();
@@ -325,10 +327,12 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         sfxVolumeValue = oldSFXVolumeValue;
         musicVolumeValue = oldMusicVolumeValue;
 
+        /*
         if(oldSelectedLanguage == "English")
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
         else if(oldSelectedLanguage == "Filipino")
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[1];
+        */
 
         //HO SETTINGS
         hoSpeed = oldHoSpeed;
