@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using TMPro;
 using UnityEngine.SceneManagement;
 //using UnityEngine.Localization.Settings;
 
@@ -17,6 +18,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
     [Header("Prefabs")]
     public ArrowSelector arrowSelectorPrefab;
     public VolumeSlider volumeSliderPrefab;
+    public Button ButtonPrefab;
 
     [Header("Parent")]
     public Transform contentParent;
@@ -26,6 +28,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
     public Button confirmButton;
     public Button exitButton;
     public Button mainMenuButton;
+    public Button deleteSaveButton;
 
     [Header("Settings Tabs")]
 
@@ -113,7 +116,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         }
 
         ShowGeneralSettings();
-
+        deleteSaveButton.onClick.AddListener(DeleteSave);
         generalButton.onClick.AddListener(() =>
         {
             ChangeSettingsState();
@@ -210,6 +213,12 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         ShowGeneralSettings();
         DataPersistenceManager.Instance.SaveGame();
         mainPanel.SetActive(false);
+    }
+    public void DeleteSave()
+    {
+        DataPersistenceManager.Instance.DeleteGame();
+
+        LoadingScreenManager.Instance.SwitchtoScene(0);
     }
 
     public void BackToMainMenu()
@@ -386,6 +395,10 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         masterVolume.slider.onValueChanged.AddListener(UpdateMasterVolume);
         sfxVolume.slider.onValueChanged.AddListener(UpdateSFXVolume);
         musicVolume.slider.onValueChanged.AddListener(UpdateMusicVolume);
+        deleteSaveButton = Instantiate(ButtonPrefab, contentParent);
+        deleteSaveButton.GetComponentInChildren<TMP_Text>().text = "Delete Save";
+        deleteSaveButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        deleteSaveButton.GetComponentInChildren<TMP_Text>().fontSize = 48;
     }
     private void ShowHOSettings()
     {

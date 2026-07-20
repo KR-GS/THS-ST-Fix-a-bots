@@ -158,4 +158,18 @@ public class DataPersistenceManager : MonoBehaviour
     {
         SaveGame();
     }
+
+        public void DeleteGame()
+    {
+        dataHandler.Delete();
+
+        NewGame();
+
+        foreach (IDataPersistence obj in dataPersistenceObjects)
+        {
+            obj.LoadData(gameData);
+        }
+
+        Debug.Log("Game save deleted.");
+    }
 }

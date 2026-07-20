@@ -1308,11 +1308,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowSelectorPrefab: {fileID: 503805575829389428, guid: 14de0a1dfe9f95a4abdd3f0856c46286, type: 3}
   volumeSliderPrefab: {fileID: 4045186812078551547, guid: 52fb59237c5a06745877b17c8b6908c0, type: 3}
+  ButtonPrefab: {fileID: 3000993537103380818, guid: 298f7b8f97631d044add32421bcbe12e, type: 3}
   contentParent: {fileID: 6981861264316389580}
   mainPanel: {fileID: 6901584244228228437}
   confirmButton: {fileID: 4193698681703763476}
   exitButton: {fileID: 978184801789943589}
   mainMenuButton: {fileID: 7277552632573032963}
+  deleteSaveButton: {fileID: 0}
   generalButton: {fileID: 1343004296652376228}
   lowerOrderButton: {fileID: 8068673019591922107}
   higherOrderButton: {fileID: 5497029921574089620}
