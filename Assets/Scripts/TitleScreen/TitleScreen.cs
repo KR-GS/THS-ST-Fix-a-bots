@@ -9,6 +9,7 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
     [Header("Panels")]
     public GameObject continuePanel;
     public GameObject settingsPanel;
+    public RawImage trailerBar;
 
     [Header("Buttons")]
     public Button HOButton;
@@ -41,6 +42,7 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
         LOButton.gameObject.SetActive(false);
         settingsButton.gameObject.SetActive(false);
         videoRawImage.gameObject.SetActive(false);
+        trailerBar.gameObject.SetActive(false);
 
 
         continueButton.onClick.AddListener(OnContinue);
@@ -66,6 +68,7 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
             continueVideo.Stop();
             idleTimer = 0f;
             soundEffectsManager.playMusic();
+            trailerBar.gameObject.SetActive(false);
             return;
         }
         continuePanel.SetActive(false);
@@ -93,6 +96,7 @@ public class TitleScreen : MonoBehaviour, IDataPersistence
             continueVideo.isLooping = true;
             continueVideo.Play();
             soundEffectsManager.stopMusic();
+            trailerBar.gameObject.SetActive(true);
             }
                 
         }
