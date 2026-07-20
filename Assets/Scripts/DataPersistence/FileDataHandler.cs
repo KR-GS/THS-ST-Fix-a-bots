@@ -44,6 +44,21 @@ public class FileDataHandler
         return loadedData;
     }
 
+    public void Delete()
+    {
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+
+        if (File.Exists(fullPath))
+        {
+            File.Delete(fullPath);
+            Debug.Log("Save file deleted: " + fullPath);
+        }
+        else
+        {
+            Debug.Log("No save file found to delete.");
+        }
+    }
+
     public void Save(GameData data)
     {
         string fullPath = Path.Combine(dataDirPath, dataFileName);

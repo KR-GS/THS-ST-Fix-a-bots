@@ -58,6 +58,16 @@ public class SoundEffectsManager : MonoBehaviour
         music.Play();
     }
 
+    public void stopMusic()
+    {
+        music.Stop();
+    }
+
+    public void playMusic()
+    {
+        music.Play();
+    }
+
     // USE THIS FOR FUTURE SFX USAGE
     public void PlaySFX(AudioClip clip)
     {
