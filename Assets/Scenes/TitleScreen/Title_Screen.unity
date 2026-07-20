@@ -1178,7 +1178,7 @@ MonoBehaviour:
   settingsButton: {fileID: 454147270}
   continueButton: {fileID: 263348820}
   continueVideo: {fileID: 1078820956}
-  idleTimeBeforeVideo: 3
+  idleTimeBeforeVideo: 20
   videoRawImage: {fileID: 82257569}
   soundEffectsManager: {fileID: 1781595932}
 --- !u!114 &620106930
