@@ -396,7 +396,7 @@ public class SettingsPanelManager : MonoBehaviour, IDataPersistence
         sfxVolume.slider.onValueChanged.AddListener(UpdateSFXVolume);
         musicVolume.slider.onValueChanged.AddListener(UpdateMusicVolume);
         deleteSaveButton = Instantiate(ButtonPrefab, contentParent);
-        deleteSaveButton.GetComponentInChildren<TMP_Text>().text = "Delete Save";
+        deleteSaveButton.GetComponentInChildren<TMP_Text>().text = "Demo Save";
         deleteSaveButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
         deleteSaveButton.GetComponentInChildren<TMP_Text>().fontSize = 48;
     }

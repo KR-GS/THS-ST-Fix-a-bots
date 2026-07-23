@@ -211,7 +211,7 @@ public class GameData
         this.ho_firstname = "";
         this.lo_lastname = "";
         this.ho_lastname = "";
-        this.level = 1;
+        this.level = 6;
         this.savedOrders = new List<Order>();
         this.currentOrderIndex = -1;
         this.money = 0;
@@ -227,7 +227,7 @@ public class GameData
         this.stageTimes = new List<float>(new float[stageCount]);
         this.formulaAttempts = new List<string>(new string[stageCount]);
         this.stageStars = new List<int>(new int[stageCount]);
-        this.stageDone = 0;
+        this.stageDone = 15;
         this.stageSpeed = 1f;
 
         //Lower Order
