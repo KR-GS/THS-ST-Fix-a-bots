@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7495af2ae7a67d640af79f7e66a476dc
+guid: df67d41ac1629d040af680ef0686b6c9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -69,8 +69,8 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: red_philips-01_0
+      name: Flathead_screws_spritesheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 4275
-        height: 4275
+        x: 263
+        y: 1249
+        width: 501
+        height: 497
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,118 +138,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14b12479338d1dd4893d8948f7cac66a
-      internalID: -1987908071
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: red_philips-01_1
-      rect:
-        serializedVersion: 2
-        x: 4275
-        y: 0
-        width: 4275
-        height: 4275
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f8f14e79ba5627842ba48151de1f3e97
-      internalID: -872879521
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: red_philips-01_2
-      rect:
-        serializedVersion: 2
-        x: 8550
-        y: 0
-        width: 4275
-        height: 4275
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2fef085452beceb4ba136c82c27f7c4f
-      internalID: -1903393084
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: red_philips-01_3
-      rect:
-        serializedVersion: 2
-        x: 12825
-        y: 0
-        width: 4275
-        height: 4275
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 07b934fad4ca7fe4782a9599b561c028
-      internalID: -950154211
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: red_philips-01_4
-      rect:
-        serializedVersion: 2
-        x: 17100
-        y: 0
-        width: 4275
-        height: 4275
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59316b8af20d5334d8ee5a29fb44a96c
-      internalID: -14326384
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: red_philips-01_5
-      rect:
-        serializedVersion: 2
-        x: 21375
-        y: 0
-        width: 4275
-        height: 4275
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f7d7d41bd99cef4c8f0acb35876e4c1
-      internalID: -341442475
+      spriteID: 896f1e12293253b41a8c7f6a7c848046
+      internalID: -1061563680
       vertices: []
       indices: 
       edges: []
@@ -258,7 +148,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 50cf4b740006420438c2459322c9623e
+    spriteID: 472e51c4836662749b8b0fcd9fbd8492
     internalID: 0
     vertices: []
     indices: 
@@ -268,12 +158,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      red_philips-01_0: -1987908071
-      red_philips-01_1: -872879521
-      red_philips-01_2: -1903393084
-      red_philips-01_3: -950154211
-      red_philips-01_4: -14326384
-      red_philips-01_5: -341442475
+      Flathead_screws_spritesheet_0: -1061563680
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

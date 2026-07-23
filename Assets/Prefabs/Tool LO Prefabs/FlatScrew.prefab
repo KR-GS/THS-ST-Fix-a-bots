@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brokenSprite: {fileID: 443853292, guid: 3fd513aa149e19648bbe82e6ad44cda7, type: 3}
-  fixedSprite: {fileID: 272432934, guid: b8e1be3e85f3d3844a18ac3dc030ea84, type: 3}
+  fixedSprite: {fileID: -1061563680, guid: df67d41ac1629d040af680ef0686b6c9, type: 3}
   mainsprite: {fileID: 5811078362170141790}
+  isMissing: 0
 --- !u!1 &5486189537628908141
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,12 +126,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 272432934, guid: b8e1be3e85f3d3844a18ac3dc030ea84, type: 3}
+  m_Sprite: {fileID: -1061563680, guid: df67d41ac1629d040af680ef0686b6c9, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.6699996, y: 7.7}
+  m_Size: {x: 5.0112233, y: 4.9700003}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -212,12 +213,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 272432934, guid: b8e1be3e85f3d3844a18ac3dc030ea84, type: 3}
+  m_Sprite: {fileID: -1061563680, guid: df67d41ac1629d040af680ef0686b6c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.6699996, y: 7.7}
+  m_Size: {x: 5.0112233, y: 4.9700003}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
